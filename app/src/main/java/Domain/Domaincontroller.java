@@ -8,8 +8,8 @@ package Domain;
 public class Domaincontroller {
 
 
-    public DomainController(){
-        
+    public Domaincontroller(){
+
     }
 
 
