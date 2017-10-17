@@ -7,7 +7,7 @@ import Domain.Domaincontroller;
 /**
  * Created by timos on 5-10-2017.
  */
-
+// this is the singleton class
 public class ApplicationRuntime extends Application {
 
     //Variables
