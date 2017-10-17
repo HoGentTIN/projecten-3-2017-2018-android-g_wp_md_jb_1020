@@ -1,0 +1,66 @@
+*************************************************
+-------------------PROGRESSION------------------- OUT OF DATE MADE IN WEEK 2
+*************************************************
+
+(not yet included) login activity - allow offical to log in using integrated google account of android device (use gmail to login on website)
+    |
+    V
+CompetitionSelection    - option 1: sync with google account calender containing all waterpolo competitions (official can only select certain competitions)
+    |   |               - option 2: list all matches the official may overview sort by date (offical must belong to either visitors or home team or have higher rights)
+    |   |-> each competition Date: [Home Team - Away Team] location(google maps integration optional to show location)
+    V
+AdministrationSetup     - Official confirms himself as main official for match
+    |                   - Official select 1 or more subofficals (either by contact info or text input)
+    |                   - (ver1) official select age-division of match
+    |                   - (ver2) via team info age-division of team is known, timer is automaticaly set
+    |                   - Official is given list of players for each team   - can switch player for replacement player
+    |                                                                       - Sets which players will play and which are benched for first round
+    |                   - Has option to call off match do to discualification or other reasons and select a winner
+    |                   -
+    V
+MatchControl    - Roundtimer (maximum runtime dependent on age division) - When stopped gets list of players
+    |   |       - Shotlocktimer (follow ballpossesion) ?stop roundtimer on experation until ball given to other team?
+    |   |       - Match Score in big (Optional - current round score)
+    |   |       - Textual overview of important information (example: which player is in time out zone + notify when he can come out)
+    |   |       - Time out buttons for each team
+    |   |
+    |  [When Roundtimer is paused  official can select player to edit]
+    |   V
+    |   PlayerControl   - !!!LOOK UP RULES FURTHER TO DETERMINE FUNCTIONALLITY
+    |
+    |
+    |
+    |
+    |
+    |
+    |
+    |
+    |
+    V
+(not yet made) AdministrationRound (in between rounds, players can be switched, ...)
+
+END OF MATCH (end of final round) (official is still able to add goal or fault on player if he did something in the last second and the official was to late in stopping the timer)
+    |
+    |
+    |
+    V
+AdministrationEnd   - Gets log of events in match and is able to remove some wrong ones (can also undo the last thing he did to a player during match)
+                    - notes scores
+                    -
+                    -
+                    -
+
+*************************************************
+ -------------------COMMENTS------------------- (common remarks by team to leave as memo)
+*************************************************
+
+
+
+
+
+
+
+
+*************************************************
+  -------------------TO DO------------------- memos in case something is still incomplete and need to come back to it
+*************************************************
