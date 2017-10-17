@@ -13,7 +13,7 @@ public class ApplicationRuntime extends Application {
     //Variables
     private static ApplicationRuntime singleInstance = null;    //Singleton - This class is universal in the app and can be used in each different activity
     public Domaincontroller dc;                                 //called in ApplicationRuntime functions to manipulate/retrieve/set data or call/use domain functionality
-
+    
     //Class initializer - setter runtime instance
     @Override
     public void onCreate() {
