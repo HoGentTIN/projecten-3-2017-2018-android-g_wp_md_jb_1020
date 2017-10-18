@@ -7,6 +7,7 @@ package Domain;
 
 public class Domaincontroller {
 
+    private Match match;
 
     public Domaincontroller(){
 

@@ -6,12 +6,19 @@ package Domain;
 
 class Team {
 
-    private int teamId;
+    //Variables
+    private int team_id;
     private String teamname;
-    private String location;
-    private Player[] players;
-    private int ageDivision;
-    private String competitionClass;    //A-class, B-class....
-    //season overview loss win ratio
 
+
+    private Location location;      // now hear me out on this one, when we need to replace a member they can be replaced by anyone of the same organization that has the same division so In my oppinion this should be added to class diagram
+    private Division division;
+    private CompetitionClass competitionClass;
+
+    private Player[] players;
+
+    public Team(String teamname, CompetitionClass competitionClass) {
+        this.teamname = teamname;
+        this.competitionClass = competitionClass;
+    }
 }

@@ -7,15 +7,14 @@ package Domain;
 class Player {
 
     //variables
-    private int playerId;
-    private String firstname;
-    private String lastname;
+    private int player_id;
     private int playerNumber;
-    //Rules?
-    //season goals?
-    //match goals?
-    //list of played matches by id
-    //benched/probation/disqualified/palying state
+    private String name;        // private String firstname; private String lastname;
+    private int age;            //would this normally not be birthdate
+    private Status status;
+
+
+
 
 
 }
