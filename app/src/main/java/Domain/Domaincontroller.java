@@ -8,6 +8,7 @@ package Domain;
 public class Domaincontroller {
 
     private Match match;
+    private Official o;
 
     public Domaincontroller(){
 
