@@ -14,10 +14,10 @@ import android.widget.Toast;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlayersTeamFragment extends Fragment {
+public class PlayersHomeTeamFragment extends Fragment {
 
 
-    public PlayersTeamFragment() {
+    public PlayersHomeTeamFragment() {
         // Required empty public constructor
     }
 
@@ -33,24 +33,34 @@ public class PlayersTeamFragment extends Fragment {
         String[] playersBench = {"BenchPlayer1", "BenchPlayer2", "BenchPlayer3"};
 
         ListView playersHomeTeam = (ListView) view.findViewById(R.id.hometeamplayers);
-        //ListView playersBenchHomeTeam = (ListView) view.findViewById(R.id.hometeambenchplayers);
+        ListView playersBenchHomeTeam = (ListView) view.findViewById(R.id.hometeambenchplayers);
 
+        playersHomeTeam.setAdapter(createArrayAdapter(players));
+        playersBenchHomeTeam.setAdapter(createArrayAdapter(playersBench));
+
+        teamClickAction(playersHomeTeam);
+        teamClickAction(playersBenchHomeTeam);
+
+        return view;
+    }
+
+    private ArrayAdapter createArrayAdapter(String[] array) {
         ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
-                players
+                array
         );
 
-        playersHomeTeam.setAdapter(listViewAdapter);
+        return listViewAdapter;
+    }
 
-        playersHomeTeam.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void teamClickAction(ListView listview) {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getActivity(), "You've clicked item " + position, Toast.LENGTH_SHORT).show();
             }
         });
-        return view;
     }
-
 
 }

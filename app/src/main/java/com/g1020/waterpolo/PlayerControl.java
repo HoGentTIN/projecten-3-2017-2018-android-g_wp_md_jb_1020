@@ -1,9 +1,7 @@
 package com.g1020.waterpolo;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
 
 public class PlayerControl extends AppCompatActivity {
 
@@ -22,7 +20,8 @@ public class PlayerControl extends AppCompatActivity {
         textview.setText(message);
         //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY END
     */
-        PlayersTeamFragment homeTeam = new PlayersTeamFragment();
+        PlayersHomeTeamFragment homeTeam = new PlayersHomeTeamFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.playercontainer, homeTeam).commit();
+
     }
 }
