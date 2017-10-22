@@ -11,6 +11,7 @@ public class PlayerControl extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_control);
+    /*
         //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY START
         //get intent that started the activity
         Intent intent = getIntent();
@@ -20,5 +21,8 @@ public class PlayerControl extends AppCompatActivity {
         TextView textview = (TextView) findViewById(R.id.textView); //R.id.textview = find the component on screen R using it's id with value textField
         textview.setText(message);
         //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY END
+    */
+        PlayersTeamFragment homeTeam = new PlayersTeamFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.playercontainer, homeTeam).commit();
     }
 }

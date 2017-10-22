@@ -14,6 +14,10 @@ class Player {
     private Status status;
 
 
+    public Player(int n, String name){
+        this.name = name;
+        this.playerNumber = n;
+    }
 
 
 
