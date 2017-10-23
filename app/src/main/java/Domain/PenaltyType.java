@@ -4,7 +4,7 @@ package Domain;
  * Created by Impling on 18-Oct-17.
  */
 
-class PenaltyType {
+public class PenaltyType {
 
     //Variables
     private int penaltyType_id;

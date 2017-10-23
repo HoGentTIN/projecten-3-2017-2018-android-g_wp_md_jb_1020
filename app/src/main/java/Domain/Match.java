@@ -7,7 +7,7 @@ import java.util.List;
  * Created by timos on 5-10-2017.
  */
 
-class Match {
+public class Match {
 
     //Variables
     private int match_id;

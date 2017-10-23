@@ -4,7 +4,7 @@ package Domain;
  * Created by timos on 5-10-2017.
  */
 
-class Player {
+public class Player {
 
     //variables
     private int player_id;

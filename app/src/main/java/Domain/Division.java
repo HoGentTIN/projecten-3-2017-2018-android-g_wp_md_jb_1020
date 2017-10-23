@@ -6,7 +6,7 @@ import java.sql.Time;
  * Created by Impling on 18-Oct-17.
  */
 
-class Division {
+public class Division {
 
     //Variables
     private int division_id;

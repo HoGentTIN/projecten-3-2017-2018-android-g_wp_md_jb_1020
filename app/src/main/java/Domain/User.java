@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Impling on 18-Oct-17.
  */
 
-class User {
+public class User {
 
     //Variables
     private int user_id;

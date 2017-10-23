@@ -4,7 +4,7 @@ package Domain;
  * Created by Impling on 18-Oct-17.
  */
 
-class Location {
+public class Location {
 
     //Variables
     private int location_id;

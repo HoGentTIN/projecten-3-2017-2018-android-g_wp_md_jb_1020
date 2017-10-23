@@ -5,7 +5,7 @@ package Domain;
  */
 
 //look into main-offical and sub-official differences before making this one
-class Official {
+public class Official {
 
     //Variables
     private int official_id;
