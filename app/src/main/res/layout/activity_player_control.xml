@@ -44,13 +44,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:weightSum="6"
             android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/liveactivitiescontainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="START" />
+                android:text="START"
+                android:layout_weight="1"/>
         </LinearLayout>
 
         <FrameLayout
