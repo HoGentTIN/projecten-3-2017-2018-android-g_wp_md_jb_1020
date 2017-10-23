@@ -23,5 +23,8 @@ public class PlayerControl extends AppCompatActivity {
         PlayersHomeTeamFragment homeTeam = new PlayersHomeTeamFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.playercontainer, homeTeam).commit();
 
+        PlayersAwayTeamFragment awayTeam = new PlayersAwayTeamFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.playerawaycontainer, awayTeam).commit();
+
     }
 }
