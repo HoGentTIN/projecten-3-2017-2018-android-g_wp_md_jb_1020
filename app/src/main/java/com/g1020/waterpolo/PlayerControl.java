@@ -29,5 +29,8 @@ public class PlayerControl extends AppCompatActivity {
         LiveActivitiesFragment activities = new LiveActivitiesFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.liveactivitiescontainer, activities).commit();
 
+        TeamsHeaderFragment teamsHeader = new TeamsHeaderFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.teamsheadercontainer, teamsHeader).commit();
+
     }
 }

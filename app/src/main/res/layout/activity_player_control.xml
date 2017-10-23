@@ -36,7 +36,8 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="#ffffff">
 
         </FrameLayout>
 
@@ -48,17 +49,27 @@
             android:orientation="vertical">
 
             <FrameLayout
+                android:id="@+id/teamsheadercontainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4">
+
+            </FrameLayout>
+
+            <FrameLayout
                 android:id="@+id/liveactivitiescontainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="5" />
+                android:layout_weight="2">
+
+            </FrameLayout>
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="START"
-                android:layout_weight="1"/>
+                android:layout_weight="2"/>
         </LinearLayout>
 
         <FrameLayout
@@ -76,7 +87,8 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="#ffffff">
 
         </FrameLayout>
 
