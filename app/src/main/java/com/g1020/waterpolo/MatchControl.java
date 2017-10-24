@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Chronometer;
 
 import Application.ApplicationRuntime;
+import Domain.Domaincontroller;
 import Domain.MatchTimer;
 
 public class MatchControl extends AppCompatActivity {
@@ -18,10 +19,11 @@ public class MatchControl extends AppCompatActivity {
     //VARIABLES
     //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY START
     public static final String EXTRA_MESSAGE = "com.g1020.Waterpolo.MESSAGE";
+    //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY END
 
     ApplicationRuntime ar;  //this adds temporary code to this class
     MatchTimer matchTimer;
-    //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY END
+
 
 
     //LIFECYCLE FUNCTIONS
@@ -29,7 +31,7 @@ public class MatchControl extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_control);
-        //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY START
+
         ar = ApplicationRuntime.getInstance();
         matchTimer = ar.chronoSetup((Chronometer) findViewById(R.id.matchTimer));
         //Chrono listner to set maximum time
@@ -43,7 +45,9 @@ public class MatchControl extends AppCompatActivity {
                 }
             }
         });
-        //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY END
+
+        testLog();
+
     }
 
     //PROCESS FUNCTIONS
@@ -90,4 +94,16 @@ public class MatchControl extends AppCompatActivity {
     public void homeTimeout(View view){}
 
     public void awayTimeout(View view){}
+
+
+    //start testcode log
+    public void testLog(){
+        Domaincontroller dc = ar.getDc();
+        dc.appendLog("player 1H " +  "Steve "  + "from antwerp hawks has scored a goal [0 - 1]");
+        dc.appendLog("player 8A " +  "Marcus "  + "from Gent bobcat has scored a goal [1 - 1]");
+
+       // dc.getSegmentedLog();
+    }
+
+    //end testcode log
 }

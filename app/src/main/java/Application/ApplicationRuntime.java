@@ -32,11 +32,14 @@ public class ApplicationRuntime extends Application {
         return singleInstance;
     }
 
-    // TEMPORARY CODE FOR CHRONO SHOWCASE
+    //FUNCTIONS
     //Function chronoSetup - create chronometer
     public MatchTimer chronoSetup(Chronometer chrono){
         return mt = new MatchTimer(chrono);
     }
 
-    // TEMPORARY CODE FOR CHRONO SHOWCASE END
+    //Function getDomeincontroller
+    public Domaincontroller getDc(){
+        return this.dc;
+    }
 }
