@@ -22,6 +22,7 @@ public class MatchControl extends AppCompatActivity {
     //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY END
 
     ApplicationRuntime ar;  //this adds temporary code to this class
+    Domaincontroller dc;
     MatchTimer matchTimer;
 
 
@@ -33,6 +34,7 @@ public class MatchControl extends AppCompatActivity {
         setContentView(R.layout.activity_match_control);
 
         ar = ApplicationRuntime.getInstance();
+        dc = ar.getDc();
         matchTimer = ar.chronoSetup((Chronometer) findViewById(R.id.matchTimer));
         //Chrono listner to set maximum time
         matchTimer.getMatchTimer().setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
@@ -40,12 +42,14 @@ public class MatchControl extends AppCompatActivity {
             public void onChronometerTick(Chronometer chronometer) {
                 if(matchTimer.checkRoundTime(chronometer.getText().toString())){
                     Log.i("Info","Timer reached round end");
+                    dc.appendLog("End of round" + 1 + " - Current matchscore: " + 2 + " - " + 5);                                              //Replace 1 by dc.functiontoretrieveroundnumber, and retrievecurrentscores home-away
                     //checkRoundTime already does the timerprocess
                     //Still need code here for actions related to activity
                 }
             }
         });
 
+        //Testcode for adding logging functionallity
         testLog();
 
     }
@@ -95,15 +99,21 @@ public class MatchControl extends AppCompatActivity {
 
     public void awayTimeout(View view){}
 
+    //Function: GoalMade - press goal button to change view so you can select who scored
+    public void goalMade(View view){
+
+    }
+
+
+
+
 
     //start testcode log
     public void testLog(){
-        Domaincontroller dc = ar.getDc();
         dc.appendLog("player 1H " +  "Steve "  + "from antwerp hawks has scored a goal [0 - 1]");
         dc.appendLog("player 8A " +  "Marcus "  + "from Gent bobcat has scored a goal [1 - 1]");
 
        // dc.getSegmentedLog();
     }
-
     //end testcode log
 }

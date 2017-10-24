@@ -88,7 +88,6 @@ public class MatchTimer {
         baseTime = (SystemClock.elapsedRealtime() + ((long)(roundTime*60000)));   //Time when chrono is first started, for countdown add maximum roundtime as long (formula is time in minutes * 60 000)
         matchTimer.setCountDown(true);
         setChronoTimes(baseTime, elapsedTime);
-        Log.i("info", ""+ baseTime);
     }
     //Function initShotlock
     public void initShotlock(){

@@ -39,9 +39,25 @@ public class Domaincontroller {
         eventCounter++;
     }
 
+    //Function; getLogByIndex - ask after specific event
     public String[] getLogByIndex(int i){
         return logList.get(i);
     }
+
+    //Function: request matchLog    - return a string containing everything that happend in a match
+    public String requestLog(){
+        int iterator = 0;
+        StringBuilder log = new StringBuilder();
+        for(String[] s : logList){
+            String line = iterator + " [" + s[0].toString() + "] " + s[1].toString() +  ": " + s[2].toString();
+            log.append(line + "\n");
+            //Log.i("logInfo", line);           //Commented to prevent android monitor overload of info, uncomment for testing
+            iterator++;
+        }
+        return log.toString();
+    }
+
+
 
 
     //eventcode - description => Overview of eventlogcodes and corresponding description
