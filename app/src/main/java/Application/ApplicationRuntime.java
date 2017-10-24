@@ -1,8 +1,10 @@
 package Application;
 
 import android.app.Application;
+import android.widget.Chronometer;
 
 import Domain.Domaincontroller;
+import Domain.MatchTimer;
 
 /**
  * Created by timos on 5-10-2017.
@@ -14,6 +16,7 @@ public class ApplicationRuntime extends Application {
     private static ApplicationRuntime singleInstance = null;    //Singleton - This class is universal in the app and can be used in each different activity
     public Domaincontroller dc;                                 //called in ApplicationRuntime functions to manipulate/retrieve/set data or call/use domain functionality
     //Domaincontroller is used to acces variables gained from database, runtime info like the timerclock data is stored in applicationruntime itself
+    public MatchTimer mt;                                       //Keep chronometer functions during runtime
 
     
     //Class initializer - setter runtime instance
@@ -30,20 +33,9 @@ public class ApplicationRuntime extends Application {
     }
 
     // TEMPORARY CODE FOR CHRONO SHOWCASE
-    private long elapsedTime;
-    private long baseTime;
-
-    public void setChronoTimes(long b, long e){
-        elapsedTime = e;
-        baseTime = b;
-    }
-
-    public long getElapsedTime(){
-        return elapsedTime;
-    }
-
-    public long getBaseTime() {
-        return baseTime;
+    //Function chronoSetup - create chronometer
+    public MatchTimer chronoSetup(Chronometer chrono){
+        return mt = new MatchTimer(chrono);
     }
 
     // TEMPORARY CODE FOR CHRONO SHOWCASE END
