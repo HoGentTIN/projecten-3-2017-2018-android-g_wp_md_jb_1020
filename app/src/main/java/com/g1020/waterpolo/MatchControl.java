@@ -34,17 +34,15 @@ public class MatchControl extends AppCompatActivity {
         matchTimer.getMatchTimer().setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-
-            if(matchTimer.checkRoundTime(chronometer.getText().toString())){
-                Log.i("Info","Timer reached round end");
-                //checkRoundTime already does the timerprocess
-                //Still need code here for actions related to activity
-            }
+                if(matchTimer.checkRoundTime(chronometer.getText().toString())){
+                    Log.i("Info","Timer reached round end");
+                    //checkRoundTime already does the timerprocess
+                    //Still need code here for actions related to activity
+                }
             }
         });
         //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY END
     }
-
 
     //PROCESS FUNCTIONS
     //TEMP function to move to PlayerControl activity
@@ -69,7 +67,7 @@ public class MatchControl extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Function togglechrono - start/stop the chronometer
+    //Function togglechrono - start/stop the chronometer - Clickable function
     public void toggleChrono(View view){
         if(matchTimer.isChronoOn()){
             matchTimer.stopChrono();
@@ -79,6 +77,14 @@ public class MatchControl extends AppCompatActivity {
     }
 
 
+    //Shotlock gets paused when matchtimer is paused, shotlock has 2 buttons 1 button for home (shotlock resets countdown stays hometeam color) the other for away, (reset shotlock ,and set teamcolor)
+    public void homeShotlock(View view){}
 
+    public void awayShotlock(View view){}
 
+    //Time out for each round each team can call time out once, cannot be paused, when clicked cannot be used again in same round for that team
+    //2 buttons 1 for each team
+    public void homeTimeout(View view){}
+
+    public void awayTimeout(View view){}
 }
