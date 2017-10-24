@@ -1,7 +1,9 @@
 package com.g1020.waterpolo;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.SystemClock;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -68,6 +70,7 @@ public class MatchControl extends AppCompatActivity {
     }
 
     //Function togglechrono - start/stop the chronometer - Clickable function
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void toggleChrono(View view){
         if(matchTimer.isChronoOn()){
             matchTimer.stopChrono();
