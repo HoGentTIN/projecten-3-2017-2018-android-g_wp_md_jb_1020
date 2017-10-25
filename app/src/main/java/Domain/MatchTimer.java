@@ -34,8 +34,8 @@ public class MatchTimer {
     //CONSTRUCTORS
     @RequiresApi(api = Build.VERSION_CODES.N)
     public MatchTimer(Chronometer matchChrono){ //temporary constructor - when shotlock has been implemented use the other constructor
+
         matchTimer = matchChrono;
-        matchTimer.setFormat(maxTime);          //replace string with max roundtime - needs to be relocated so that maxtime can be set correctly
         initTimer();
 
     }
@@ -85,6 +85,7 @@ public class MatchTimer {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void initTimer(){
         //at start of round reset the timer to start from 0
+        matchTimer.setFormat("START - " + maxTime);          //replace string with max roundtime - needs to be relocated so that maxtime can be set correctly
         baseTime = (SystemClock.elapsedRealtime() + ((long)(roundTime*60000)));   //Time when chrono is first started, for countdown add maximum roundtime as long (formula is time in minutes * 60 000)
         matchTimer.setCountDown(true);
         setChronoTimes(baseTime, elapsedTime);
@@ -114,8 +115,9 @@ public class MatchTimer {
         elapsedTime = getElapsedTime();
         matchTimer.start();
 
-        if(elapsedTime<=0){//Only on initial startup  - reset this to 0 every time the rounds change
+        if(elapsedTime<=0){//Only on initial startup  - reset this to 0 every time the rounds change - currently only needed in constructor but keep until rounds implementation
             initTimer();
+            matchTimer.setFormat("%s"); //Call again to show the clock counting down
         }
 
         baseTime+=elapsedTime ;                  //restart time of chrono has to be the sum of all the elapsed times - add active time

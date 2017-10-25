@@ -51,8 +51,11 @@ public class MatchControl extends AppCompatActivity {
         TeamsHeaderFragment teamsHeader = new TeamsHeaderFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.teamsheadercontainer, teamsHeader).commit();
 
-        //FaultHomeTeamFragment faultHomeTeam = new FaultHomeTeamFragment();
-        //getSupportFragmentManager().beginTransaction().add(R.id.playercontainer, faultHomeTeam).commit();
+        FaultHomeTeamFragment faultHomeTeam = new FaultHomeTeamFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.faultHomeContainer, faultHomeTeam).commit();
+
+        FaultAwayTeamFragment faultAwayTeam = new FaultAwayTeamFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.faultAwayContainer, faultAwayTeam).commit();
 
 
         //Testcode for adding logging functionallity
