@@ -16,7 +16,6 @@ import android.widget.Toast;
  */
 public class PlayersHomeTeamFragment extends Fragment {
 
-
     public PlayersHomeTeamFragment() {
         // Required empty public constructor
     }

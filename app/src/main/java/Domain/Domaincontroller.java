@@ -39,6 +39,17 @@ public class Domaincontroller {
         eventCounter++;
     }
 
+    //Function: appendLog - add an event to the processLog - but using the current round time instead of the system clock to register event
+    //eventCode seems pretty useless => replace by matchCode = same for entire match
+    public void appendLog(String eventDescription, String roundTime, int round){
+        //Get Time of event
+        String[] logInfo = new String[]{"" + round, roundTime, matchCode, eventDescription};
+        logList.add(eventCounter, logInfo);
+
+        Log.i("logInfo", eventCounter + " [" + logList.get(eventCounter)[0].toString() + " " + logList.get(eventCounter)[1].toString() + "] " + logList.get(eventCounter)[2].toString() +  ": " + logList.get(eventCounter)[3].toString()); //Testinglog
+        eventCounter++;
+    }
+
     //Function; getLogByIndex - ask after specific event
     public String[] getLogByIndex(int i){
         return logList.get(i);

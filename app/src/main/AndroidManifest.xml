@@ -17,11 +17,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AdministrationSetup" android:parentActivityName=".CompetitionSelection"/>
-        <activity android:name=".MatchControl" android:parentActivityName=".AdministrationSetup"/>
-        <activity android:name=".PlayerControl" android:parentActivityName=".MatchControl"/>
-        <activity android:name=".AdministrationEnd" android:parentActivityName=".MatchControl"/>
-        <activity android:name=".roundSetup" android:parentActivityName=".MatchControl"></activity>
+        <activity
+            android:name=".AdministrationSetup"
+            android:parentActivityName=".CompetitionSelection" />
+        <activity
+            android:name=".MatchControl"
+            android:parentActivityName=".AdministrationSetup" />
+        <activity
+            android:name=".PlayerControl"
+            android:parentActivityName=".MatchControl" />
+        <activity
+            android:name=".AdministrationEnd"
+            android:parentActivityName=".MatchControl" />
+        <activity
+            android:name=".roundSetup"
+            android:parentActivityName=".MatchControl" />
+        <activity
+            android:name=".PlayersHomeFaultFragment"
+            android:label="@string/title_activity_players_home_fault_fragment"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

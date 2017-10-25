@@ -4,4 +4,23 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_players_home_fault_fragment">PlayersHomeFaultFragment</string>
+
+    <!-- Button names -->
+    <string name="button_goal">G</string>
+    <string name="button_change">C</string>
+    <string name="button_penalty">P</string>
+    <string name="button_U20">U 20</string>
+    <string name="button_UMV">UMV</string>
+    <string name="button_UMV4">UMV 4</string>
+
+    <!-- Button tooltips -->
+    <string name="t_button_goal">Goal was scored.</string>
+    <string name="t_button_change">Exchange players</string>
+    <string name="t_button_penalty">Penalty</string>
+    <string name="t_button_U20">U 20</string>
+    <string name="t_button_UMV">UMV</string>
+    <string name="t_button_UMV4">UMV 4</string>
+
+
 </resources>

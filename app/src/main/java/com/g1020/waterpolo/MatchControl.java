@@ -2,7 +2,6 @@ package com.g1020.waterpolo;
 
 import android.content.Intent;
 import android.os.Build;
-import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,6 +48,13 @@ public class MatchControl extends AppCompatActivity {
             }
         });
 
+        TeamsHeaderFragment teamsHeader = new TeamsHeaderFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.teamsheadercontainer, teamsHeader).commit();
+
+        //FaultHomeTeamFragment faultHomeTeam = new FaultHomeTeamFragment();
+        //getSupportFragmentManager().beginTransaction().add(R.id.playercontainer, faultHomeTeam).commit();
+
+
         //Testcode for adding logging functionallity
         testLog();
 
@@ -85,6 +91,7 @@ public class MatchControl extends AppCompatActivity {
         }else{
             matchTimer.startChrono();
         }
+
     }
 
 
