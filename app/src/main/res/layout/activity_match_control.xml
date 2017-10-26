@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <FrameLayout
-            android:id="@+id/faultHomeContainer"
+            android:id="@+id/homeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/t_button_goal"
-                    android:onClick="editPlayer"
+                    android:onClick="goalMade"
                     android:text="@string/button_goal" />
 
                 <Button
@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="setupRound"
+                    android:onClick="changePlayers"
                     android:text="@string/button_change" />
 
                 <Button
@@ -94,6 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="penaltyEvent"
                     android:text="@string/button_penalty" />
 
                 <Button
@@ -101,6 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="faultU20"
                     android:text="@string/t_button_U20" />
 
                 <Button
@@ -132,7 +134,7 @@
         </LinearLayout>
 
         <FrameLayout
-            android:id="@+id/faultAwayContainer"
+            android:id="@+id/awayContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="8dp"

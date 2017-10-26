@@ -24,7 +24,11 @@ public class MatchControl extends AppCompatActivity {
     Domaincontroller dc;
     MatchTimer matchTimer;
 
+    TeamsHeaderFragment teamsHeader;
+    PlayersFragment homeTeam;
+    PlayersFragment awayTeam;
     FaultFragment faultAwayTeam;
+    FaultFragment faultHomeTeam;
 
 
 
@@ -50,14 +54,16 @@ public class MatchControl extends AppCompatActivity {
             }
         });
 
-        TeamsHeaderFragment teamsHeader = new TeamsHeaderFragment();
+        teamsHeader = new TeamsHeaderFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.teamsheadercontainer, teamsHeader).commit();
 
-        FaultFragment faultHomeTeam = new FaultFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.faultHomeContainer, faultHomeTeam).commit();
+        homeTeam = new PlayersFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.homeContainer, homeTeam).commit();
 
-        faultAwayTeam = new FaultFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.faultAwayContainer, faultAwayTeam).commit();
+        awayTeam = new PlayersFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
+
+
 
 
         //Testcode for adding logging functionallity
@@ -66,8 +72,8 @@ public class MatchControl extends AppCompatActivity {
     }
 
     //PROCESS FUNCTIONS
-    //TEMP function to move to PlayerControl activity
-    public void editPlayer(View view) {
+    //Function: GoalMade - press goal button to change view so you can select who scored
+    public void goalMade(View view){
         Intent intent = new Intent(this, PlayerControl.class);
 
         //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY START
@@ -77,16 +83,20 @@ public class MatchControl extends AppCompatActivity {
 
         startActivity(intent);
     }
+
     //TEMP function to move to PlayerControl activity
-    public void setupRound(View view) {
+    public void changePlayers(View view) {
         PlayersFragment awayTeam = new PlayersFragment();
         getSupportFragmentManager().beginTransaction().detach(faultAwayTeam).commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.faultAwayContainer, awayTeam).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
     }
     //TEMP function to move to PlayerControl activity
-    public void endMatch(View view) {
-        Intent intent = new Intent(this, AdministrationEnd.class);
-        startActivity(intent);
+    public void penaltyEvent(View view) {
+        loadFaults();
+    }
+
+    public void faultU20(View view){
+        loadPlayers();
     }
 
     //Function togglechrono - start/stop the chronometer - Clickable function
@@ -112,9 +122,29 @@ public class MatchControl extends AppCompatActivity {
 
     public void awayTimeout(View view){}
 
-    //Function: GoalMade - press goal button to change view so you can select who scored
-    public void goalMade(View view){
 
+
+
+    public void loadFaults(){
+        //First initialization of faultfragments
+        if(faultAwayTeam==null || faultHomeTeam==null){
+            faultHomeTeam = new FaultFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.homeContainer, faultHomeTeam).commit();
+
+            faultAwayTeam = new FaultFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, faultAwayTeam).commit();
+        }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer, faultHomeTeam).commit();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.awayContainer, faultAwayTeam).commit();
+
+    }
+
+    public void loadPlayers(){
+        getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer, homeTeam).commit();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.awayContainer, awayTeam).commit();
     }
 
 
