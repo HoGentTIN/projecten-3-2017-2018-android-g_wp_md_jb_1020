@@ -24,6 +24,8 @@ public class MatchControl extends AppCompatActivity {
     Domaincontroller dc;
     MatchTimer matchTimer;
 
+    FaultFragment faultAwayTeam;
+
 
 
     //LIFECYCLE FUNCTIONS
@@ -51,10 +53,10 @@ public class MatchControl extends AppCompatActivity {
         TeamsHeaderFragment teamsHeader = new TeamsHeaderFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.teamsheadercontainer, teamsHeader).commit();
 
-        FaultHomeTeamFragment faultHomeTeam = new FaultHomeTeamFragment();
+        FaultFragment faultHomeTeam = new FaultFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.faultHomeContainer, faultHomeTeam).commit();
 
-        FaultAwayTeamFragment faultAwayTeam = new FaultAwayTeamFragment();
+        faultAwayTeam = new FaultFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.faultAwayContainer, faultAwayTeam).commit();
 
 
@@ -77,8 +79,9 @@ public class MatchControl extends AppCompatActivity {
     }
     //TEMP function to move to PlayerControl activity
     public void setupRound(View view) {
-        Intent intent = new Intent(this, roundSetup.class);
-        startActivity(intent);
+        PlayersFragment awayTeam = new PlayersFragment();
+        getSupportFragmentManager().beginTransaction().detach(faultAwayTeam).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.faultAwayContainer, awayTeam).commit();
     }
     //TEMP function to move to PlayerControl activity
     public void endMatch(View view) {

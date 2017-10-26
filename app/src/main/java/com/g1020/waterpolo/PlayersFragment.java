@@ -14,10 +14,9 @@ import android.widget.Toast;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlayersAwayTeamFragment extends Fragment {
+public class PlayersFragment extends Fragment {
 
-
-    public PlayersAwayTeamFragment() {
+    public PlayersFragment() {
         // Required empty public constructor
     }
 
@@ -27,19 +26,19 @@ public class PlayersAwayTeamFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_players_awayteam, container, false);
+        View view = inflater.inflate(R.layout.fragment_players, container, false);
 
-        String[] players = {"AwayPlayer1", "AwayPlayer2", "AwayPlayer3", "AwayPlayer4"};
+        String[] players = {"Player1", "Player2", "Player3", "Player4"};
         String[] playersBench = {"BenchPlayer1", "BenchPlayer2", "BenchPlayer3"};
 
-        ListView playersAwayTeam = (ListView) view.findViewById(R.id.awayteamplayers);
-        ListView playersBenchAwayTeam = (ListView) view.findViewById(R.id.awayteambenchplayers);
+        ListView playersHomeTeam = (ListView) view.findViewById(R.id.hometeamplayers);
+        ListView playersBenchHomeTeam = (ListView) view.findViewById(R.id.hometeambenchplayers);
 
-        playersAwayTeam.setAdapter(createArrayAdapter(players));
-        playersBenchAwayTeam.setAdapter(createArrayAdapter(playersBench));
+        playersHomeTeam.setAdapter(createArrayAdapter(players));
+        playersBenchHomeTeam.setAdapter(createArrayAdapter(playersBench));
 
-        teamClickAction(playersAwayTeam);
-        teamClickAction(playersBenchAwayTeam);
+        teamClickAction(playersHomeTeam);
+        teamClickAction(playersBenchHomeTeam);
 
         return view;
     }

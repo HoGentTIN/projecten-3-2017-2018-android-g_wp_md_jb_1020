@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.g1020.waterpolo.FaultAwayTeamFragment">
+    tools:context="com.g1020.waterpolo.FaultFragment">
+
+    <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
         android:layout_width="0dp"
@@ -14,7 +16,7 @@
         tools:layout_editor_absoluteY="8dp">
 
         <Chronometer
-            android:id="@+id/chrAwayTimeOut"
+            android:id="@+id/chrHomeTimeOut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -32,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txtAwayTeam"
+            android:id="@+id/txtHomeTeam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -42,17 +44,18 @@
             android:layout_marginTop="8dp"
             android:layout_weight="0"
             android:gravity="center"
-            android:text="AwatTeamName"
+            android:text="HomeTeamName"
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chrAwayTimeOut" />
+            app:layout_constraintTop_toBottomOf="@+id/chrHomeTimeOut" />
 
         <ListView
-            android:id="@+id/lsvAwayFaults"
+            android:id="@+id/lsvHomeFaults"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="right"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginLeft="16dp"
@@ -63,7 +66,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtAwayTeam" />
+            app:layout_constraintTop_toBottomOf="@+id/txtHomeTeam" />
 
     </LinearLayout>
 

@@ -10,10 +10,10 @@ public class PlayerControl extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_control);
 
-        PlayersHomeTeamFragment homeTeam = new PlayersHomeTeamFragment();
+        PlayersFragment homeTeam = new PlayersFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.playercontainer, homeTeam).commit();
 
-        PlayersAwayTeamFragment awayTeam = new PlayersAwayTeamFragment();
+        PlayersFragment awayTeam = new PlayersFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.playerawaycontainer, awayTeam).commit();
 
        // LiveActivitiesFragment activities = new LiveActivitiesFragment();
