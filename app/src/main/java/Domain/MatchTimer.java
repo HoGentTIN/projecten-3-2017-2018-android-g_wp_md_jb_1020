@@ -1,11 +1,13 @@
 package Domain;
 
+import android.graphics.Color;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
-import android.view.View;
 import android.widget.Chronometer;
+import android.widget.TextView;
 
 /**
  * Created by timos on 24-10-2017.
@@ -24,28 +26,25 @@ public class MatchTimer {
     private long shotlockBaseTime = 0;      //Shotlock is countown of 30 seconds for every person
     private long elapsedTime = 0;           //The time between when the chronometer started running and when it was stopped, at the start of every round this is = 0
     private long stopTime;                  //Time at which the chronometer was stopped
+    private long shotlockTimeRemaining;     //Stores the shotlock time when pausing the match
 
     private String maxTime = "08:00";       //For testing purpose given default value
     private Chronometer matchTimer;         //matchtimer holds time exiperd during each match round
-    private Chronometer shotlockTimer;      //timer to follow ball posision of team (every player may only hold ball for 30 sec) 00:30
     private Chronometer timeoutTimer;       //Each team can call 1 time out per round, even if not all time used they cant do again time out = 01:00
     private int roundTime = 8;              //roundtime in minutes
+
+    CountDownTimer cdtShotlock;
+
 
     //CONSTRUCTORS
     @RequiresApi(api = Build.VERSION_CODES.N)
     public MatchTimer(Chronometer matchChrono){ //temporary constructor - when shotlock has been implemented use the other constructor
-
+        setShotlockTimeRemaining((long) 30000);
         matchTimer = matchChrono;
         initTimer();
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public MatchTimer(Chronometer matchChrono, Chronometer shotlockChrono){
-        matchTimer = matchChrono;
-        shotlockTimer = shotlockChrono;
-        initTimer();
-    }
 
     //GETTERS AND SETTERS
     //Function getElapsed
@@ -60,6 +59,8 @@ public class MatchTimer {
     public Chronometer getMatchTimer(){
         return matchTimer;
     }
+    //Function getShotlockTimer
+    public CountDownTimer getCdtShotlock(){return cdtShotlock;}
     //Function get Time
     public String getTime(){
         return matchTimer.getText().toString();
@@ -79,6 +80,12 @@ public class MatchTimer {
         this.maxTime = maxTime;
         this.roundTime = roundTime;
     }
+    public void setShotlockTimeRemaining(Long shotlockTimeRemaining){
+        this.shotlockTimeRemaining = shotlockTimeRemaining;
+    }
+    public Long getShotlockTimeRemaining(){
+        return this.shotlockTimeRemaining;
+    }
 
     //CLASS FUNTIONS
     //Function initialize matchtimer - reset matchtimer
@@ -90,12 +97,41 @@ public class MatchTimer {
         matchTimer.setCountDown(true);
         setChronoTimes(baseTime, elapsedTime);
     }
-    //Function initShotlock
-    public void initShotlock(){
-        //LOOK AT CLASS COUNTS_DOWNTIMER FOR SHOTLOCK, chrono textformat does not allow seconds only
-        //shotlockBaseTime = (SystemClock.elapsedRealtime()+ ((long)(30*1000)));   //Time when we add 30 000 milliseconds to allow for countdown
-        //matchTimer.setCountDown(true);
+
+    //Function initShotlock - Setup shotlock, also callable when match paused to reset shotlock when neither team has ball possesion
+    public void initShotlock(final TextView txtShotlock, Long shotlockTimeRemaining){
+        //shotlock in view has 2 buttons 1 for each team and 1 textview, default text is 30
+        //in activity when button is pressed and shotlock has not been initialized yet or the button for the other team was pressed do this function
+        //when the matchtimers pauzes, also pause shotlock, after goal reset shotlock to neutral
+        //when unpauzing default resume shotlock
+        //text is white when hometeam ball possesion, blue on awayteam and purple when no ball possesion yet
+        //textview clickable, reset shotlock to no team, only possible during player edit events
+
+        //No team has bal possesion neutral shotlock state
+        if(shotlockTimeRemaining==30000){
+            txtShotlock.setBackgroundColor(Color.MAGENTA);
+            if(cdtShotlock!=null)
+                cdtShotlock.cancel();
+        }
+
+        cdtShotlock = new CountDownTimer(shotlockTimeRemaining,1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                txtShotlock.setText(String.format("%.0f",(Math.ceil(millisUntilFinished/1000.0)))); //Do to tick registration and rounding down the milisecond value it might skip the first value, hence the usage of ceil
+                setShotlockTimeRemaining(millisUntilFinished);
+            }
+
+            @Override
+            public void onFinish() {
+                txtShotlock.setText("0");
+                Log.i("Info","Shotlock has expired.");
+            }
+        };
+
     }
+
+
     //Function initTimeout
 
     public void initTimeout(){
@@ -133,7 +169,19 @@ public class MatchTimer {
         elapsedTime = baseTime-stopTime;      //get the time the chrono was active
         isChronoOn = false;
         setChronoTimes(baseTime, elapsedTime);
+
+        //stop running shotlocktimer
+        cdtShotlock.cancel();
+
     }
+
+    //Function resetShotlock - set remaining shotlocktime to 30000
+    public void resetShotlock(final TextView txtShotlock){
+        shotlockTimeRemaining = 30000;
+        txtShotlock.setBackgroundColor(Color.MAGENTA);
+    }
+
+
 
     //Function StartTimeout   //only one neede timout process is same for both teams
     public void startTimeout(Chronometer timeoutTimer){
@@ -170,16 +218,6 @@ public class MatchTimer {
         return false;
     }
 
-    //Function Check shotlockTime
-    //REVISABLE AFTER TURNIGN SHOTLOCK INTO COUNTDOWN INSTEAD OF CHRONO
-    public boolean checkShotlockTime(String currentTime){
-        if("00:30".equalsIgnoreCase(currentTime)){
-            //
-            Log.i("Info","Shotlock has expired.");
-            return true;
-        }
-        return false;
-    }
 
     //Function Check timeoutTime
     public boolean checkTimeoutTime(String currentTime){

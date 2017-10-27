@@ -7,6 +7,8 @@
     <string name="title_activity_players_home_fault_fragment">PlayersHomeFaultFragment</string>
 
     <!-- Button names -->
+    <string name="button_home">H</string>
+    <string name="button_away">A</string>
     <string name="button_goal">G</string>
     <string name="button_change">C</string>
     <string name="button_penalty">P</string>
@@ -22,5 +24,7 @@
     <string name="t_button_UMV">UMV</string>
     <string name="t_button_UMV4">UMV 4</string>
 
+    <!-- Text -->
+    <string name="text_shotlock">30</string>
 
 </resources>
