@@ -67,9 +67,6 @@ public class MatchControl extends AppCompatActivity {
         awayTeam = new PlayersFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
 
-
-
-
         //Testcode for adding logging functionallity
         testLog();
 
@@ -129,7 +126,6 @@ public class MatchControl extends AppCompatActivity {
 
         findViewById(R.id.txtShotlock).setBackgroundColor(Color.WHITE);
     }
-
     public void awayShotlock(View view){
         //Cancel first, to prevent another shotlock running in the bacground
         if(matchTimer!=null)
@@ -142,7 +138,6 @@ public class MatchControl extends AppCompatActivity {
 
         findViewById(R.id.txtShotlock).setBackgroundColor(Color.BLUE);
     }
-
     public void resumeShotlock(){
         //re-initialize shotlock if necesary and start it
         Long timeremaining = matchTimer.getShotlockTimeRemaining();
@@ -156,10 +151,7 @@ public class MatchControl extends AppCompatActivity {
     //Time out for each round each team can call time out once, cannot be paused, when clicked cannot be used again in same round for that team
     //2 buttons 1 for each team
     public void homeTimeout(View view){}
-
     public void awayTimeout(View view){}
-
-
 
 
     public void loadFaults(){
