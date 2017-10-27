@@ -17,10 +17,9 @@ public class Domaincontroller {
     private Match match;
     private Official o;
 
-    private List<String[]> logList = new ArrayList<>();
-    private int eventCounter = 0;
+    private List<String[]> logList = new ArrayList<>();                                             //List of all events, event = String[] => [0] = roundNumber, [1] = roundTime, [2] = eventCode ,[3] = eventDescription
+    private int eventCounter = 0;                                                                   //eventCode used for filtering logs, show all goals, faults, [G|C|P|U|V|V4][H,A][1,2,3,4] {G,C,P,U,V,V4 = goal|change of player|Penalty|faults.. , H,A = Home|Away, 1,2,3,4 = Round}
 
-    private String matchCode = "National012";                                                       //Temporary init value replace by match code after administration is done
 
     public Domaincontroller(){
 
@@ -29,10 +28,10 @@ public class Domaincontroller {
 
     //Function: appendLog - add an event to the processLog
     //eventCode seems pretty useless => replace by matchCode = same for entire match
-    public void appendLog(String eventDescription){
+    public void appendLog(String eventDescription, String eventCode){
         //Get Time of event
         String timeOfEvent = "" + Calendar.getInstance().getTime().getHours() + ":" + Calendar.getInstance().getTime().getMinutes() + ":" + Calendar.getInstance().getTime().getSeconds();
-        String[] logInfo = new String[]{timeOfEvent, matchCode, eventDescription};
+        String[] logInfo = new String[]{timeOfEvent, eventCode, eventDescription};
         logList.add(eventCounter, logInfo);
 
         Log.i("logInfo", eventCounter + " [" + logList.get(eventCounter)[0].toString() + "] " + logList.get(eventCounter)[1].toString() +  ": " + logList.get(eventCounter)[2].toString()); //Testinglog
@@ -41,9 +40,9 @@ public class Domaincontroller {
 
     //Function: appendLog - add an event to the processLog - but using the current round time instead of the system clock to register event
     //eventCode seems pretty useless => replace by matchCode = same for entire match
-    public void appendLog(String eventDescription, String roundTime, int round){
+    public void appendLog(String eventDescription, String eventCode, String roundTime, int round){
         //Get Time of event
-        String[] logInfo = new String[]{"" + round, roundTime, matchCode, eventDescription};
+        String[] logInfo = new String[]{"" + round, roundTime, eventCode, eventDescription};
         logList.add(eventCounter, logInfo);
 
         Log.i("logInfo", eventCounter + " [" + logList.get(eventCounter)[0].toString() + " " + logList.get(eventCounter)[1].toString() + "] " + logList.get(eventCounter)[2].toString() +  ": " + logList.get(eventCounter)[3].toString()); //Testinglog

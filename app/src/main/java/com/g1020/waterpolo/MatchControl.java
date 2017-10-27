@@ -49,7 +49,7 @@ public class MatchControl extends AppCompatActivity {
             public void onChronometerTick(Chronometer chronometer) {
                 if(matchTimer.checkRoundTime(chronometer.getText().toString())){
                     Log.i("Info","Timer reached round end");
-                    dc.appendLog("End of round" + 1 + " - Current matchscore: " + 2 + " - " + 5);                                              //Replace 1 by dc.functiontoretrieveroundnumber, and retrievecurrentscores home-away
+                    dc.appendLog("End of round" + 1 + " - Current matchscore: " + 2 + " - " + 5,"ME");                                              //Replace 1 by dc.functiontoretrieveroundnumber, and retrievecurrentscores home-away
                     //checkRoundTime already does the timerprocess
                     //Still need code here for actions related to activity
                 }
@@ -182,8 +182,8 @@ public class MatchControl extends AppCompatActivity {
 
     //start testcode log
     public void testLog(){
-        dc.appendLog("player 1H " +  "Steve "  + "from antwerp hawks has scored a goal [0 - 1]");
-        dc.appendLog("player 8A " +  "Marcus "  + "from Gent bobcat has scored a goal [1 - 1]");
+        dc.appendLog("player 1H " +  "Steve "  + "from antwerp hawks has scored a goal [0 - 1]","GH1");
+        dc.appendLog("player 8A " +  "Marcus "  + "from Gent bobcat has scored a goal [1 - 1]","GH1");
 
        // dc.getSegmentedLog();
     }
