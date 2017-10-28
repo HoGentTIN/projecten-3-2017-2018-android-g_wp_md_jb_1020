@@ -31,6 +31,7 @@ public class MatchControl extends AppCompatActivity {
     PlayersFragment awayTeam;
     FaultFragment faultAwayTeam;
     FaultFragment faultHomeTeam;
+    ActivityFragment activities;
 
 
 
@@ -67,8 +68,14 @@ public class MatchControl extends AppCompatActivity {
         awayTeam = new PlayersFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
 
+        dc.appendLog("Round 1 started","SR1","8:00",1); //relocate to startchrono for first time only here for testing
+        activities = new ActivityFragment(dc,1);
+        getSupportFragmentManager().beginTransaction().add(R.id.activitiesContainer, activities).commit();
+
         //Testcode for adding logging functionallity
         testLog();
+
+        activities.updateActivities(dc, 1);
 
     }
 
@@ -182,8 +189,9 @@ public class MatchControl extends AppCompatActivity {
 
     //start testcode log
     public void testLog(){
-        dc.appendLog("player 1H " +  "Steve "  + "from antwerp hawks has scored a goal [0 - 1]","GH1");
-        dc.appendLog("player 8A " +  "Marcus "  + "from Gent bobcat has scored a goal [1 - 1]","GH1");
+        dc.appendLog("Goal by (1)Home.","GH1","05:47",1);
+        dc.appendLog("Goal by (5)Away.","GA1","04:02",1);
+        dc.appendLog("Goal by (3)Home.","GH2","07:02",2);
 
        // dc.getSegmentedLog();
     }

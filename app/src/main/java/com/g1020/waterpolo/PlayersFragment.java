@@ -20,10 +20,8 @@ public class PlayersFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_players, container, false);
@@ -31,8 +29,8 @@ public class PlayersFragment extends Fragment {
         String[] players = {"Player1", "Player2", "Player3", "Player4"};
         String[] playersBench = {"BenchPlayer1", "BenchPlayer2", "BenchPlayer3"};
 
-        ListView playersHomeTeam = (ListView) view.findViewById(R.id.hometeamplayers);
-        ListView playersBenchHomeTeam = (ListView) view.findViewById(R.id.hometeambenchplayers);
+        ListView playersHomeTeam = (ListView) view.findViewById(R.id.lsvplayers);
+        ListView playersBenchHomeTeam = (ListView) view.findViewById(R.id.lsvBenched);
 
         playersHomeTeam.setAdapter(createArrayAdapter(players));
         playersBenchHomeTeam.setAdapter(createArrayAdapter(playersBench));
