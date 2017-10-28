@@ -69,19 +69,20 @@ public class MatchControl extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
 
         dc.appendLog("Round 1 started","SR1","8:00",1); //relocate to startchrono for first time only here for testing
-        activities = new ActivityFragment(dc,1);
+        activities = ActivityFragment.newInstance(1);
+
+
         getSupportFragmentManager().beginTransaction().add(R.id.activitiesContainer, activities).commit();
 
         //Testcode for adding logging functionallity
-        testLog();
 
-        activities.updateActivities(dc, 1);
 
     }
 
     //PROCESS FUNCTIONS
     //Function: GoalMade - press goal button to change view so you can select who scored
     public void goalMade(View view){
+        /*
         Intent intent = new Intent(this, PlayerControl.class);
 
         //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY START
@@ -90,6 +91,9 @@ public class MatchControl extends AppCompatActivity {
         //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY END
 
         startActivity(intent);
+        */
+        testLog();
+        activities.updateActivities(1);
     }
 
     //TEMP function to move to PlayerControl activity
