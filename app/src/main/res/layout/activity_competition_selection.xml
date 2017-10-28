@@ -574,4 +574,14 @@ android:gravity="center"
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="94dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="32dp"
+        android:onClick="endSelection"
+        android:text="START"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="52dp" />
+
 </android.support.constraint.ConstraintLayout>
