@@ -27,7 +27,6 @@ public class Domaincontroller {
 
 
     //Function: appendLog - add an event to the processLog
-    //eventCode seems pretty useless => replace by matchCode = same for entire match
     public void appendLog(String eventDescription, String eventCode){
         //Get Time of event
         String timeOfEvent = "" + Calendar.getInstance().getTime().getHours() + ":" + Calendar.getInstance().getTime().getMinutes() + ":" + Calendar.getInstance().getTime().getSeconds();
@@ -67,7 +66,17 @@ public class Domaincontroller {
         return log.toString();
     }
 
+    public List<String> getLogForRound(int round){
 
+        List<String> roundLog = new ArrayList<>();
+
+        for (String[] log : this.logList) {
+            if(Integer.parseInt(log[0])== round){
+                roundLog.add("[" + log[1] + "] - " + log[3]);
+            }
+        }
+        return roundLog;
+    }
 
 
     //eventcode - description => Overview of eventlogcodes and corresponding description

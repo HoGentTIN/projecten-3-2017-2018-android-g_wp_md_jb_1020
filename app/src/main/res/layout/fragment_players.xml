@@ -6,7 +6,7 @@
     tools:context="com.g1020.waterpolo.PlayersFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txtTeam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HOME TEAM"
@@ -21,12 +21,12 @@
         android:layout_marginEnd="8dp" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/txtBench"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="BENCH"
         android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/hometeamplayers"
+        app:layout_constraintTop_toBottomOf="@+id/lsvplayers"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
@@ -36,7 +36,7 @@
         app:layout_constraintHorizontal_bias="0.024" />
 
     <ListView
-        android:id="@+id/hometeamplayers"
+        android:id="@+id/lsvplayers"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -50,10 +50,10 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
         android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTeam" />
 
     <ListView
-        android:id="@+id/hometeambenchplayers"
+        android:id="@+id/lsvBenched"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -62,6 +62,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/txtBench" />
 
 </android.support.constraint.ConstraintLayout>

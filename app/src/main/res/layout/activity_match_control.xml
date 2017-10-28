@@ -108,7 +108,7 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/activitiescontainer"
+                android:id="@+id/activitiesContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2">
