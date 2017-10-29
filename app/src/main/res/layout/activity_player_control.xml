@@ -61,15 +61,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2">
-
             </FrameLayout>
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnResume"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="START"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                android:text="RESUME"
+                android:background="@drawable/start_button_custom"
+                />
         </LinearLayout>
 
         <FrameLayout
