@@ -1,12 +1,9 @@
 package Domain;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -89,13 +86,13 @@ public class Domaincontroller {
 
     public void createPlayers(){
         Player[] homePlayers = {new Player(1,"Beirens", "Sam" ),new Player(2,"Beirens","Stijn"),new Player(3,"Boedt","Olivier"),
-                new Player(7,"Callebout", "Tom"),new Player(10,"Crombez","Brech"),new Player(5,"David","Indy"),
+                new Player(7,"Callebout", "Tom"),new Player(10,"Crombez","Brecht"),new Player(5,"David","Indy"),
                 new Player(8,"Devlies","Tim"),new Player(4,"Haelemeersch","Benoit"),new Player(6,"Hendryckx","Kris"),
                 new Player(9,"Mechele","Steve"), new Player(11,"Peel","Dailly"),new Player(12,"Piens","Tim"),new Player(13,"Vandermeulen","Matisse")};
         for(Player p: homePlayers){
             p.setTeam(match.getTeam(0));
         }
-        Log.i("game","Hometeam " + match.getTeam(0).getTeamname() + ", players created");
+        Log.i("game","Hometeam " + match.getTeam(0).getTeamName() + ", players created");
 
         Player[] awayPlayers = {new Player(1,"Backaert","Guy"),new Player(2,"Cassiman","Thomas"),new Player(3,"De Smedt","Peter"),
                 new Player(7,"Gheyssens","Ruben"),new Player(10,"Goossens","Jonas"),new Player(5,"Heyvaert","Norbert"),
@@ -104,7 +101,7 @@ public class Domaincontroller {
         for(Player p: homePlayers){
             p.setTeam(match.getTeam(1));
         }
-        Log.i("game","AwayTeam " + match.getTeam(1).getTeamname() + ", players created");
+        Log.i("game","AwayTeam " + match.getTeam(1).getTeamName() + ", players created");
 
         match.getTeam(0).addPlayers(homePlayers);
         match.getTeam(1).addPlayers(awayPlayers);
@@ -128,8 +125,8 @@ public class Domaincontroller {
     }
 
     public void createTeams(String homeTeamName, CompetitionClass homeCc, String awayTeamName, CompetitionClass awayCc){
-        Team hometeam = new Team(homeTeamName,homeCc);
-        Team awayteam = new Team(awayTeamName,awayCc);
+        Team hometeam = new Team(homeTeamName, homeCc);
+        Team awayteam = new Team(awayTeamName, awayCc);
         match.addTeams(hometeam,awayteam);
     }
 

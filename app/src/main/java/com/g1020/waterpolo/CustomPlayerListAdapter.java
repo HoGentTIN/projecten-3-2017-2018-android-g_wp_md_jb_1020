@@ -47,7 +47,6 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                 v = vi.inflate(R.layout.list_item_players_custom, null);
 
                 Player p = getItem(position);
-                Log.i("game","customlist " + p.getFullName());
 
                 if (p != null) {
                     txtPlayernumber = (TextView) v.findViewById(R.id.txtplayernumber);

@@ -2,7 +2,6 @@ package Domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ public class Team {
 
     //Variables
     private int team_id;
-    private String teamname;
+    private String teamName;
 
 
     private Location location;      // now hear me out on this one, when we need to replace a member they can be replaced by anyone of the same organization that has the same division so In my oppinion this should be added to class diagram
@@ -23,7 +22,7 @@ public class Team {
     private List<Player> players = new ArrayList<>();
 
     public Team(String teamname, CompetitionClass competitionClass) {
-        this.teamname = teamname;
+        this.teamName = teamname;
         this.competitionClass = competitionClass;
     }
 
@@ -39,8 +38,8 @@ public class Team {
         players.add(p);
     }
 
-    public String getTeamname() {
-        return teamname;
+    public String getTeamName() {
+        return teamName;
     }
 
 
