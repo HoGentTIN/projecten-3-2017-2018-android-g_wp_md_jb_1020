@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import Application.ApplicationRuntime;
 import Domain.Domaincontroller;
 
 
@@ -21,22 +22,32 @@ import Domain.Domaincontroller;
  */
 public class ActivityFragment extends Fragment {
 
+    Domaincontroller dc;
     ListView roundActivities;
     String[] activityArray;
+    private static ActivityFragment activityFragment;
 
     public ActivityFragment() {
         // Required empty public constructor
+        ApplicationRuntime ar = ApplicationRuntime.getInstance();
+        dc = ar.getDc();
     }
 
-    public ActivityFragment(Domaincontroller dc, int round) {
-        // INPUT PIETER NEEDED - add arguments outside constructor
-        activityArray = dc.getLogForRound(round).toArray(new String[0]);
+    public static ActivityFragment newInstance(int round){
+        activityFragment = new ActivityFragment();
+
+        Bundle args = new Bundle();
+        args.putInt("roundNumber", round);
+        activityFragment.setArguments(args);
+
+        return activityFragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_activity, container, false);
+        activityArray = dc.getLogForRound(getArguments().getInt("roundNumber")).toArray(new String[0]);
         roundActivities = (ListView) view.findViewById(R.id.lsvActivities);
         roundActivities.setAdapter(createListAdaptor(activityArray));
         return view;
@@ -46,9 +57,11 @@ public class ActivityFragment extends Fragment {
         return new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, activities);
     }
 
-    public void updateActivities(Domaincontroller dc, int round){
+    public void updateActivities(int round){
         activityArray = dc.getLogForRound(round).toArray(new String[0]);
+        roundActivities.setAdapter(createListAdaptor(activityArray));
     }
+
 
 
 

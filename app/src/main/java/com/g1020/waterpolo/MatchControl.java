@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.*;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -69,19 +69,20 @@ public class MatchControl extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
 
         dc.appendLog("Round 1 started","SR1","8:00",1); //relocate to startchrono for first time only here for testing
-        activities = new ActivityFragment(dc,1);
+        activities = ActivityFragment.newInstance(1);
+
+
         getSupportFragmentManager().beginTransaction().add(R.id.activitiesContainer, activities).commit();
 
         //Testcode for adding logging functionallity
-        testLog();
 
-        activities.updateActivities(dc, 1);
 
     }
 
     //PROCESS FUNCTIONS
     //Function: GoalMade - press goal button to change view so you can select who scored
     public void goalMade(View view){
+        /*
         Intent intent = new Intent(this, PlayerControl.class);
 
         //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY START
@@ -90,6 +91,9 @@ public class MatchControl extends AppCompatActivity {
         //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY END
 
         startActivity(intent);
+        */
+        testLog();
+        activities.updateActivities(1);
     }
 
     //TEMP function to move to PlayerControl activity
@@ -122,28 +126,33 @@ public class MatchControl extends AppCompatActivity {
 
     //Shotlock gets paused when matchtimer is paused, shotlock has 2 buttons 1 button for home (shotlock resets countdown stays hometeam color) the other for away, (reset shotlock ,and set teamcolor)
     public void homeShotlock(View view){
-        //Cancel first, to prevent another shotlock running in the bacground
-        if(matchTimer!=null)
-            matchTimer.getCdtShotlock().cancel();
+        if(matchTimer.isChronoOn()){
+            //Cancel first, to prevent another shotlock running in the bacground
+            if(matchTimer!=null)
+                matchTimer.getCdtShotlock().cancel();
 
-        //re-initialize shot lock to set remaining time back to 30 sec
-        matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
+            //re-initialize shot lock to set remaining time back to 30 sec
+            matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
 
-        matchTimer.getCdtShotlock().start();
+            matchTimer.getCdtShotlock().start();
 
-        findViewById(R.id.txtShotlock).setBackgroundColor(Color.WHITE);
+            findViewById(R.id.txtShotlock).setBackgroundColor(Color.WHITE);
+        }
     }
     public void awayShotlock(View view){
         //Cancel first, to prevent another shotlock running in the bacground
-        if(matchTimer!=null)
-            matchTimer.getCdtShotlock().cancel();
+        if(matchTimer.isChronoOn()){
+            if(matchTimer!=null)
+                matchTimer.getCdtShotlock().cancel();
 
-        //re-initialize shot lock to set remaining time back to 30 sec
-        matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
+            //re-initialize shot lock to set remaining time back to 30 sec
+            matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
 
-        matchTimer.getCdtShotlock().start();
+            matchTimer.getCdtShotlock().start();
 
-        findViewById(R.id.txtShotlock).setBackgroundColor(Color.BLUE);
+            findViewById(R.id.txtShotlock).setBackgroundColor(Color.BLUE);
+        }
+
     }
     public void resumeShotlock(){
         //re-initialize shotlock if necesary and start it
