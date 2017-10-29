@@ -6,6 +6,6 @@ package Domain;
 
 public enum CompetitionClass {
 
-
+    U20,DAMES
 
 }

@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="btnColorStart">#1E6520</color>
+    <color name="colorGoaly">#e1111f</color>
+    <color name="colorBlack">#000000</color>
 </resources>

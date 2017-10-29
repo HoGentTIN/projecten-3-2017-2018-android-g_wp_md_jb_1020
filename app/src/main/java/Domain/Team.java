@@ -1,5 +1,9 @@
 package Domain;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Created by timos on 5-10-2017.
  */
@@ -15,10 +19,22 @@ public class Team {
     private Division division;
     private CompetitionClass competitionClass;
 
-    private Player[] players;
+    private List players = new ArrayList<>();
 
     public Team(String teamname, CompetitionClass competitionClass) {
         this.teamname = teamname;
         this.competitionClass = competitionClass;
+    }
+
+    public void addPlayers(Player p){
+        players.add(p);
+    }
+
+    public void addPlayers(Collection p){
+        players.addAll(p);
+    }
+
+    public List<Player> getPlayers(){
+        return players;
     }
 }
