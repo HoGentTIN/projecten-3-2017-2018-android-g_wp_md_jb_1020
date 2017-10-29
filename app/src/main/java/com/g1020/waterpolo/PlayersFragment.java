@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import Domain.CompetitionClass;
+import Domain.Location;
+import Domain.Match;
 import Domain.Player;
 import Domain.Team;
 
@@ -31,9 +33,13 @@ import Domain.Team;
 public class PlayersFragment extends Fragment {
 
     //TEMPORARY
-    private Team team = new Team("Gent",CompetitionClass.U20);
+    private Match match = new Match();
+    private Team hometeam = new Team("Gent",CompetitionClass.U20);
+    private Team awayteam = new Team("Aalst",CompetitionClass.U20);
     private String[] players = {"Player1", "Player2", "Player3", "Player4"};
     private Player[] playerObjects = {new Player(1,"Test"),new Player(2,"Test"),new Player(3,"Test"),
+            new Player(7,"Test"),new Player(10,"Test"),new Player(5,"Test"),new Player(8,"Test")};
+    private Player[] awayPlayerObjects = {new Player(1,"Test"),new Player(2,"Test"),new Player(3,"Test"),
             new Player(7,"Test"),new Player(10,"Test"),new Player(5,"Test"),new Player(8,"Test")};
     //TEMPORARY
 
@@ -48,7 +54,15 @@ public class PlayersFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_players, container, false);
 
         // TEMPORARY
-        team.addPlayers(Arrays.asList(playerObjects));
+        match.setLocation(new Location("Gent","Blorb"));
+        awayteam.setLocation(new Location("Aalst","Blorb"));
+        hometeam.setLocation(new Location("Gent","Blorb"));
+
+        awayteam.addPlayers(Arrays.asList(awayPlayerObjects));
+        hometeam.addPlayers(Arrays.asList(playerObjects));
+
+        match.addTeam(hometeam);
+        match.addTeam(awayteam);
         // TEMPORARY
 
         String[] playersBench = {"BenchPlayer1", "BenchPlayer2", "BenchPlayer3"};
@@ -56,7 +70,7 @@ public class PlayersFragment extends Fragment {
         ListView playersHomeTeam = (ListView) view.findViewById(R.id.lsvplayers);
         ListView playersBenchHomeTeam = (ListView) view.findViewById(R.id.lsvBenched);
 
-        CustomPlayersListAdapter customPlayerAdapter = new CustomPlayersListAdapter(getContext(),android.R.id.text1,team.getPlayers());
+        CustomPlayersListAdapter customPlayerAdapter = new CustomPlayersListAdapter(getContext(),android.R.id.text1,hometeam.getPlayers());
 
         playersHomeTeam.setAdapter(customPlayerAdapter);
         playersBenchHomeTeam.setAdapter(createArrayAdapter(playersBench));
@@ -116,6 +130,14 @@ public class PlayersFragment extends Fragment {
                     }
                     if (txtPlayernumber != null){
                         int pNumber = p.getPlayerNumber();
+                        if(hometeam.getLocation().equals(match.getLocation())) {
+                            txtPlayernumber.setBackgroundColor(Color.WHITE);
+                            txtPlayernumber.setTextColor(Color.BLACK);
+                        }
+                        else{
+                                txtPlayernumber.setBackgroundColor(Color.BLUE);
+                                txtPlayernumber.setTextColor(Color.WHITE);
+                        }
                         switch (pNumber) {
                             case 1:
                                 txtPlayernumber.setBackgroundColor(Color.RED);
@@ -124,9 +146,8 @@ public class PlayersFragment extends Fragment {
                                 txtPlayernumber.setBackgroundColor(Color.RED);
                                 break;
                             default:
-                                txtPlayernumber.setBackgroundColor(Color.WHITE);
-                        }
-
+                               break;
+                            }
                         StringBuilder sbPlayerNumber = new StringBuilder();
                         sbPlayerNumber.append(pNumber);
                         txtPlayernumber.setText((sbPlayerNumber.toString()));

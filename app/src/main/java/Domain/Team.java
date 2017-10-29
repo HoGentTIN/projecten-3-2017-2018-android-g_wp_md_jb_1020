@@ -26,6 +26,14 @@ public class Team {
         this.competitionClass = competitionClass;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     public void addPlayers(Player p){
         players.add(p);
     }
