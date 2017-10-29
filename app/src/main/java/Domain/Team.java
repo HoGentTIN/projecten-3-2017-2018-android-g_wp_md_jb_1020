@@ -1,6 +1,7 @@
 package Domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Team {
     private Division division;
     private CompetitionClass competitionClass;
 
-    private List players = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
 
     public Team(String teamname, CompetitionClass competitionClass) {
         this.teamname = teamname;
@@ -38,9 +39,25 @@ public class Team {
         players.add(p);
     }
 
-    public void addPlayers(Collection p){
-        players.addAll(p);
+    public String getTeamname() {
+        return teamname;
     }
+
+
+    public void addPlayers(Player[] p){
+        players.addAll(Arrays.asList(p));
+    }
+
+    public List<Player> getPlayersByStatus(Status s){
+        List<Player> list = new ArrayList<>();
+        for(Player p: players){
+            if(p.getStatus().equals(s)){
+                list.add(p);
+            }
+        }
+        return list;
+    }
+
 
     public List<Player> getPlayers(){
         return players;

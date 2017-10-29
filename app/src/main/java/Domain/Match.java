@@ -17,7 +17,7 @@ public class Match {
 
     private String matchLog;            //keep this unless there is another way to better keep a written down form of the match progress
 
-    private List<Team> teams = new ArrayList<>();               //always size 2 (1 is hometeam, 2 is awayteam)
+    private List<Team> teams = new ArrayList<>(2);               //always size 2 (1 is hometeam, 2 is awayteam)
     private List<Official> officials;       //first official is always main official
     private List<Quarter> quarters;         //list of maximum 4 length initialize in start admin when setting up quarterlenght
 
@@ -41,16 +41,13 @@ public class Match {
         this.location = location;
     }
 
-    public void addTeams(List<Team> teams){
-        teams.addAll(teams);
+    public void addTeams(Team homeTeam, Team awayTeam){
+        teams.add(homeTeam);
+        teams.add(awayTeam);
     }
 
-    public void addTeam(Team team){
-        teams.add(team);
-    }
-
-    public Team getHomeTeam(){
-        return teams.get(0);
+    public Team getTeam(int i){
+        return teams.get(i);
     }
 
     //Function calculate total match score from rounds

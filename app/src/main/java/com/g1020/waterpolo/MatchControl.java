@@ -12,6 +12,7 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 
 import Application.ApplicationRuntime;
+import Domain.CompetitionClass;
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
 
@@ -43,6 +44,13 @@ public class MatchControl extends AppCompatActivity {
 
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
+
+        // PIETER
+        dc.startMatch();
+        dc.createTeams("Oostende", CompetitionClass.U20,"Aalst",CompetitionClass.U20);
+        dc.createPlayers();
+        // END PIETER
+
         matchTimer = ar.chronoSetup((Chronometer) findViewById(R.id.matchTimer));
         //Chrono listner to set maximum time
         matchTimer.getMatchTimer().setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
@@ -71,9 +79,10 @@ public class MatchControl extends AppCompatActivity {
         dc.appendLog("Round 1 started","SR1","8:00",1); //relocate to startchrono for first time only here for testing
         activities = ActivityFragment.newInstance(1);
 
-
         getSupportFragmentManager().beginTransaction().add(R.id.activitiesContainer, activities).commit();
 
+        ActivityButtonsFragment btnFragment = new ActivityButtonsFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.activitiesbuttonContainer, btnFragment).commit();
         //Testcode for adding logging functionallity
 
 
