@@ -12,16 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginLeft="6dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="13dp"
         android:orientation="horizontal">
         <TextView  android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAppearance="?android:attr/textAppearanceLarge"
+
             android:text="Games"/>
         <TextView  android:layout_width="0dp"
             android:layout_marginLeft="6dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:textAppearance="?android:attr/textAppearanceLarge"
 
             android:text="Settings"/>
@@ -85,32 +88,73 @@
             android:orientation="vertical"
 
             tools:layout_editor_absoluteY="73dp">
-
-            <TextView
-                android:id="@+id/textView4"
+           <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
+               android:background="#258e2e"
                 android:layout_marginBottom="6dp"
-                android:background="#258e2e"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Begin"
-                android:textColor="#ffffff" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView7"
+               <Button
+                   android:id="@+id/button"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+
+                   android:background="#258e2e"
+                   android:textAppearance="?android:attr/textAppearanceMedium"
+                   android:text="Begin"
+                   android:textColor="#ffffff" />
+
+
+            </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:layout_marginBottom="6dp"
+    android:orientation="horizontal">
+    <Button
+        android:id="@+id/buttonPTime"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:layout_marginLeft="6dp"
+        android:background="#ffffff"
+
+        android:text="Period Time"
+         />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="0.1"
+        android:layout_height="wrap_content"
+
+        android:text="8min."/>
+</LinearLayout>
+          <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffffff"
                 android:layout_marginBottom="6dp"
-                android:text="Period Time" />
+                android:orientation="horizontal">
+              <Button
+                  android:id="@+id/buttonInvOffic"
+                  android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:layout_height="wrap_content"
+                  android:gravity="left|center_vertical"
+                  android:layout_marginLeft="6dp"
+                  android:background="#ffffff"
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:background="#ffffff"
-                android:text="Invited Officials" />
+                  android:text="Invite Officials"
+                  />
+              <TextView
+                  android:layout_width="0dp"
+                  android:layout_weight="0.1"
+                  android:layout_height="wrap_content"
+                  android:text="0"/>
+          </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -192,6 +236,7 @@ android:gravity="center"
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
 
                                 android:text="jan janssens" />
                       </LinearLayout>
@@ -222,7 +267,8 @@ android:gravity="center"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#ffffff"
-                                android:layout_margin="1dp"
+
+                                android:layout_marginLeft="10dp"
                                 android:text="Boris Bakker" />
                            </LinearLayout>
                         </TableRow>
@@ -250,8 +296,9 @@ android:gravity="center"
                             <TextView
                                 android:layout_width="match_parent"
                                 android:background="#ffffff"
-                                android:layout_margin="1dp"
+
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
                                 android:text="Cedric Kortens" />
                            </LinearLayout>
                         </TableRow>
@@ -280,7 +327,8 @@ android:gravity="center"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#ffffff"
-                                android:layout_margin="1dp"
+
+                                android:layout_marginLeft="10dp"
                                 android:text="Davy Dauwe" />
                             </LinearLayout>
                         </TableRow>
@@ -308,8 +356,9 @@ android:gravity="center"
                             <TextView
                                 android:layout_width="match_parent"
                                 android:background="#ffffff"
-                                android:layout_margin="1dp"
+
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
                                 android:text="Boris Bakker" />
                            </LinearLayout>
                         </TableRow>
@@ -337,8 +386,9 @@ android:gravity="center"
                             <TextView
                                 android:layout_width="match_parent"
                                 android:background="#ffffff"
-                                android:layout_margin="1dp"
+
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
                                 android:text="Cedrik korten" />
                            </LinearLayout>
                         </TableRow>
@@ -366,8 +416,9 @@ android:gravity="center"
                             <TextView
                                 android:layout_width="match_parent"
                                 android:background="#ffffff"
-                                android:layout_margin="1dp"
+
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
                                 android:text="Davy Dauwe" />
                            </LinearLayout>
                         </TableRow>
@@ -419,7 +470,8 @@ android:gravity="center"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#ffffff"
-                                android:layout_margin="1dp"
+
+                                android:layout_marginLeft="10dp"
                                 android:text="Cedrik korten" />
                            </LinearLayout>
                         </TableRow>
@@ -446,7 +498,8 @@ android:gravity="center"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#ffffff"
-                                android:layout_margin="1dp"
+
+                                android:layout_marginLeft="10dp"
                                 android:text="Fons van Callenberghe" />
                            </LinearLayout>
                         </TableRow>
@@ -472,8 +525,9 @@ android:gravity="center"
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:background="#ffffff"
-                                    android:layout_margin="1dp"
+
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
                                     android:text="" />
                             </LinearLayout>
 
@@ -500,8 +554,9 @@ android:gravity="center"
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:background="#ffffff"
-                                    android:layout_margin="1dp"
+
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
                                     android:text="" />
                             </LinearLayout>
 
@@ -529,8 +584,9 @@ android:gravity="center"
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:background="#ffffff"
-                                    android:layout_margin="1dp"
+
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
                                     android:text="" />
                             </LinearLayout>
 
@@ -557,8 +613,9 @@ android:gravity="center"
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:background="#ffffff"
-                                    android:layout_margin="1dp"
+
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
                                     android:text="" />
                             </LinearLayout>
 
