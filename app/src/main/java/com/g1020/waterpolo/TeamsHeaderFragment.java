@@ -50,12 +50,18 @@ public class TeamsHeaderFragment extends Fragment {
         txtVHomeTeamName.setText(dc.getMatch().getTeam(0).getTeamName());
         txtVAwayTeamName.setText(dc.getMatch().getTeam(1).getTeamName());
 
-        Log.i("game", "Current period: " + Integer.toString(dc.getMatch().getQuarters().get(0).getQuarterPeriod()));
+       // Log.i("game", "Current period: " + Integer.toString(dc.getMatch().getQuarters().get(0).getQuarterPeriod()));
         txtVPeriod.setText(String.valueOf(dc.getMatch().getQuarters().get(0).getQuarterPeriod()));
         txtVHomeScore.setText(String.valueOf(dc.getMatch().getScoreHome()));
         txtVAwayScore.setText(String.valueOf(dc.getMatch().getScoreAway()));
 
         return view;
+    }
+
+    public void updateHeader(){
+        txtVPeriod.setText(String.valueOf(dc.getMatch().getQuarters().get(0).getQuarterPeriod()));
+        txtVHomeScore.setText(String.valueOf(dc.getMatch().getScoreHome()));
+        txtVAwayScore.setText(String.valueOf(dc.getMatch().getScoreAway()));
     }
 
 }

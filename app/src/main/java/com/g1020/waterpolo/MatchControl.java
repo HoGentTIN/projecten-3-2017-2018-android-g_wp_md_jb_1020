@@ -102,6 +102,12 @@ public class MatchControl extends AppCompatActivity {
         startActivity(intent);
         */
         testLog();
+        
+        //temporary to check change in score
+        dc.getMatch().addScore(dc.getMatch().getTeam(0));
+
+        teamsHeader.updateHeader();
+        Log.i("game","Number of goals: " + String.valueOf(dc.getMatch().getScoreHome()));
         activities.updateActivities(1);
     }
 
