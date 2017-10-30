@@ -62,9 +62,6 @@ public class PlayersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_players, container, false);
 
-
-        //NULLPOINTER
-        // currentPlayers = getArguments().getStringArray("players");
         Team team = dc.getMatch().getTeam(getArguments().getInt("teamNumber"));
         List<Player> activePlayers = team.getPlayersByStatus(Status.ACTIVE);
         List<Player> benchedPlayers = team.getPlayersByStatus(Status.BENCHED);

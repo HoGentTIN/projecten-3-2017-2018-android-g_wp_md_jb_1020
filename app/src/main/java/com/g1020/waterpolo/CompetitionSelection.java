@@ -15,7 +15,8 @@ public class CompetitionSelection extends AppCompatActivity {
 
     //TEMP function to move to administration activity
     public void endSelection(View view) {
-        Intent intent = new Intent(this, AdministrationSetup.class);
+        Intent intent = new Intent(this, MatchControl.class);
+        //Intent intent = new Intent(this, AdministrationSetup.class);
         startActivity(intent);
     }
 

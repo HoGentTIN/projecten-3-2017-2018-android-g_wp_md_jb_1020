@@ -33,8 +33,8 @@ public class MatchControl extends AppCompatActivity {
     FaultFragment faultAwayTeam;
     FaultFragment faultHomeTeam;
     ActivityFragment activities;
-
-
+    ActivityInfoFragment infoFragment;
+    ActivityButtonsFragment btnFragment;
 
     //LIFECYCLE FUNCTIONS
     @Override
@@ -83,7 +83,7 @@ public class MatchControl extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().add(R.id.activitiesContainer, activities).commit();
 
-        ActivityButtonsFragment btnFragment = new ActivityButtonsFragment();
+        btnFragment = new ActivityButtonsFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.activitiesbuttonContainer, btnFragment).commit();
         //Testcode for adding logging functionallity
 
@@ -111,6 +111,9 @@ public class MatchControl extends AppCompatActivity {
         teamsHeader.updateHeader();
         Log.i("game","Number of goals: " + String.valueOf(dc.getMatch().getScoreHome()));
         activities.updateActivities(1);
+
+        matchTimer.stopChrono();
+        switchActivitiesButtonsToActionInfo();
     }
 
     //TEMP function to move to PlayerControl activity
@@ -136,8 +139,10 @@ public class MatchControl extends AppCompatActivity {
         }else{
             matchTimer.startChrono();
             resumeShotlock();
-        }
 
+            //show the button again
+            loadActivitiesButtons();
+        }
     }
 
 
@@ -186,6 +191,20 @@ public class MatchControl extends AppCompatActivity {
     public void homeTimeout(View view){}
     public void awayTimeout(View view){}
 
+
+    public void switchActivitiesButtonsToActionInfo(){
+        if(infoFragment == null) {
+            infoFragment = new ActivityInfoFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.activitiesbuttonContainer, infoFragment).commit();
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.activitiesbuttonContainer, infoFragment).commit();
+
+    }
+
+    public void loadActivitiesButtons(){
+        getSupportFragmentManager().beginTransaction().replace(R.id.activitiesbuttonContainer, btnFragment).commit();
+
+    }
 
     public void loadFaults(){
         //First initialization of faultfragments
