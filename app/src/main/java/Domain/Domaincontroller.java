@@ -88,7 +88,8 @@ public class Domaincontroller {
         Player[] homePlayers = {new Player(1,"Beirens", "Sam" ),new Player(2,"Beirens","Stijn"),new Player(3,"Boedt","Olivier"),
                 new Player(7,"Callebout", "Tom"),new Player(10,"Crombez","Brecht"),new Player(5,"David","Indy"),
                 new Player(8,"Devlies","Tim"),new Player(4,"Haelemeersch","Benoit"),new Player(6,"Hendryckx","Kris"),
-                new Player(9,"Mechele","Steve"), new Player(11,"Peel","Dailly"),new Player(12,"Piens","Tim"),new Player(13,"Vandermeulen","Matisse")};
+                new Player(9,"Mechele","Steve"), new Player(11,"Peel","Dailly"),new Player(12,"Piens","Tim"),
+                new Player(13,"Vandermeulen","Matisse")};
         for(Player p: homePlayers){
             p.setTeam(match.getTeam(0));
         }
@@ -98,7 +99,7 @@ public class Domaincontroller {
                 new Player(7,"Gheyssens","Ruben"),new Player(10,"Goossens","Jonas"),new Player(5,"Heyvaert","Norbert"),
                 new Player(8,"Langelet","Rik"),new Player(4,"Pandolfi","Mateo"),new Player(6,"Uyttersprot","Dieter"),new Player(9,"Van der Heyden","Stijn"),
                 new Player(11,"Verhoeve","Lander"),new Player(12,"Verhoeven","Maxim"),new Player(13,"Bakker","Boris")};
-        for(Player p: homePlayers){
+        for(Player p: awayPlayers){
             p.setTeam(match.getTeam(1));
         }
         Log.i("game","AwayTeam " + match.getTeam(1).getTeamName() + ", players created");

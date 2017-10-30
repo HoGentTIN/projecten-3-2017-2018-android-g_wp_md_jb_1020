@@ -1,6 +1,7 @@
 package com.g1020.waterpolo;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import Domain.CompetitionClass;
 import Domain.Domaincontroller;
 import Domain.Player;
 import Domain.Status;
+import Domain.Team;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,10 +38,16 @@ public class PlayersFragment extends Fragment {
     //TEMPORARY
     ApplicationRuntime ar;  //this adds temporary code to this class
     Domaincontroller dc;
+    Team team;
     //TEMPORARY
 
     public PlayersFragment() {
         // Required empty public constructor
+    }
+
+    @SuppressLint("ValidFragment")
+    public PlayersFragment(Team team){
+        this.team = team;
     }
 
     /* NULPOINTEREXCEPTION, creating multiple fragments
@@ -70,8 +78,11 @@ public class PlayersFragment extends Fragment {
 
         Log.i("game",dc.getMatch().getTeam(0).getPlayers().get(0).getFullName());
 
-        CustomPlayerListAdapter customPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1,dc.getMatch().getTeam(0).getPlayersByStatus(Status.ACTIVE));
-        CustomPlayerListAdapter customBenchPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1,dc.getMatch().getTeam(0).getPlayersByStatus(Status.BENCHED));
+        //CustomPlayerListAdapter customPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1,dc.getMatch().getTeam(0).getPlayersByStatus(Status.ACTIVE));
+        //CustomPlayerListAdapter customBenchPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1,dc.getMatch().getTeam(0).getPlayersByStatus(Status.BENCHED));
+
+        CustomPlayerListAdapter customPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1,team.getPlayersByStatus(Status.ACTIVE));
+        CustomPlayerListAdapter customBenchPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1,team.getPlayersByStatus(Status.BENCHED));
 
         playersHomeTeam.setAdapter(customPlayerAdapter);
         playersBenchHomeTeam.setAdapter(customBenchPlayerAdapter);
