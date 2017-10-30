@@ -98,7 +98,7 @@ public class Domaincontroller {
                 new Player(7,"Gheyssens","Ruben"),new Player(10,"Goossens","Jonas"),new Player(5,"Heyvaert","Norbert"),
                 new Player(8,"Langelet","Rik"),new Player(4,"Pandolfi","Mateo"),new Player(6,"Uyttersprot","Dieter"),new Player(9,"Van der Heyden","Stijn"),
                 new Player(11,"Verhoeve","Lander"),new Player(12,"Verhoeven","Maxim"),new Player(13,"Bakker","Boris")};
-        for(Player p: homePlayers){
+        for(Player p: awayPlayers){
             p.setTeam(match.getTeam(1));
         }
         Log.i("game","AwayTeam " + match.getTeam(1).getTeamName() + ", players created");

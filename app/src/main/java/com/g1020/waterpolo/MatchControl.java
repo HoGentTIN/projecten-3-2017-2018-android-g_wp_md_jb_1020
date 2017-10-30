@@ -70,10 +70,12 @@ public class MatchControl extends AppCompatActivity {
         teamsHeader = new TeamsHeaderFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.teamsheadercontainer, teamsHeader).commit();
 
-        homeTeam = new PlayersFragment();
+        //homeTeam = new PlayersFragment();
+        homeTeam = PlayersFragment.newInstance(0);
         getSupportFragmentManager().beginTransaction().add(R.id.homeContainer, homeTeam).commit();
 
-        awayTeam = new PlayersFragment();
+        //awayTeam = new PlayersFragment();
+        awayTeam = PlayersFragment.newInstance(1);
         getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
 
         dc.appendLog("Round 1 started","SR1","8:00",1); //relocate to startchrono for first time only here for testing

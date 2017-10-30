@@ -27,6 +27,7 @@ import Domain.CompetitionClass;
 import Domain.Domaincontroller;
 import Domain.Player;
 import Domain.Status;
+import Domain.Team;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,44 +35,47 @@ import Domain.Status;
 public class PlayersFragment extends Fragment {
 
     //TEMPORARY
-    ApplicationRuntime ar;  //this adds temporary code to this class
     Domaincontroller dc;
+    private static PlayersFragment pf;
     //TEMPORARY
 
     public PlayersFragment() {
         // Required empty public constructor
+        ApplicationRuntime ar = ApplicationRuntime.getInstance();
+        dc = ar.getDc();
     }
 
-    /* NULPOINTEREXCEPTION, creating multiple fragments
-    public static PlayersFragment newInstance(String[] players) {
+    //NULPOINTEREXCEPTION, creating multiple fragments
+    public static PlayersFragment newInstance(int teamNumber) {
         pf = new PlayersFragment();
 
         Bundle args = new Bundle();
-        args.putStringArray("players",players);
+        args.putInt("teamNumber",teamNumber);
         pf.setArguments(args);
 
         return pf;
-    } */
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_players, container, false);
-        ar = ApplicationRuntime.getInstance();
-        dc = ar.getDc();
+
 
         //NULLPOINTER
         // currentPlayers = getArguments().getStringArray("players");
-
+        Team team = dc.getMatch().getTeam(getArguments().getInt("teamNumber"));
+        List<Player> activePlayers = team.getPlayersByStatus(Status.ACTIVE);
+        List<Player> benchedPlayers = team.getPlayersByStatus(Status.BENCHED);
 
         ListView playersHomeTeam = (ListView) view.findViewById(R.id.lsvplayers);
         ListView playersBenchHomeTeam = (ListView) view.findViewById(R.id.lsvBenched);
 
         Log.i("game",dc.getMatch().getTeam(0).getPlayers().get(0).getFullName());
 
-        CustomPlayerListAdapter customPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1,dc.getMatch().getTeam(0).getPlayersByStatus(Status.ACTIVE));
-        CustomPlayerListAdapter customBenchPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1,dc.getMatch().getTeam(0).getPlayersByStatus(Status.BENCHED));
+        CustomPlayerListAdapter customPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1,activePlayers);
+        CustomPlayerListAdapter customBenchPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1, benchedPlayers);
 
         playersHomeTeam.setAdapter(customPlayerAdapter);
         playersBenchHomeTeam.setAdapter(customBenchPlayerAdapter);
@@ -92,7 +96,7 @@ public class PlayersFragment extends Fragment {
     }
 
     private ArrayAdapter createArrayAdapter(String[] array) {
-        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 array
