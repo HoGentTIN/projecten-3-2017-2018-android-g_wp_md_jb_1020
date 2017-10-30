@@ -113,7 +113,7 @@ public class Domaincontroller {
     private void setPlayersStatus(){
         // match.getTeam().getPlayers().subList(0,6).forEach(p -> p.setStatus(Status.PLAYING));
         for (int i = 0; i < match.getTeam(0).getPlayers().size(); i++){
-            if(i < 8) {
+            if(i < 7) {
                 match.getTeam(0).getPlayers().get(i).setStatus(Status.ACTIVE);
                 match.getTeam(1).getPlayers().get(i).setStatus(Status.ACTIVE);
             }

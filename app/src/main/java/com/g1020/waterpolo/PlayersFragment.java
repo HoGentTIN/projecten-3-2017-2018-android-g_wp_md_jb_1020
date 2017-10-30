@@ -74,7 +74,6 @@ public class PlayersFragment extends Fragment {
 
 
         ListView playersHomeTeam = (ListView) view.findViewById(R.id.lsvplayers);
-        ListView playersBenchHomeTeam = (ListView) view.findViewById(R.id.lsvBenched);
 
         Log.i("game",dc.getMatch().getTeam(0).getPlayers().get(0).getFullName());
 
@@ -85,10 +84,8 @@ public class PlayersFragment extends Fragment {
         CustomPlayerListAdapter customBenchPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1,team.getPlayersByStatus(Status.BENCHED));
 
         playersHomeTeam.setAdapter(customPlayerAdapter);
-        playersBenchHomeTeam.setAdapter(customBenchPlayerAdapter);
 
         teamClickAction(playersHomeTeam);
-        teamClickAction(playersBenchHomeTeam);
 
         return view;
     }

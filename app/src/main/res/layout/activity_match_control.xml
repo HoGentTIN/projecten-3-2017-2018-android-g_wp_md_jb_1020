@@ -7,17 +7,20 @@
     tools:context="com.g1020.waterpolo.MatchControl">
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:baselineAligned="false"
         android:orientation="horizontal"
+        android:layout_weight="7"
         android:weightSum="3"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +40,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:background="#ffffff"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -45,49 +47,6 @@
                 app:layout_constraintVertical_bias="0.5">
 
             </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:gravity="bottom|center"
-                android:orientation="horizontal"
-                android:padding="4dp">
-
-                <Button
-                    android:id="@+id/btnHomeShotlock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left"
-                    android:layout_margin="4dp"
-                    android:onClick="homeShotlock"
-                    android:padding="2dp"
-                    android:text="@string/button_home" />
-
-                <TextView
-                    android:id="@+id/txtShotlock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="4dp"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:text="@string/text_shotlock"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btnAwayShotlock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="right"
-                    android:layout_margin="4dp"
-                    android:onClick="awayShotlock"
-                    android:padding="2dp"
-                    android:text="@string/button_away" />
-
-            </LinearLayout>
 
         </LinearLayout>
 
@@ -119,20 +78,8 @@
                 android:id="@+id/activitiesbuttonContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2">
-            </FrameLayout>
+                android:layout_weight="2"></FrameLayout>
 
-            <Chronometer
-                android:id="@+id/matchTimer"
-                android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:clickable="true"
-                android:gravity="center"
-                android:onClick="toggleChrono"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:background="@color/btnColorStart"
-                android:textColor="#FFFFFF"/>
         </LinearLayout>
 
         <FrameLayout
@@ -155,6 +102,85 @@
 
         </FrameLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:gravity="bottom|center"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <Button
+                android:id="@+id/btnHomeShotlock"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:layout_margin="4dp"
+                android:onClick="homeShotlock"
+                android:padding="2dp"
+                android:text="@string/button_home" />
+
+            <TextView
+                android:id="@+id/txtShotlock"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/text_shotlock"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnAwayShotlock"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_margin="4dp"
+                android:onClick="awayShotlock"
+                android:padding="2dp"
+                android:text="@string/button_away" />
+
+        </LinearLayout>
+
+        <Chronometer
+            android:id="@+id/matchTimer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/btnColorStart"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="toggleChrono"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:gravity="bottom|center"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+        </LinearLayout>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
