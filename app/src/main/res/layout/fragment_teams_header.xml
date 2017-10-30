@@ -21,104 +21,120 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:orientation="horizontal"
-            >
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txtnamehometeam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/hello_blank_fragment"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtnameawayteam"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.49"
                 tools:layout_constraintBottom_creator="1"
                 tools:layout_constraintLeft_creator="1"
                 tools:layout_constraintRight_creator="1"
-                tools:layout_constraintTop_creator="1" />
+                tools:layout_constraintTop_creator="1"
+                android:layout_marginRight="8dp"
+                android:textColor="@color/colorBlack"/>
 
             <TextView
                 android:id="@+id/txtnameawayteam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/hello_blank_fragment"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txtnamehometeam"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_constraintBottom_creator="1"
                 tools:layout_constraintLeft_creator="1"
                 tools:layout_constraintRight_creator="1"
-                tools:layout_constraintTop_creator="1" />
-        </LinearLayout>
+                tools:layout_constraintTop_creator="1"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/colorBlack"/>
+        </android.support.constraint.ConstraintLayout>
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/linearLayout5"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/imglogoawayteam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:contentDescription="logo_home_team"
-                app:srcCompat="@android:drawable/ic_menu_gallery" />
+                app:layout_constraintBottom_toBottomOf="@+id/imglogohometeam"
+                app:layout_constraintEnd_toStartOf="@+id/txtscorehometeam"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imglogohometeam"
+                app:srcCompat="@android:drawable/ic_menu_gallery"
+                android:layout_marginLeft="8dp" />
 
             <TextView
                 android:id="@+id/txtscorehometeam"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:layout_height="0dp"
+                android:text="TextView"
+                app:layout_constraintBaseline_toBaselineOf="@+id/txtperiod"
+                app:layout_constraintEnd_toStartOf="@+id/txtperiod"
+                app:layout_constraintStart_toEndOf="@+id/imglogoawayteam"
+                android:textSize="30sp"/>
 
             <TextView
                 android:id="@+id/txtperiod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:layout_marginBottom="6dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/imglogoawayteam"
+                app:layout_constraintEnd_toStartOf="@+id/txtscoreawayteam"
+                app:layout_constraintStart_toEndOf="@+id/txtscorehometeam"
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/txtscoreawayteam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                app:layout_constraintBaseline_toBaselineOf="@+id/txtperiod"
+                app:layout_constraintEnd_toStartOf="@+id/imglogohometeam"
+                app:layout_constraintStart_toEndOf="@+id/txtperiod"
+                android:textSize="30sp"/>
 
             <ImageView
                 android:id="@+id/imglogohometeam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginTop="8dp"
                 android:contentDescription="logo_away_team"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txtscoreawayteam"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@android:drawable/ic_menu_gallery" />
-        </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

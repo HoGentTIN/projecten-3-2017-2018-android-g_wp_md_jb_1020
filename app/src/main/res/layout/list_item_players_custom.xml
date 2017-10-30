@@ -2,49 +2,87 @@
 <TableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <TableRow
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/tableRow"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout2">
 
         <TextView
             android:id="@+id/txtplayernumber"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="8dp"
             android:gravity="center"
             android:textSize="20sp"
-             />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txtplayername"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="30dp" />
 
         <TextView
             android:id="@+id/txtplayername"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
-            android:textSize="16sp" />
+            android:layout_marginEnd="8dp"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+            app:layout_constraintStart_toEndOf="@+id/txtplayernumber"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="8dp" />
 
-        <ImageView
-            android:id="@+id/fault1"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            app:srcCompat="@android:drawable/radiobutton_off_background" />
+            android:layout_marginEnd="8dp"
+            android:gravity="right"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtplayername"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="8dp">
 
-        <ImageView
-            android:id="@+id/fault2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/radiobutton_off_background" />
+            <ImageView
+                android:id="@+id/fault3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/radiobutton_off_background" />
 
-        <ImageView
-            android:id="@+id/fault3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/radiobutton_off_background" />
-    </TableRow>
+            <ImageView
+                android:id="@+id/fault2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fault3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/radiobutton_off_background" />
+
+            <ImageView
+                android:id="@+id/fault1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fault2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/radiobutton_off_background" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
 </TableLayout>
