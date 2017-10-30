@@ -1,29 +1,20 @@
 package com.g1020.waterpolo;
 
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Arrays;
 import java.util.List;
 
 import Application.ApplicationRuntime;
-import Domain.CompetitionClass;
 import Domain.Domaincontroller;
 import Domain.Player;
 import Domain.Status;
@@ -37,6 +28,10 @@ public class PlayersFragment extends Fragment {
     //TEMPORARY
     Domaincontroller dc;
     private static PlayersFragment pf;
+    private CustomPlayerListAdapter playerAdapter;
+    List<Player> currentPlayers;
+    ListView lvPlayers;
+    TextView playerTitle;
     //TEMPORARY
 
     public PlayersFragment() {
@@ -63,19 +58,17 @@ public class PlayersFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_players, container, false);
 
         Team team = dc.getMatch().getTeam(getArguments().getInt("teamNumber"));
-        List<Player> activePlayers = team.getPlayersByStatus(Status.ACTIVE);
-        List<Player> benchedPlayers = team.getPlayersByStatus(Status.BENCHED);
 
-        ListView playersHomeTeam = (ListView) view.findViewById(R.id.lsvplayers);
+        lvPlayers = (ListView) view.findViewById(R.id.lsvplayers);
+
 
         Log.i("game",dc.getMatch().getTeam(0).getPlayers().get(0).getFullName());
 
-        CustomPlayerListAdapter customPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1,activePlayers);
-        CustomPlayerListAdapter customBenchPlayerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1, benchedPlayers);
 
-        playersHomeTeam.setAdapter(customPlayerAdapter);
+        teamClickAction(lvPlayers);
 
-        teamClickAction(playersHomeTeam);
+        playerTitle = (TextView) view.findViewById(R.id.playerTitle);
+        setListPlayersByStatus(team,Status.ACTIVE);
 
         return view;
     }
@@ -89,14 +82,13 @@ public class PlayersFragment extends Fragment {
         });
     }
 
-    private ArrayAdapter createArrayAdapter(String[] array) {
-        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<>(
-                getActivity(),
-                android.R.layout.simple_list_item_1,
-                array
-        );
+    public void setListPlayersByStatus(Team team, Status s){
+        currentPlayers = team.getPlayersByStatus(s);
+        playerTitle.setText(String.format(getResources().getString(R.string.playerFragmentTitle),currentPlayers.get(0).getStatus().toString()));
 
-        return listViewAdapter;
+        playerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers);
+
+        lvPlayers.setAdapter(playerAdapter);
     }
 
 

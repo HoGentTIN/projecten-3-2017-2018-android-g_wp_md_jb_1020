@@ -26,5 +26,6 @@
 
     <!-- Text -->
     <string name="text_shotlock">30</string>
+    <string name="playerFragmentTitle">%1$S PLAYERS</string>
 
 </resources>

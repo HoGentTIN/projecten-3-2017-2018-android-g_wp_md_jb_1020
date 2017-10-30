@@ -15,6 +15,7 @@ import Application.ApplicationRuntime;
 import Domain.CompetitionClass;
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
+import Domain.Status;
 
 public class MatchControl extends AppCompatActivity {
 
@@ -113,15 +114,21 @@ public class MatchControl extends AppCompatActivity {
         activities.updateActivities(1);
 
         matchTimer.stopChrono();
+        loadPlayers();
         switchActivitiesButtonsToActionInfo();
     }
 
     //TEMP function to move to PlayerControl activity
     public void changePlayers(View view) {
-        PlayersFragment awayTeam = new PlayersFragment();
-        getSupportFragmentManager().beginTransaction().detach(faultAwayTeam).commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
+        //PlayersFragment awayTeam = new PlayersFragment();
+        //getSupportFragmentManager().beginTransaction().detach(faultAwayTeam).commit();
+        //getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
+
+        awayTeam.setListPlayersByStatus(dc.getMatch().getTeam(0),Status.BENCHED);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.awayContainer, awayTeam).commit();
     }
+
     //TEMP function to move to PlayerControl activity
     public void penaltyEvent(View view) {
         loadFaults();
@@ -142,6 +149,7 @@ public class MatchControl extends AppCompatActivity {
 
             //show the button again
             loadActivitiesButtons();
+            loadFaults();
         }
     }
 
