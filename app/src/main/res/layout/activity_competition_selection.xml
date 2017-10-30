@@ -101,8 +101,9 @@
                    android:layout_height="wrap_content"
 
                    android:background="#258e2e"
-                   android:textAppearance="?android:attr/textAppearanceMedium"
+                   android:onClick="endSelection"
                    android:text="Begin"
+                   android:textAppearance="?android:attr/textAppearanceMedium"
                    android:textColor="#ffffff" />
 
 
@@ -630,15 +631,5 @@ android:gravity="center"
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="94dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="32dp"
-        android:onClick="endSelection"
-        android:text="START"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:layout_editor_absoluteX="52dp" />
 
 </android.support.constraint.ConstraintLayout>
