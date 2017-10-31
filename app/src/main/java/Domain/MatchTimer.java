@@ -25,18 +25,20 @@ public class MatchTimer {
     private long timeoutBaseTime;
     private long elapsedTime = 0;           //The time between when the chronometer started running and when it was stopped, at the start of every round this is = 0
     private long stopTime;                  //Time at which the chronometer was stopped
+    private long timeRemaining;
     private long shotlockTimeRemaining;     //Stores the shotlock time when pausing the match
 
     private String maxTime = "08:00";       //For testing purpose given default value
     private Chronometer matchTimer;         //matchtimer holds time exiperd during each match round
-    CountDownTimer cdtShotlock;             //shotlock to follow timelimit on ball possesion
+    private CountDownTimer cdtTimer;
+    private CountDownTimer cdtShotlock;             //shotlock to follow timelimit on ball possesion
     private Chronometer timeoutTimer;       //Each team can call 1 time out per round, even if not all time used they cant do again time out = 01:00
     private int roundTime = 8;              //roundtime in minutes
 
 
     //CONSTRUCTORS
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public MatchTimer(Chronometer matchChrono){ //temporary constructor - when shotlock has been implemented use the other constructor
+    public MatchTimer(Chronometer matchChrono){
         setShotlockTimeRemaining((long) 30000);
         matchTimer = matchChrono;
         initTimer();
@@ -55,6 +57,7 @@ public class MatchTimer {
     public Chronometer getMatchTimer(){
         return matchTimer;
     }
+    public CountDownTimer getCdtTimer(){return  cdtTimer;}
     //Function getShotlockTimer
     public CountDownTimer getCdtShotlock(){return cdtShotlock;}
     //Function get Time
@@ -77,15 +80,21 @@ public class MatchTimer {
         this.roundTime = roundTime;
     }
 
-    public void setShotlockTimeRemaining(Long shotlockTimeRemaining){
+    public void setTimeRemaining(long timeRemaining){
+        this.timeRemaining = timeRemaining;
+    }
+    public long getTimeRemaining(){
+        return this.timeRemaining;
+    }
+
+    public void setShotlockTimeRemaining(long shotlockTimeRemaining){
         this.shotlockTimeRemaining = shotlockTimeRemaining;
     }
     public long getShotlockTimeRemaining(){
         return this.shotlockTimeRemaining;
     }
 
-    //CLASS FUNTIONS
-    //Function initialize matchtimer - reset matchtimer
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void initTimer(){
         //at start of round reset the timer to start from 0
@@ -94,6 +103,42 @@ public class MatchTimer {
         matchTimer.setCountDown(true);
         setChronoTimes(baseTime, elapsedTime);
     }
+
+    //CLASS FUNTIONS
+    //Function initialize matchtimer - reset matchtimer
+    public void initTimer(final TextView txtTimer, long timeRemaining){
+        if(timeRemaining==(roundTime*1000*60)){
+            if(cdtTimer!=null)
+                cdtTimer.cancel();
+        }
+        txtTimer.setText(roundTime + ":00");
+
+        cdtTimer = new CountDownTimer((roundTime*1000*60), 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long minutesRemaining = (long) Math.ceil(millisUntilFinished/(1000.0*60.0))-1;
+                long secondRemaining = (long) Math.ceil((millisUntilFinished - (minutesRemaining*(1000*60)))/1000.0);
+
+                if(secondRemaining==60 && minutesRemaining+1 == roundTime)
+                    txtTimer.setText(roundTime + ":00");
+                else if(secondRemaining==60){
+                    txtTimer.setText(String.format("%d:00",minutesRemaining));
+                }else {
+                    txtTimer.setText(String.format("%d:%d",minutesRemaining , secondRemaining));
+                }
+                setTimeRemaining(millisUntilFinished);
+            }
+
+            @Override
+            public void onFinish() {
+                txtTimer.setText("0");
+                Log.i("Info","Matchtimer has expired.");
+            }
+        };
+
+
+    }
+
     //Function initShotlock - Setup shotlock, also callable when match paused to reset shotlock when neither team has ball possesion
     public void initShotlock(final TextView txtShotlock, Long shotlockTimeRemaining){
         //when the matchtimers pauzes, also pause shotlock, after special reset shotlock to neutral
@@ -131,6 +176,11 @@ public class MatchTimer {
     public void resetTimer(){
         this.elapsedTime = 0;
     }
+    //Function resetTimer
+    public void resetTimer(final TextView txtTimer){
+        timeRemaining = (roundTime*1000*60);
+
+    }
     //Function resetShotlock - set remaining shotlocktime to 30000
     public void resetShotlock(final TextView txtShotlock){
         shotlockTimeRemaining = 30000;
@@ -163,7 +213,10 @@ public class MatchTimer {
         setChronoTimes(baseTime, elapsedTime);
 
         //stop running shotlocktimer
-        cdtShotlock.cancel();
+
+        cdtTimer.cancel();
+        isChronoOn = false;
+        cdtShotlock.cancel();   //stop running shotlocktimer
 
     }
 

@@ -67,6 +67,7 @@ public class MatchControl extends AppCompatActivity {
         });
         //initialize shotlock timer
         matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
+        matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (long) (8*1000*60));
 
         teamsHeader = new TeamsHeaderFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.teamsheadercontainer, teamsHeader).commit();
@@ -153,6 +154,12 @@ public class MatchControl extends AppCompatActivity {
         }
     }
 
+    public void pressTimer(View view){
+        matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (long) (8*1000*60));
+        matchTimer.getCdtTimer().start();
+
+    }
+
 
     //Shotlock gets paused when matchtimer is paused, shotlock has 2 buttons 1 button for home (shotlock resets countdown stays hometeam color) the other for away, (reset shotlock ,and set teamcolor)
     public void homeShotlock(View view){
@@ -184,6 +191,14 @@ public class MatchControl extends AppCompatActivity {
         }
 
     }
+    public void resumeTimer(){
+        long timeRemaining = matchTimer.getTimeRemaining();
+        matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), timeRemaining);
+        if(timeRemaining!=(8*1000*60)){
+            matchTimer.getCdtTimer().start();
+        }
+    }
+
     public void resumeShotlock(){
         //re-initialize shotlock if necesary and start it
         Long timeremaining = matchTimer.getShotlockTimeRemaining();
