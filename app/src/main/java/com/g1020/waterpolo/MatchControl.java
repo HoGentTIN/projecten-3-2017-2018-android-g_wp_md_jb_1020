@@ -52,7 +52,8 @@ public class MatchControl extends AppCompatActivity {
         dc.createPlayers();
         // END PIETER
 
-        matchTimer = ar.chronoSetup((Chronometer) findViewById(R.id.matchTimer));
+        matchTimer = ar.chronoSetup((TextView) findViewById(R.id.txtTimer), dc.getRoundTime());
+        /*
         //Chrono listner to set maximum time
         matchTimer.getMatchTimer().setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
@@ -65,6 +66,7 @@ public class MatchControl extends AppCompatActivity {
                 }
             }
         });
+        */
         //initialize shotlock timer
         matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
         matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (long) (8*1000*60));
@@ -145,6 +147,7 @@ public class MatchControl extends AppCompatActivity {
         if(matchTimer.isChronoOn()){
             matchTimer.stopChrono();
         }else{
+            resumeTimer();
             matchTimer.startChrono();
             resumeShotlock();
 
@@ -154,12 +157,13 @@ public class MatchControl extends AppCompatActivity {
         }
     }
 
+    /*
     public void pressTimer(View view){
         matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (long) (8*1000*60));
         matchTimer.getCdtTimer().start();
 
     }
-
+    */
 
     //Shotlock gets paused when matchtimer is paused, shotlock has 2 buttons 1 button for home (shotlock resets countdown stays hometeam color) the other for away, (reset shotlock ,and set teamcolor)
     public void homeShotlock(View view){
@@ -191,6 +195,7 @@ public class MatchControl extends AppCompatActivity {
         }
 
     }
+
     public void resumeTimer(){
         long timeRemaining = matchTimer.getTimeRemaining();
         matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), timeRemaining);
@@ -201,9 +206,9 @@ public class MatchControl extends AppCompatActivity {
 
     public void resumeShotlock(){
         //re-initialize shotlock if necesary and start it
-        Long timeremaining = matchTimer.getShotlockTimeRemaining();
-        matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), timeremaining);
-        if(timeremaining!=30000){
+        Long timeRemaining = matchTimer.getShotlockTimeRemaining();
+        matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), timeRemaining);
+        if(timeRemaining!=30000){
             matchTimer.getCdtShotlock().start();
         }
 

@@ -49,15 +49,6 @@
 
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/txtTimer"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:onClick="pressTimer"
-                android:text="TextView" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -171,8 +162,9 @@
 
         </LinearLayout>
 
-        <Chronometer
-            android:id="@+id/matchTimer"
+
+        <TextView
+            android:id="@+id/txtTimer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

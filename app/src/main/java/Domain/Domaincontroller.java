@@ -80,6 +80,12 @@ public class Domaincontroller {
         return roundLog;
     }
 
+    //temporary static value until we set it in code
+    public long getRoundTime(){
+        return 8;
+    }
+
+
     public void startMatch(){
         match = new Match();
     }

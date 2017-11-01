@@ -2,6 +2,7 @@ package Application;
 
 import android.app.Application;
 import android.widget.Chronometer;
+import android.widget.TextView;
 
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
@@ -34,8 +35,8 @@ public class ApplicationRuntime extends Application {
 
     //FUNCTIONS
     //Function chronoSetup - create chronometer
-    public MatchTimer chronoSetup(Chronometer chrono){
-        return mt = new MatchTimer(chrono);
+    public MatchTimer chronoSetup(TextView txtTimer, long roundtime){
+        return mt = new MatchTimer(txtTimer, roundtime);
     }
 
     //Function getDomeincontroller
