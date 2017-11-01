@@ -21,18 +21,12 @@ public class MatchTimer {
     private boolean shotlockRunning = false;
     private boolean timeoutRunning = false;
 
-    private long baseTime;                  //Basetime of the matchtimer, hold starttime of when chronometer is started
-    private long timeoutBaseTime;
-    private long elapsedTime = 0;           //The time between when the chronometer started running and when it was stopped, at the start of every round this is = 0
-    private long stopTime;                  //Time at which the chronometer was stopped
     private long timeRemaining;
     private long shotlockTimeRemaining;     //Stores the shotlock time when pausing the match
 
-    private String maxTime = "08:00";       //For testing purpose given default value
-    private Chronometer matchTimer;         //matchtimer holds time exiperd during each match round
     private CountDownTimer cdtTimer;
     private CountDownTimer cdtShotlock;             //shotlock to follow timelimit on ball possesion
-    private Chronometer timeoutTimer;       //Each team can call 1 time out per round, even if not all time used they cant do again time out = 01:00
+    private CountDownTimer timeoutTimer;       //Each team can call 1 time out per round, even if not all time used they cant do again time out = 01:00
     private long roundTime = 8;              //roundtime in minutes
 
 
@@ -48,14 +42,6 @@ public class MatchTimer {
     public CountDownTimer getCdtTimer(){return  cdtTimer;}
     //Function getShotlockTimer
     public CountDownTimer getCdtShotlock(){return cdtShotlock;}
-    //Function get Time
-    public String getTime(){
-        return matchTimer.getText().toString();
-    }
-    //Function get Chronostate
-    public boolean isChronoOn() {
-        return isChronoOn;
-    }
 
     //Function setMaxTime for round
     public void setMaxTime(long roundTime){
@@ -77,7 +63,7 @@ public class MatchTimer {
         return this.shotlockTimeRemaining;
     }
 
-    //CLASS FUNTIONS
+    //CLASS FUNCTIONS
     //Function initialize matchtimer - reset matchtimer
     public void initTimer(final TextView txtTimer, long timeRemaining){
         if(timeRemaining==(roundTime*1000*60)){
@@ -85,7 +71,6 @@ public class MatchTimer {
                 cdtTimer.cancel();
             txtTimer.setText(roundTime + ":00");
         }
-
 
         cdtTimer = new CountDownTimer(timeRemaining, 1000) {
             @Override
@@ -163,47 +148,22 @@ public class MatchTimer {
     }
 
     //Function StartTimeout   //only one neede timout process is same for both teams
-    public void startTimeout(Chronometer timeoutTimer){
+    public void startTimeout(){
         //Matchtimer needs to pause when starting timeout
-        if(isChronoOn()){
-            stopChrono();
-        }
 
-        this.timeoutTimer = timeoutTimer;   //timeouttimer is assigned to the timeoutbutton that was pressed (away or home)
-        timeoutTimer.setFormat("01:00");
-        initTimeout();
-        timeoutRunning = true;
-        //timeout alwas starts from start
 
     }
     //Function stopTimeout //in case time out needs to be stopped earlier ?should automaticly stop when restarting chrono
     public void stopTimeout(){
         //make button of timeout unavailable in activity when this is called
-        timeoutRunning = false;
-        timeoutTimer.setFormat("X");    //cannot be used this round
-
+        //???Can timeout be prematurly stopped
     }
 
-    //Function checkifroundended
-    public boolean checkRoundTime(String currentTime){
-        if("00:00".equalsIgnoreCase(currentTime)){
-            //temporary at end of round stop timer
-            Log.i("timer","Round has ended");
-            matchTimer.stop();
-            isChronoOn = false;
-            return true;
-        }
-        return false;
+    //Function get Chronostate
+    public boolean isChronoOn() {
+        return isChronoOn;
     }
-    //Function Check timeoutTime
-    public boolean checkTimeoutTime(String currentTime){
-        if("00:00".equalsIgnoreCase(currentTime)){
-            //
-            Log.i("Info","Timeout has expired. Resuming matchtimer...");
-            return true;
-        }
-        return false;
-    }
+
 
 
 
