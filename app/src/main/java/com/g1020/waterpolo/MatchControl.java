@@ -1,8 +1,12 @@
 package com.g1020.waterpolo;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.*;
 import android.os.Bundle;
@@ -11,11 +15,29 @@ import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.net.ssl.HttpsURLConnection;
+
 import Application.ApplicationRuntime;
 import Domain.CompetitionClass;
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
 import Domain.Status;
+import persistency.MatchContract;
 
 public class MatchControl extends AppCompatActivity {
 
@@ -92,7 +114,103 @@ public class MatchControl extends AppCompatActivity {
         //Testcode for adding logging functionallity
 
 
+
+        //PRE 23 sdk version by importing library in build.graddle app android
+        //errors found httpclient is not supported in newer versions of andoird above 23
+        //webservices can not be called in the main mehod in version of android greater than honeycomb resolve by using async Task
+
+        /*
+        try {
+            HttpClient client = new DefaultHttpClient();
+            HttpGet request = new HttpGet(
+                    "http://voom.be:12005/api/matches/1");
+            HttpResponse response = client.execute(request);
+            BufferedReader rd = new BufferedReader(new InputStreamReader(
+                    response.getEntity().getContent()));
+            String line = "";
+            while ((line = rd.readLine()) != null) {
+                Log.i("DBTEST", line);
+                System.out.println(line);
+            }
+        } catch (Exception e) {
+
+            System.out.println("DBTEST" + e.getMessage());
+        }
+        */
+
+
+        //String Data = getJSON("http://voom.be:12005/api/matches/",100000);
+
+
+
     }
+
+/*
+    public String getJSON(String url, int timeout) {
+        HttpURLConnection c = null;
+        try {
+            URL u = new URL(url);
+            c = (HttpURLConnection) u.openConnection();
+            c.setRequestMethod("GET");
+            c.setRequestProperty("Content-length", "0");
+            c.setUseCaches(false);
+            c.setAllowUserInteraction(false);
+            c.setConnectTimeout(timeout);
+            c.setReadTimeout(timeout);
+            c.connect();
+            int status = c.getResponseCode();
+
+            switch (status) {
+                case 200:
+
+                case 201:
+                    BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line+"\n");
+                    }
+                    br.close();
+                    Log.i("DBTEST",sb.toString());
+                    return sb.toString();
+            }
+
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (c != null) {
+                try {
+                    c.disconnect();
+                } catch (Exception ex) {
+                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return null;
+    }
+    */
+
+    /*
+    public static String getJSON(String url) throws IOException {
+        HttpsURLConnection con = null;
+        URL u = new URL(url);
+        con = (HttpsURLConnection) u.openConnection();
+
+        con.connect();
+        BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line + "\n");
+        }
+        br.close();
+        Log.i("DBTEST", sb.toString());
+        return sb.toString();
+
+    }
+    */
 
     //PROCESS FUNCTIONS
     //Function: GoalMade - press goal button to change view so you can select who scored
@@ -269,4 +387,44 @@ public class MatchControl extends AppCompatActivity {
        // dc.getSegmentedLog();
     }
     //end testcode log
+
+
+    private void getResponseThread(final String url) {
+        new Thread(new Runnable() {
+            public void run() {
+                String cadHTTP = getResponse(url);
+                Message msg = new Message();
+                msg.obj = cadHTTP;
+                handlerHTTP.sendMessage(msg);
+            }
+        }).start();
+    }
+
+    private String getResponse(String url) {
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet del = new HttpGet(url);
+        del.setHeader("content-type", "application/json");
+
+        String respStr;
+        try {
+            HttpResponse resp = httpClient.execute(del);
+            respStr = EntityUtils.toString(resp.getEntity());
+        } catch(Exception ex) {
+            Log.e("RestService","Error!", ex);
+            respStr = "";
+        }
+
+        Log.e("getResponse",respStr);
+        return respStr;
+    }
+
+    private Handler handlerHTTP = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            String res = (String) msg.obj;
+            //CONTINUE HERE
+            nexTask(res);
+        }
+    };
+
 }
