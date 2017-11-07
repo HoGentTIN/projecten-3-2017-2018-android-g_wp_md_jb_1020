@@ -1,56 +1,93 @@
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="2.3"
     android:gravity="center_vertical|center">
 
-    <Button
-        android:id="@+id/btnGoal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:contentDescription="@string/t_button_goal"
-        android:onClick="goalMade"
-        android:text="@string/button_goal" />
+    <GridLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:columnCount="4"
+        android:rowCount="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-    <Button
-        android:id="@+id/btnChange"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="changePlayers"
-        android:text="@string/button_change" />
+        <Button
+            android:id="@+id/btnGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="fill"
+            android:layout_row="0"
+            android:layout_rowSpan="2"
+            android:contentDescription="@string/t_button_goal"
+            android:onClick="goalMade"
+            android:text="@string/button_goal" />
 
-    <Button
-        android:id="@+id/btnPenalty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="penaltyEvent"
-        android:text="@string/button_penalty" />
+        <Button
+            android:id="@+id/btnPenalty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="fill"
+            android:layout_row="0"
+            android:onClick="penaltyMade"
+            android:text="@string/button_penalty" />
 
-    <Button
-        android:id="@+id/btnU20"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="faultU20"
-        android:text="@string/t_button_U20" />
+        <Button
+            android:id="@+id/btnInjury"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_gravity="fill"
+            android:layout_row="0"
+            android:text="Injury" />
 
-    <Button
-        android:id="@+id/btnUMV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="0dp"
-        android:text="@string/button_UMV" />
+        <Button
+            android:id="@+id/btnNumberChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:layout_gravity="fill"
+            android:layout_row="0"
+            android:onClick="changePlayers"
+            android:text="@string/button_change" />
 
-    <Button
-        android:id="@+id/brnUMV4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="0dp"
-        android:text="@string/button_UMV4" />
-</LinearLayout>
+        <Button
+            android:id="@+id/btnU20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="fill"
+            android:layout_row="1"
+            android:onClick="faultU20"
+            android:text="@string/t_button_U20" />
+
+        <Button
+            android:id="@+id/btnUMV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_gravity="fill"
+            android:layout_row="1"
+            android:text="@string/button_UMV" />
+
+        <Button
+            android:id="@+id/btnUMV4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:layout_gravity="fill"
+            android:layout_row="1"
+            android:text="@string/button_UMV4" />
+
+    </GridLayout>
+
+</android.support.constraint.ConstraintLayout>
