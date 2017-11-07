@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by timos on 5-10-2017.
  */

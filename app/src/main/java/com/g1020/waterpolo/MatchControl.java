@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -27,6 +28,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,16 +37,22 @@ import javax.net.ssl.HttpsURLConnection;
 import Application.ApplicationRuntime;
 import Domain.CompetitionClass;
 import Domain.Domaincontroller;
+import Domain.Match;
 import Domain.MatchTimer;
 import Domain.Status;
 import persistency.MatchContract;
+import persistency.MatchRest;
+import persistency.MatchRestResponse;
+import rest.ApiClient;
+import rest.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MatchControl extends AppCompatActivity {
 
-    //VARIABLES
-    //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY START
-    public static final String EXTRA_MESSAGE = "com.g1020.Waterpolo.MESSAGE";
-    //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY END
+    private static final String TAG = MatchControl.class.getSimpleName();
+    private final static String API_KEY = "";
 
     ApplicationRuntime ar;  //this adds temporary code to this class
     Domaincontroller dc;
@@ -114,103 +122,31 @@ public class MatchControl extends AppCompatActivity {
         //Testcode for adding logging functionallity
 
 
-
-        //PRE 23 sdk version by importing library in build.graddle app android
-        //errors found httpclient is not supported in newer versions of andoird above 23
-        //webservices can not be called in the main mehod in version of android greater than honeycomb resolve by using async Task
-
-        /*
-        try {
-            HttpClient client = new DefaultHttpClient();
-            HttpGet request = new HttpGet(
-                    "http://voom.be:12005/api/matches/1");
-            HttpResponse response = client.execute(request);
-            BufferedReader rd = new BufferedReader(new InputStreamReader(
-                    response.getEntity().getContent()));
-            String line = "";
-            while ((line = rd.readLine()) != null) {
-                Log.i("DBTEST", line);
-                System.out.println(line);
-            }
-        } catch (Exception e) {
-
-            System.out.println("DBTEST" + e.getMessage());
+        if(API_KEY.isEmpty()){
+            Toast.makeText(getApplicationContext(),"please obtain api key", Toast.LENGTH_LONG).show();
+            return;
         }
-        */
 
 
-        //String Data = getJSON("http://voom.be:12005/api/matches/",100000);
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<MatchRestResponse> call = apiService.getMatches();
+        call.enqueue(new Callback<MatchRestResponse>() {
+            @Override
+            public void onResponse(Call<MatchRestResponse> call, Response<MatchRestResponse> response) {
+                List<MatchRest> matches = response.body().getResults();
+                Log.d(TAG,"" + matches.size());
+            }
+
+            @Override
+            public void onFailure(Call<MatchRestResponse> call, Throwable t) {
+                Log.e(TAG,t.toString());
+            }
+        });
 
 
 
     }
 
-/*
-    public String getJSON(String url, int timeout) {
-        HttpURLConnection c = null;
-        try {
-            URL u = new URL(url);
-            c = (HttpURLConnection) u.openConnection();
-            c.setRequestMethod("GET");
-            c.setRequestProperty("Content-length", "0");
-            c.setUseCaches(false);
-            c.setAllowUserInteraction(false);
-            c.setConnectTimeout(timeout);
-            c.setReadTimeout(timeout);
-            c.connect();
-            int status = c.getResponseCode();
-
-            switch (status) {
-                case 200:
-
-                case 201:
-                    BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line+"\n");
-                    }
-                    br.close();
-                    Log.i("DBTEST",sb.toString());
-                    return sb.toString();
-            }
-
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (c != null) {
-                try {
-                    c.disconnect();
-                } catch (Exception ex) {
-                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return null;
-    }
-    */
-
-    /*
-    public static String getJSON(String url) throws IOException {
-        HttpsURLConnection con = null;
-        URL u = new URL(url);
-        con = (HttpsURLConnection) u.openConnection();
-
-        con.connect();
-        BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = br.readLine()) != null) {
-            sb.append(line + "\n");
-        }
-        br.close();
-        Log.i("DBTEST", sb.toString());
-        return sb.toString();
-
-    }
-    */
 
     //PROCESS FUNCTIONS
     //Function: GoalMade - press goal button to change view so you can select who scored
@@ -388,43 +324,5 @@ public class MatchControl extends AppCompatActivity {
     }
     //end testcode log
 
-
-    private void getResponseThread(final String url) {
-        new Thread(new Runnable() {
-            public void run() {
-                String cadHTTP = getResponse(url);
-                Message msg = new Message();
-                msg.obj = cadHTTP;
-                handlerHTTP.sendMessage(msg);
-            }
-        }).start();
-    }
-
-    private String getResponse(String url) {
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet del = new HttpGet(url);
-        del.setHeader("content-type", "application/json");
-
-        String respStr;
-        try {
-            HttpResponse resp = httpClient.execute(del);
-            respStr = EntityUtils.toString(resp.getEntity());
-        } catch(Exception ex) {
-            Log.e("RestService","Error!", ex);
-            respStr = "";
-        }
-
-        Log.e("getResponse",respStr);
-        return respStr;
-    }
-
-    private Handler handlerHTTP = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            String res = (String) msg.obj;
-            //CONTINUE HERE
-            nexTask(res);
-        }
-    };
 
 }
