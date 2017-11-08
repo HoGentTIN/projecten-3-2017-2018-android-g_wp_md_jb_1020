@@ -61,8 +61,7 @@ public class MatchControl extends AppCompatActivity {
     TeamsHeaderFragment teamsHeader;
     PlayersFragment homeTeam;
     PlayersFragment awayTeam;
-    FaultFragment faultAwayTeam;
-    FaultFragment faultHomeTeam;
+
     ActivityFragment activities;
     ActivityInfoFragment infoFragment;
     ActivityButtonsFragment btnFragment;
@@ -163,16 +162,17 @@ public class MatchControl extends AppCompatActivity {
         */
         testLog();
 
-        //temporary to check change in score
-        dc.getMatch().addScore(dc.getMatch().getTeam(0));
-
         teamsHeader.updateHeader();
         Log.i("game","Number of goals: " + String.valueOf(dc.getMatch().getScoreHome()));
         activities.updateActivities(1);
 
         matchTimer.stopChrono();
         loadPlayers();
-        switchActivitiesButtonsToActionInfo();
+
+    }
+
+    public void penaltyMade(View view) {
+
     }
 
     //TEMP function to move to PlayerControl activity
@@ -181,14 +181,6 @@ public class MatchControl extends AppCompatActivity {
         //getSupportFragmentManager().beginTransaction().detach(faultAwayTeam).commit();
         //getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
 
-        awayTeam.setListPlayersByStatus(dc.getMatch().getTeam(0),Status.BENCHED);
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.awayContainer, awayTeam).commit();
-    }
-
-    //TEMP function to move to PlayerControl activity
-    public void penaltyEvent(View view) {
-        loadFaults();
     }
 
     public void faultU20(View view){
@@ -207,7 +199,6 @@ public class MatchControl extends AppCompatActivity {
 
             //show the button again
             loadActivitiesButtons();
-            loadFaults();
         }
     }
 
@@ -274,7 +265,7 @@ public class MatchControl extends AppCompatActivity {
     public void awayTimeout(View view){}
 
 
-    public void switchActivitiesButtonsToActionInfo(){
+    public void showActionInfo(){
         if(infoFragment == null) {
             infoFragment = new ActivityInfoFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.activitiesbuttonContainer, infoFragment).commit();
@@ -285,22 +276,6 @@ public class MatchControl extends AppCompatActivity {
 
     public void loadActivitiesButtons(){
         getSupportFragmentManager().beginTransaction().replace(R.id.activitiesbuttonContainer, btnFragment).commit();
-
-    }
-
-    public void loadFaults(){
-        //First initialization of faultfragments
-        if(faultAwayTeam==null || faultHomeTeam==null){
-            faultHomeTeam = new FaultFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.homeContainer, faultHomeTeam).commit();
-
-            faultAwayTeam = new FaultFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, faultAwayTeam).commit();
-        }
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer, faultHomeTeam).commit();
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.awayContainer, faultAwayTeam).commit();
 
     }
 

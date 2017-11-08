@@ -19,6 +19,7 @@ import Domain.Domaincontroller;
 import Domain.Player;
 import Domain.Status;
 import Domain.Team;
+import views.CustomPlayerListAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
