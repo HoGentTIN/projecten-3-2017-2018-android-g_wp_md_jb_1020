@@ -29,9 +29,6 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
         private TextView txtPlayernumber;
         private TextView txtPlayername;
 
-        private ImageView imgFault1;
-        private ImageView imgFault2;
-        private ImageView imgFault3;
 
         public CustomPlayerListAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<Player> players) {
             super(context, textViewResourceId, players);
@@ -52,9 +49,6 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                 if (p != null) {
                     txtPlayernumber = (TextView) v.findViewById(R.id.txtplayernumber);
                     txtPlayername = (TextView) v.findViewById(R.id.txtplayername);
-                    imgFault1 = (ImageView) v.findViewById(R.id.fault1);
-                    imgFault2 = (ImageView) v.findViewById(R.id.fault2);
-                    imgFault3 = (ImageView) v.findViewById(R.id.fault3);
 
                     if (txtPlayername != null) {
                         txtPlayername.setText(p.getFullName());

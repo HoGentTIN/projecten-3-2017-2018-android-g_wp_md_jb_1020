@@ -20,68 +20,25 @@
             android:id="@+id/txtplayernumber"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="16dp"
             android:gravity="center"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txtplayername"
             app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginRight="30dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtplayername"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
-            app:layout_constraintStart_toEndOf="@+id/txtplayernumber"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginRight="8dp" />
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:gravity="right"
-            android:orientation="horizontal"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/txtplayername"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginRight="8dp">
-
-            <ImageView
-                android:id="@+id/fault3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/radiobutton_off_background" />
-
-            <ImageView
-                android:id="@+id/fault2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fault3"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/radiobutton_off_background" />
-
-            <ImageView
-                android:id="@+id/fault1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fault2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/radiobutton_off_background" />
-        </android.support.constraint.ConstraintLayout>
+            app:layout_constraintStart_toEndOf="@+id/txtplayernumber"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </TableLayout>

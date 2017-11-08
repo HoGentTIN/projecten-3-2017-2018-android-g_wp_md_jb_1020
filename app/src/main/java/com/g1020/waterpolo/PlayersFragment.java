@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +30,13 @@ public class PlayersFragment extends Fragment {
     //TEMPORARY
     Domaincontroller dc;
     private static PlayersFragment pf;
-    private CustomPlayerListAdapter playerAdapter;
+    private CustomPlayerListAdapter playerAdapter1;
+    private CustomPlayerListAdapter playerAdapter2;
     List<Player> currentPlayers;
-    ListView lvPlayers;
+    Player selectedPlayer;
+    private ListView lvPlayers;
+    private ListView lvPlayers2;
+
     TextView playerTitle;
     //TEMPORARY
 
@@ -61,35 +66,39 @@ public class PlayersFragment extends Fragment {
         Team team = dc.getMatch().getTeam(getArguments().getInt("teamNumber"));
 
         lvPlayers = (ListView) view.findViewById(R.id.lsvplayers);
-
+        lvPlayers2 = (ListView) view.findViewById(R.id.lsvplayers2);
 
         Log.i("game",dc.getMatch().getTeam(0).getPlayers().get(0).getFullName());
-
 
         teamClickAction(lvPlayers);
 
         playerTitle = (TextView) view.findViewById(R.id.playerTitle);
-        setListPlayersByStatus(team,Status.ACTIVE);
+        setListPlayers(team);
 
         return view;
     }
 
-    private void teamClickAction(ListView listview) {
+    private void teamClickAction(final ListView listview) {
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), "You've clicked item " + position, Toast.LENGTH_SHORT).show();
+                // retrieve the selected player
+                selectedPlayer = (Player) listview.getItemAtPosition(position);
+                Toast.makeText(getActivity(), "You've selected player " + selectedPlayer.getFullName(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void setListPlayersByStatus(Team team, Status s){
-        currentPlayers = team.getPlayersByStatus(s);
+    public void setListPlayers(Team team){
+        currentPlayers = team.getPlayers();
         playerTitle.setText(String.format(getResources().getString(R.string.playerFragmentTitle),currentPlayers.get(0).getStatus().toString()));
 
-        playerAdapter = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers);
+        playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,7));
+        playerAdapter2 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(7,currentPlayers.size()));
 
-        lvPlayers.setAdapter(playerAdapter);
+        lvPlayers.setAdapter(playerAdapter1);
+        lvPlayers2.setAdapter(playerAdapter2);
     }
 
 
