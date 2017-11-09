@@ -15,11 +15,25 @@ public class Player {
     private Status status;
     private Team team;
 
+    // 3 strikes and you are out
+    private int faults;
+
     public Player(int n, String lastName, String firstName){
         this.firstName = firstName;
         this.lastName = lastName;
         this.playerNumber = n;
         this.status = status;
+
+        //temporary
+        player_id = playerNumber;
+    }
+
+    public int getFaults() {
+        return faults;
+    }
+
+    public void setFaults(int faults) {
+        this.faults = faults;
     }
 
     public Team getTeam() {

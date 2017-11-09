@@ -49,7 +49,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MatchControl extends AppCompatActivity {
+public class MatchControl extends AppCompatActivity implements PlayersFragment.OnPlayerSelectedListener{
 
     private static final String TAG = MatchControl.class.getSimpleName();
     private final static String API_KEY = "";
@@ -162,12 +162,16 @@ public class MatchControl extends AppCompatActivity {
         */
         testLog();
 
+        //add the goal to the current selected player in domaincontroller
+        dc.addGoal();
+
         teamsHeader.updateHeader();
         Log.i("game","Number of goals: " + String.valueOf(dc.getMatch().getScoreHome()));
         activities.updateActivities(1);
 
         matchTimer.stopChrono();
-        loadPlayers();
+
+        //loadPlayers();
 
     }
 
@@ -200,6 +204,9 @@ public class MatchControl extends AppCompatActivity {
             //show the button again
             loadActivitiesButtons();
         }
+
+        //add the fault to the current selected player in domaincontroller
+        dc.addFaultU20();
     }
 
     /*
@@ -296,6 +303,12 @@ public class MatchControl extends AppCompatActivity {
         dc.appendLog("Goal by (3)Home.","GH2","07:02",2);
 
        // dc.getSegmentedLog();
+    }
+
+    // sets the selected player in the domaincontroller
+    @Override
+    public void onArticleSelected(Boolean hometeam, int playerId) {
+        dc.setSelectedPlayer(hometeam, playerId);
     }
     //end testcode log
 

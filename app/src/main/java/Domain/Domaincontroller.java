@@ -16,12 +16,37 @@ public class Domaincontroller {
     private Match match;
     private Official o;
 
+    private Player selectedPlayer;
+
     private List<String[]> logList = new ArrayList<>();                                             //List of all events, event = String[] => [0] = roundNumber, [1] = roundTime, [2] = eventCode ,[3] = eventDescription
     private int eventCounter = 0;                                                                   //eventCode used for filtering logs, show all goals, faults, [G|C|P|U|V|V4][H,A][1,2,3,4] {G,C,P,U,V,V4 = goal|change of player|Penalty|faults.. , H,A = Home|Away, 1,2,3,4 = Round}
 
 
     public Domaincontroller(){
 
+    }
+
+    public Player getSelectedPlayer() {
+        return selectedPlayer;
+    }
+
+    public void setSelectedPlayer(Boolean homeTeam, int playerId) {
+        int teamNr;
+        if (homeTeam){
+            teamNr = 0;
+        } else {
+            teamNr = 1;
+        }
+        selectedPlayer = match.getTeam(teamNr).getPlayerById(playerId);
+        Log.i("game", selectedPlayer.getFullName() + " selected in DC");
+    }
+
+    public void addGoal(){
+        match.addGoal(new Goal(selectedPlayer));
+    }
+
+    public void addFaultU20() {
+        selectedPlayer.setFaults(selectedPlayer.getFaults() + 1);
     }
 
     public Match getMatch() {
@@ -133,9 +158,13 @@ public class Domaincontroller {
 
     public void createTeams(String homeTeamName, CompetitionClass homeCc, String awayTeamName, CompetitionClass awayCc){
         Team hometeam = new Team(homeTeamName, homeCc);
+        hometeam.setHomeTeam(true);
         Team awayteam = new Team(awayTeamName, awayCc);
+        awayteam.setHomeTeam(false);
         match.addTeams(hometeam,awayteam);
     }
+
+
 
 
     //eventcode - description => Overview of eventlogcodes and corresponding description

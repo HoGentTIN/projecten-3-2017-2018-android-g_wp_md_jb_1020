@@ -1,6 +1,7 @@
 package com.g1020.waterpolo;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -37,8 +38,29 @@ public class PlayersFragment extends Fragment {
     private ListView lvPlayers;
     private ListView lvPlayers2;
 
+    // interface object to pass data
+    OnPlayerSelectedListener playerListener;
+
     TextView playerTitle;
     //TEMPORARY
+
+    //interface for passing data to matchcontrol
+    public interface OnPlayerSelectedListener{
+        public void onArticleSelected(Boolean homeTeam, int playerId);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            playerListener = (OnPlayerSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnPlayerSelectedListener");
+        }
+
+    }
 
     public PlayersFragment() {
         // Required empty public constructor
@@ -46,7 +68,6 @@ public class PlayersFragment extends Fragment {
         dc = ar.getDc();
     }
 
-    //NULPOINTEREXCEPTION, creating multiple fragments
     public static PlayersFragment newInstance(int teamNumber) {
         pf = new PlayersFragment();
 
@@ -71,6 +92,7 @@ public class PlayersFragment extends Fragment {
         Log.i("game",dc.getMatch().getTeam(0).getPlayers().get(0).getFullName());
 
         teamClickAction(lvPlayers);
+        teamClickAction(lvPlayers2);
 
         playerTitle = (TextView) view.findViewById(R.id.playerTitle);
         setListPlayers(team);
@@ -84,8 +106,11 @@ public class PlayersFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // retrieve the selected player
+
                 selectedPlayer = (Player) listview.getItemAtPosition(position);
+                Boolean team = selectedPlayer.getTeam().getHomeTeam();
                 Toast.makeText(getActivity(), "You've selected player " + selectedPlayer.getFullName(), Toast.LENGTH_SHORT).show();
+                playerListener.onArticleSelected(team, selectedPlayer.getPlayer_id());
             }
         });
     }
