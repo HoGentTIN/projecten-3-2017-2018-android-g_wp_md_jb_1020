@@ -106,7 +106,6 @@ public class PlayersFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // retrieve the selected player
-
                 selectedPlayer = (Player) listview.getItemAtPosition(position);
                 Boolean team = selectedPlayer.getTeam().getHomeTeam();
                 Toast.makeText(getActivity(), "You've selected player " + selectedPlayer.getFullName(), Toast.LENGTH_SHORT).show();

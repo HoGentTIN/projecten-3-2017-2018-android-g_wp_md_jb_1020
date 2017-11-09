@@ -6,4 +6,10 @@
     <color name="btnColorStart">#1E6520</color>
     <color name="colorGoaly">#e1111f</color>
     <color name="colorBlack">#000000</color>
+
+    // kleuren voor de verschillende fouten van een speler aan te tonen.
+    <color name="colorNoFaults">#ffffff</color>
+    <color name="color1Fault">#d6c442</color>
+    <color name="color2Faults">#e6912f</color>
+    <color name="color3Faults">#cc291e</color>
 </resources>

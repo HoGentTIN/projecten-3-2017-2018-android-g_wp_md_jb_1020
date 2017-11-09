@@ -166,7 +166,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         dc.addGoal();
 
         teamsHeader.updateHeader();
-        Log.i("game","Number of goals: " + String.valueOf(dc.getMatch().getScoreHome()));
         activities.updateActivities(1);
 
         matchTimer.stopChrono();
@@ -188,6 +187,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     }
 
     public void faultU20(View view){
+
+        //add the fault to the current selected player in domaincontroller
+        dc.addFaultU20();
         loadPlayers();
     }
 
@@ -205,8 +207,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             loadActivitiesButtons();
         }
 
-        //add the fault to the current selected player in domaincontroller
-        dc.addFaultU20();
+        loadPlayers();
     }
 
     /*
@@ -287,9 +288,11 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     }
 
     public void loadPlayers(){
+
         getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer, homeTeam).commit();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.awayContainer, awayTeam).commit();
+
     }
 
 

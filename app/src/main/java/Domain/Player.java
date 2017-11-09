@@ -23,6 +23,7 @@ public class Player {
         this.lastName = lastName;
         this.playerNumber = n;
         this.status = status;
+        this.faults = 0;
 
         //temporary
         player_id = playerNumber;

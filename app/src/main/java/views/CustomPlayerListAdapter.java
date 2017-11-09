@@ -29,6 +29,8 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
         private TextView txtPlayernumber;
         private TextView txtPlayername;
 
+        //to use colors in resources
+        private int res[] = {R.color.colorNoFaults, R.color.color1Fault,R.color.color2Faults,R.color.color3Faults};
 
         public CustomPlayerListAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<Player> players) {
             super(context, textViewResourceId, players);
@@ -57,6 +59,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                         int pNumber = p.getPlayerNumber();
 
                         setTeamColors(p);
+                        updateBackgroundColors(v,p);
 
                         StringBuilder sbPlayerNumber = new StringBuilder();
                         sbPlayerNumber.append(pNumber);
@@ -87,5 +90,9 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                 default:
                     break;
             }
+        }
+
+        private void updateBackgroundColors(View v, Player p){
+            v.setBackgroundResource(res[p.getFaults()]);
         }
     }
