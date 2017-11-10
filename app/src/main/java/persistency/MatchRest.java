@@ -32,7 +32,7 @@ public class MatchRest {
 
 
     @SerializedName("date")
-    private Date date;
+    private String date;
 
     @SerializedName("location_id")
     private int location_id;
@@ -57,7 +57,7 @@ public class MatchRest {
     private List<Goal> goals;
 
 
-    public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway, Date date, int location_id, int valor_id, int difficulty_id, Team home, Team visitor, Valor valor, Difficulty difficulty, List<Goal> goals) {
+    public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway, String date, int location_id, int valor_id, int difficulty_id, Team home, Team visitor, Valor valor, Difficulty difficulty, List<Goal> goals) {
         this.match_id = match_id;
         this.home_id = home_id;
         this.visitor_id = visitor_id;
@@ -94,7 +94,7 @@ public class MatchRest {
         return scoreAway;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -130,7 +130,7 @@ public class MatchRest {
         this.scoreAway = scoreAway;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

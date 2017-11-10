@@ -25,12 +25,12 @@ public class ApiClient {
 
 
     public static Retrofit getClient() {
-        private final DateFormat dateFormat;
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);      //This is the format I need
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+       // DateFormat dateFormat;
+        //dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);      //This is the format I need
+        //dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         Gson gson = new GsonBuilder()
-                .setDateFormat(String.valueOf(dateFormat))
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
 
         if (retrofit==null) {
