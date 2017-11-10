@@ -22,7 +22,7 @@ public class Match {
     private List<Team> teams;               //always size 2 (1 is hometeam, 2 is awayteam)
     private List<Goal> scoreHome;
     private List<Goal> scoreAway;
-    private List<Official> officials;       //first official is always main official
+    private Official official;       //first official is always main official
     private List<Quarter> quarters;         //list of maximum 4 length initialize in start admin when setting up quarterlenght
 
     private Date date;

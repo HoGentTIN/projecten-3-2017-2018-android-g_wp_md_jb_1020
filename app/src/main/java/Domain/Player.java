@@ -62,7 +62,7 @@ public class Player {
     }
 
     public String getFullName(){
-        return lastName + " " + firstName;
+        return firstName.charAt(0) + ". " + lastName;
     }
 
     public int getAge() {

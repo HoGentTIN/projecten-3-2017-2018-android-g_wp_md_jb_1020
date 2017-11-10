@@ -110,35 +110,43 @@
             <TextView
                 android:id="@+id/txtTimer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:clickable="true"
                 android:gravity="center"
                 android:onClick="toggleChrono"
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
-            <FrameLayout
-                android:id="@+id/teamsheadercontainer"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:weightSum="3"
+                android:orientation="vertical">
 
-            </FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/activitiesContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                <FrameLayout
+                    android:id="@+id/teamsheadercontainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                </FrameLayout>
 
-            </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/activitiesContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingBottom="8dp">
+                </FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/activitiesbuttonContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"></FrameLayout>
+                <FrameLayout
+                    android:id="@+id/activitiesbuttonContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                </FrameLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
