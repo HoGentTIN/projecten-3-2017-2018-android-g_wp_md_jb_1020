@@ -121,23 +121,26 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //Testcode for adding logging functionallity
 
 
+        /*
         if(API_KEY.isEmpty()){
             Toast.makeText(getApplicationContext(),"please obtain api key", Toast.LENGTH_LONG).show();
             return;
         }
+        */
+
 
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<MatchRestResponse> call = apiService.getMatches();
-        call.enqueue(new Callback<MatchRestResponse>() {
+        Call<List<MatchRest>> call = apiService.getMatches();
+        call.enqueue(new Callback<List<MatchRest>>() {
             @Override
-            public void onResponse(Call<MatchRestResponse> call, Response<MatchRestResponse> response) {
-                List<MatchRest> matches = response.body().getResults();
+            public void onResponse(Call<List<MatchRest>> call, Response<List<MatchRest>> response) {
+                List<MatchRest> matches = response.body();
                 Log.d(TAG,"" + matches.size());
             }
 
             @Override
-            public void onFailure(Call<MatchRestResponse> call, Throwable t) {
+            public void onFailure(Call<List<MatchRest>> call, Throwable t) {
                 Log.e(TAG,t.toString());
             }
         });

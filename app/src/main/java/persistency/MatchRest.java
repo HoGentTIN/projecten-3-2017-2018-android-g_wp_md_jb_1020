@@ -19,13 +19,15 @@ public class MatchRest {
     @SerializedName("visitor_id")
     private int visitor_id;
 
-    @SerializedName("home_score")
+    @SerializedName("score_home")
     private int scoreHome;
-    @SerializedName("visitor_score")
+    @SerializedName("score_visitor")
     private int scoreAway;
 
+    /*
     @SerializedName("date")
     private Date date;
+    */
 
     @SerializedName("location_id")
     private int location_id;
@@ -37,13 +39,13 @@ public class MatchRest {
     //private int division_id;
 
 
-    public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway, Date date, int location_id, int valor_id, int difficulty_id) {
+    public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway,/* Date date,*/int location_id, int valor_id, int difficulty_id) {
         this.match_id = match_id;
         this.home_id = home_id;
         this.visitor_id = visitor_id;
         this.scoreHome = scoreHome;
         this.scoreAway = scoreAway;
-        this.date = date;
+        //this.date = date;
         this.location_id = location_id;
         this.valor_id = valor_id;
         this.difficulty_id = difficulty_id;
@@ -69,9 +71,11 @@ public class MatchRest {
         return scoreAway;
     }
 
+    /*
     public Date getDate() {
         return date;
     }
+    */
 
     public int getLocation_id() {
         return location_id;
@@ -105,9 +109,10 @@ public class MatchRest {
         this.scoreAway = scoreAway;
     }
 
-    public void setDate(Date date) {
+   /* public void setDate(Date date) {
         this.date = date;
     }
+    */
 
     public void setLocation_id(int location_id) {
         this.location_id = location_id;
