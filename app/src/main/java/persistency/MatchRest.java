@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
 
+import Domain.Difficulty;
+import Domain.Goal;
+import Domain.Location;
+import Domain.Team;
+import Domain.Valor;
+
 
 /**
  * Created by timos on 7-11-2017.
@@ -24,10 +30,9 @@ public class MatchRest {
     @SerializedName("score_visitor")
     private int scoreAway;
 
-    /*
+
     @SerializedName("date")
     private Date date;
-    */
 
     @SerializedName("location_id")
     private int location_id;
@@ -38,17 +43,35 @@ public class MatchRest {
     //@SerializedName("divisioin_id")
     //private int division_id;
 
+    @SerializedName("home")
+    private Team home;
+    @SerializedName("visitor")
+    private Team visitor;
+    @SerializedName("location")
+    private Location location;
+    @SerializedName("valor")
+    private Valor valor;
+    @SerializedName("difficulty")
+    private Difficulty difficulty;
+    @SerializedName("goals")
+    private List<Goal> goals;
 
-    public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway,/* Date date,*/int location_id, int valor_id, int difficulty_id) {
+
+    public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway, Date date, int location_id, int valor_id, int difficulty_id, Team home, Team visitor, Valor valor, Difficulty difficulty, List<Goal> goals) {
         this.match_id = match_id;
         this.home_id = home_id;
         this.visitor_id = visitor_id;
         this.scoreHome = scoreHome;
         this.scoreAway = scoreAway;
-        //this.date = date;
+        this.date = date;
         this.location_id = location_id;
         this.valor_id = valor_id;
         this.difficulty_id = difficulty_id;
+        this.home = home;
+        this.visitor = visitor;
+        this.valor = valor;
+        this.difficulty = difficulty;
+        this.goals = goals;
     }
 
     public int getMatch_id() {
@@ -71,11 +94,9 @@ public class MatchRest {
         return scoreAway;
     }
 
-    /*
     public Date getDate() {
         return date;
     }
-    */
 
     public int getLocation_id() {
         return location_id;
@@ -109,10 +130,10 @@ public class MatchRest {
         this.scoreAway = scoreAway;
     }
 
-   /* public void setDate(Date date) {
+    public void setDate(Date date) {
         this.date = date;
     }
-    */
+
 
     public void setLocation_id(int location_id) {
         this.location_id = location_id;

@@ -1,53 +1,17 @@
 package com.g1020.waterpolo;
 
-import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.*;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Chronometer;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import Application.ApplicationRuntime;
 import Domain.CompetitionClass;
 import Domain.Domaincontroller;
-import Domain.Match;
 import Domain.MatchTimer;
-import Domain.Status;
-import persistency.MatchContract;
-import persistency.MatchRest;
-import persistency.MatchRestResponse;
-import rest.ApiClient;
-import rest.ApiInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MatchControl extends AppCompatActivity implements PlayersFragment.OnPlayerSelectedListener{
 
@@ -82,20 +46,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         // END PIETER
 
         matchTimer = ar.chronoSetup((TextView) findViewById(R.id.txtTimer), dc.getRoundTime());
-        /*
-        //Chrono listner to set maximum time
-        matchTimer.getMatchTimer().setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                if(matchTimer.checkRoundTime(chronometer.getText().toString())){
-                    Log.i("Info","Timer reached round end");
-                    dc.appendLog("End of round" + 1 + " - Current matchscore: " + 2 + " - " + 5,"ME");                                              //Replace 1 by dc.functiontoretrieveroundnumber, and retrievecurrentscores home-away
-                    //checkRoundTime already does the timerprocess
-                    //Still need code here for actions related to activity
-                }
-            }
-        });
-        */
+
         //initialize shotlock timer
         matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
         matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (long) (8*1000*60));
@@ -121,29 +72,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //Testcode for adding logging functionallity
 
 
-        /*
-        if(API_KEY.isEmpty()){
-            Toast.makeText(getApplicationContext(),"please obtain api key", Toast.LENGTH_LONG).show();
-            return;
-        }
-        */
-
-
-
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<List<MatchRest>> call = apiService.getMatches();
-        call.enqueue(new Callback<List<MatchRest>>() {
-            @Override
-            public void onResponse(Call<List<MatchRest>> call, Response<List<MatchRest>> response) {
-                List<MatchRest> matches = response.body();
-                Log.d(TAG,"" + matches.size());
-            }
-
-            @Override
-            public void onFailure(Call<List<MatchRest>> call, Throwable t) {
-                Log.e(TAG,t.toString());
-            }
-        });
 
 
 
