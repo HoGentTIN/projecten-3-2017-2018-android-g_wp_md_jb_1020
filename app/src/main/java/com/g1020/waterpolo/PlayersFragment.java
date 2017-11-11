@@ -2,6 +2,7 @@ package com.g1020.waterpolo;
 
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -37,6 +38,8 @@ public class PlayersFragment extends Fragment {
     Player selectedPlayer;
     private ListView lvPlayers;
     private ListView lvPlayers2;
+
+    private int previousPlayerPosition;
 
     // interface object to pass data
     OnPlayerSelectedListener playerListener;
@@ -105,13 +108,42 @@ public class PlayersFragment extends Fragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                resetFontPlayers();
+
                 // retrieve the selected player
+                previousPlayerPosition = position;
                 selectedPlayer = (Player) listview.getItemAtPosition(position);
                 Boolean team = selectedPlayer.getTeam().isHomeTeam();
                 Toast.makeText(getActivity(), "You've selected player " + selectedPlayer.getFullName(), Toast.LENGTH_SHORT).show();
                 playerListener.onArticleSelected(team, selectedPlayer.getPlayer_id());
+
+
+                //Change look of selected item
+                if(selectedPlayer.getTeam().isHomeTeam()){
+                    CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
+                    ca.setSelectedPlayer(position,  listview.getChildAt(position), Typeface.BOLD );
+                }else{
+                    CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
+                    ca.setSelectedPlayer(position,  listview.getChildAt(position), Typeface.BOLD );
+                }
+
+
+
             }
         });
+    }
+
+    //function to reset the visibility of currently selected player
+    public void resetFontPlayers(){
+        if(selectedPlayer!=null){
+            //Change look of previous item
+            CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
+            ca.setSelectedPlayer(previousPlayerPosition,  lvPlayers.getChildAt(previousPlayerPosition), Typeface.NORMAL );
+            ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
+            ca.setSelectedPlayer(previousPlayerPosition,  lvPlayers2.getChildAt(previousPlayerPosition), Typeface.NORMAL );
+
+        }
     }
 
     public void setListPlayers(Team team){
@@ -123,6 +155,7 @@ public class PlayersFragment extends Fragment {
 
         lvPlayers.setAdapter(playerAdapter1);
         lvPlayers2.setAdapter(playerAdapter2);
+
     }
 
 

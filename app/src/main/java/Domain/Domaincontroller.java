@@ -46,8 +46,11 @@ public class Domaincontroller {
     }
 
     public void addFaultU20() {
+        //set fault to player
         selectedPlayer.setFaults(selectedPlayer.getFaults() + 1);
         Log.i("game", selectedPlayer.getFullName() + " has " + selectedPlayer.getFaults() + " faults");
+        //Reset selectedplayer to zero
+        selectedPlayer = null;
     }
 
     public Match getMatch() {

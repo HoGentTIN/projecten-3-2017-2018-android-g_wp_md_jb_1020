@@ -118,9 +118,13 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     public void faultU20(View view){
 
-        //add the fault to the current selected player in domaincontroller
-        dc.addFaultU20();
-        loadPlayers();
+        //If players selected preform action
+        if(dc.getSelectedPlayer()!=null){
+            //add the fault to the current selected player in domaincontroller
+            dc.addFaultU20();
+            loadPlayers();
+        }
+
     }
 
     //Function togglechrono - backup function to pauze match and simply halt the shotlock
