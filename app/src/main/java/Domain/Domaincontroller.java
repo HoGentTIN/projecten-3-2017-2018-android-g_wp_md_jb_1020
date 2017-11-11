@@ -54,12 +54,14 @@ public class Domaincontroller {
         Log.i("game", selectedPlayer.getFullName() + " has " + selectedPlayer.getFaults() + " faults");
     }
 
+    //WERKT NIET CORRECT
     public void switchPlayerCaps() {
 
         Player firstPlayer = selectedPlayer;
         int firstPlayerNumber = firstPlayer.getPlayerNumber();
         resetSelectedPlayer();
 
+        // WERKT NIET, moet gewacht worden op een clickEvent
         if (!firstPlayer.equals(selectedPlayer) && selectedPlayer != null) {
             Player secondPlayer = selectedPlayer;
             int secondPlayerNumber = secondPlayer.getPlayerNumber();
