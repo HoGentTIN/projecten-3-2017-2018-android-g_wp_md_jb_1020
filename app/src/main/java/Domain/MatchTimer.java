@@ -90,6 +90,11 @@ public class MatchTimer {
                     txtTimer.setText(String.format("%d:%d",minutesRemaining , secondRemaining));
                 }
                 setTimeRemaining(millisUntilFinished);
+
+                //Update matchTimerView before stopping otherwise it will be 1 second behind
+                if(getShotlockTimeRemaining()==0){
+                    stopChrono();
+                }
             }
 
             @Override
@@ -123,6 +128,7 @@ public class MatchTimer {
             public void onFinish() {
                 txtShotlock.setText("0");
                 Log.i("Info","Shotlock has expired.");
+                setShotlockTimeRemaining(0);
             }
         };
     }
