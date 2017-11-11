@@ -20,7 +20,6 @@ public class Team {
     private CompetitionClass competitionClass;
     private Boolean isHomeTeam;
 
-
     private List<Player> players = new ArrayList<>();
 
     public Team(String teamname, CompetitionClass competitionClass) {
@@ -80,5 +79,17 @@ public class Team {
             }
         }
         return pl;
+    }
+
+    public void switchPlayerCaps(int playerId1, int playerId2){
+        Player p1 = getPlayerById(playerId1);
+        Player p2 = getPlayerById(playerId2);
+
+        int firstPlayerNumber = p1.getPlayerNumber();
+        int secondPlayerNumber = p2.getPlayerNumber();
+
+        p1.setPlayerNumber(secondPlayerNumber);
+        p2.setPlayerNumber(firstPlayerNumber);
+
     }
 }

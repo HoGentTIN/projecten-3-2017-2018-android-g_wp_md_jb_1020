@@ -21,6 +21,9 @@ public class Domaincontroller {
     private List<String[]> logList = new ArrayList<>();                                             //List of all events, event = String[] => [0] = roundNumber, [1] = roundTime, [2] = eventCode ,[3] = eventDescription
     private int eventCounter = 0;                                                                   //eventCode used for filtering logs, show all goals, faults, [G|C|P|U|V|V4][H,A][1,2,3,4] {G,C,P,U,V,V4 = goal|change of player|Penalty|faults.. , H,A = Home|Away, 1,2,3,4 = Round}
 
+    //pretty sure this isn't the correct way to switch players, but it works
+    private Boolean switchPlayer = false;
+    private Player playerToSwitch;
 
     public Domaincontroller(){
 
@@ -39,10 +42,17 @@ public class Domaincontroller {
         }
         selectedPlayer = match.getTeam(teamNr).getPlayerById(playerId);
         Log.i("game", selectedPlayer.getFullName() + " selected in DC");
+
+        //check if there's a player to switch
+        checkPlayerSwitch();
     }
 
     public void addGoal(){
-        match.addGoal(new Goal(selectedPlayer));
+        if(selectedPlayer != null) {
+            if(selectedPlayer.getStatus() !=Status.GAMEOVER) {
+                match.addGoal(new Goal(selectedPlayer));
+            }
+        }
     }
 
     public void addFaultU20() {
@@ -51,6 +61,23 @@ public class Domaincontroller {
         Log.i("game", selectedPlayer.getFullName() + " has " + selectedPlayer.getFaults() + " faults");
         //Reset selectedplayer to zero
         selectedPlayer = null;
+    }
+
+    // indicate that players want to change number & store first player object
+    public void switchPlayerCaps() {
+        playerToSwitch = selectedPlayer;
+        switchPlayer = true;
+    }
+
+    // calls method in team to switch the player numbers when both players are from the same team and passes both player id's
+    private void checkPlayerSwitch(){
+        if(switchPlayer){
+            if(playerToSwitch.getTeam().equals(selectedPlayer.getTeam())) {
+                playerToSwitch.getTeam().switchPlayerCaps(playerToSwitch.getPlayer_id(), selectedPlayer.getPlayer_id());
+                Log.i("game", playerToSwitch.getFullName() + " switched numbers with " + selectedPlayer.getFullName());
+                switchPlayer = false;
+            }
+        }
     }
 
     public Match getMatch() {
@@ -168,7 +195,9 @@ public class Domaincontroller {
         match.addTeams(hometeam,awayteam);
     }
 
-
+    public void resetSelectedPlayer() {
+        selectedPlayer = null;
+    }
 
 
     //eventcode - description => Overview of eventlogcodes and corresponding description
