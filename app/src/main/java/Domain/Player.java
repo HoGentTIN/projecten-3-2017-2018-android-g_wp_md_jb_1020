@@ -16,6 +16,7 @@ public class Player {
     private String lastName;
     private int age;            //would this normally not be birthdate
     private Status status;
+    private boolean starter;
     private Team team;
 
     // 3 strikes and you are out
@@ -120,7 +121,7 @@ public class Player {
                 @Override
                 public void onFinish() {
                     Log.d("FaultTest","FaultTimer for " + firstName + " has ended");
-                    faultTimer=null;
+                    setFaultTimeRemaining(0);
                 }
             };
         } else {
@@ -133,8 +134,8 @@ public class Player {
 
                 @Override
                 public void onFinish() {
-
-                    faultTimer = null;
+                    Log.d("FaultTest","FaultTimer for " + firstName + " has ended");
+                    setFaultTimeRemaining(0);
                 }
             };
         }

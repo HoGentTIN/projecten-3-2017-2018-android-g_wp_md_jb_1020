@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,18 +136,29 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //If players selected preform action
         if(dc.getSelectedPlayer()!=null){
             Player sp = dc.getSelectedPlayer();
-            //add the fault to the current selected player in domaincontroller
-            dc.addFaultU20();
-            loadPlayers();
-            clearSelectedPlayer();
+            if(!faultPlayers.contains(sp)){
+                //add the fault to the current selected player in domaincontroller
+                dc.addFaultU20();
+                //Logging
+                String t;
+                if(sp.getTeam().isHomeTeam()){t = "H";}else {t = "A";}
+                TextView tt = (TextView) findViewById(R.id.txtTimer);
+                dc.appendLog("Fault U20 for " + sp.getFullName() + ".","U" + t + ar.round, tt.getText().toString(),ar.round);
 
-            //Start 20 second timer
-            sp.setFaultTimer();
-            CountDownTimer faultTimer = sp.getFaultTimer();
-            if(matchTimer.isChronoOn()){
-                faultTimer.start();
+                loadPlayers();
+                clearSelectedPlayer();      //clear selected player from layout
+
+                //Start 20 second timer
+                sp.setFaultTimer();
+                CountDownTimer faultTimer = sp.getFaultTimer();
+                if(matchTimer.isChronoOn()){
+                    faultTimer.start();
+                }
+                faultPlayers.add(sp);
+            }else {
+                //Player is already punished by this fault he cannot get extra
+                Toast.makeText(this, "player " + sp.getFullName() + " still has an ongoing U20 Fault", Toast.LENGTH_SHORT).show();
             }
-            faultPlayers.add(sp);
 
         }
 
@@ -271,11 +283,13 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     //Function to control all faultimers via shotlock
     public void toggleFaultTimers(boolean start){
         if(faultPlayers!=null) {
-
             for (int i = 0; i < faultPlayers.size(); i++) {
-                Log.d("sizetes",i +""+faultPlayers.size());
                 if (start) {
-                    faultPlayers.get(i).getFaultTimer().start();
+                    if(faultPlayers.get(i).getFaultTimeRemaining()!=0){
+                        faultPlayers.get(i).getFaultTimer().start();
+                    }else {
+                        faultPlayers.remove(faultPlayers.get(i));
+                    }
                 } else {
                     faultPlayers.get(i).getFaultTimer().cancel();
                     faultPlayers.get(i).setFaultTimer();            //Stores faultimers for correct time reactivation

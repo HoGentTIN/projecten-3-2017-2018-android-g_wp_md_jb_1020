@@ -34,7 +34,7 @@ public class CompetitionSelection extends AppCompatActivity {
         //Get runtime singleton class
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
-/*
+
         //Retrieve list of Matches being played -- TEMPORARY THIS RETURNS ALL MATCHES PRACTICLY SHOULD ONLY BE MATCHES OF LOGGED IN OFFICIAL
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<List<MatchRest>> call = apiService.getMatches();
@@ -53,7 +53,7 @@ public class CompetitionSelection extends AppCompatActivity {
 
         //show list of match ..... vs ......
 
-*/
+
     }
 
     //TEMP function to move to administration activity
