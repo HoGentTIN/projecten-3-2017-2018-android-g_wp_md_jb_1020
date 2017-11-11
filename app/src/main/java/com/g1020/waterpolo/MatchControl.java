@@ -63,6 +63,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         awayTeam = PlayersFragment.newInstance(1);
         getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
 
+        homeTeam.setOtherTeam(awayTeam);
+        awayTeam.setOtherTeam(homeTeam);
+
         dc.appendLog("Round 1 started","SR1","8:00",1); //relocate to startchrono for first time only here for testing
         activities = ActivityFragment.newInstance(1);
 

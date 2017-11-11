@@ -39,7 +39,9 @@ public class PlayersFragment extends Fragment {
     private ListView lvPlayers;
     private ListView lvPlayers2;
 
+    //Playerselection parameters
     private int previousPlayerPosition;
+    private PlayersFragment otherTeam;
 
     // interface object to pass data
     OnPlayerSelectedListener playerListener;
@@ -110,6 +112,7 @@ public class PlayersFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 resetFontPlayers();
+                otherTeam.resetFontPlayers();
 
                 // retrieve the selected player
                 previousPlayerPosition = position;
@@ -144,6 +147,10 @@ public class PlayersFragment extends Fragment {
             ca.setSelectedPlayer(previousPlayerPosition,  lvPlayers2.getChildAt(previousPlayerPosition), Typeface.NORMAL );
 
         }
+    }
+
+    public void setOtherTeam(PlayersFragment opponent){
+        otherTeam = opponent;
     }
 
     public void setListPlayers(Team team){
