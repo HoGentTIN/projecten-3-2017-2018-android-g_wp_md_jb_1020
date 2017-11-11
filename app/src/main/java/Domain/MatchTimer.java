@@ -19,7 +19,7 @@ public class MatchTimer {
 
     //VARIABLES
     private boolean isChronoOn = false;
-    private boolean shotlockRunning = false;
+    private boolean isShotlockOn = false;
     private boolean istimoutUsed = false;
 
     private long timeRemaining;
@@ -129,6 +129,8 @@ public class MatchTimer {
     //Function initTimeout
     public void initTimeout(final Button btnTimeout){
 
+        btnTimeout.setClickable(false);                     //Can no longer be activated in this quarter
+
         //Countdown only once per round no pausing timout possible
         cdtTimout = new CountDownTimer(60000,1000) {
 
@@ -140,12 +142,10 @@ public class MatchTimer {
             @Override
             public void onFinish() {
                 btnTimeout.setText("T");
-                btnTimeout.setClickable(false);                     //Can no longer be activated in this quarter
                 Log.i("Info","Timeout has expired.");
             }
 
         };
-
         stopChrono();               //stop other timers
         istimoutUsed = true;          //Remember timout was used
 

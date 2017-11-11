@@ -127,25 +127,14 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     public void toggleChrono(View view){
         if(matchTimer.isChronoOn()){
             matchTimer.stopChrono();
-        }else{
-            resumeTimer();
-            matchTimer.startChrono();
-            resumeShotlock();
-
+        }
             //show the button again
             loadActivitiesButtons();
-        }
+
 
         loadPlayers();
     }
 
-    /*
-    public void pressTimer(View view){
-        matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (long) (8*1000*60));
-        matchTimer.getCdtTimer().start();
-
-    }
-    */
 
     //Shotlock button starts matchtimer and shotlocktimer, on press press reset shotlock but keep matchTimer running
     public void shotlock(View view){
@@ -184,7 +173,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             matchTimer.getCdtShotlock().cancel();
 
         //re-initialize shot lock to set remaining time back to 30 sec
-        matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
+        TextView txtShotlock = (TextView) findViewById(R.id.txtShotlock);
+        matchTimer.initShotlock(txtShotlock, (long) 30000);
+        txtShotlock.setText("30");
 
     }
 
