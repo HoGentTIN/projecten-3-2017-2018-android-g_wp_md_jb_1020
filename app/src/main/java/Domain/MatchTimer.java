@@ -26,8 +26,8 @@ public class MatchTimer {
 
     private CountDownTimer cdtTimer;
     private CountDownTimer cdtShotlock;             //shotlock to follow timelimit on ball possesion
-    private CountDownTimer timeoutTimer;       //Each team can call 1 time out per round, even if not all time used they cant do again time out = 01:00
-    private long roundTime = 8;              //roundtime in minutes
+    private CountDownTimer cdtTimout;          //Each team can call 1 time out per round, even if not all time used they cant do again time out = 01:00
+    private long roundTime = 8;                     //roundtime in minutes
 
 
     //CONSTRUCTORS
@@ -42,6 +42,9 @@ public class MatchTimer {
     public CountDownTimer getCdtTimer(){return  cdtTimer;}
     //Function getShotlockTimer
     public CountDownTimer getCdtShotlock(){return cdtShotlock;}
+    //Function getTimeoutTimer
+    public CountDownTimer getCdtTimoutTimer(){return cdtTimout;}
+
 
     //Function setMaxTime for round
     public void setMaxTime(long roundTime){
@@ -123,7 +126,25 @@ public class MatchTimer {
         };
     }
     //Function initTimeout
-    public void initTimeout(){}
+    public void initTimeout(final TextView txtTimeOut){
+
+        //Countdown only once per round no pausing timout possible
+        cdtTimout = new CountDownTimer(60000,1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                txtTimeOut.setText(String.format("%.0f",(Math.ceil(millisUntilFinished/1000.0)))); //Do to tick registration and rounding down the milisecond value it might skip the first value, hence the usage of ceil
+            }
+
+            @Override
+            public void onFinish() {
+                txtTimeOut.setText("T");
+                txtTimeOut.setClickable(false);                     //Can no longer be activated in this quarter
+                Log.i("Info","Timeout has expired.");
+            }
+
+        };
+    }
 
     //Function resetTimer
     public void resetTimer(final TextView txtTimer){
@@ -149,9 +170,7 @@ public class MatchTimer {
 
     //Function StartTimeout   //only one neede timout process is same for both teams
     public void startTimeout(){
-        //Matchtimer needs to pause when starting timeout
-
-
+        stopChrono();
     }
     //Function stopTimeout //in case time out needs to be stopped earlier ?should automaticly stop when restarting chrono
     public void stopTimeout(){
@@ -163,12 +182,6 @@ public class MatchTimer {
     public boolean isChronoOn() {
         return isChronoOn;
     }
-
-
-
-
-
-
 
 }
 
