@@ -23,7 +23,7 @@ public class Player {
     private int faults;
     //FaultTimer
     private CountDownTimer faultTimer;
-    private long faultTimeRemaining;
+    private long faultTimeRemaining = 20000;
 
     public Player(int n, String lastName, String firstName){
         this.firstName = firstName;
@@ -110,7 +110,7 @@ public class Player {
     }
 
     public void setFaultTimer() {
-        if(faultTimer==null){
+        if(faultTimer==null || faultTimeRemaining == 0){
             faultTimer = new CountDownTimer(20000,1000){
 
                 @Override
@@ -122,6 +122,7 @@ public class Player {
                 public void onFinish() {
                     Log.d("FaultTest","FaultTimer for " + firstName + " has ended");
                     setFaultTimeRemaining(0);
+                    faultTimer=null;
                 }
             };
         } else {
@@ -136,6 +137,7 @@ public class Player {
                 public void onFinish() {
                     Log.d("FaultTest","FaultTimer for " + firstName + " has ended");
                     setFaultTimeRemaining(0);
+                    faultTimer=null;
                 }
             };
         }

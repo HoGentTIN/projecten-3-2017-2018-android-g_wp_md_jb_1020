@@ -89,7 +89,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     }
 
-
     //PROCESS FUNCTIONS
     //Function: GoalMade - press goal button to change view so you can select who scored
     public void goalMade(View view){
@@ -100,7 +99,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             dc.addGoal();
 
             //Logging
-
             addToLog(sp, "G","Goal by " + dc.getSelectedPlayer().getFullName());
             clearSelectedPlayer();
 
