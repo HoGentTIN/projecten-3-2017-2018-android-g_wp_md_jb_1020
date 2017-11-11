@@ -6,6 +6,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.*;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import Application.ApplicationRuntime;
@@ -72,9 +73,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //Testcode for adding logging functionallity
 
 
-
-
-
     }
 
 
@@ -133,62 +131,63 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     }
 
-    //Function togglechrono - start/stop the chronometer - Clickable function
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    //Function togglechrono - backup function to pauze match and simply halt the shotlock
     public void toggleChrono(View view){
         if(matchTimer.isChronoOn()){
             matchTimer.stopChrono();
-        }else{
-            resumeTimer();
-            matchTimer.startChrono();
-            resumeShotlock();
-
+        }
             //show the button again
             loadActivitiesButtons();
-        }
+
 
         loadPlayers();
     }
 
-    /*
-    public void pressTimer(View view){
-        matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (long) (8*1000*60));
-        matchTimer.getCdtTimer().start();
 
-    }
-    */
+    //Shotlock button starts matchtimer and shotlocktimer, on press press reset shotlock but keep matchTimer running
+    public void shotlock(View view){
 
-    //Shotlock gets paused when matchtimer is paused, shotlock has 2 buttons 1 button for home (shotlock resets countdown stays hometeam color) the other for away, (reset shotlock ,and set teamcolor)
-    public void homeShotlock(View view){
-        if(matchTimer.isChronoOn()){
+        if(!matchTimer.isTimoutUsed()){             //No timeout used = normal process
             //Cancel first, to prevent another shotlock running in the bacground
             if(matchTimer!=null)
                 matchTimer.getCdtShotlock().cancel();
 
             //re-initialize shot lock to set remaining time back to 30 sec
             matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
-
             matchTimer.getCdtShotlock().start();
 
-            findViewById(R.id.txtShotlock).setBackgroundColor(Color.WHITE);
+        }else {
+            resumeShotlock();           //restart shotlock on the time it had before start of timeout
+            matchTimer.resetIsTimoutUsed();
         }
+
+        //needs to be done otherwise it would keep creating new timer
+        if(!matchTimer.isChronoOn()){
+            resumeTimer();
+            matchTimer.startChrono();
+        }
+
+
     }
-    public void awayShotlock(View view){
+
+    //Shotlock txtfield pressed to pauze match
+    public void stopShotlock(View view){
+        //Stop matchTimer
+        matchTimer.stopChrono();
+
+        //reset shotlock to 30 seconds
         //Cancel first, to prevent another shotlock running in the bacground
-        if(matchTimer.isChronoOn()){
-            if(matchTimer!=null)
-                matchTimer.getCdtShotlock().cancel();
+        if(matchTimer!=null)
+            matchTimer.getCdtShotlock().cancel();
 
-            //re-initialize shot lock to set remaining time back to 30 sec
-            matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
-
-            matchTimer.getCdtShotlock().start();
-
-            findViewById(R.id.txtShotlock).setBackgroundColor(Color.BLUE);
-        }
+        //re-initialize shot lock to set remaining time back to 30 sec
+        TextView txtShotlock = (TextView) findViewById(R.id.txtShotlock);
+        matchTimer.initShotlock(txtShotlock, (long) 30000);
+        txtShotlock.setText("30");
 
     }
 
+    //Function to restart the timer correctly
     public void resumeTimer(){
         long timeRemaining = matchTimer.getTimeRemaining();
         matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), timeRemaining);
@@ -197,6 +196,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         }
     }
 
+    //Function for when matchtimer pauze was used
     public void resumeShotlock(){
         //re-initialize shotlock if necesary and start it
         Long timeRemaining = matchTimer.getShotlockTimeRemaining();
@@ -209,8 +209,31 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     //Time out for each round each team can call time out once, cannot be paused, when clicked cannot be used again in same round for that team
     //2 buttons 1 for each team
-    public void homeTimeout(View view){}
-    public void awayTimeout(View view){}
+    public void homeTimeout(View view){
+        matchTimer.initTimeout((Button) findViewById(R.id.btnTimeOutHome));
+        matchTimer.getCdtTimout().start();
+
+        //ADD FUNCTION TO LIMIT CLICKABILITY
+
+        //stop matchTimer
+        matchTimer.stopChrono();
+        //stop shotlock
+        if(matchTimer!=null)
+            matchTimer.getCdtShotlock().cancel();
+
+    }
+    public void awayTimeout(View view){
+        matchTimer.initTimeout((Button) findViewById(R.id.btnTimeOutAway));
+        matchTimer.getCdtTimout().start();
+
+        //ADD FUNCTION TO LIMIT CLICKABILITY
+
+        //stop matchTimer
+        matchTimer.stopChrono();
+        //stop shotlock
+        if(matchTimer!=null)
+            matchTimer.getCdtShotlock().cancel();
+    }
 
 
     public void showActionInfo(){
@@ -244,7 +267,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         dc.appendLog("Goal by (1)Home.","GH1","05:47",1);
         dc.appendLog("Goal by (5)Away.","GA1","04:02",1);
         dc.appendLog("Goal by (3)Home.","GH2","07:02",2);
-
        // dc.getSegmentedLog();
     }
 
