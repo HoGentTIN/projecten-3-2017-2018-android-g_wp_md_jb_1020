@@ -25,6 +25,8 @@ public class Domaincontroller {
     private Boolean switchPlayer = false;
     private Player playerToSwitch;
 
+    public int round = 1;
+
     public Domaincontroller(){
 
     }

@@ -18,7 +18,7 @@ public class ApplicationRuntime extends Application {
     public Domaincontroller dc;                                 //called in ApplicationRuntime functions to manipulate/retrieve/set data or call/use domain functionality
     //Domaincontroller is used to acces variables gained from database, runtime info like the timerclock data is stored in applicationruntime itself
     public MatchTimer mt;                                       //Keep chronometer functions during runtime
-    public int round = 1;
+
     
     //Class initializer - setter runtime instance
     @Override

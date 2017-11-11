@@ -102,16 +102,21 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         startActivity(intent);
         */
-        testLog();
+
 
         //add the goal to the current selected player in domaincontroller
         dc.addGoal();
-     //   dc.appendLog("Goal by " + dc.getSelectedPlayer().getFullName(),"GH1");
+
+        //Logging
+        Player sp = dc.getSelectedPlayer();
+        addToLog(sp, "G","Goal by " + dc.getSelectedPlayer().getFullName());
+        clearSelectedPlayer();
 
         teamsHeader.updateHeader();
-        activities.updateActivities(1);
+        activities.updateActivities(dc.round);
 
-        matchTimer.stopChrono();
+
+        stopShotlock(view);
 
         //loadPlayers();
 
@@ -140,13 +145,12 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
                 //add the fault to the current selected player in domaincontroller
                 dc.addFaultU20();
                 //Logging
-                String t;
-                if(sp.getTeam().isHomeTeam()){t = "H";}else {t = "A";}
-                TextView tt = (TextView) findViewById(R.id.txtTimer);
-                dc.appendLog("Fault U20 for " + sp.getFullName() + ".","U" + t + ar.round, tt.getText().toString(),ar.round);
+                addToLog(sp, "U","Fault U20 for " + sp.getFullName() + ".");
 
                 loadPlayers();
                 clearSelectedPlayer();      //clear selected player from layout
+
+                activities.updateActivities(dc.round);
 
                 //Start 20 second timer
                 sp.setFaultTimer();
@@ -154,7 +158,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
                 if(matchTimer.isChronoOn()){
                     faultTimer.start();
                 }
-                faultPlayers.add(sp);
+                faultPlayers.add(sp);                               //List of all players with faultTimers
+
             }else {
                 //Player is already punished by this fault he cannot get extra
                 Toast.makeText(this, "player " + sp.getFullName() + " still has an ongoing U20 Fault", Toast.LENGTH_SHORT).show();
@@ -278,6 +283,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     public void clearSelectedPlayer(){
         homeTeam.resetFontPlayers();
         awayTeam.resetFontPlayers();
+        dc.resetSelectedPlayer();
     }
 
     //Function to control all faultimers via shotlock
@@ -324,12 +330,15 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
 
 
-    //start testcode log
-    public void testLog(){
-        dc.appendLog("Goal by (1)Home.","GH1","05:47",1);
-        dc.appendLog("Goal by (5)Away.","GA1","04:02",1);
-        dc.appendLog("Goal by (3)Home.","GH2","07:02",2);
-       // dc.getSegmentedLog();
+    //Log actions
+    public void addToLog(Player sp, String event, String description){
+        //Determine home or away team
+        String t;
+        if(sp.getTeam().isHomeTeam()){t = "H";}else {t = "A";}
+        //Get time notation
+        TextView tt = (TextView) findViewById(R.id.txtTimer);
+        dc.appendLog(description,event + t + dc.round, tt.getText().toString(),dc.round);
+
     }
 
     // sets the selected player in the domaincontroller
