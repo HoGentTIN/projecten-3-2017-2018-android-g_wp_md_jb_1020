@@ -95,6 +95,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         //add the goal to the current selected player in domaincontroller
         dc.addGoal();
+        dc.resetSelectedPlayer();
      //   dc.appendLog("Goal by " + dc.getSelectedPlayer().getFullName(),"GH1");
 
         teamsHeader.updateHeader();
@@ -111,18 +112,25 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     }
 
     //TEMP function to move to PlayerControl activity
-    public void changePlayers(View view) {
-        //PlayersFragment awayTeam = new PlayersFragment();
-        //getSupportFragmentManager().beginTransaction().detach(faultAwayTeam).commit();
-        //getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
+    public void switchPlayerCaps(View view) {
+        disableActivityButtons();
+        dc.switchPlayerCaps();
+        enableActivityButtons();
+    }
 
+    public void disableActivityButtons(){
+        btnFragment.disableButtons();
+    }
+
+    public void enableActivityButtons(){
+        btnFragment.enableButtons();
     }
 
     public void faultU20(View view){
 
         //add the fault to the current selected player in domaincontroller
         dc.addFaultU20();
-        loadPlayers();
+
     }
 
     //Function togglechrono - start/stop the chronometer - Clickable function

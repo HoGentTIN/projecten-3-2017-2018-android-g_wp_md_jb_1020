@@ -42,12 +42,31 @@ public class Domaincontroller {
     }
 
     public void addGoal(){
-        match.addGoal(new Goal(selectedPlayer));
+        if(selectedPlayer != null) {
+            if(selectedPlayer.getStatus() !=Status.GAMEOVER) {
+                match.addGoal(new Goal(selectedPlayer));
+            }
+        }
     }
 
     public void addFaultU20() {
         selectedPlayer.setFaults(selectedPlayer.getFaults() + 1);
         Log.i("game", selectedPlayer.getFullName() + " has " + selectedPlayer.getFaults() + " faults");
+    }
+
+    public void switchPlayerCaps() {
+
+        Player firstPlayer = selectedPlayer;
+        int firstPlayerNumber = firstPlayer.getPlayerNumber();
+        resetSelectedPlayer();
+
+        if (!firstPlayer.equals(selectedPlayer) && selectedPlayer != null) {
+            Player secondPlayer = selectedPlayer;
+            int secondPlayerNumber = secondPlayer.getPlayerNumber();
+
+            firstPlayer.setPlayerNumber(secondPlayerNumber);
+            secondPlayer.setPlayerNumber(firstPlayerNumber);
+        }
     }
 
     public Match getMatch() {
@@ -165,7 +184,9 @@ public class Domaincontroller {
         match.addTeams(hometeam,awayteam);
     }
 
-
+    public void resetSelectedPlayer() {
+        selectedPlayer = null;
+    }
 
 
     //eventcode - description => Overview of eventlogcodes and corresponding description
