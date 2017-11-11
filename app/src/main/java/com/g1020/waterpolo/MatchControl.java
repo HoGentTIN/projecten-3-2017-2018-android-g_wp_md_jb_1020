@@ -89,12 +89,12 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         startActivity(intent);
         */
-        testLog();
+        //testLog();
 
         //add the goal to the current selected player in domaincontroller
         dc.addGoal();
+        dc.appendLog("Goal by " + dc.getSelectedPlayer().getFullName(),"GH1",matchTimer.getCdtTimer().toString(),1);
         dc.resetSelectedPlayer();
-     //   dc.appendLog("Goal by " + dc.getSelectedPlayer().getFullName(),"GH1");
 
         teamsHeader.updateHeader();
         activities.updateActivities(1);
@@ -111,17 +111,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     //TEMP function to move to PlayerControl activity
     public void switchPlayerCaps(View view) {
-        disableActivityButtons();
         dc.switchPlayerCaps();
-        enableActivityButtons();
-    }
-
-    public void disableActivityButtons(){
-        btnFragment.disableButtons();
-    }
-
-    public void enableActivityButtons(){
-        btnFragment.enableButtons();
+        //dc.appendLog("Switched caps " + dc.getSelectedPlayer().getFullName() + " with " + dc.playerToSwitch.getFullName(),"PS1",matchTimer.getCdtTimer().toString(),1);
     }
 
     public void faultU20(View view){
@@ -259,8 +250,13 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     }
 
 
+    public void disableActivityButtons(){
+        btnFragment.disableButtons();
+    }
 
-
+    public void enableActivityButtons(){
+        btnFragment.enableButtons();
+    }
 
     //start testcode log
     public void testLog(){
