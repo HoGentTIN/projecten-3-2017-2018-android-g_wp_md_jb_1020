@@ -7,6 +7,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.*;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -92,42 +93,50 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     //PROCESS FUNCTIONS
     //Function: GoalMade - press goal button to change view so you can select who scored
     public void goalMade(View view){
-        /*
-        Intent intent = new Intent(this, PlayerControl.class);
 
-        //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY START
-        matchTimer.stopChrono();
-        intent.putExtra(EXTRA_MESSAGE, matchTimer.getTime());
-        //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY END
-
-        startActivity(intent);
-        */
-
-
-        //add the goal to the current selected player in domaincontroller
-        dc.addGoal();
-
-        //Logging
         Player sp = dc.getSelectedPlayer();
-        addToLog(sp, "G","Goal by " + dc.getSelectedPlayer().getFullName());
-        clearSelectedPlayer();
+        if(sp!=null){
+            //add the goal to the current selected player in domaincontroller
+            dc.addGoal();
 
-        teamsHeader.updateHeader();
-        activities.updateActivities(dc.round);
+            //Logging
 
+            addToLog(sp, "G","Goal by " + dc.getSelectedPlayer().getFullName());
+            clearSelectedPlayer();
 
-        stopShotlock(view);
+            teamsHeader.updateHeader();
+            activities.updateActivities(dc.round);
 
-        //loadPlayers();
+            stopShotlock(view);
 
+            //loadPlayers();
+        }else {
+            toast("Select a player first.");
+        }
     }
 
     public void penaltyMade(View view) {
+        Player sp = dc.getSelectedPlayer();
+        if(sp!=null){
 
+            clearSelectedPlayer();
+
+        }else {
+            toast("Select a player first.");
+        }
     }
 
     //TEMP function to move to PlayerControl activity
     public void changePlayers(View view) {
+
+        Player sp = dc.getSelectedPlayer();
+        if(sp!=null){
+
+            clearSelectedPlayer();
+
+        }else {
+            toast("Select a player first.");
+        }
         //PlayersFragment awayTeam = new PlayersFragment();
         //getSupportFragmentManager().beginTransaction().detach(faultAwayTeam).commit();
         //getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
@@ -162,9 +171,34 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
             }else {
                 //Player is already punished by this fault he cannot get extra
-                Toast.makeText(this, "player " + sp.getFullName() + " still has an ongoing U20 Fault", Toast.LENGTH_SHORT).show();
+                toast("player " + sp.getFullName() + " still has an ongoing U20 Fault");
             }
+        }else {
+            toast("Select a player first.");
+        }
 
+    }
+
+    public void faultUMV(View view) {
+        Player sp = dc.getSelectedPlayer();
+        if(sp!=null){
+
+            clearSelectedPlayer();
+
+        }else {
+            toast("Select a player first.");
+        }
+    }
+
+    public void faultUMV4(View view) {
+
+        Player sp = dc.getSelectedPlayer();
+        if(sp!=null){
+
+            clearSelectedPlayer();
+
+        }else {
+            toast("Select a player first.");
         }
 
     }
@@ -180,7 +214,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         loadPlayers();
     }
-
 
     //Shotlock button starts matchtimer and shotlocktimer, on press press reset shotlock but keep matchTimer running
     public void shotlock(View view){
@@ -338,7 +371,20 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //Get time notation
         TextView tt = (TextView) findViewById(R.id.txtTimer);
         dc.appendLog(description,event + t + dc.round, tt.getText().toString(),dc.round);
+    }
+    //Remove latest event log
+    public void undoLatest(View view){
+        //get latest log use it to get what activity happend and undo the effect of that activity
 
+        //Remove undone event from log
+        dc.undoLog();
+        activities.updateActivities(dc.round);
+    }
+    //Setup toast notification
+    public void toast(String message){
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 
     // sets the selected player in the domaincontroller

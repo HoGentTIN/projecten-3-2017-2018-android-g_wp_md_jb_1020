@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,7 +123,11 @@ public class PlayersFragment extends Fragment {
                 previousPlayerPosition = position;
                 selectedPlayer = (Player) listview.getItemAtPosition(position);
                 Boolean team = selectedPlayer.getTeam().isHomeTeam();
-                Toast.makeText(getActivity(), "You've selected player " + selectedPlayer.getFullName(), Toast.LENGTH_SHORT).show();
+
+                Toast toast = Toast.makeText(getActivity(), "You've selected player " + selectedPlayer.getFullName(), Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+
                 playerListener.onArticleSelected(team, selectedPlayer.getPlayer_id());
 
 

@@ -138,6 +138,10 @@ public class Domaincontroller {
         return roundLog;
     }
 
+    public void undoLog(){
+        logList.remove(logList.size()-1);
+    }
+
     //temporary static value until we set it in code
     public long getRoundTime(){
         return 8;
