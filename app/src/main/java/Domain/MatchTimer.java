@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ public class MatchTimer {
     //VARIABLES
     private boolean isChronoOn = false;
     private boolean shotlockRunning = false;
-    private boolean timeoutRunning = false;
+    private boolean istimoutUsed = false;
 
     private long timeRemaining;
     private long shotlockTimeRemaining;     //Stores the shotlock time when pausing the match
@@ -43,7 +44,7 @@ public class MatchTimer {
     //Function getShotlockTimer
     public CountDownTimer getCdtShotlock(){return cdtShotlock;}
     //Function getTimeoutTimer
-    public CountDownTimer getCdtTimoutTimer(){return cdtTimout;}
+    public CountDownTimer getCdtTimout(){return cdtTimout;}
 
 
     //Function setMaxTime for round
@@ -126,24 +127,28 @@ public class MatchTimer {
         };
     }
     //Function initTimeout
-    public void initTimeout(final TextView txtTimeOut){
+    public void initTimeout(final Button btnTimeout){
 
         //Countdown only once per round no pausing timout possible
         cdtTimout = new CountDownTimer(60000,1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
-                txtTimeOut.setText(String.format("%.0f",(Math.ceil(millisUntilFinished/1000.0)))); //Do to tick registration and rounding down the milisecond value it might skip the first value, hence the usage of ceil
+                btnTimeout.setText(String.format("%.0f",(Math.ceil(millisUntilFinished/1000.0)))); //Do to tick registration and rounding down the milisecond value it might skip the first value, hence the usage of ceil
             }
 
             @Override
             public void onFinish() {
-                txtTimeOut.setText("T");
-                txtTimeOut.setClickable(false);                     //Can no longer be activated in this quarter
+                btnTimeout.setText("T");
+                btnTimeout.setClickable(false);                     //Can no longer be activated in this quarter
                 Log.i("Info","Timeout has expired.");
             }
 
         };
+
+        stopChrono();               //stop other timers
+        istimoutUsed = true;          //Remember timout was used
+
     }
 
     //Function resetTimer
@@ -153,7 +158,6 @@ public class MatchTimer {
     //Function resetShotlock - set remaining shotlocktime to 30000
     public void resetShotlock(final TextView txtShotlock){
         shotlockTimeRemaining = 30000;
-        txtShotlock.setBackgroundColor(Color.MAGENTA);
     }
 
     //Function startTimer
@@ -168,10 +172,7 @@ public class MatchTimer {
         cdtShotlock.cancel();   //stop running shotlocktimer
     }
 
-    //Function StartTimeout   //only one neede timout process is same for both teams
-    public void startTimeout(){
-        stopChrono();
-    }
+
     //Function stopTimeout //in case time out needs to be stopped earlier ?should automaticly stop when restarting chrono
     public void stopTimeout(){
         //make button of timeout unavailable in activity when this is called
@@ -182,6 +183,13 @@ public class MatchTimer {
     public boolean isChronoOn() {
         return isChronoOn;
     }
-
+    //Function get shotlock used
+    public boolean isTimoutUsed() {
+        return istimoutUsed;
+    }
+    //Function set shotlock used
+    public void resetIsTimoutUsed() {
+        istimoutUsed = false;
+    }
 }
 
