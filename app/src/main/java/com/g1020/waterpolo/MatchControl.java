@@ -2,17 +2,23 @@ package com.g1020.waterpolo;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.*;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import Application.ApplicationRuntime;
 import Domain.CompetitionClass;
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
+import Domain.Player;
 
 public class MatchControl extends AppCompatActivity implements PlayersFragment.OnPlayerSelectedListener{
 
@@ -30,6 +36,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     ActivityFragment activities;
     ActivityInfoFragment infoFragment;
     ActivityButtonsFragment btnFragment;
+
+    //Fault playerTimers
+    List<Player> faultPlayers = new ArrayList<>();
 
     //LIFECYCLE FUNCTIONS
     @Override
@@ -121,11 +130,24 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     public void faultU20(View view){
 
+        //FIRST CHECK IF PLAYER ALREADY HAS 20 sec FAULT if not ignore press of button or give message player allready punished
+
         //If players selected preform action
         if(dc.getSelectedPlayer()!=null){
+            Player sp = dc.getSelectedPlayer();
             //add the fault to the current selected player in domaincontroller
             dc.addFaultU20();
             loadPlayers();
+            clearSelectedPlayer();
+
+            //Start 20 second timer
+            sp.setFaultTimer();
+            CountDownTimer faultTimer = sp.getFaultTimer();
+            if(matchTimer.isChronoOn()){
+                faultTimer.start();
+            }
+            faultPlayers.add(sp);
+
         }
 
     }
@@ -166,6 +188,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             matchTimer.startChrono();
         }
 
+        //Restart Faulttimers
+        toggleFaultTimers(true);
+
 
     }
 
@@ -183,6 +208,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         TextView txtShotlock = (TextView) findViewById(R.id.txtShotlock);
         matchTimer.initShotlock(txtShotlock, (long) 30000);
         txtShotlock.setText("30");
+
+        //Stop faulttimers
+        toggleFaultTimers(false);
 
     }
 
@@ -234,6 +262,27 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             matchTimer.getCdtShotlock().cancel();
     }
 
+    //Function to clear selectedPlayer after performing buttonAction
+    public void clearSelectedPlayer(){
+        homeTeam.resetFontPlayers();
+        awayTeam.resetFontPlayers();
+    }
+
+    //Function to control all faultimers via shotlock
+    public void toggleFaultTimers(boolean start){
+        if(faultPlayers!=null) {
+
+            for (int i = 0; i < faultPlayers.size(); i++) {
+                Log.d("sizetes",i +""+faultPlayers.size());
+                if (start) {
+                    faultPlayers.get(i).getFaultTimer().start();
+                } else {
+                    faultPlayers.get(i).getFaultTimer().cancel();
+                    faultPlayers.get(i).setFaultTimer();            //Stores faultimers for correct time reactivation
+                }
+            }
+        }
+    }
 
     public void showActionInfo(){
         if(infoFragment == null) {

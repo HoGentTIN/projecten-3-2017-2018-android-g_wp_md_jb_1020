@@ -1,5 +1,8 @@
 package Domain;
 
+import android.os.CountDownTimer;
+import android.util.Log;
+
 /**
  * Created by timos on 5-10-2017.
  */
@@ -17,6 +20,9 @@ public class Player {
 
     // 3 strikes and you are out
     private int faults;
+    //FaultTimer
+    private CountDownTimer faultTimer;
+    private long faultTimeRemaining;
 
     public Player(int n, String lastName, String firstName){
         this.firstName = firstName;
@@ -98,5 +104,47 @@ public class Player {
         this.playerNumber = playerNumber;
     }
 
+    public CountDownTimer getFaultTimer() {
+        return faultTimer;
+    }
 
+    public void setFaultTimer() {
+        if(faultTimer==null){
+            faultTimer = new CountDownTimer(20000,1000){
+
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    setFaultTimeRemaining(millisUntilFinished);
+                }
+
+                @Override
+                public void onFinish() {
+                    Log.d("FaultTest","FaultTimer for " + firstName + " has ended");
+                    faultTimer=null;
+                }
+            };
+        } else {
+            faultTimer.cancel();
+            faultTimer = new CountDownTimer(getFaultTimeRemaining(), 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    setFaultTimeRemaining(millisUntilFinished);
+                }
+
+                @Override
+                public void onFinish() {
+
+                    faultTimer = null;
+                }
+            };
+        }
+    }
+
+    public long getFaultTimeRemaining() {
+        return faultTimeRemaining;
+    }
+
+    public void setFaultTimeRemaining(long faultTimeRemaining) {
+        this.faultTimeRemaining = faultTimeRemaining;
+    }
 }
