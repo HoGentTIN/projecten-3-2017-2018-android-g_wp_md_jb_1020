@@ -52,6 +52,7 @@ public class PlayersFragment extends Fragment {
 
 
 
+
     //TEMPORARY
 
     //interface for passing data to matchcontrol
@@ -135,12 +136,11 @@ public class PlayersFragment extends Fragment {
                 if(selectedPlayer.getTeam().isHomeTeam()){
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
                     ca.setSelectedPlayer(position,  listview.getChildAt(position), Typeface.BOLD );
+
                 }else{
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
                     ca.setSelectedPlayer(position,  listview.getChildAt(position), Typeface.BOLD );
                 }
-
-
 
             }
         });
@@ -158,6 +158,20 @@ public class PlayersFragment extends Fragment {
         }
     }
 
+    public void updateBackgroundPlayer(){
+
+            CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
+            //update background
+            ca.updateBackgroundColors(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition));
+
+            CustomPlayerListAdapter ca2 = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
+            //update background
+            ca2.updateBackgroundColors(previousPlayerPosition, lvPlayers2.getChildAt(previousPlayerPosition));
+
+    }
+
+
+
     public void setOtherTeam(PlayersFragment opponent){
         otherTeam = opponent;
     }
@@ -173,6 +187,4 @@ public class PlayersFragment extends Fragment {
         lvPlayers2.setAdapter(playerAdapter2);
 
     }
-
-
 }

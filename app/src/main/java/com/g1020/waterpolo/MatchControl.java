@@ -66,11 +66,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         teamsHeader = new TeamsHeaderFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.teamsheadercontainer, teamsHeader).commit();
 
-        //homeTeam = new PlayersFragment();
         homeTeam = PlayersFragment.newInstance(0);
         getSupportFragmentManager().beginTransaction().add(R.id.homeContainer, homeTeam).commit();
 
-        //awayTeam = new PlayersFragment();
         awayTeam = PlayersFragment.newInstance(1);
         getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
 
@@ -152,6 +150,14 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             if(!faultPlayers.contains(sp)){
                 //add the fault to the current selected player in domaincontroller
                 dc.addFaultU20();
+
+                //update the background color
+                if(sp.getTeam().isHomeTeam()){
+                    homeTeam.updateBackgroundPlayer();
+                } else {
+                    awayTeam.updateBackgroundPlayer();
+                }
+
                 //Logging
                 addToLog(sp, "U","Fault U20 for " + sp.getFullName() + ".");
 
