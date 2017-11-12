@@ -111,7 +111,7 @@ public class MatchTimer {
 
         //No team has bal possesion neutral shotlock state
         if(shotlockTimeRemaining==30000){                                                           //Set layout if neither teams have ball possesion
-            txtShotlock.setBackgroundColor(Color.MAGENTA);
+//            txtShotlock.setBackgroundColor(Color.MAGENTA);
             if(cdtShotlock!=null)
                 cdtShotlock.cancel();                                                               //Stop previous countdowntimers, to prevent needless background process
         }

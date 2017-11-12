@@ -165,13 +165,9 @@ public class PlayersFragment extends Fragment {
     }
 
     public void updateBackgroundPlayer(){
-
             CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-            //update background
             ca.updateBackgroundColors(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition));
-
             CustomPlayerListAdapter ca2 = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
-            //update background
             ca2.updateBackgroundColors(previousPlayerPosition, lvPlayers2.getChildAt(previousPlayerPosition));
 
     }

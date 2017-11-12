@@ -91,6 +91,7 @@ public void setMatch(int matchNumber){
             if(playerToSwitch.getTeam().equals(selectedPlayer.getTeam())) {
                 playerToSwitch.getTeam().switchPlayerCaps(playerToSwitch.getPlayer_id(), selectedPlayer.getPlayer_id());
                 Log.i("game", playerToSwitch.getFullName() + " switched numbers with " + selectedPlayer.getFullName());
+
                 switchPlayer = false;
             }
         }
