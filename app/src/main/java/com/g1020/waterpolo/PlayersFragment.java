@@ -2,9 +2,12 @@ package com.g1020.waterpolo;
 
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,10 +41,17 @@ public class PlayersFragment extends Fragment {
     private ListView lvPlayers;
     private ListView lvPlayers2;
 
+    //Playerselection parameters
+    private int previousPlayerPosition;
+    private PlayersFragment otherTeam;
+
     // interface object to pass data
     OnPlayerSelectedListener playerListener;
 
     TextView playerTitle;
+
+
+
     //TEMPORARY
 
     //interface for passing data to matchcontrol
@@ -105,13 +115,51 @@ public class PlayersFragment extends Fragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                resetFontPlayers();
+                otherTeam.resetFontPlayers();
+
                 // retrieve the selected player
+                previousPlayerPosition = position;
                 selectedPlayer = (Player) listview.getItemAtPosition(position);
-                Boolean team = selectedPlayer.getTeam().getHomeTeam();
-                Toast.makeText(getActivity(), "You've selected player " + selectedPlayer.getFullName(), Toast.LENGTH_SHORT).show();
+                Boolean team = selectedPlayer.getTeam().isHomeTeam();
+
+                Toast toast = Toast.makeText(getActivity(), "You've selected player " + selectedPlayer.getFullName(), Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+
                 playerListener.onArticleSelected(team, selectedPlayer.getPlayer_id());
+
+
+                //Change look of selected item
+                if(selectedPlayer.getTeam().isHomeTeam()){
+                    CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
+                    ca.setSelectedPlayer(position,  listview.getChildAt(position), Typeface.BOLD );
+                }else{
+                    CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
+                    ca.setSelectedPlayer(position,  listview.getChildAt(position), Typeface.BOLD );
+                }
+
+
+
             }
         });
+    }
+
+    //function to reset the visibility of currently selected player
+    public void resetFontPlayers(){
+        if(selectedPlayer!=null){
+            //Change look of previous item
+            CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
+            ca.setSelectedPlayer(previousPlayerPosition,  lvPlayers.getChildAt(previousPlayerPosition), Typeface.NORMAL );
+            ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
+            ca.setSelectedPlayer(previousPlayerPosition,  lvPlayers2.getChildAt(previousPlayerPosition), Typeface.NORMAL );
+
+        }
+    }
+
+    public void setOtherTeam(PlayersFragment opponent){
+        otherTeam = opponent;
     }
 
     public void setListPlayers(Team team){
@@ -123,6 +171,7 @@ public class PlayersFragment extends Fragment {
 
         lvPlayers.setAdapter(playerAdapter1);
         lvPlayers2.setAdapter(playerAdapter2);
+
     }
 
 

@@ -2,16 +2,25 @@ package com.g1020.waterpolo;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.*;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import Application.ApplicationRuntime;
 import Domain.CompetitionClass;
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
+import Domain.Player;
 
 public class MatchControl extends AppCompatActivity implements PlayersFragment.OnPlayerSelectedListener{
 
@@ -29,6 +38,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     ActivityFragment activities;
     ActivityInfoFragment infoFragment;
     ActivityButtonsFragment btnFragment;
+
+    //Fault playerTimers
+    List<Player> faultPlayers = new ArrayList<>();
 
     //LIFECYCLE FUNCTIONS
     @Override
@@ -62,6 +74,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         awayTeam = PlayersFragment.newInstance(1);
         getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
 
+        homeTeam.setOtherTeam(awayTeam);
+        awayTeam.setOtherTeam(homeTeam);
+
         dc.appendLog("Round 1 started","SR1","8:00",1); //relocate to startchrono for first time only here for testing
         activities = ActivityFragment.newInstance(1);
 
@@ -72,45 +87,55 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //Testcode for adding logging functionallity
 
 
-
-
-
     }
-
 
     //PROCESS FUNCTIONS
     //Function: GoalMade - press goal button to change view so you can select who scored
     public void goalMade(View view){
-        /*
-        Intent intent = new Intent(this, PlayerControl.class);
 
-        //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY START
-        matchTimer.stopChrono();
-        intent.putExtra(EXTRA_MESSAGE, matchTimer.getTime());
-        //TEMPORARY CODE TO SHOWCASE CHRONO FUNCTIONALITY END
+        Player sp = dc.getSelectedPlayer();
+        if(sp!=null){
+            //add the goal to the current selected player in domaincontroller
+            dc.addGoal();
 
-        startActivity(intent);
-        */
-        testLog();
+            //Logging
+            addToLog(sp, "G","Goal by " + dc.getSelectedPlayer().getFullName());
+            clearSelectedPlayer();
 
-        //add the goal to the current selected player in domaincontroller
-        dc.addGoal();
+            teamsHeader.updateHeader();
+            activities.updateActivities(dc.round);
 
-        teamsHeader.updateHeader();
-        activities.updateActivities(1);
+            stopShotlock(view);
 
-        matchTimer.stopChrono();
-
-        //loadPlayers();
-
+            //loadPlayers();
+        }else {
+            toast("Select a player first.");
+        }
     }
 
     public void penaltyMade(View view) {
+        Player sp = dc.getSelectedPlayer();
+        if(sp!=null){
 
+            clearSelectedPlayer();
+
+        }else {
+            toast("Select a player first.");
+        }
     }
 
     //TEMP function to move to PlayerControl activity
     public void changePlayers(View view) {
+
+        Player sp = dc.getSelectedPlayer();
+        if(sp!=null){
+
+            dc.switchPlayerCaps();
+            clearSelectedPlayer();
+
+        }else {
+            toast("Select a player first.");
+        }
         //PlayersFragment awayTeam = new PlayersFragment();
         //getSupportFragmentManager().beginTransaction().detach(faultAwayTeam).commit();
         //getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
@@ -119,67 +144,126 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     public void faultU20(View view){
 
-        //add the fault to the current selected player in domaincontroller
-        dc.addFaultU20();
-        loadPlayers();
+        //FIRST CHECK IF PLAYER ALREADY HAS 20 sec FAULT if not ignore press of button or give message player allready punished
+
+        //If players selected preform action
+        if(dc.getSelectedPlayer()!=null){
+            Player sp = dc.getSelectedPlayer();
+            if(!faultPlayers.contains(sp)){
+                //add the fault to the current selected player in domaincontroller
+                dc.addFaultU20();
+                //Logging
+                addToLog(sp, "U","Fault U20 for " + sp.getFullName() + ".");
+
+                loadPlayers();
+                clearSelectedPlayer();      //clear selected player from layout
+
+                activities.updateActivities(dc.round);
+
+                //Start 20 second timer
+                sp.setFaultTimer();
+                CountDownTimer faultTimer = sp.getFaultTimer();
+                if(matchTimer.isChronoOn()){
+                    faultTimer.start();
+                }
+                faultPlayers.add(sp);                               //List of all players with faultTimers
+
+            }else {
+                //Player is already punished by this fault he cannot get extra
+                toast("player " + sp.getFullName() + " still has an ongoing U20 Fault");
+            }
+        }else {
+            toast("Select a player first.");
+        }
+
     }
 
-    //Function togglechrono - start/stop the chronometer - Clickable function
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void faultUMV(View view) {
+        Player sp = dc.getSelectedPlayer();
+        if(sp!=null){
+
+            clearSelectedPlayer();
+
+        }else {
+            toast("Select a player first.");
+        }
+    }
+
+    public void faultUMV4(View view) {
+
+        Player sp = dc.getSelectedPlayer();
+        if(sp!=null){
+
+            clearSelectedPlayer();
+
+        }else {
+            toast("Select a player first.");
+        }
+
+    }
+
+    //Function togglechrono - backup function to pauze match and simply halt the shotlock
     public void toggleChrono(View view){
         if(matchTimer.isChronoOn()){
             matchTimer.stopChrono();
-        }else{
-            resumeTimer();
-            matchTimer.startChrono();
-            resumeShotlock();
-
+        }
             //show the button again
             loadActivitiesButtons();
-        }
+
 
         loadPlayers();
     }
 
-    /*
-    public void pressTimer(View view){
-        matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (long) (8*1000*60));
-        matchTimer.getCdtTimer().start();
+    //Shotlock button starts matchtimer and shotlocktimer, on press press reset shotlock but keep matchTimer running
+    public void shotlock(View view){
 
-    }
-    */
-
-    //Shotlock gets paused when matchtimer is paused, shotlock has 2 buttons 1 button for home (shotlock resets countdown stays hometeam color) the other for away, (reset shotlock ,and set teamcolor)
-    public void homeShotlock(View view){
-        if(matchTimer.isChronoOn()){
+        if(!matchTimer.isTimoutUsed()){             //No timeout used = normal process
             //Cancel first, to prevent another shotlock running in the bacground
             if(matchTimer!=null)
                 matchTimer.getCdtShotlock().cancel();
 
             //re-initialize shot lock to set remaining time back to 30 sec
             matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
-
             matchTimer.getCdtShotlock().start();
 
-            findViewById(R.id.txtShotlock).setBackgroundColor(Color.WHITE);
+        }else {
+            resumeShotlock();           //restart shotlock on the time it had before start of timeout
+            matchTimer.resetIsTimoutUsed();
         }
+
+        //needs to be done otherwise it would keep creating new timer
+        if(!matchTimer.isChronoOn()){
+            resumeTimer();
+            matchTimer.startChrono();
+        }
+
+        //Restart Faulttimers
+        toggleFaultTimers(true);
+
+
     }
-    public void awayShotlock(View view){
+
+    //Shotlock txtfield pressed to pauze match
+    public void stopShotlock(View view){
+        //Stop matchTimer
+        matchTimer.stopChrono();
+
+        //reset shotlock to 30 seconds
         //Cancel first, to prevent another shotlock running in the bacground
-        if(matchTimer.isChronoOn()){
-            if(matchTimer!=null)
-                matchTimer.getCdtShotlock().cancel();
+        if(matchTimer!=null)
+            matchTimer.getCdtShotlock().cancel();
 
-            //re-initialize shot lock to set remaining time back to 30 sec
-            matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
+        //re-initialize shot lock to set remaining time back to 30 sec
+        TextView txtShotlock = (TextView) findViewById(R.id.txtShotlock);
+        matchTimer.initShotlock(txtShotlock, (long) 30000);
+        txtShotlock.setText("30");
 
-            matchTimer.getCdtShotlock().start();
-
-            findViewById(R.id.txtShotlock).setBackgroundColor(Color.BLUE);
-        }
+        //Stop faulttimers
+        toggleFaultTimers(false);
 
     }
 
+    //Function to restart the timer correctly
     public void resumeTimer(){
         long timeRemaining = matchTimer.getTimeRemaining();
         matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), timeRemaining);
@@ -188,6 +272,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         }
     }
 
+    //Function for when matchtimer pauze was used
     public void resumeShotlock(){
         //re-initialize shotlock if necesary and start it
         Long timeRemaining = matchTimer.getShotlockTimeRemaining();
@@ -200,9 +285,56 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     //Time out for each round each team can call time out once, cannot be paused, when clicked cannot be used again in same round for that team
     //2 buttons 1 for each team
-    public void homeTimeout(View view){}
-    public void awayTimeout(View view){}
+    public void homeTimeout(View view){
+        matchTimer.initTimeout((Button) findViewById(R.id.btnTimeOutHome));
+        matchTimer.getCdtTimout().start();
 
+        //ADD FUNCTION TO LIMIT CLICKABILITY
+
+        //stop matchTimer
+        matchTimer.stopChrono();
+        //stop shotlock
+        if(matchTimer!=null)
+            matchTimer.getCdtShotlock().cancel();
+
+    }
+    public void awayTimeout(View view){
+        matchTimer.initTimeout((Button) findViewById(R.id.btnTimeOutAway));
+        matchTimer.getCdtTimout().start();
+
+        //ADD FUNCTION TO LIMIT CLICKABILITY
+
+        //stop matchTimer
+        matchTimer.stopChrono();
+        //stop shotlock
+        if(matchTimer!=null)
+            matchTimer.getCdtShotlock().cancel();
+    }
+
+    //Function to clear selectedPlayer after performing buttonAction
+    public void clearSelectedPlayer(){
+        homeTeam.resetFontPlayers();
+        awayTeam.resetFontPlayers();
+        dc.resetSelectedPlayer();
+    }
+
+    //Function to control all faultimers via shotlock
+    public void toggleFaultTimers(boolean start){
+        if(faultPlayers!=null) {
+            for (int i = 0; i < faultPlayers.size(); i++) {
+                if (start) {
+                    if(faultPlayers.get(i).getFaultTimeRemaining()!=0){
+                        faultPlayers.get(i).getFaultTimer().start();
+                    }else {
+                        faultPlayers.remove(faultPlayers.get(i));
+                    }
+                } else {
+                    faultPlayers.get(i).getFaultTimer().cancel();
+                    faultPlayers.get(i).setFaultTimer();            //Stores faultimers for correct time reactivation
+                }
+            }
+        }
+    }
 
     public void showActionInfo(){
         if(infoFragment == null) {
@@ -230,13 +362,28 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
 
 
-    //start testcode log
-    public void testLog(){
-        dc.appendLog("Goal by (1)Home.","GH1","05:47",1);
-        dc.appendLog("Goal by (5)Away.","GA1","04:02",1);
-        dc.appendLog("Goal by (3)Home.","GH2","07:02",2);
+    //Log actions
+    public void addToLog(Player sp, String event, String description){
+        //Determine home or away team
+        String t;
+        if(sp.getTeam().isHomeTeam()){t = "H";}else {t = "A";}
+        //Get time notation
+        TextView tt = (TextView) findViewById(R.id.txtTimer);
+        dc.appendLog(description,event + t + dc.round, tt.getText().toString(),dc.round);
+    }
+    //Remove latest event log
+    public void undoLatest(View view){
+        //get latest log use it to get what activity happend and undo the effect of that activity
 
-       // dc.getSegmentedLog();
+        //Remove undone event from log
+        dc.undoLog();
+        activities.updateActivities(dc.round);
+    }
+    //Setup toast notification
+    public void toast(String message){
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 
     // sets the selected player in the domaincontroller

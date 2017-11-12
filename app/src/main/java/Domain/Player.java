@@ -1,5 +1,8 @@
 package Domain;
 
+import android.os.CountDownTimer;
+import android.util.Log;
+
 /**
  * Created by timos on 5-10-2017.
  */
@@ -13,10 +16,14 @@ public class Player {
     private String lastName;
     private int age;            //would this normally not be birthdate
     private Status status;
+    private boolean starter;
     private Team team;
 
     // 3 strikes and you are out
     private int faults;
+    //FaultTimer
+    private CountDownTimer faultTimer;
+    private long faultTimeRemaining = 20000;
 
     public Player(int n, String lastName, String firstName){
         this.firstName = firstName;
@@ -62,7 +69,7 @@ public class Player {
     }
 
     public String getFullName(){
-        return lastName + " " + firstName;
+        return firstName.charAt(0) + ". " + lastName;
     }
 
     public int getAge() {
@@ -98,5 +105,49 @@ public class Player {
         this.playerNumber = playerNumber;
     }
 
+    public CountDownTimer getFaultTimer() {
+        return faultTimer;
+    }
 
+    public void setFaultTimer() {
+        if(faultTimer==null || faultTimeRemaining == 0){
+            faultTimer = new CountDownTimer(20000,1000){
+
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    setFaultTimeRemaining(millisUntilFinished);
+                }
+
+                @Override
+                public void onFinish() {
+                    Log.d("FaultTest","FaultTimer for " + firstName + " has ended");
+                    setFaultTimeRemaining(0);
+                    faultTimer=null;
+                }
+            };
+        } else {
+            faultTimer.cancel();
+            faultTimer = new CountDownTimer(getFaultTimeRemaining(), 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    setFaultTimeRemaining(millisUntilFinished);
+                }
+
+                @Override
+                public void onFinish() {
+                    Log.d("FaultTest","FaultTimer for " + firstName + " has ended");
+                    setFaultTimeRemaining(0);
+                    faultTimer=null;
+                }
+            };
+        }
+    }
+
+    public long getFaultTimeRemaining() {
+        return faultTimeRemaining;
+    }
+
+    public void setFaultTimeRemaining(long faultTimeRemaining) {
+        this.faultTimeRemaining = faultTimeRemaining;
+    }
 }

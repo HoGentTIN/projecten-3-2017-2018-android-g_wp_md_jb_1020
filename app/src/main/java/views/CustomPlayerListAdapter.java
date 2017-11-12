@@ -2,6 +2,7 @@ package views;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,4 +96,13 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
         private void updateBackgroundColors(View v, Player p){
             v.setBackgroundResource(res[p.getFaults()]);
         }
+
+        //Function to set the name style of a list item
+        public void setSelectedPlayer(int position, View convertView, int t){
+            View v = convertView;
+            Player p = getItem(position);
+            txtPlayername = (TextView) v.findViewById(R.id.txtplayername);
+            txtPlayername.setTypeface(null, t);
+        }
+
     }

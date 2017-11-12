@@ -66,7 +66,7 @@
                     android:layout_gravity="left"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
-                    android:onClick="homeShotlock"
+                    android:onClick="shotlock"
                     android:padding="2dp"
                     android:text="@string/button_home" />
 
@@ -76,23 +76,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="4dp"
+                    android:clickable="true"
                     android:gravity="center"
+                    android:onClick="stopShotlock"
                     android:padding="4dp"
                     android:text="@string/text_shotlock"
                     android:textAlignment="center"
                     android:textSize="24sp"
                     android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btnAwayShotlock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:onClick="awayShotlock"
-                    android:padding="2dp"
-                    android:text="@string/button_away" />
 
             </LinearLayout>
 
@@ -110,35 +101,43 @@
             <TextView
                 android:id="@+id/txtTimer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:clickable="true"
                 android:gravity="center"
                 android:onClick="toggleChrono"
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
-            <FrameLayout
-                android:id="@+id/teamsheadercontainer"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:weightSum="3"
+                android:orientation="vertical">
 
-            </FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/activitiesContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                <FrameLayout
+                    android:id="@+id/teamsheadercontainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                </FrameLayout>
 
-            </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/activitiesContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:longClickable="true"
+                    android:paddingBottom="8dp"></FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/activitiesbuttonContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"></FrameLayout>
+                <FrameLayout
+                    android:id="@+id/activitiesbuttonContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                </FrameLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -180,6 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="homeTimeout"
                     android:text="TimeOut_H" />
 
                 <Button
@@ -187,6 +187,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="awayTimeout"
                     android:text="TimeOut_A" />
             </LinearLayout>
         </LinearLayout>

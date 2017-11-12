@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
@@ -18,16 +19,16 @@ public class MatchTimer {
 
     //VARIABLES
     private boolean isChronoOn = false;
-    private boolean shotlockRunning = false;
-    private boolean timeoutRunning = false;
+    private boolean isShotlockOn = false;
+    private boolean istimoutUsed = false;
 
     private long timeRemaining;
     private long shotlockTimeRemaining;     //Stores the shotlock time when pausing the match
 
     private CountDownTimer cdtTimer;
     private CountDownTimer cdtShotlock;             //shotlock to follow timelimit on ball possesion
-    private CountDownTimer timeoutTimer;       //Each team can call 1 time out per round, even if not all time used they cant do again time out = 01:00
-    private long roundTime = 8;              //roundtime in minutes
+    private CountDownTimer cdtTimout;          //Each team can call 1 time out per round, even if not all time used they cant do again time out = 01:00
+    private long roundTime = 8;                     //roundtime in minutes
 
 
     //CONSTRUCTORS
@@ -42,6 +43,9 @@ public class MatchTimer {
     public CountDownTimer getCdtTimer(){return  cdtTimer;}
     //Function getShotlockTimer
     public CountDownTimer getCdtShotlock(){return cdtShotlock;}
+    //Function getTimeoutTimer
+    public CountDownTimer getCdtTimout(){return cdtTimout;}
+
 
     //Function setMaxTime for round
     public void setMaxTime(long roundTime){
@@ -86,6 +90,11 @@ public class MatchTimer {
                     txtTimer.setText(String.format("%d:%d",minutesRemaining , secondRemaining));
                 }
                 setTimeRemaining(millisUntilFinished);
+
+                //Update matchTimerView before stopping otherwise it will be 1 second behind
+                if(getShotlockTimeRemaining()==0){
+                    stopChrono();
+                }
             }
 
             @Override
@@ -119,11 +128,34 @@ public class MatchTimer {
             public void onFinish() {
                 txtShotlock.setText("0");
                 Log.i("Info","Shotlock has expired.");
+                setShotlockTimeRemaining(0);
             }
         };
     }
     //Function initTimeout
-    public void initTimeout(){}
+    public void initTimeout(final Button btnTimeout){
+
+        btnTimeout.setClickable(false);                     //Can no longer be activated in this quarter
+
+        //Countdown only once per round no pausing timout possible
+        cdtTimout = new CountDownTimer(60000,1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                btnTimeout.setText(String.format("%.0f",(Math.ceil(millisUntilFinished/1000.0)))); //Do to tick registration and rounding down the milisecond value it might skip the first value, hence the usage of ceil
+            }
+
+            @Override
+            public void onFinish() {
+                btnTimeout.setText("T");
+                Log.i("Info","Timeout has expired.");
+            }
+
+        };
+        stopChrono();               //stop other timers
+        istimoutUsed = true;          //Remember timout was used
+
+    }
 
     //Function resetTimer
     public void resetTimer(final TextView txtTimer){
@@ -132,7 +164,6 @@ public class MatchTimer {
     //Function resetShotlock - set remaining shotlocktime to 30000
     public void resetShotlock(final TextView txtShotlock){
         shotlockTimeRemaining = 30000;
-        txtShotlock.setBackgroundColor(Color.MAGENTA);
     }
 
     //Function startTimer
@@ -147,12 +178,7 @@ public class MatchTimer {
         cdtShotlock.cancel();   //stop running shotlocktimer
     }
 
-    //Function StartTimeout   //only one neede timout process is same for both teams
-    public void startTimeout(){
-        //Matchtimer needs to pause when starting timeout
 
-
-    }
     //Function stopTimeout //in case time out needs to be stopped earlier ?should automaticly stop when restarting chrono
     public void stopTimeout(){
         //make button of timeout unavailable in activity when this is called
@@ -163,12 +189,13 @@ public class MatchTimer {
     public boolean isChronoOn() {
         return isChronoOn;
     }
-
-
-
-
-
-
-
+    //Function get shotlock used
+    public boolean isTimoutUsed() {
+        return istimoutUsed;
+    }
+    //Function set shotlock used
+    public void resetIsTimoutUsed() {
+        istimoutUsed = false;
+    }
 }
 
