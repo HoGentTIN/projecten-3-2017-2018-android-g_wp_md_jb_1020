@@ -55,7 +55,7 @@
             android:layout_column="3"
             android:layout_gravity="fill"
             android:layout_row="0"
-            android:onClick="switchPlayerCaps"
+            android:onClick="changePlayers"
             android:text="@string/button_change" />
 
         <Button

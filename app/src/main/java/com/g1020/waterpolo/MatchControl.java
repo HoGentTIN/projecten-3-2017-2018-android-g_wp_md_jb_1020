@@ -130,6 +130,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         Player sp = dc.getSelectedPlayer();
         if(sp!=null){
 
+            dc.switchPlayerCaps();
             clearSelectedPlayer();
 
         }else {

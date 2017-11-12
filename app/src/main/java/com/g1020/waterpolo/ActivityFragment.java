@@ -11,6 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import Application.ApplicationRuntime;
@@ -48,13 +53,19 @@ public class ActivityFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_activity, container, false);
         activityArray = dc.getLogForRound(getArguments().getInt("roundNumber")).toArray(new String[0]);
+
         roundActivities = (ListView) view.findViewById(R.id.lsvActivities);
         roundActivities.setAdapter(createListAdaptor(activityArray));
         return view;
     }
 
     public ArrayAdapter createListAdaptor(String[] activities){
-        return new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, activities);
+
+        //reverse list to put last activity on top
+        List<String> tempList = Arrays.asList(activities);
+        Collections.reverse(tempList);
+
+        return new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, tempList);
     }
 
     public void updateActivities(int round){
