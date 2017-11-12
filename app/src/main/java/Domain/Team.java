@@ -20,7 +20,9 @@ public class Team {
     private CompetitionClass competitionClass;
     private Boolean isHomeTeam;
 
+    private Official coach;
     private List<Player> players = new ArrayList<>();
+
 
     public Team(String teamname, CompetitionClass competitionClass) {
         this.teamName = teamname;
