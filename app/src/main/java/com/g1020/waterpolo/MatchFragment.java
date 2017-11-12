@@ -1,28 +1,31 @@
 package com.g1020.waterpolo;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import Domain.Match;
+import views.CustomMatchListAdapter;
 
 
 public class MatchFragment extends Fragment {
+
     Domaincontroller dc;
     private static MatchFragment mf;
     List<Match> hostedmatches;
+    CustomMatchListAdapter matchAdapter;
     Match selectedMatch;
+
+    private ListView lvMatches;
     private OnMatchSelectedListener mListener;
 
     public MatchFragment() {
@@ -52,11 +55,12 @@ args.putInt("matchnumber",matchNumber);
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view = inflater.inflate(R.layout.fragment_match, container, false);
-        TextView txtTeams = (TextView) view.findViewById(R.id.txtTeams);
-        TextView txtDate = (TextView) view.findViewById(R.id.txtDatum);
-       txtTeams.setText( dc.getMatch().getTeam(0).getTeamName()+" - "+dc.getMatch().getTeam(1).getTeamName());
-       txtDate.setText(dc.getMatch().getDate().getDay() +"/"+dc.getMatch().getDate().getMonth());
+       View view = inflater.inflate(R.layout.fragment_matches, container, false);
+lvMatches = (ListView) view.findViewById(R.id.lsvMatches);
+       hostedmatches = dc.getOwnedMatches();
+
+       matchAdapter = new CustomMatchListAdapter(getContext(),android.R.id.text1,hostedmatches);
+lvMatches.setAdapter(matchAdapter);
 
 
        return view;
@@ -92,8 +96,5 @@ args.putInt("matchnumber",matchNumber);
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }

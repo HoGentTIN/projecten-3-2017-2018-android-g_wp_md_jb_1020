@@ -15,6 +15,15 @@ import java.util.List;
 public class Domaincontroller {
 
     private Match match;
+    //hier ga ik een selectedmatch maken in principe is dit exact hetzelfde als 'match' dat hierboven staat maar ik ga et voor de functionaliteit even apart declareren
+    private Match selectedMatch;
+
+    //hier ga ik een aantal matches aanmaken om een lijst van matches van een official te simuleren (gade uiteindelijk moeten verwijderen)
+    //de waarden toekennen staat in startmatch() dus daar ook wegdoen dan
+    private Match testMatch1 = new Match();
+    private Match testMatch2 = new Match();
+
+
     private List<Match> ownedMatches;
     private Official o;
 
@@ -58,6 +67,8 @@ public void setMatch(int matchNumber){
     public Match getMatch() {
         return match;
     }
+
+    public List<Match> getOwnedMatches(){return ownedMatches;}
 
     //Function: appendLog - add an event to the processLog
     public void appendLog(String eventDescription, String eventCode){
@@ -119,8 +130,17 @@ public void setMatch(int matchNumber){
 
     public void startMatch(){
         match = new Match();
+
         //hier ga ik al een vaste datum meegeven om te testen dit moet nog aangepast worden met de juiste functionaliteit (groetjes laurentje)
         match.setDate(new Date(2017,11,11));
+        //ik ga hier verder die testmatchen uitwerken dus dit ook ni vergeten weg te doen dan;
+        ownedMatches = new ArrayList<Match>();
+        testMatch1.setDate(new Date(2017,12,12));
+        testMatch1.addTeams(new Team("Gent",CompetitionClass.DAMES),new Team("Oostakker",CompetitionClass.DAMES));
+        testMatch2.setDate(new Date(2017,12,11));
+        testMatch2.addTeams(new Team("Kortrijk",CompetitionClass.DAMES),new Team("Lochristi",CompetitionClass.DAMES));
+        ownedMatches.add(testMatch1);
+        ownedMatches.add(testMatch2);
     }
 
     public void createPlayers(){
