@@ -34,12 +34,14 @@ public class MatchRest {
     private int difficulty_id;
     @SerializedName("division_id")
     private int division_id;
+
 /*
     @SerializedName("home")
     private Team home;
     @SerializedName("visitor")
     private Team visitor;
 */
+
     @SerializedName("location")
     private Location location;
     @SerializedName("valor")
@@ -58,6 +60,8 @@ public class MatchRest {
         this.valor_id = valor_id;
         this.difficulty_id = difficulty_id;
         this.division_id = division_id;
+        //this.home = home;
+        //this.visitor = visitor;
         this.location = location;
         this.valor = valor;
         this.difficulty = difficulty;

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,6 +15,16 @@ import java.util.List;
 public class Domaincontroller {
 
     private Match match;
+    //hier ga ik een selectedmatch maken in principe is dit exact hetzelfde als 'match' dat hierboven staat maar ik ga et voor de functionaliteit even apart declareren
+    private Match selectedMatch;
+
+    //hier ga ik een aantal matches aanmaken om een lijst van matches van een official te simuleren (gade uiteindelijk moeten verwijderen)
+    //de waarden toekennen staat in startmatch() dus daar ook wegdoen dan
+    private Match testMatch1 = new Match();
+    private Match testMatch2 = new Match();
+
+
+    private List<Match> ownedMatches;
     private Official o;
 
     private Player selectedPlayer;
@@ -34,15 +45,18 @@ public class Domaincontroller {
     public Player getSelectedPlayer() {
         return selectedPlayer;
     }
-
+public void setMatch(int matchNumber){
+        //hier moet er nog vanuit de lijst van ownedmathes de juiste match worden gehaald om die vervolgens in match te steken wat de
+    //eigenlijke geselecteerde match is.
+}
     public void setSelectedPlayer(Boolean homeTeam, int playerId) {
         int teamNr;
         if (homeTeam){
-            teamNr = 0;
+            selectedPlayer = match.getHome().getPlayerById(playerId);
         } else {
-            teamNr = 1;
+            selectedPlayer = match.getVisitor().getPlayerById(playerId);
         }
-        selectedPlayer = match.getTeam(teamNr).getPlayerById(playerId);
+
         Log.i("game", selectedPlayer.getFullName() + " selected in DC");
 
         //check if there's a player to switch
@@ -52,7 +66,7 @@ public class Domaincontroller {
     public void addGoal(){
         if(selectedPlayer != null) {
             if(selectedPlayer.getStatus() !=Status.GAMEOVER) {
-                match.addGoal(new Goal(selectedPlayer));
+                match.addGoal(new Goal(selectedPlayer),selectedPlayer.getTeam().isHomeTeam());
             }
         }
     }
@@ -85,6 +99,8 @@ public class Domaincontroller {
     public Match getMatch() {
         return match;
     }
+
+    public List<Match> getOwnedMatches(){return ownedMatches;}
 
     //Function: appendLog - add an event to the processLog
     public void appendLog(String eventDescription, String eventCode){
@@ -150,6 +166,19 @@ public class Domaincontroller {
 
     public void startMatch(){
         match = new Match();
+
+        //hier ga ik al een vaste datum meegeven om te testen dit moet nog aangepast worden met de juiste functionaliteit (groetjes laurentje)
+        match.setDate(new Date(2017,11,11));
+        //ik ga hier verder die testmatchen uitwerken dus dit ook ni vergeten weg te doen dan;
+        ownedMatches = new ArrayList<Match>();
+        testMatch1.setDate(new Date(2017,12,12));
+        testMatch1.setHome(new Team("Gent",CompetitionClass.DAMES));
+        testMatch1.setVisitor(new Team("Oostakker",CompetitionClass.DAMES));
+        testMatch2.setDate(new Date(2017,12,11));
+        testMatch2.setHome(new Team("Kortrijk",CompetitionClass.DAMES));
+        testMatch2.setVisitor(new Team("Lochristi",CompetitionClass.DAMES));
+        ownedMatches.add(testMatch1);
+        ownedMatches.add(testMatch2);
     }
 
     public void createPlayers(){
@@ -159,35 +188,35 @@ public class Domaincontroller {
                 new Player(9,"Mechele","Steve"), new Player(11,"Peel","Dailly"),new Player(12,"Piens","Tim"),
                 new Player(13,"Vandermeulen","Matisse")};
         for(Player p: homePlayers){
-            p.setTeam(match.getTeam(0));
+            p.setTeam(match.getHome());
         }
-        Log.i("game","Hometeam " + match.getTeam(0).getTeamName() + ", players created");
+        Log.i("game","Hometeam " + match.getHome().getTeamName() + ", players created");
 
         Player[] awayPlayers = {new Player(1,"Backaert","Guy"),new Player(2,"Cassiman","Thomas"),new Player(3,"De Smedt","Peter"),
                 new Player(7,"Gheyssens","Ruben"),new Player(10,"Goossens","Jonas"),new Player(5,"Heyvaert","Norbert"),
                 new Player(8,"Langelet","Rik"),new Player(4,"Pandolfi","Mateo"),new Player(6,"Uyttersprot","Dieter"),new Player(9,"Van der Heyden","Stijn"),
                 new Player(11,"Verhoeve","Lander"),new Player(12,"Verhoeven","Maxim"),new Player(13,"Bakker","Boris")};
         for(Player p: awayPlayers){
-            p.setTeam(match.getTeam(1));
+            p.setTeam(match.getVisitor());
         }
-        Log.i("game","AwayTeam " + match.getTeam(1).getTeamName() + ", players created");
+        Log.i("game","AwayTeam " + match.getVisitor().getTeamName() + ", players created");
 
-        match.getTeam(0).addPlayers(homePlayers);
-        match.getTeam(1).addPlayers(awayPlayers);
+        match.getHome().addPlayers(homePlayers);
+        match.getVisitor().addPlayers(awayPlayers);
 
         setPlayersStatus();
     }
 
     private void setPlayersStatus(){
         // match.getTeam().getPlayers().subList(0,6).forEach(p -> p.setStatus(Status.PLAYING));
-        for (int i = 0; i < match.getTeam(0).getPlayers().size(); i++){
+        for (int i = 0; i < match.getHome().getPlayers().size(); i++){
             if(i < 7) {
-                match.getTeam(0).getPlayers().get(i).setStatus(Status.ACTIVE);
-                match.getTeam(1).getPlayers().get(i).setStatus(Status.ACTIVE);
+                match.getHome().getPlayers().get(i).setStatus(Status.ACTIVE);
+                match.getVisitor().getPlayers().get(i).setStatus(Status.ACTIVE);
             }
             else{
-                match.getTeam(0).getPlayers().get(i).setStatus(Status.BENCHED);
-                match.getTeam(1).getPlayers().get(i).setStatus(Status.BENCHED);
+                match.getHome().getPlayers().get(i).setStatus(Status.BENCHED);
+                match.getVisitor().getPlayers().get(i).setStatus(Status.BENCHED);
             }
         }
 
@@ -198,7 +227,8 @@ public class Domaincontroller {
         hometeam.setHomeTeam(true);
         Team awayteam = new Team(awayTeamName, awayCc);
         awayteam.setHomeTeam(false);
-        match.addTeams(hometeam,awayteam);
+        match.setHome(hometeam);
+        match.setVisitor(awayteam);
     }
 
     public void resetSelectedPlayer() {

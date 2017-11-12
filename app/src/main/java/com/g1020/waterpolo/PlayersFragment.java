@@ -95,12 +95,18 @@ public class PlayersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_players, container, false);
 
-        Team team = dc.getMatch().getTeam(getArguments().getInt("teamNumber"));
+
+        Team team;
+        if(getArguments().getInt("teamNumber")==0){
+            team = dc.getMatch().getHome();
+        }else {
+            team = dc.getMatch().getVisitor();
+        }
 
         lvPlayers = (ListView) view.findViewById(R.id.lsvplayers);
         lvPlayers2 = (ListView) view.findViewById(R.id.lsvplayers2);
 
-        Log.i("game",dc.getMatch().getTeam(0).getPlayers().get(0).getFullName());
+        Log.i("game",dc.getMatch().getHome().getPlayers().get(0).getFullName());
 
         teamClickAction(lvPlayers);
         teamClickAction(lvPlayers2);

@@ -1,6 +1,7 @@
 package com.g1020.waterpolo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import java.util.List;
 
 import Application.ApplicationRuntime;
+import Domain.CompetitionClass;
 import Domain.Domaincontroller;
 import persistency.MatchRest;
 import rest.ApiClient;
@@ -17,12 +19,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CompetitionSelection extends AppCompatActivity {
+public class CompetitionSelection extends AppCompatActivity implements MatchFragment.OnMatchSelectedListener{
 
     private static final String TAG = CompetitionSelection.class.getSimpleName();
 
     ApplicationRuntime ar;  //this adds temporary code to this class
     Domaincontroller dc;
+    MatchFragment matches;
 
 
     @Override
@@ -34,6 +37,16 @@ public class CompetitionSelection extends AppCompatActivity {
         //Get runtime singleton class
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
+        ar = ApplicationRuntime.getInstance();
+        dc = ar.getDc();
+
+        // PIETER
+        dc.startMatch();
+        dc.createTeams("Oostende", CompetitionClass.U20,"Aalst",CompetitionClass.U20);
+        dc.createPlayers();
+
+        matches = new MatchFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.matchesContainer, matches).commit();
 
         //Retrieve list of Matches being played -- TEMPORARY THIS RETURNS ALL MATCHES PRACTICLY SHOULD ONLY BE MATCHES OF LOGGED IN OFFICIAL
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -65,4 +78,8 @@ public class CompetitionSelection extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onMatchSelected(int matchNumber) {
+        dc.setMatch(matchNumber);
+    }
 }

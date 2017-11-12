@@ -65,14 +65,13 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                         sbPlayerNumber.append(pNumber);
                         txtPlayernumber.setText((sbPlayerNumber.toString()));
                     }
-
                 }
 
             }
             return v;
         }
         private void setTeamColors(Player p){
-            if(p.getTeam().equals(dc.getMatch().getTeam(0))) {
+            if(p.getTeam().equals(dc.getMatch().getHome())) {
                 txtPlayernumber.setBackgroundColor(Color.WHITE);
                 txtPlayernumber.setTextColor(Color.BLACK);
             }
