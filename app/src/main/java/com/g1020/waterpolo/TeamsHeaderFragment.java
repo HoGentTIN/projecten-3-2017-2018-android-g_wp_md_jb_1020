@@ -47,8 +47,8 @@ public class TeamsHeaderFragment extends Fragment {
         txtVHomeScore = (TextView) view.findViewById(R.id.txtscorehometeam);
         txtVAwayScore = (TextView) view.findViewById(R.id.txtscoreawayteam);
 
-        txtVHomeTeamName.setText(dc.getMatch().getTeam(0).getTeamName());
-        txtVAwayTeamName.setText(dc.getMatch().getTeam(1).getTeamName());
+        txtVHomeTeamName.setText(dc.getMatch().getHome().getTeamName());
+        txtVAwayTeamName.setText(dc.getMatch().getVisitor().getTeamName());
 
        // Log.i("game", "Current period: " + Integer.toString(dc.getMatch().getQuarters().get(0).getQuarterPeriod()));
         txtVPeriod.setText(String.valueOf(dc.getMatch().getQuarters().get(0).getQuarterPeriod()));

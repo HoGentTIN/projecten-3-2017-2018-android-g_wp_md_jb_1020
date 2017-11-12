@@ -51,7 +51,7 @@ public class CustomMatchListAdapter extends ArrayAdapter<Match> {
                 txtTeams = (TextView) v.findViewById(R.id.txtTeams);
                 txtDate = (TextView) v.findViewById(R.id.txtDatum);
 
-                txtTeams.setText(p.getTeam(0).getTeamName()+" - "+p.getTeam(1).getTeamName());
+                txtTeams.setText(p.getHome().getTeamName()+" - "+p.getVisitor().getTeamName());
                 txtDate.setText(p.getDate().getDay()+"/"+p.getDate().getMonth());
             }
 

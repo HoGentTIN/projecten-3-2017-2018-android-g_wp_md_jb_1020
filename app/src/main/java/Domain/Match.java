@@ -19,7 +19,8 @@ public class Match {
 
     private String matchLog;            //keep this unless there is another way to better keep a written down form of the match progress
 
-    private List<Team> teams;               //always size 2 (1 is hometeam, 2 is awayteam)
+    private Team home;
+    private Team visitor;
     private List<Goal> scoreHome;
     private List<Goal> scoreAway;
     private Official official;       //first official is always main official
@@ -36,7 +37,6 @@ public class Match {
 
     //Constructor
     public Match(){
-        teams = new ArrayList<>(2);
         quarters = new ArrayList<Quarter>(4);
         Quarter q1 = new Quarter();
         q1.setQuarterPeriod(1);
@@ -51,9 +51,7 @@ public class Match {
         return location;
     }
 
-    public List<Team> getTeams() {
-        return teams;
-    }
+
 
     public void setLocation(Location location) {
         this.location = location;
@@ -63,13 +61,20 @@ public class Match {
         return quarters;
     }
 
-    public void addTeams(Team homeTeam, Team awayTeam){
-        teams.add(0, homeTeam);
-        teams.add(1, awayTeam);
+    public Team getHome() {
+        return home;
     }
 
-    public Team getTeam(int i){
-        return teams.get(i);
+    public void setHome(Team home) {
+        this.home = home;
+    }
+
+    public Team getVisitor() {
+        return visitor;
+    }
+
+    public void setVisitor(Team visitor) {
+        this.visitor = visitor;
     }
 
     public int getScoreHome() {
@@ -80,8 +85,8 @@ public class Match {
         return scoreAway.size();
     }
 
-    public void addGoal(Goal g){
-        if(teams.get(0).equals(g.getPlayer().getTeam())){
+    public void addGoal(Goal g, boolean home){
+        if(home){
             scoreHome.add(g);
         } else {
             scoreAway.add(g);

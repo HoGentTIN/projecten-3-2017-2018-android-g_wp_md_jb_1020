@@ -52,11 +52,11 @@ public void setMatch(int matchNumber){
     public void setSelectedPlayer(Boolean homeTeam, int playerId) {
         int teamNr;
         if (homeTeam){
-            teamNr = 0;
+            selectedPlayer = match.getHome().getPlayerById(playerId);
         } else {
-            teamNr = 1;
+            selectedPlayer = match.getVisitor().getPlayerById(playerId);
         }
-        selectedPlayer = match.getTeam(teamNr).getPlayerById(playerId);
+
         Log.i("game", selectedPlayer.getFullName() + " selected in DC");
 
         //check if there's a player to switch
@@ -66,7 +66,7 @@ public void setMatch(int matchNumber){
     public void addGoal(){
         if(selectedPlayer != null) {
             if(selectedPlayer.getStatus() !=Status.GAMEOVER) {
-                match.addGoal(new Goal(selectedPlayer));
+                match.addGoal(new Goal(selectedPlayer),selectedPlayer.getTeam().isHomeTeam());
             }
         }
     }
@@ -172,9 +172,11 @@ public void setMatch(int matchNumber){
         //ik ga hier verder die testmatchen uitwerken dus dit ook ni vergeten weg te doen dan;
         ownedMatches = new ArrayList<Match>();
         testMatch1.setDate(new Date(2017,12,12));
-        testMatch1.addTeams(new Team("Gent",CompetitionClass.DAMES),new Team("Oostakker",CompetitionClass.DAMES));
+        testMatch1.setHome(new Team("Gent",CompetitionClass.DAMES));
+        testMatch1.setVisitor(new Team("Oostakker",CompetitionClass.DAMES));
         testMatch2.setDate(new Date(2017,12,11));
-        testMatch2.addTeams(new Team("Kortrijk",CompetitionClass.DAMES),new Team("Lochristi",CompetitionClass.DAMES));
+        testMatch2.setHome(new Team("Kortrijk",CompetitionClass.DAMES));
+        testMatch2.setVisitor(new Team("Lochristi",CompetitionClass.DAMES));
         ownedMatches.add(testMatch1);
         ownedMatches.add(testMatch2);
     }
@@ -186,35 +188,35 @@ public void setMatch(int matchNumber){
                 new Player(9,"Mechele","Steve"), new Player(11,"Peel","Dailly"),new Player(12,"Piens","Tim"),
                 new Player(13,"Vandermeulen","Matisse")};
         for(Player p: homePlayers){
-            p.setTeam(match.getTeam(0));
+            p.setTeam(match.getHome());
         }
-        Log.i("game","Hometeam " + match.getTeam(0).getTeamName() + ", players created");
+        Log.i("game","Hometeam " + match.getHome().getTeamName() + ", players created");
 
         Player[] awayPlayers = {new Player(1,"Backaert","Guy"),new Player(2,"Cassiman","Thomas"),new Player(3,"De Smedt","Peter"),
                 new Player(7,"Gheyssens","Ruben"),new Player(10,"Goossens","Jonas"),new Player(5,"Heyvaert","Norbert"),
                 new Player(8,"Langelet","Rik"),new Player(4,"Pandolfi","Mateo"),new Player(6,"Uyttersprot","Dieter"),new Player(9,"Van der Heyden","Stijn"),
                 new Player(11,"Verhoeve","Lander"),new Player(12,"Verhoeven","Maxim"),new Player(13,"Bakker","Boris")};
         for(Player p: awayPlayers){
-            p.setTeam(match.getTeam(1));
+            p.setTeam(match.getVisitor());
         }
-        Log.i("game","AwayTeam " + match.getTeam(1).getTeamName() + ", players created");
+        Log.i("game","AwayTeam " + match.getVisitor().getTeamName() + ", players created");
 
-        match.getTeam(0).addPlayers(homePlayers);
-        match.getTeam(1).addPlayers(awayPlayers);
+        match.getHome().addPlayers(homePlayers);
+        match.getVisitor().addPlayers(awayPlayers);
 
         setPlayersStatus();
     }
 
     private void setPlayersStatus(){
         // match.getTeam().getPlayers().subList(0,6).forEach(p -> p.setStatus(Status.PLAYING));
-        for (int i = 0; i < match.getTeam(0).getPlayers().size(); i++){
+        for (int i = 0; i < match.getHome().getPlayers().size(); i++){
             if(i < 7) {
-                match.getTeam(0).getPlayers().get(i).setStatus(Status.ACTIVE);
-                match.getTeam(1).getPlayers().get(i).setStatus(Status.ACTIVE);
+                match.getHome().getPlayers().get(i).setStatus(Status.ACTIVE);
+                match.getVisitor().getPlayers().get(i).setStatus(Status.ACTIVE);
             }
             else{
-                match.getTeam(0).getPlayers().get(i).setStatus(Status.BENCHED);
-                match.getTeam(1).getPlayers().get(i).setStatus(Status.BENCHED);
+                match.getHome().getPlayers().get(i).setStatus(Status.BENCHED);
+                match.getVisitor().getPlayers().get(i).setStatus(Status.BENCHED);
             }
         }
 
@@ -225,7 +227,8 @@ public void setMatch(int matchNumber){
         hometeam.setHomeTeam(true);
         Team awayteam = new Team(awayTeamName, awayCc);
         awayteam.setHomeTeam(false);
-        match.addTeams(hometeam,awayteam);
+        match.setHome(hometeam);
+        match.setVisitor(awayteam);
     }
 
     public void resetSelectedPlayer() {
