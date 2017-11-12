@@ -29,6 +29,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
 
         private TextView txtPlayernumber;
         private TextView txtPlayername;
+        private TextView txtFaultField;
 
     //to use colors in resources
     private int res[] = {R.color.colorNoFaults, R.color.color1Fault,R.color.color2Faults,R.color.color3Faults};
@@ -102,7 +103,13 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
 
     public void updateBackgroundColors(int position, View v){
         Player p = getItem(position);
-        v.setBackgroundResource(res[p.getFaults()]);
+
+        txtFaultField = (TextView) v.findViewById(R.id.txtFaultField);
+
+        txtFaultField.setBackgroundResource(res[p.getFaults()]);
+
+        //entire cell backgroundcolor
+        //v.setBackgroundResource(res[p.getFaults()]);
     }
 
     }
