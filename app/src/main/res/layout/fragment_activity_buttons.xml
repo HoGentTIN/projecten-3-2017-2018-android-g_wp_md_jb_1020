@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <GridLayout
+    <TableLayout
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:columnCount="4"
         android:rowCount="2"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,75 +17,85 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <Button
-            android:id="@+id/btnGoal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_gravity="fill"
-            android:layout_row="0"
-            android:layout_rowSpan="2"
-            android:contentDescription="@string/t_button_goal"
-            android:onClick="goalMade"
-            android:text="@string/button_goal" />
+        <TableRow
+            android:layout_weight="1">
 
-        <Button
-            android:id="@+id/btnPenalty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_gravity="fill"
-            android:layout_row="0"
-            android:onClick="penaltyMade"
-            android:text="@string/button_penalty" />
+            <Button
+                android:id="@+id/btnGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-        <Button
-            android:id="@+id/btnInjury"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:layout_gravity="fill"
-            android:layout_row="0"
-            android:text="Injury" />
+                android:layout_gravity="fill"
+                android:layout_weight="1"
+                android:contentDescription="@string/t_button_goal"
+                android:onClick="goalMade"
+                android:text="@string/button_goal" />
+        </TableRow>
 
-        <Button
-            android:id="@+id/btnNumberChange"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="3"
-            android:layout_gravity="fill"
-            android:layout_row="0"
-            android:onClick="changePlayers"
-            android:text="@string/button_change" />
+        <TableRow
+            android:layout_weight="1">
 
-        <Button
-            android:id="@+id/btnU20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_gravity="fill"
-            android:layout_row="1"
-            android:onClick="faultU20"
-            android:text="@string/t_button_U20" />
+            <Button
+                android:id="@+id/btnPenalty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_weight="1"
 
-        <Button
-            android:id="@+id/btnUMV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:layout_gravity="fill"
-            android:layout_row="1"
-            android:text="@string/button_UMV" />
+                android:onClick="penaltyMade"
+                android:text="@string/button_penalty" />
 
-        <Button
-            android:id="@+id/btnUMV4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="3"
-            android:layout_gravity="fill"
-            android:layout_row="1"
-            android:text="@string/button_UMV4" />
+            <Button
+                android:id="@+id/btnInjury"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_weight="1"
 
-    </GridLayout>
+                android:text="Injury" />
 
+            <Button
+                android:id="@+id/btnNumberChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_weight="1"
+
+                android:onClick="changePlayers"
+                android:text="@string/button_change" />
+        </TableRow>
+
+        <TableRow
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btnU20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_weight="1"
+
+                android:onClick="faultU20"
+                android:text="@string/t_button_U20" />
+
+            <Button
+                android:id="@+id/btnUMV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_weight="1"
+
+                android:text="@string/button_UMV" />
+
+            <Button
+                android:id="@+id/btnUMV4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_weight="1"
+
+                android:text="@string/button_UMV4" />
+        </TableRow>
+
+    </TableLayout>
 </android.support.constraint.ConstraintLayout>

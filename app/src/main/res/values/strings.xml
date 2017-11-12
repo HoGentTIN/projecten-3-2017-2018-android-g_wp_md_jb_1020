@@ -9,7 +9,7 @@
     <!-- Button names -->
     <string name="button_home">H</string>
     <string name="button_away">A</string>
-    <string name="button_goal">G</string>
+    <string name="button_goal">Goal</string>
     <string name="button_change">C</string>
     <string name="button_penalty">P</string>
     <string name="button_U20">U 20</string>
