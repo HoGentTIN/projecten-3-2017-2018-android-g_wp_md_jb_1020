@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,6 +15,7 @@ import java.util.List;
 public class Domaincontroller {
 
     private Match match;
+    private List<Match> ownedMatches;
     private Official o;
 
     private Player selectedPlayer;
@@ -29,7 +31,10 @@ public class Domaincontroller {
     public Player getSelectedPlayer() {
         return selectedPlayer;
     }
-
+public void setMatch(int matchNumber){
+        //hier moet er nog vanuit de lijst van ownedmathes de juiste match worden gehaald om die vervolgens in match te steken wat de
+    //eigenlijke geselecteerde match is.
+}
     public void setSelectedPlayer(Boolean homeTeam, int playerId) {
         int teamNr;
         if (homeTeam){
@@ -114,6 +119,8 @@ public class Domaincontroller {
 
     public void startMatch(){
         match = new Match();
+        //hier ga ik al een vaste datum meegeven om te testen dit moet nog aangepast worden met de juiste functionaliteit (groetjes laurentje)
+        match.setDate(new Date(2017,11,11));
     }
 
     public void createPlayers(){

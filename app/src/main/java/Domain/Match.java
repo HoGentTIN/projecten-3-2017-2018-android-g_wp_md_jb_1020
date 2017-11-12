@@ -87,6 +87,12 @@ public class Match {
             scoreAway.add(g);
         }
     }
+    public void setDate(Date date){
+        this.date = date;
+    }
+    public Date getDate(){
+        return date;
+    }
 
     //Function calculate total match score from rounds
 
