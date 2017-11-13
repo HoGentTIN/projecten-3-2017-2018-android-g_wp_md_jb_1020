@@ -8,6 +8,7 @@ import java.util.List;
 import Domain.CompetitionClass;
 import Domain.Division;
 import Domain.Official;
+import Domain.Player;
 
 /**
  * Created by Impling on 12-Nov-17.
@@ -29,17 +30,18 @@ public class TeamRest {
     private Division division;
     @SerializedName("coach")
     private Official coach;
-    /*
-    @SerializedName("players")
-    private List<Integer> players = new ArrayList<>();
-    */
 
-    public TeamRest(String teamName, int division_id, CompetitionClass competitionClass, Division division, Official coach) {
+    @SerializedName("players")
+    private List<PlayerRest> players = new ArrayList<>();
+
+
+    public TeamRest(String teamName, int division_id, CompetitionClass competitionClass, Division division, Official coach, List<PlayerRest> players) {
         this.teamName = teamName;
         this.division_id = division_id;
         this.competitionClass = competitionClass;
         this.division = division;
         this.coach = coach;
+        this.players = players;
     }
 
 

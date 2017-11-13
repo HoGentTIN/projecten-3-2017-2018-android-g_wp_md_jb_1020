@@ -70,7 +70,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
                     @Override
                     public void onResponse(Call<TeamRest> call, Response<TeamRest> response) {
                         TeamRest tHomeTest = response.body();
-                        Log.d(TAG,"Retrieved home team" + tHomeTest.getTeamName());
+                        Log.d(TAG,"Retrieved home team " + tHomeTest.getTeamName());
 
                     }
 
@@ -83,7 +83,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
                     @Override
                     public void onResponse(Call<TeamRest> call, Response<TeamRest> response) {
                         TeamRest tVisitorTest = response.body();
-                        Log.d(TAG,"Retrieved visitor team" + tVisitorTest.getTeamName());
+                        Log.d(TAG,"Retrieved visitor team " + tVisitorTest.getTeamName());
                     }
 
                     @Override
