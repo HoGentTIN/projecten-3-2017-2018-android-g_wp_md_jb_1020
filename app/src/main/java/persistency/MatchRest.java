@@ -35,12 +35,12 @@ public class MatchRest {
     @SerializedName("division_id")
     private int division_id;
 
-/*
+
     @SerializedName("home")
     private Team home;
     @SerializedName("visitor")
     private Team visitor;
-*/
+
 
     @SerializedName("location")
     private Location location;

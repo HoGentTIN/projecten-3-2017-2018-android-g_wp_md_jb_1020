@@ -21,7 +21,7 @@ public class Team {
     private Boolean isHomeTeam;
 
     private Official coach;
-    private List<Player> players = new ArrayList<>();
+    transient List<Player> players = new ArrayList<>();
 
 
     public Team(String teamname, CompetitionClass competitionClass) {
