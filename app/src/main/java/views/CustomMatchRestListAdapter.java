@@ -2,10 +2,12 @@ package views;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.g1020.waterpolo.R;
@@ -27,7 +29,12 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
     private Domaincontroller dc = ar.getDc();
 
     private TextView txtTeams;
+
     private TextView txtDate;
+    private TextView txtDateDetail;
+    private TextView txtTime;
+    private TextView txtDivision;
+    private TextView txtLocation;
 
 
     public CustomMatchRestListAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<MatchRest> matches) {
@@ -36,26 +43,59 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-
         View v = convertView;
-
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
 
 
             MatchRest p = getItem(position);
-            if (p!=dc.getMatchR()) {
-                v = vi.inflate(R.layout.list_item_match, null);
 
-                txtTeams = (TextView) v.findViewById(R.id.txtTeams);
-                txtDate = (TextView) v.findViewById(R.id.txtDatum);
+            //here i look if the the match is selected, if so it will show a more detailed listitem
 
-                txtTeams.setText(p.getHome().getTeamName()+" - "+p.getVisitor().getTeamName());
-                txtDate.setText(p.getDate());
-            }
 
+            v = vi.inflate(R.layout.list_item_match, null);
+
+            txtTeams = (TextView) v.findViewById(R.id.txtTeamsDetail);
+            txtDate = (TextView) v.findViewById(R.id.txtDatum);
+            txtDateDetail = (TextView) v.findViewById(R.id.txtDatumDetail);
+            txtDivision = (TextView)v.findViewById(R.id.txtDivision);
+            txtLocation=(TextView)v.findViewById(R.id.txtLocation);
+            txtTime = (TextView)v.findViewById(R.id.txtTime);
+
+
+
+            txtTeams.setText(p.getHome().getTeamName()+" - "+p.getVisitor().getTeamName());
+            txtDate.setText(p.getDate());
+            txtDateDetail.setText(p.getDate());
+            txtDivision.setText(p.getHome().getDivision().getDivisionName());
+            txtLocation.setText(p.getLocation().getFullAddress());
+            txtTime.setText("12:00");
         }
         return v;
+    }
+    public void setSelectedMatch(int position,View convertView){
+        View v = convertView;
+        LinearLayout llunfold = (LinearLayout) v.findViewById(R.id.llUnfold);
+        TextView txtDate = (TextView) v.findViewById(R.id.txtDatum);
+        TextView txtTeams = (TextView)v.findViewById(R.id.txtTeamsDetail);
+        txtTeams.setGravity(Gravity.CENTER_HORIZONTAL);
+        txtDate.setVisibility(View.GONE);
+        llunfold.setVisibility(View.VISIBLE);
+
+
+
+    }
+    public void unselectMatch(int position,View convertView){
+        View v = convertView;
+        LinearLayout llunfold = (LinearLayout) v.findViewById(R.id.llUnfold);
+        TextView txtDate = (TextView) v.findViewById(R.id.txtDatum);
+        TextView txtTeams = (TextView)v.findViewById(R.id.txtTeamsDetail);
+        txtTeams.setGravity(Gravity.LEFT);
+        txtDate.setVisibility(View.VISIBLE);
+        llunfold.setVisibility(View.GONE);
+
+
+
     }
 }

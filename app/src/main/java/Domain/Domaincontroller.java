@@ -19,7 +19,7 @@ public class Domaincontroller {
     private Match match;
     private MatchRest matchR;
     //hier ga ik een selectedmatch maken in principe is dit exact hetzelfde als 'match' dat hierboven staat maar ik ga et voor de functionaliteit even apart declareren
-    private Match selectedMatch;
+    private MatchRest selectedMatch;
 
     //hier ga ik een aantal matches aanmaken om een lijst van matches van een official te simuleren (gade uiteindelijk moeten verwijderen)
     //de waarden toekennen staat in startmatch() dus daar ook wegdoen dan
@@ -52,6 +52,12 @@ public class Domaincontroller {
     public void setMatch(int matchNumber){
         //hier moet er nog vanuit de lijst van ownedmathes de juiste match worden gehaald om die vervolgens in match te steken wat de
         //eigenlijke geselecteerde match is.
+        int aantal = ownedMatchesR.size();
+        for (int i =0;i<aantal;i++){
+            if(ownedMatchesR.get(i).getMatch_id()==matchNumber){
+                selectedMatch = ownedMatchesR.get(i);
+            }
+        }
     }
 
     public void setSelectedPlayer(Boolean homeTeam, int playerId) {
@@ -75,6 +81,7 @@ public class Domaincontroller {
     public Match getMatch() {
         return match;
     }
+    public MatchRest getSelectedMatch(){return  selectedMatch;}
 
     public MatchRest getMatchR() {
         return matchR;
