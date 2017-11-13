@@ -7,14 +7,14 @@
     <string name="title_activity_players_home_fault_fragment">PlayersHomeFaultFragment</string>
 
     <!-- Button names -->
-    <string name="button_home">ShotClock</string>
-    <string name="button_away">A</string>
+    <string name="button_home">Timout Home</string>
+    <string name="button_away">TimeOut Away</string>
     <string name="button_goal">Goal</string>
-    <string name="button_change">C</string>
-    <string name="button_penalty">P</string>
+    <string name="button_change">Change</string>
     <string name="button_U20">U 20</string>
     <string name="button_UMV">UMV</string>
     <string name="button_UMV4">UMV 4</string>
+    <string name="button_shotclock">Shotclock</string>
 
     <!-- Button tooltips -->
     <string name="t_button_goal">Goal was scored.</string>
@@ -27,5 +27,5 @@
     <!-- Text -->
     <string name="text_shotlock">30</string>
     <string name="playerFragmentTitle">%1$S PLAYERS</string>
-
+    <string name="injury">Injury</string>
 </resources>

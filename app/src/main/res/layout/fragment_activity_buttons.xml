@@ -36,7 +36,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="homeTimeout"
-                    android:text="TimeOut_H" />
+                    android:text="@string/button_home" />
 
                 <Button
                     android:id="@+id/btnTimeOutAway"
@@ -44,7 +44,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="awayTimeout"
-                    android:text="TimeOut_A" />
+                    android:text="@string/button_away" />
             </LinearLayout>
 
             <Button
@@ -54,7 +54,7 @@
                 android:layout_gravity="fill"
                 android:layout_weight="1"
 
-                android:text="Injury" />
+                android:text="@string/injury" />
 
             <Button
                 android:id="@+id/btnNumberChange"
@@ -126,11 +126,11 @@
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/btnHomeShotlock"
+                    android:id="@+id/btnShotlock"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:onClick="shotlock"
-                    android:text="@string/button_home" />
+                    android:text="@string/button_shotclock" />
             </LinearLayout>
         </TableRow>
 
