@@ -50,6 +50,10 @@ public class MatchRest {
     @SerializedName("goals")
     private List<GoalRest> goals;
 
+    public MatchRest() {
+
+    }
+
     public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway, String date, int location_id, int valor_id, int difficulty_id, int division_id, TeamRest home, TeamRest visitor, Location location, Valor valor, Difficulty difficulty, List<GoalRest> goals) {
         this.match_id = match_id;
         this.home_id = home_id;

@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import persistency.MatchRest;
+
 /**
  * Created by timos on 5-10-2017.
  */
@@ -15,6 +17,7 @@ import java.util.List;
 public class Domaincontroller {
 
     private Match match;
+    private MatchRest matchR;
     //hier ga ik een selectedmatch maken in principe is dit exact hetzelfde als 'match' dat hierboven staat maar ik ga et voor de functionaliteit even apart declareren
     private Match selectedMatch;
 
@@ -25,6 +28,7 @@ public class Domaincontroller {
 
 
     private List<Match> ownedMatches;
+    private List<MatchRest> ownedMatchesR;
     private Official o;
     private String startTime;
 
@@ -103,6 +107,16 @@ public class Domaincontroller {
         return match;
     }
 
+    public MatchRest getMatchR() {
+        return matchR;
+    }
+
+    public void setOwnedMatchesR(List<MatchRest> matcherR){
+        this.ownedMatchesR = matcherR;
+    }
+
+    public List<MatchRest> getOwnedMatchesR(){return ownedMatchesR;}
+
     public List<Match> getOwnedMatches(){return ownedMatches;}
 
     //Function: appendLog - add an event to the processLog
@@ -169,6 +183,9 @@ public class Domaincontroller {
 
     public void startMatch(){
         match = new Match();
+        matchR = new MatchRest();
+        matchR.setDate(new Date(2017,11,11).toString());
+
 
         //hier ga ik al een vaste datum meegeven om te testen dit moet nog aangepast worden met de juiste functionaliteit (groetjes laurentje)
         match.setDate(new Date(2017,11,11));
@@ -182,6 +199,8 @@ public class Domaincontroller {
         testMatch2.setVisitor(new Team("Lochristi",CompetitionClass.DAMES));
         ownedMatches.add(testMatch1);
         ownedMatches.add(testMatch2);
+
+
     }
 
     public void createPlayers(){

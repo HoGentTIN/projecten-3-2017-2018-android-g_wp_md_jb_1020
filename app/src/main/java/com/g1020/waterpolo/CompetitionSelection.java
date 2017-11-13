@@ -48,8 +48,9 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         dc.createTeams("Oostende", CompetitionClass.U20,"Aalst",CompetitionClass.U20);
         dc.createPlayers();
 
-        matches = new MatchFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.matchesContainer, matches).commit();
+        //matches = new MatchFragment();
+        //getSupportFragmentManager().beginTransaction().add(R.id.matchesContainer, matches).commit();
+
 
         //Retrieve list of Matches being played -- TEMPORARY THIS RETURNS ALL MATCHES PRACTICLY SHOULD ONLY BE MATCHES OF LOGGED IN OFFICIAL
         final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -57,13 +58,19 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         call.enqueue(new Callback<List<MatchRest>>() {
             @Override
             public void onResponse(Call<List<MatchRest>> call, Response<List<MatchRest>> response) {
-                List<MatchRest> matches = response.body();
-                Log.d(TAG,"Retrieved " + matches.size() + " Match objects.");
+                List<MatchRest> matchesR = response.body();
+                dc.setOwnedMatchesR(matchesR);
+
+                matches = new MatchFragment();
+                getSupportFragmentManager().beginTransaction().add(R.id.matchesContainer, matches).commit();
+
+
+                Log.d(TAG,"Retrieved " + matchesR.size() + " Match objects.");
 
                 //for each match offical has filter matches
 
                 //retrieve for each match the teams and needed info
-                MatchRest mtest = matches.get(0);
+                MatchRest mtest = matchesR.get(0);
                 String ptest = mtest.getHome().getPlayers().get(0).getName();
                 Log.d(TAG,"random test player retrival from Matchrest object: " + ptest + ". Player who made the first goal " + mtest.getGoals().get(0).getPlayer().getName());
                 Call<TeamRest> tCallHome = apiService.getTeam(mtest.getHome_id());

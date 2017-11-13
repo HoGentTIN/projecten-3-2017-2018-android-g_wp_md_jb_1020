@@ -14,7 +14,9 @@ import java.util.List;
 import Application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import Domain.Match;
+import persistency.MatchRest;
 import views.CustomMatchListAdapter;
+import views.CustomMatchRestListAdapter;
 
 
 public class MatchFragment extends Fragment {
@@ -23,6 +25,9 @@ public class MatchFragment extends Fragment {
     private static MatchFragment mf;
     List<Match> hostedmatches;
     CustomMatchListAdapter matchAdapter;
+    List<MatchRest> hostedmatchesR;
+    CustomMatchRestListAdapter matchRestAdapter;
+
     Match selectedMatch;
 
     private ListView lvMatches;
@@ -40,7 +45,7 @@ public interface OnMatchSelectedListener{
     public static MatchFragment newInstance(int matchNumber) {
         mf = new MatchFragment();
         Bundle args = new Bundle();
-args.putInt("matchnumber",matchNumber);
+        args.putInt("matchnumber",matchNumber);
         mf.setArguments(args);
         return mf;
     }
@@ -56,11 +61,15 @@ args.putInt("matchnumber",matchNumber);
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view = inflater.inflate(R.layout.fragment_matches, container, false);
-lvMatches = (ListView) view.findViewById(R.id.lsvMatches);
-       hostedmatches = dc.getOwnedMatches();
+       lvMatches = (ListView) view.findViewById(R.id.lsvMatches);
 
+       hostedmatches = dc.getOwnedMatches();
        matchAdapter = new CustomMatchListAdapter(getContext(),android.R.id.text1,hostedmatches);
-lvMatches.setAdapter(matchAdapter);
+
+       hostedmatchesR = dc.getOwnedMatchesR();
+       matchRestAdapter = new CustomMatchRestListAdapter(getContext(),android.R.id.text1,hostedmatchesR);
+
+       lvMatches.setAdapter(matchRestAdapter);
 
 
        return view;
