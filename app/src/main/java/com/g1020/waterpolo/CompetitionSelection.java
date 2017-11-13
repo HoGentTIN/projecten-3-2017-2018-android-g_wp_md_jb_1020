@@ -14,6 +14,7 @@ import Domain.CompetitionClass;
 import Domain.Domaincontroller;
 import Domain.Team;
 import persistency.MatchRest;
+import persistency.TeamRest;
 import rest.ApiClient;
 import rest.ApiInterface;
 import retrofit2.Call;
@@ -50,7 +51,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         getSupportFragmentManager().beginTransaction().add(R.id.matchesContainer, matches).commit();
 
         //Retrieve list of Matches being played -- TEMPORARY THIS RETURNS ALL MATCHES PRACTICLY SHOULD ONLY BE MATCHES OF LOGGED IN OFFICIAL
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<List<MatchRest>> call = apiService.getMatches();
         call.enqueue(new Callback<List<MatchRest>>() {
             @Override
@@ -61,6 +62,37 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
                 //for each match offical has filter matches
 
                 //retrieve for each match the teams and needed info
+                MatchRest mtest = matches.get(0);
+                Call<TeamRest> tCallHome = apiService.getTeam(mtest.getHome_id());
+                Call<TeamRest> tCallVisitor = apiService.getTeam(mtest.getVisitor_id());
+
+                tCallHome.enqueue(new Callback<TeamRest>() {
+                    @Override
+                    public void onResponse(Call<TeamRest> call, Response<TeamRest> response) {
+                        TeamRest tHomeTest = response.body();
+                        Log.d(TAG,"Retrieved home team" + tHomeTest.getTeamName());
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<TeamRest> call, Throwable t) {
+                        Log.e(TAG,t.toString());
+                    }
+                });
+                tCallVisitor.enqueue(new Callback<TeamRest>() {
+                    @Override
+                    public void onResponse(Call<TeamRest> call, Response<TeamRest> response) {
+                        TeamRest tVisitorTest = response.body();
+                        Log.d(TAG,"Retrieved visitor team" + tVisitorTest.getTeamName());
+                    }
+
+                    @Override
+                    public void onFailure(Call<TeamRest> call, Throwable t) {
+                        Log.e(TAG,t.toString());
+                    }
+                });
+
+
 
                 //When match selected show info in screen and list of players
 
@@ -69,8 +101,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
 
 
                 //team should have list of players
-                MatchRest mtest = matches.get(0);
-                Log.d(TAG,"test playerfound " + mtest.getHome_id() );
+
 
             }
 

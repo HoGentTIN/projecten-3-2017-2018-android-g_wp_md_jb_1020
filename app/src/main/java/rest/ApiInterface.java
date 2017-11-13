@@ -7,8 +7,10 @@ package rest;
 import java.util.List;
 
 import persistency.MatchRest;
+import persistency.TeamRest;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface ApiInterface {
 
@@ -23,6 +25,10 @@ public interface ApiInterface {
 
 
     //Get all matches being played today?
+
+    //get team
+    @GET("api/teams/{id}")
+    Call<TeamRest> getTeam(@Path("id") int id);
 
     //
 
