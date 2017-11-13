@@ -75,6 +75,8 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
                 MatchRest mtest = matchesR.get(0);
                 String ptest = mtest.getHome().getPlayers().get(0).getName();
                 Log.d(TAG,"random test player retrival from Matchrest object: " + ptest + ". Player who made the first goal " + mtest.getGoals().get(0).getPlayer().getName());
+
+                /* Technicly not needed since Match knows its TeamRest objects and its PlayerRestObjects - Normaly when a match is finished it cannot be played anymore so should always initialize on empty array
                 Call<TeamRest> tCallHome = apiService.getTeam(mtest.getHome_id());
                 Call<TeamRest> tCallVisitor = apiService.getTeam(mtest.getVisitor_id());
 
@@ -107,6 +109,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
                         Log.e(TAG,t.toString());
                     }
                 });
+                */
 
 
 
@@ -136,6 +139,14 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
     public void endSelection(View view) {
         //get selected match value from layout -> create Match object from the MatchRest Object and store it in the applicationruntime domaincontroller
 
+
+
+        //Create Team object from RestTeam object
+
+             //Create player objects from RestPlayer objects + add Right team object from
+
+        //Create Match object from Matchrest and the created team and player objects // + add Goal ojbect or not if it is initialized in matchconstructor itself
+
         Intent intent = new Intent(this, MatchControl.class);
         //Intent intent = new Intent(this, AdministrationSetup.class);
         startActivity(intent);
@@ -146,7 +157,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         dc.setMatch(matchNumber);
         matchSettings = new MatchSettingsFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.matchSettingsContainer,matchSettings).commit();
-        playersFrag = new PlayersMatchSettingsFragment();
+        playersFrag = new PlayersMatchSettingsFragment();       //keeps adding to list on reloading the fragment try to prevent this TO DO
         getSupportFragmentManager().beginTransaction().add(R.id.homeContainer1,playersFrag).commit();
 
     }
