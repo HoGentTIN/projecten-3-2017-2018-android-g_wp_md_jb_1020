@@ -7,9 +7,7 @@ package Domain;
 public enum Status {
 
     ACTIVE,
-    BENCHED,
     SUSPENDED,
-    OUTZONE,
     GAMEOVER,
     INJURED
 

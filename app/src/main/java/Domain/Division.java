@@ -8,10 +8,13 @@ import java.sql.Time;
 
 public class Division {
 
-    //Variables
     private int division_id;
     private String divisionName;
-    private Time time_match;
+    private DivisionType divisionType;
 
+    public Division(String divisionName, DivisionType divisionType){
+        this.divisionName = divisionName;
+        this.divisionType = divisionType;
+    }
 
 }

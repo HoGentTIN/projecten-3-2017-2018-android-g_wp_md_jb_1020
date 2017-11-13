@@ -8,13 +8,22 @@ public class Penalty {
 
     //Variables
     private int penalty_id;
-    private int Weight;
 
+
+    private Player player;
     private PenaltyType penaltyType;
 
     //Constructor
-    public Penalty(int penalty_id, int weight) {
-        this.penalty_id = penalty_id;
-        this.Weight = weight;
+    public Penalty(Player p, PenaltyType pt) {
+        this.player = p;
+        this.penaltyType = pt;
+    }
+
+    public PenaltyType getPenaltyType(){
+        return penaltyType;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

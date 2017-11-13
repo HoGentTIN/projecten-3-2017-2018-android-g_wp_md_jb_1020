@@ -1,12 +1,8 @@
 package com.g1020.waterpolo;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.os.CountDownTimer;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.*;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Application.ApplicationRuntime;
-import Domain.CompetitionClass;
+import Domain.Division;
+import Domain.DivisionType;
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
 import Domain.Player;
@@ -53,7 +50,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         // PIETER
         dc.startMatch();
-        dc.createTeams("Oostende", CompetitionClass.U20,"Aalst",CompetitionClass.U20);
+        Division heren = new Division("Eerste klasse Heren", DivisionType.HEREN);
+        dc.createTeams("Oostende", heren,"Aalst",heren);
         dc.createPlayers();
         // END PIETER
 
@@ -101,22 +99,11 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             clearSelectedPlayer();
 
             teamsHeader.updateHeader();
-            activities.updateActivities(dc.round);
+            activities.updateActivities(dc.getMatch().getCurrentRound());
 
             stopShotlock(view);
 
             //loadPlayers();
-        }else {
-            toast("Select a player first.");
-        }
-    }
-
-    public void penaltyMade(View view) {
-        Player sp = dc.getSelectedPlayer();
-        if(sp!=null){
-
-            clearSelectedPlayer();
-
         }else {
             toast("Select a player first.");
         }
@@ -152,7 +139,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
                 dc.addFaultU20();
 
                 //update the background color
-                if(sp.getTeam().isHomeTeam()){
+                if(sp.getTeam().equals(dc.getHomeTeam())){
                     homeTeam.updateBackgroundPlayer();
                 } else {
                     awayTeam.updateBackgroundPlayer();
@@ -164,7 +151,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
                 loadPlayers();
                 clearSelectedPlayer();      //clear selected player from layout
 
-                activities.updateActivities(dc.round);
+                activities.updateActivities(dc.getMatch().getCurrentRound());
 
                 //Start 20 second timer
                 sp.setFaultTimer();
@@ -372,10 +359,10 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     public void addToLog(Player sp, String event, String description){
         //Determine home or away team
         String t;
-        if(sp.getTeam().isHomeTeam()){t = "H";}else {t = "A";}
+        if(sp.getTeam().equals(dc.getHomeTeam())){t = "H";}else {t = "A";}
         //Get time notation
         TextView tt = (TextView) findViewById(R.id.txtTimer);
-        dc.appendLog(description,event + t + dc.round, tt.getText().toString(),dc.round);
+        dc.appendLog(description,event + t + dc.getMatch().getCurrentRound(), tt.getText().toString(),dc.getMatch().getCurrentRound());
     }
     //Remove latest event log
     public void undoLatest(View view){
@@ -383,7 +370,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         //Remove undone event from log
         dc.undoLog();
-        activities.updateActivities(dc.round);
+        activities.updateActivities(dc.getMatch().getCurrentRound());
     }
     //Setup toast notification
     public void toast(String message){

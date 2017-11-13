@@ -4,7 +4,6 @@ package com.g1020.waterpolo;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +20,6 @@ import java.util.List;
 import Application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import Domain.Player;
-import Domain.Status;
 import Domain.Team;
 import views.CustomPlayerListAdapter;
 
@@ -98,15 +95,15 @@ public class PlayersFragment extends Fragment {
 
         Team team;
         if(getArguments().getInt("teamNumber")==0){
-            team = dc.getMatch().getHome();
+            team = dc.getMatch().getHomeTeam();
         }else {
-            team = dc.getMatch().getVisitor();
+            team = dc.getMatch().getAwayTeam();
         }
 
         lvPlayers = (ListView) view.findViewById(R.id.lsvplayers);
         lvPlayers2 = (ListView) view.findViewById(R.id.lsvplayers2);
 
-        Log.i("game",dc.getMatch().getHome().getPlayers().get(0).getFullName());
+        Log.i("game",dc.getMatch().getHomeTeam().getPlayers().get(0).getFullName());
 
         teamClickAction(lvPlayers);
         teamClickAction(lvPlayers2);
@@ -129,7 +126,7 @@ public class PlayersFragment extends Fragment {
                 // retrieve the selected player
                 previousPlayerPosition = position;
                 selectedPlayer = (Player) listview.getItemAtPosition(position);
-                Boolean team = selectedPlayer.getTeam().isHomeTeam();
+                Boolean team = selectedPlayer.getTeam().equals(dc.getHomeTeam());
 
                 Toast toast = Toast.makeText(getActivity(), "You've selected player " + selectedPlayer.getFullName(), Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -139,7 +136,7 @@ public class PlayersFragment extends Fragment {
 
 
                 //Change look of selected item
-                if(selectedPlayer.getTeam().isHomeTeam()){
+                if(selectedPlayer.getTeam().equals(dc.getHomeTeam())){
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
                     ca.setSelectedPlayer(position,  listview.getChildAt(position), Typeface.BOLD );
 
@@ -169,7 +166,6 @@ public class PlayersFragment extends Fragment {
             ca.updateBackgroundColors(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition));
             CustomPlayerListAdapter ca2 = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
             ca2.updateBackgroundColors(previousPlayerPosition, lvPlayers2.getChildAt(previousPlayerPosition));
-
     }
 
 

@@ -10,6 +10,7 @@ import android.util.Log;
 public class Player {
 
     //variables
+
     private int player_id;
     private int playerNumber;
     private String firstName;
@@ -19,8 +20,6 @@ public class Player {
     private boolean starter;
     private Team team;
 
-    // 3 strikes and you are out
-    private int faults;
     //FaultTimer
     private CountDownTimer faultTimer;
     private long faultTimeRemaining = 20000;
@@ -30,18 +29,9 @@ public class Player {
         this.lastName = lastName;
         this.playerNumber = n;
         this.status = status;
-        this.faults = 0;
 
         //temporary
         player_id = playerNumber;
-    }
-
-    public int getFaults() {
-        return faults;
-    }
-
-    public void setFaults(int faults) {
-        this.faults = faults;
     }
 
     public Team getTeam() {
@@ -87,7 +77,6 @@ public class Player {
     public void setStatus(Status status) {
         this.status = status;
     }
-
 
     public int getPlayer_id() {
         return player_id;

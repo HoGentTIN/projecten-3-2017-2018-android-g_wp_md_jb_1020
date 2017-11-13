@@ -6,17 +6,22 @@ package Domain;
 
 public class Goal {
 
+    private int playerid;
+    private int matchid;
+
+    private int teamid;
+
     private Player p;
 
-    public Goal(Player p){
+    public Goal(int matchid, int teamid, Player p){
+        this.teamid = teamid;
+        this.matchid = matchid;
         this.p = p;
+        this.playerid = p.getPlayer_id();
     }
 
-    public Player getPlayer() {
-        return p;
+    public int getTeamid() {
+        return teamid;
     }
 
-    public void setP(Player p) {
-        this.p = p;
-    }
 }

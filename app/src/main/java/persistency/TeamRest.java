@@ -5,10 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import Domain.CompetitionClass;
 import Domain.Division;
 import Domain.Official;
-import Domain.Player;
 
 /**
  * Created by Impling on 12-Nov-17.
@@ -24,8 +22,6 @@ public class TeamRest {
 
     @SerializedName("division_id")
     private int division_id;
-    @SerializedName("competition_class")
-    private CompetitionClass competitionClass;
     @SerializedName("division")
     private Division division;
     @SerializedName("coach")
@@ -35,10 +31,9 @@ public class TeamRest {
     private List<PlayerRest> players = new ArrayList<>();
 
 
-    public TeamRest(String teamName, int division_id, CompetitionClass competitionClass, Division division, Official coach, List<PlayerRest> players) {
+    public TeamRest(String teamName, int division_id, Division division, Official coach, List<PlayerRest> players) {
         this.teamName = teamName;
         this.division_id = division_id;
-        this.competitionClass = competitionClass;
         this.division = division;
         this.coach = coach;
         this.players = players;
@@ -71,14 +66,6 @@ public class TeamRest {
 
     public void setDivision_id(int division_id) {
         this.division_id = division_id;
-    }
-
-    public CompetitionClass getCompetitionClass() {
-        return competitionClass;
-    }
-
-    public void setCompetitionClass(CompetitionClass competitionClass) {
-        this.competitionClass = competitionClass;
     }
 
     public Division getDivision() {

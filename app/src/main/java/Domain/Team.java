@@ -17,24 +17,19 @@ public class Team {
 
     private Location location;      // now hear me out on this one, when we need to replace a member they can be replaced by anyone of the same organization that has the same division so In my oppinion this should be added to class diagram
     private Division division;
-    private CompetitionClass competitionClass;
-    private Boolean isHomeTeam;
 
     private Official coach;
-    transient List<Player> players = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
 
 
-    public Team(String teamname, CompetitionClass competitionClass) {
+    public Team(int teamId, String teamname, Division division) {
+        this.team_id = teamId;
         this.teamName = teamname;
-        this.competitionClass = competitionClass;
+        this.division = division;
     }
 
-    public void setHomeTeam(Boolean isHomeTeam) {
-        this.isHomeTeam = isHomeTeam;
-    }
-
-    public Boolean isHomeTeam() {
-        return isHomeTeam;
+    public int getTeam_id() {
+        return team_id;
     }
 
     public Location getLocation() {

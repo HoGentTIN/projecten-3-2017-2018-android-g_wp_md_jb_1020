@@ -3,7 +3,6 @@ package com.g1020.waterpolo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,21 +46,21 @@ public class TeamsHeaderFragment extends Fragment {
         txtVHomeScore = (TextView) view.findViewById(R.id.txtscorehometeam);
         txtVAwayScore = (TextView) view.findViewById(R.id.txtscoreawayteam);
 
-        txtVHomeTeamName.setText(dc.getMatch().getHome().getTeamName());
-        txtVAwayTeamName.setText(dc.getMatch().getVisitor().getTeamName());
+        txtVHomeTeamName.setText(dc.getHomeTeam().getTeamName());
+        txtVAwayTeamName.setText(dc.getAwayTeam().getTeamName());
 
        // Log.i("game", "Current period: " + Integer.toString(dc.getMatch().getQuarters().get(0).getQuarterPeriod()));
-        txtVPeriod.setText(String.valueOf(dc.getMatch().getQuarters().get(0).getQuarterPeriod()));
-        txtVHomeScore.setText(String.valueOf(dc.getMatch().getScoreHome()));
-        txtVAwayScore.setText(String.valueOf(dc.getMatch().getScoreAway()));
+        txtVPeriod.setText(String.valueOf(dc.getMatch().getCurrentRound()));
+        txtVHomeScore.setText(String.valueOf(dc.getMatch().getScoreForTeam(dc.getHomeTeam().getTeam_id())));
+        txtVAwayScore.setText(String.valueOf(dc.getMatch().getScoreForTeam(dc.getAwayTeam().getTeam_id())));
 
         return view;
     }
 
     public void updateHeader(){
-        txtVPeriod.setText(String.valueOf(dc.getMatch().getQuarters().get(0).getQuarterPeriod()));
-        txtVHomeScore.setText(String.valueOf(dc.getMatch().getScoreHome()));
-        txtVAwayScore.setText(String.valueOf(dc.getMatch().getScoreAway()));
+        txtVPeriod.setText(String.valueOf(dc.getMatch().getCurrentRound()));
+        txtVHomeScore.setText(String.valueOf(dc.getMatch().getScoreForTeam(dc.getHomeTeam().getTeam_id())));
+        txtVAwayScore.setText(String.valueOf(dc.getMatch().getScoreForTeam(dc.getAwayTeam().getTeam_id())));
     }
 
 }

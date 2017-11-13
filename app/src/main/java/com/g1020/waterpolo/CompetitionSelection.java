@@ -1,7 +1,6 @@
 package com.g1020.waterpolo;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +9,9 @@ import android.view.View;
 import java.util.List;
 
 import Application.ApplicationRuntime;
-import Domain.CompetitionClass;
+import Domain.Division;
+import Domain.DivisionType;
 import Domain.Domaincontroller;
-import Domain.Team;
 import persistency.MatchRest;
 import persistency.PlayerRest;
 import persistency.TeamRest;
@@ -45,7 +44,8 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
 
         // PIETER
         dc.startMatch();
-        dc.createTeams("Oostende", CompetitionClass.U20,"Aalst",CompetitionClass.U20);
+        Division heren = new Division("Eerste klasse Heren", DivisionType.HEREN);
+        dc.createTeams("Oostende", heren,"Aalst",heren);
         dc.createPlayers();
 
         //matches = new MatchFragment();

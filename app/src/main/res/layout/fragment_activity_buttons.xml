@@ -48,16 +48,6 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btnPenalty"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="fill"
-                android:layout_weight="1"
-
-                android:onClick="penaltyMade"
-                android:text="@string/button_penalty" />
-
-            <Button
                 android:id="@+id/btnInjury"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

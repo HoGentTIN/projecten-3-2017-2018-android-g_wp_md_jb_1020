@@ -2,13 +2,11 @@ package views;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.g1020.waterpolo.R;
@@ -72,7 +70,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
             return v;
         }
         private void setTeamColors(Player p){
-            if(p.getTeam().equals(dc.getMatch().getHome())) {
+            if(p.getTeam().equals(dc.getMatch().getHomeTeam())) {
                 txtPlayernumber.setBackgroundColor(Color.WHITE);
                 txtPlayernumber.setTextColor(Color.BLACK);
             }
@@ -106,7 +104,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
 
         txtFaultField = (TextView) v.findViewById(R.id.txtFaultField);
 
-        txtFaultField.setBackgroundResource(res[p.getFaults()]);
+        txtFaultField.setBackgroundResource(res[dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(p.getPlayer_id())]);
 
         //entire cell backgroundcolor
         //v.setBackgroundResource(res[p.getFaults()]);

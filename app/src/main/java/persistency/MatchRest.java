@@ -2,12 +2,8 @@ package persistency;
 
 import com.google.gson.annotations.SerializedName;
 
+import Domain.*;
 import java.util.List;
-
-import Domain.Difficulty;
-import Domain.Location;
-import Domain.Valor;
-
 
 /**
  * Created by timos on 7-11-2017.
@@ -43,10 +39,7 @@ public class MatchRest {
 
     @SerializedName("location")
     private Location location;
-    @SerializedName("valor")
-    private Valor valor;
-    @SerializedName("difficulty")
-    private Difficulty difficulty;
+
     @SerializedName("goals")
     private List<GoalRest> goals;
 
@@ -54,7 +47,7 @@ public class MatchRest {
 
     }
 
-    public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway, String date, int location_id, int valor_id, int difficulty_id, int division_id, TeamRest home, TeamRest visitor, Location location, Valor valor, Difficulty difficulty, List<GoalRest> goals) {
+    public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway, String date, int location_id, int valor_id, int difficulty_id, int division_id, TeamRest home, TeamRest visitor, Location location, List<GoalRest> goals) {
         this.match_id = match_id;
         this.home_id = home_id;
         this.visitor_id = visitor_id;
@@ -68,8 +61,6 @@ public class MatchRest {
         this.home = home;
         this.visitor = visitor;
         this.location = location;
-        this.valor = valor;
-        this.difficulty = difficulty;
         this.goals = goals;
     }
 
@@ -175,22 +166,6 @@ public class MatchRest {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public Valor getValor() {
-        return valor;
-    }
-
-    public void setValor(Valor valor) {
-        this.valor = valor;
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
     }
 
     public List<GoalRest> getGoals() {

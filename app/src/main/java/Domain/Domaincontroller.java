@@ -41,8 +41,6 @@ public class Domaincontroller {
     private Boolean switchPlayer = false;
     private Player playerToSwitch;
 
-    public int round = 1;
-
     public Domaincontroller(){
 
     }
@@ -55,12 +53,13 @@ public class Domaincontroller {
         //hier moet er nog vanuit de lijst van ownedmathes de juiste match worden gehaald om die vervolgens in match te steken wat de
         //eigenlijke geselecteerde match is.
     }
+
     public void setSelectedPlayer(Boolean homeTeam, int playerId) {
         int teamNr;
         if (homeTeam){
-            selectedPlayer = match.getHome().getPlayerById(playerId);
+            selectedPlayer = match.getHomeTeam().getPlayerById(playerId);
         } else {
-            selectedPlayer = match.getVisitor().getPlayerById(playerId);
+            selectedPlayer = match.getAwayTeam().getPlayerById(playerId);
         }
 
         Log.i("game", selectedPlayer.getFullName() + " selected in DC");
@@ -69,20 +68,37 @@ public class Domaincontroller {
         checkPlayerSwitch();
     }
 
+    public void resetSelectedPlayer() {
+        selectedPlayer = null;
+    }
+
+    public Match getMatch() {
+        return match;
+    }
+
+    public MatchRest getMatchR() {
+        return matchR;
+    }
+
+    public void setOwnedMatchesR(List<MatchRest> matcherR){
+        this.ownedMatchesR = matcherR;
+    }
+
+    public List<MatchRest> getOwnedMatchesR(){return ownedMatchesR;}
+
+    public List<Match> getOwnedMatches(){return ownedMatches;}
+
+
     public void addGoal(){
         if(selectedPlayer != null) {
-            if(selectedPlayer.getStatus() !=Status.GAMEOVER) {
-                match.addGoal(new Goal(selectedPlayer),selectedPlayer.getTeam().isHomeTeam());
+            if(selectedPlayer.getStatus() == Status.ACTIVE) {
+                match.addGoal(new Goal(match.getMatch_id(), selectedPlayer.getTeam().getTeam_id(),selectedPlayer));
             }
         }
     }
 
     public void addFaultU20() {
-        //set fault to player
-        selectedPlayer.setFaults(selectedPlayer.getFaults() + 1);
-        Log.i("game", selectedPlayer.getFullName() + " has " + selectedPlayer.getFaults() + " faults");
-        //Reset selectedplayer to zero
-        selectedPlayer = null;
+        match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.U20));
     }
 
     // indicate that players want to change number & store first player object
@@ -102,22 +118,6 @@ public class Domaincontroller {
             }
         }
     }
-
-    public Match getMatch() {
-        return match;
-    }
-
-    public MatchRest getMatchR() {
-        return matchR;
-    }
-
-    public void setOwnedMatchesR(List<MatchRest> matcherR){
-        this.ownedMatchesR = matcherR;
-    }
-
-    public List<MatchRest> getOwnedMatchesR(){return ownedMatchesR;}
-
-    public List<Match> getOwnedMatches(){return ownedMatches;}
 
     //Function: appendLog - add an event to the processLog
     public void appendLog(String eventDescription, String eventCode){
@@ -180,6 +180,13 @@ public class Domaincontroller {
         return 8;
     }
 
+    public Team getHomeTeam(){
+       return match.getHomeTeam();
+    }
+
+    public Team getAwayTeam(){
+        return match.getAwayTeam();
+    }
 
     public void startMatch(){
         match = new Match();
@@ -192,11 +199,12 @@ public class Domaincontroller {
         //ik ga hier verder die testmatchen uitwerken dus dit ook ni vergeten weg te doen dan;
         ownedMatches = new ArrayList<Match>();
         testMatch1.setDate(new Date(2017,12,12));
-        testMatch1.setHome(new Team("Gent",CompetitionClass.DAMES));
-        testMatch1.setVisitor(new Team("Oostakker",CompetitionClass.DAMES));
+        Division Dames = new Division("Dames",DivisionType.DAMES);
+        testMatch1.setHomeTeam(new Team(0,"Gent",Dames));
+        testMatch1.setAwayTeam(new Team(1,"Oostakker",Dames));
         testMatch2.setDate(new Date(2017,12,11));
-        testMatch2.setHome(new Team("Kortrijk",CompetitionClass.DAMES));
-        testMatch2.setVisitor(new Team("Lochristi",CompetitionClass.DAMES));
+        testMatch2.setHomeTeam(new Team(2,"Kortrijk",Dames));
+        testMatch2.setAwayTeam(new Team(3,"Lochristi",Dames));
         ownedMatches.add(testMatch1);
         ownedMatches.add(testMatch2);
 
@@ -210,52 +218,42 @@ public class Domaincontroller {
                 new Player(9,"Mechele","Steve"), new Player(11,"Peel","Dailly"),new Player(12,"Piens","Tim"),
                 new Player(13,"Vandermeulen","Matisse")};
         for(Player p: homePlayers){
-            p.setTeam(match.getHome());
+            p.setTeam(match.getHomeTeam());
         }
-        Log.i("game","Hometeam " + match.getHome().getTeamName() + ", players created");
+        Log.i("game","Hometeam " + match.getHomeTeam().getTeamName() + ", players created");
 
         Player[] awayPlayers = {new Player(1,"Backaert","Guy"),new Player(2,"Cassiman","Thomas"),new Player(3,"De Smedt","Peter"),
                 new Player(7,"Gheyssens","Ruben"),new Player(10,"Goossens","Jonas"),new Player(5,"Heyvaert","Norbert"),
                 new Player(8,"Langelet","Rik"),new Player(4,"Pandolfi","Mateo"),new Player(6,"Uyttersprot","Dieter"),new Player(9,"Van der Heyden","Stijn"),
                 new Player(11,"Verhoeve","Lander"),new Player(12,"Verhoeven","Maxim"),new Player(13,"Bakker","Boris")};
         for(Player p: awayPlayers){
-            p.setTeam(match.getVisitor());
+            p.setTeam(match.getAwayTeam());
         }
-        Log.i("game","AwayTeam " + match.getVisitor().getTeamName() + ", players created");
+        Log.i("game","AwayTeam " + match.getAwayTeam().getTeamName() + ", players created");
 
-        match.getHome().addPlayers(homePlayers);
-        match.getVisitor().addPlayers(awayPlayers);
+        match.getHomeTeam().addPlayers(homePlayers);
+        match.getAwayTeam().addPlayers(awayPlayers);
 
         setPlayersStatus();
     }
 
     private void setPlayersStatus(){
         // match.getTeam().getPlayers().subList(0,6).forEach(p -> p.setStatus(Status.PLAYING));
-        for (int i = 0; i < match.getHome().getPlayers().size(); i++){
-            if(i < 7) {
-                match.getHome().getPlayers().get(i).setStatus(Status.ACTIVE);
-                match.getVisitor().getPlayers().get(i).setStatus(Status.ACTIVE);
-            }
-            else{
-                match.getHome().getPlayers().get(i).setStatus(Status.BENCHED);
-                match.getVisitor().getPlayers().get(i).setStatus(Status.BENCHED);
-            }
+        for (int i = 0; i < match.getHomeTeam().getPlayers().size(); i++){
+
+                match.getHomeTeam().getPlayers().get(i).setStatus(Status.ACTIVE);
+                match.getAwayTeam().getPlayers().get(i).setStatus(Status.ACTIVE);
         }
 
     }
 
-    public void createTeams(String homeTeamName, CompetitionClass homeCc, String awayTeamName, CompetitionClass awayCc){
-        Team hometeam = new Team(homeTeamName, homeCc);
-        hometeam.setHomeTeam(true);
-        Team awayteam = new Team(awayTeamName, awayCc);
-        awayteam.setHomeTeam(false);
-        match.setHome(hometeam);
-        match.setVisitor(awayteam);
+    public void createTeams(String homeTeamName, Division dH, String awayTeamName, Division dA){
+        Team hometeam = new Team(4,homeTeamName, dH);
+        Team awayteam = new Team(5,awayTeamName, dA);
+        match.setHomeTeam(hometeam);
+        match.setAwayTeam(awayteam);
     }
 
-    public void resetSelectedPlayer() {
-        selectedPlayer = null;
-    }
 
 
     //eventcode - description => Overview of eventlogcodes and corresponding description

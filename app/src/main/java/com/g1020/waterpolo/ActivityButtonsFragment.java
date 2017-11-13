@@ -14,7 +14,7 @@ import android.widget.Button;
  */
 public class ActivityButtonsFragment extends Fragment {
 
-    Button btnGoal, btnInjury, btnNumberChange, btnU20, btnUMV, btnUMV4, btnPenalty;
+    Button btnGoal, btnInjury, btnNumberChange, btnU20, btnUMV, btnUMV4;
     private Button btnList[];
 
     public ActivityButtonsFragment() {
@@ -31,12 +31,11 @@ public class ActivityButtonsFragment extends Fragment {
         btnGoal = (Button) view.findViewById(R.id.btnGoal);
         btnInjury = (Button) view.findViewById(R.id.btnInjury);
         btnNumberChange = (Button) view.findViewById(R.id.btnNumberChange);
-        btnPenalty = (Button) view.findViewById(R.id.btnPenalty);
         btnU20 = (Button) view.findViewById(R.id.btnU20);
         btnUMV = (Button) view.findViewById(R.id.btnUMV);
         btnUMV4 = (Button) view.findViewById(R.id.btnUMV4);
 
-        btnList = new Button[]{btnGoal, btnInjury, btnNumberChange, btnU20, btnUMV, btnUMV4, btnPenalty};
+        btnList = new Button[]{btnGoal, btnInjury, btnNumberChange, btnU20, btnUMV, btnUMV4};
 
         return view;
     }
