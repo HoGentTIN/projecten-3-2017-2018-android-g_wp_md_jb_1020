@@ -26,6 +26,7 @@ public class Domaincontroller {
 
     private List<Match> ownedMatches;
     private Official o;
+    private String startTime;
 
     private Player selectedPlayer;
 

@@ -2,9 +2,10 @@ package persistency;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 import Domain.Difficulty;
 import Domain.Location;
-import Domain.Team;
 import Domain.Valor;
 
 
@@ -46,8 +47,10 @@ public class MatchRest {
     private Valor valor;
     @SerializedName("difficulty")
     private Difficulty difficulty;
+    @SerializedName("goals")
+    private List<GoalRest> goals;
 
-    public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway, String date, int location_id, int valor_id, int difficulty_id, int division_id, TeamRest home, TeamRest visitor, Location location, Valor valor, Difficulty difficulty) {
+    public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway, String date, int location_id, int valor_id, int difficulty_id, int division_id, TeamRest home, TeamRest visitor, Location location, Valor valor, Difficulty difficulty, List<GoalRest> goals) {
         this.match_id = match_id;
         this.home_id = home_id;
         this.visitor_id = visitor_id;
@@ -63,6 +66,7 @@ public class MatchRest {
         this.location = location;
         this.valor = valor;
         this.difficulty = difficulty;
+        this.goals = goals;
     }
 
     public int getMatch_id() {
@@ -183,6 +187,14 @@ public class MatchRest {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public List<GoalRest> getGoals() {
+        return goals;
+    }
+
+    public void setGoals(List<GoalRest> goals) {
+        this.goals = goals;
     }
 }
 
