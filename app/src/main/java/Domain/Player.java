@@ -81,6 +81,9 @@ public class Player {
     public int getPlayer_id() {
         return player_id;
     }
+    public boolean getStarter(){
+        return starter;
+    }
 
     public void setPlayer_id(int player_id) {
         this.player_id = player_id;

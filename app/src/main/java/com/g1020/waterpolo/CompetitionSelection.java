@@ -1,14 +1,15 @@
 package com.g1020.waterpolo;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
 import java.util.List;
 
 import Application.ApplicationRuntime;
+
 import Domain.Division;
 import Domain.DivisionType;
 import Domain.Domaincontroller;
@@ -28,6 +29,8 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
     ApplicationRuntime ar;  //this adds temporary code to this class
     Domaincontroller dc;
     MatchFragment matches;
+    MatchSettingsFragment matchSettings;
+    PlayersMatchSettingsFragment playersFrag;
 
 
     @Override
@@ -44,8 +47,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
 
         // PIETER
         dc.startMatch();
-        Division heren = new Division("Eerste klasse Heren", DivisionType.HEREN);
-        dc.createTeams("Oostende", heren,"Aalst",heren);
+        dc.createTeams("Oostende", new Division("U20", DivisionType.DAMES),"Aalst",new Division("U20", DivisionType.DAMES));
         dc.createPlayers();
 
         //matches = new MatchFragment();
@@ -142,5 +144,10 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
     @Override
     public void onMatchSelected(int matchNumber) {
         dc.setMatch(matchNumber);
+        matchSettings = new MatchSettingsFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.matchSettingsContainer,matchSettings).commit();
+        playersFrag = new PlayersMatchSettingsFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.homeContainer1,playersFrag).commit();
+
     }
 }

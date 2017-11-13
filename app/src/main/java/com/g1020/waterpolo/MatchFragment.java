@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -15,7 +15,6 @@ import Application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import Domain.Match;
 import persistency.MatchRest;
-import views.CustomMatchListAdapter;
 import views.CustomMatchRestListAdapter;
 
 
@@ -23,8 +22,8 @@ public class MatchFragment extends Fragment {
 
     Domaincontroller dc;
     private static MatchFragment mf;
-    List<Match> hostedmatches;
-    CustomMatchListAdapter matchAdapter;
+    List<MatchRest> hostedmatches;
+    CustomMatchRestListAdapter matchAdapter;
     List<MatchRest> hostedmatchesR;
     CustomMatchRestListAdapter matchRestAdapter;
 
@@ -38,9 +37,9 @@ public class MatchFragment extends Fragment {
         dc = ar.getDc();
         // Required empty public constructor
     }
-public interface OnMatchSelectedListener{
+    public interface OnMatchSelectedListener{
         public void onMatchSelected(int matchNumber);
-}
+    }
 
     public static MatchFragment newInstance(int matchNumber) {
         mf = new MatchFragment();
@@ -60,19 +59,19 @@ public interface OnMatchSelectedListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view = inflater.inflate(R.layout.fragment_matches, container, false);
-       lvMatches = (ListView) view.findViewById(R.id.lsvMatches);
-
-       hostedmatches = dc.getOwnedMatches();
-       matchAdapter = new CustomMatchListAdapter(getContext(),android.R.id.text1,hostedmatches);
-
-       hostedmatchesR = dc.getOwnedMatchesR();
-       matchRestAdapter = new CustomMatchRestListAdapter(getContext(),android.R.id.text1,hostedmatchesR);
-
-       lvMatches.setAdapter(matchRestAdapter);
+        View view = inflater.inflate(R.layout.fragment_matches, container, false);
+        lvMatches = (ListView) view.findViewById(R.id.lsvMatches);
 
 
-       return view;
+
+        hostedmatchesR = dc.getOwnedMatchesR();
+        matchRestAdapter = new CustomMatchRestListAdapter(getContext(),android.R.id.text1,hostedmatchesR);
+
+        lvMatches.setAdapter(matchRestAdapter);
+        matchClickAction(lvMatches);
+
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,5 +104,28 @@ public interface OnMatchSelectedListener{
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+    private void matchClickAction(final ListView listview) {
 
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // retrieve the selected player
+                int itemAmount = listview.getChildCount();
+                MatchRest selectedMatch = (MatchRest) listview.getItemAtPosition(position);
+
+                mListener.onMatchSelected(selectedMatch.getMatch_id());
+
+                //Change look of selected item and the others
+                CustomMatchRestListAdapter ca = (CustomMatchRestListAdapter) lvMatches.getAdapter();
+                for (int i =0;i<itemAmount;i++){
+                    ca.unselectMatch(i,listview.getChildAt(i));
+                }
+                ca.setSelectedMatch(position,  listview.getChildAt(position));
+
+
+
+            }
+        });
+    }
 }

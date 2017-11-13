@@ -16,5 +16,8 @@ public class Division {
         this.divisionName = divisionName;
         this.divisionType = divisionType;
     }
+    public String getDivisionName(){
+        return divisionName;
+    }
 
 }
