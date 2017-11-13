@@ -97,4 +97,11 @@ public class TeamRest {
         this.coach = coach;
     }
 
+    public List<PlayerRest> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<PlayerRest> players) {
+        this.players = players;
+    }
 }

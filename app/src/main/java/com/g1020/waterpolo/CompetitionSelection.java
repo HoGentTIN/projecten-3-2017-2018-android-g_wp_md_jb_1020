@@ -14,6 +14,7 @@ import Domain.CompetitionClass;
 import Domain.Domaincontroller;
 import Domain.Team;
 import persistency.MatchRest;
+import persistency.PlayerRest;
 import persistency.TeamRest;
 import rest.ApiClient;
 import rest.ApiInterface;
@@ -84,6 +85,10 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
                     public void onResponse(Call<TeamRest> call, Response<TeamRest> response) {
                         TeamRest tVisitorTest = response.body();
                         Log.d(TAG,"Retrieved visitor team " + tVisitorTest.getTeamName());
+                        List<PlayerRest> playersVisitor = tVisitorTest.getPlayers();
+                        for (PlayerRest p : playersVisitor){
+                            Log.d(TAG,"Retrieved visitor players " + p.getName());
+                        }
                     }
 
                     @Override
