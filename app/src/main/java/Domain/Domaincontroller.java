@@ -45,10 +45,11 @@ public class Domaincontroller {
     public Player getSelectedPlayer() {
         return selectedPlayer;
     }
-public void setMatch(int matchNumber){
+
+    public void setMatch(int matchNumber){
         //hier moet er nog vanuit de lijst van ownedmathes de juiste match worden gehaald om die vervolgens in match te steken wat de
-    //eigenlijke geselecteerde match is.
-}
+        //eigenlijke geselecteerde match is.
+    }
     public void setSelectedPlayer(Boolean homeTeam, int playerId) {
         int teamNr;
         if (homeTeam){

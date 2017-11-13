@@ -35,12 +35,10 @@ public class MatchRest {
     @SerializedName("division_id")
     private int division_id;
 
-
     @SerializedName("home")
-    private Team home;
+    private TeamRest home;
     @SerializedName("visitor")
-    private Team visitor;
-
+    private TeamRest visitor;
 
     @SerializedName("location")
     private Location location;
@@ -49,7 +47,7 @@ public class MatchRest {
     @SerializedName("difficulty")
     private Difficulty difficulty;
 
-    public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway, String date, int location_id, int valor_id, int difficulty_id, int division_id, Team home, Team visitor, Location location, Valor valor, Difficulty difficulty) {
+    public MatchRest(int match_id, int home_id, int visitor_id, int scoreHome, int scoreAway, String date, int location_id, int valor_id, int difficulty_id, int division_id, TeamRest home, TeamRest visitor, Location location, Valor valor, Difficulty difficulty) {
         this.match_id = match_id;
         this.home_id = home_id;
         this.visitor_id = visitor_id;
@@ -147,19 +145,19 @@ public class MatchRest {
         this.division_id = division_id;
     }
 
-    public Team getHome() {
+    public TeamRest getHome() {
         return home;
     }
 
-    public void setHome(Team home) {
+    public void setHome(TeamRest home) {
         this.home = home;
     }
 
-    public Team getVisitor() {
+    public TeamRest getVisitor() {
         return visitor;
     }
 
-    public void setVisitor(Team visitor) {
+    public void setVisitor(TeamRest visitor) {
         this.visitor = visitor;
     }
 

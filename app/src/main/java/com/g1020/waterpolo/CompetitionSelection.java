@@ -64,6 +64,8 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
 
                 //retrieve for each match the teams and needed info
                 MatchRest mtest = matches.get(0);
+                String ptest = mtest.getHome().getPlayers().get(0).getName();
+                Log.d(TAG,"random test player retrival from Matchrest object: " + ptest);
                 Call<TeamRest> tCallHome = apiService.getTeam(mtest.getHome_id());
                 Call<TeamRest> tCallVisitor = apiService.getTeam(mtest.getVisitor_id());
 
