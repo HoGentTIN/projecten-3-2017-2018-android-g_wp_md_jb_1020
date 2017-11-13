@@ -12,6 +12,7 @@ import java.util.List;
 import Application.ApplicationRuntime;
 import Domain.CompetitionClass;
 import Domain.Domaincontroller;
+import Domain.Team;
 import persistency.MatchRest;
 import rest.ApiClient;
 import rest.ApiInterface;
@@ -56,6 +57,21 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
             public void onResponse(Call<List<MatchRest>> call, Response<List<MatchRest>> response) {
                 List<MatchRest> matches = response.body();
                 Log.d(TAG,"Retrieved " + matches.size() + " Match objects.");
+
+                //for each match offical has filter matches
+
+                //retrieve for each match the teams and needed info
+
+                //When match selected show info in screen and list of players
+
+                //use match to get the id's of both teams
+                //call to retrieve team using that id, for both home and visitor
+
+
+                //team should have list of players
+                MatchRest mtest = matches.get(0);
+                Log.d(TAG,"test playerfound " + mtest.getHome_id() );
+
             }
 
             @Override
