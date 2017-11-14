@@ -206,7 +206,7 @@ public class Domaincontroller {
         //ik ga hier verder die testmatchen uitwerken dus dit ook ni vergeten weg te doen dan;
         ownedMatches = new ArrayList<Match>();
         testMatch1.setDate(new Date(2017,12,12));
-        Division Dames = new Division("Dames",DivisionType.DAMES);
+        Division Dames = new Division("Dames",7,2);
         testMatch1.setHomeTeam(new Team(0,"Gent",Dames));
         testMatch1.setAwayTeam(new Team(1,"Oostakker",Dames));
         testMatch2.setDate(new Date(2017,12,11));

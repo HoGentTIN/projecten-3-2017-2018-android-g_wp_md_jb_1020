@@ -11,11 +11,8 @@ import java.util.List;
 import Application.ApplicationRuntime;
 
 import Domain.Division;
-import Domain.DivisionType;
 import Domain.Domaincontroller;
 import persistency.MatchRest;
-import persistency.PlayerRest;
-import persistency.TeamRest;
 import rest.ApiClient;
 import rest.ApiInterface;
 import retrofit2.Call;
@@ -47,7 +44,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
 
         // PIETER
         dc.startMatch();
-        dc.createTeams("Oostende", new Division("U20", DivisionType.DAMES),"Aalst",new Division("U20", DivisionType.DAMES));
+        dc.createTeams("Oostende", new Division("U20", 7,2),"Aalst",new Division("U20", 7,2));
         dc.createPlayers();
 
         //matches = new MatchFragment();

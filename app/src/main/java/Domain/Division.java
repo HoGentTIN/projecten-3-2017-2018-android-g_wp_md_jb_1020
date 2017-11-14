@@ -10,12 +10,15 @@ public class Division {
 
     private int division_id;
     private String divisionName;
-    private DivisionType divisionType;
+    private long roundLength;
+    private long pauseLength;
 
-    public Division(String divisionName, DivisionType divisionType){
+    public Division(String divisionName,long roundLength, long pauseLength){
         this.divisionName = divisionName;
-        this.divisionType = divisionType;
+        this.roundLength = roundLength;
+        this.pauseLength = pauseLength;
     }
+
     public String getDivisionName(){
         return divisionName;
     }

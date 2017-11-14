@@ -14,7 +14,6 @@ import java.util.List;
 
 import Application.ApplicationRuntime;
 import Domain.Division;
-import Domain.DivisionType;
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
 import Domain.Player;
@@ -50,7 +49,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         // PIETER
         dc.startMatch();
-        Division heren = new Division("Eerste klasse Heren", DivisionType.HEREN);
+        Division heren = new Division("Eerste klasse Heren", 8,2);
         dc.createTeams("Oostende", heren,"Aalst",heren);
         dc.createPlayers();
         // END PIETER
