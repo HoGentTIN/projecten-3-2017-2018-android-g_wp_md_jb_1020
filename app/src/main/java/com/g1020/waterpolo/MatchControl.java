@@ -161,7 +161,10 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
                 }
                 faultPlayers.add(sp);                               //List of all players with faultTimers
 
-            }else {
+            }else if(sp.getFaultTimeRemaining()==0){
+                faultPlayers.remove(sp);
+            }
+            else {
                 //Player is already punished by this fault he cannot get extra
                 toast("player " + sp.getFullName() + " still has an ongoing U20 Fault");
             }
