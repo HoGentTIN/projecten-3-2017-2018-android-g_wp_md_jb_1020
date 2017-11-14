@@ -22,6 +22,7 @@ import Domain.Domaincontroller;
 import Domain.Player;
 import Domain.Team;
 import views.CustomPlayerListAdapter;
+import views.FontManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -176,7 +177,7 @@ public class PlayersFragment extends Fragment {
 
     public void setListPlayers(Team team){
         currentPlayers = team.getPlayers();
-        playerTitle.setText(String.format(getResources().getString(R.string.playerFragmentTitle),currentPlayers.get(0).getStatus().toString()));
+        playerTitle.setText("Players");
 
         playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,7));
         playerAdapter2 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(7,currentPlayers.size()));

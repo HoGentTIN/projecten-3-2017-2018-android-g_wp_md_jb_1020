@@ -4,152 +4,191 @@
     android:id="@+id/linearLayout6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp"
     android:background="@color/colorGray">
 
-    <TableLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:columnCount="4"
-        android:rowCount="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:orientation="vertical">
 
-
-            <LinearLayout
+            <Button
+                android:id="@+id/btnTimeOutHome"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginRight="10dp">
+                android:layout_weight="1"
+                android:onClick="homeTimeout"
+                android:text="@string/button_home" />
 
-                <Button
-                    android:id="@+id/btnTimeOutHome"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="homeTimeout"
-                    android:text="@string/button_home" />
+            <Button
+                android:id="@+id/btnTimeOutAway"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="awayTimeout"
+                android:text="@string/button_away" />
+        </LinearLayout>
 
-                <Button
-                    android:id="@+id/btnTimeOutAway"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="awayTimeout"
-                    android:text="@string/button_away" />
-            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llActionButtons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnInjury"
-                android:layout_width="wrap_content"
+                style="@style/actionbuttontext"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="fill"
-                android:layout_weight="1"
                 android:layout_margin="2dp"
-                android:text="@string/injury"
+                android:layout_weight="1"
                 android:background="@drawable/button_injury"
-                style="@style/actionbuttontext"/>
+                android:text="@string/injury" />
 
             <Button
                 android:id="@+id/btnNumberChange"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="fill"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
-                android:onClick="changePlayers"
-                android:text="@string/button_change"
-                android:background="@drawable/button_change"
-                style="@style/actionbuttontext"/>
-
-            <Button
-                android:id="@+id/btnGoal"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_goal"
-                android:layout_gravity="fill"
-                android:layout_weight="1"
-                android:contentDescription="@string/t_button_goal"
-                android:onClick="goalMade"
-                android:text="@string/button_goal"
-                android:layout_margin="2dp"
                 style="@style/actionbuttontext"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_change"
+                android:onClick="changePlayers"
+                android:text="@string/button_change" />
+
+            <RelativeLayout
+                android:id="@+id/btnGoal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_goal"
+                android:clickable="true"
+                android:onClick="goalMade">
+
+                <TextView
+                    android:id="@+id/iconGoal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/fa_icon_ball"
+                    android:textAlignment="center"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:id="@+id/txtBtnGoal"
+                    style="@style/actionbuttontext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/iconGoal"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/button_goal"
+                    android:textAlignment="center" />
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/btnU20"
-                android:layout_width="wrap_content"
+                style="@style/actionbuttontext"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="fill"
-                android:layout_weight="1"
-                android:onClick="faultU20"
                 android:layout_margin="2dp"
-                android:text="@string/t_button_U20"
+                android:layout_weight="1"
                 android:background="@drawable/button_u20"
-                style="@style/actionbuttontext"/>
+                android:onClick="faultU20"
+                android:text="@string/t_button_U20" />
 
             <Button
                 android:id="@+id/btnUMV"
-                android:layout_width="wrap_content"
+                style="@style/actionbuttontext"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="fill"
-                android:layout_weight="1"
-                android:onClick="faultUMV"
                 android:layout_margin="2dp"
-                android:text="@string/button_UMV"
+                android:layout_weight="1"
                 android:background="@drawable/button_umv"
-                style="@style/actionbuttontext"/>
+                android:onClick="faultUMV"
+                android:text="@string/button_UMV" />
 
-            <Button
+            <RelativeLayout
                 android:id="@+id/btnUMV4"
-                android:background="@drawable/button_umv4"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="fill"
-                android:layout_weight="1"
-                android:onClick="faultUMV4"
                 android:layout_margin="2dp"
-                android:text="@string/button_UMV4"
-                style="@style/actionbuttontext"/>
-
-            <LinearLayout
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginLeft="10dp">
+                android:layout_weight="1"
+                android:background="@drawable/button_umv4"
+                android:clickable="true"
+                android:onClick="faultUMV4">
 
                 <TextView
-                    android:id="@+id/txtShotlock"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/iconUMV4"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:background="@color/colorWhite"
-                    android:layout_gravity="center"
-                    android:onClick="stopShotlock"
-                    android:padding="4dp"
-                    android:text="@string/text_shotlock"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/fa_icon_exclamation"
                     android:textAlignment="center"
-                    android:textSize="40sp"
-                    android:textStyle="bold" />
+                    android:textSize="35sp" />
 
-                <Button
-                    android:id="@+id/btnShotlock"
+                <TextView
+                    android:id="@+id/txtBtnUMV4"
+                    style="@style/actionbuttontext"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:onClick="shotlock"
-                    android:text="@string/button_shotclock" />
-            </LinearLayout>
-        </TableRow>
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/iconUMV4"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/button_UMV4"
+                    android:textAlignment="center" />
+            </RelativeLayout>
 
-    </TableLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtShotlock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/colorWhite"
+                android:clickable="true"
+                android:onClick="stopShotlock"
+                android:padding="4dp"
+                android:text="@string/text_shotlock"
+                android:textAlignment="center"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnShotlock"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="shotlock"
+                android:text="@string/button_shotclock" />
+        </LinearLayout>
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
