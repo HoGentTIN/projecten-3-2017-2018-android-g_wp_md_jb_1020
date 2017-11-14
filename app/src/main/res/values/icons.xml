@@ -2,4 +2,8 @@
 <resources>
     <string name="fa_icon_ball">&#xf1e3;</string>
     <string name="fa_icon_exclamation">&#xf12a;</string>
+    <string name="fa_icon_ambulance">&#xf0f9;</string>
+    <string name="fa_icon_change">&#xf021;</string>
+    <string name="fa_icon_square">&#xf096;</string>
+    <string name="fa_icon_umv">&#xf021;</string>
 </resources>

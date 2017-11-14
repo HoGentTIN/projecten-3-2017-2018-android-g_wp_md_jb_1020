@@ -23,9 +23,8 @@ import views.FontManager;
 public class ActivityButtonsFragment extends Fragment {
 
 
-    private TextView iconGoal, iconUMV4;
-    private Button btnInjury, btnNumberChange, btnU20, btnUMV;
-    private RelativeLayout btnGoal, btnUMV4;
+    private TextView iconGoal, iconUMV4, iconInjury, iconNumberChange, iconU20, iconUMV;
+    private RelativeLayout btnGoal, btnUMV4, btnInjury, btnNumberChange, btnU20, btnUMV;
     private RelativeLayout btnList[];
     private TextView iconList[];
 
@@ -44,16 +43,19 @@ public class ActivityButtonsFragment extends Fragment {
         iconGoal = (TextView) view.findViewById(R.id.iconGoal);
         btnUMV4 = (RelativeLayout) view.findViewById(R.id.btnUMV4);
         iconUMV4 = (TextView) view.findViewById(R.id.iconUMV4);
+        btnInjury = (RelativeLayout) view.findViewById(R.id.btnInjury);
+        iconInjury = (TextView) view.findViewById(R.id.iconInjury);
+        btnNumberChange = (RelativeLayout) view.findViewById(R.id.btnNumberChange);
+        iconNumberChange = (TextView) view.findViewById(R.id.iconNumberChange);
+        btnU20 = (RelativeLayout) view.findViewById(R.id.btnU20);
+        btnUMV = (RelativeLayout) view.findViewById(R.id.btnUMV);
+        iconU20 = (TextView) view.findViewById(R.id.iconU20);
+        iconUMV = (TextView) view.findViewById(R.id.iconUMV);
 
-        btnInjury = (Button) view.findViewById(R.id.btnInjury);
-        btnNumberChange = (Button) view.findViewById(R.id.btnNumberChange);
-        btnU20 = (Button) view.findViewById(R.id.btnU20);
-        btnUMV = (Button) view.findViewById(R.id.btnUMV);
+        btnList = new RelativeLayout[]{btnGoal, btnInjury, btnNumberChange, btnU20, btnUMV, btnUMV4};
+        iconList = new TextView[] {iconGoal, iconInjury, iconNumberChange, iconU20, iconUMV,iconUMV4};
 
-        btnList = new RelativeLayout[]{btnGoal/*, btnInjury, btnNumberChange, btnU20, btnUMV, btnUMV4*/};
-        iconList = new TextView[] {iconGoal,iconUMV4};
-
-        setIconFont();
+        setIconFont(iconList);
 
         return view;
     }
@@ -70,8 +72,8 @@ public class ActivityButtonsFragment extends Fragment {
         }
     }
 
-    private void setIconFont() {
-        for(TextView icon: iconList) {
+    private void setIconFont(TextView[] icons) {
+        for(TextView icon: icons) {
             icon.setAlpha(0.4f);
             icon.setTypeface(FontManager.getTypeface(getContext(), FontManager.FONTAWESOME));
         }
