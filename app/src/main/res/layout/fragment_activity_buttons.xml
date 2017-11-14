@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout6"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:background="@color/colorGray">
 
     <TableLayout
         android:layout_width="0dp"
@@ -28,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginRight="16dp">
+                android:layout_marginRight="10dp">
 
                 <Button
                     android:id="@+id/btnTimeOutHome"
@@ -53,8 +55,10 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="fill"
                 android:layout_weight="1"
-
-                android:text="@string/injury" />
+                android:layout_margin="2dp"
+                android:text="@string/injury"
+                android:background="@drawable/button_injury"
+                style="@style/actionbuttontext"/>
 
             <Button
                 android:id="@+id/btnNumberChange"
@@ -62,20 +66,25 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="fill"
                 android:layout_weight="1"
-
+                android:layout_margin="2dp"
                 android:onClick="changePlayers"
-                android:text="@string/button_change" />
+                android:text="@string/button_change"
+                android:background="@drawable/button_change"
+                style="@style/actionbuttontext"/>
 
             <Button
                 android:id="@+id/btnGoal"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-
+                android:background="@drawable/button_goal"
                 android:layout_gravity="fill"
                 android:layout_weight="1"
                 android:contentDescription="@string/t_button_goal"
                 android:onClick="goalMade"
-                android:text="@string/button_goal" />
+                android:text="@string/button_goal"
+                android:layout_margin="2dp"
+                style="@style/actionbuttontext"
+                />
 
             <Button
                 android:id="@+id/btnU20"
@@ -83,9 +92,11 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="fill"
                 android:layout_weight="1"
-
                 android:onClick="faultU20"
-                android:text="@string/t_button_U20" />
+                android:layout_margin="2dp"
+                android:text="@string/t_button_U20"
+                android:background="@drawable/button_u20"
+                style="@style/actionbuttontext"/>
 
             <Button
                 android:id="@+id/btnUMV"
@@ -93,23 +104,29 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="fill"
                 android:layout_weight="1"
-
-                android:text="@string/button_UMV" />
+                android:onClick="faultUMV"
+                android:layout_margin="2dp"
+                android:text="@string/button_UMV"
+                android:background="@drawable/button_umv"
+                style="@style/actionbuttontext"/>
 
             <Button
                 android:id="@+id/btnUMV4"
+                android:background="@drawable/button_umv4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="fill"
                 android:layout_weight="1"
-
-                android:text="@string/button_UMV4" />
+                android:onClick="faultUMV4"
+                android:layout_margin="2dp"
+                android:text="@string/button_UMV4"
+                style="@style/actionbuttontext"/>
 
             <LinearLayout
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginLeft="16dp">
+                android:layout_marginLeft="10dp">
 
                 <TextView
                     android:id="@+id/txtShotlock"

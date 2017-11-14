@@ -95,7 +95,7 @@ public class Domaincontroller {
 
     public List<Match> getOwnedMatches(){return ownedMatches;}
 
-
+    //Actions
     public void addGoal(){
         if(selectedPlayer != null) {
             if(selectedPlayer.getStatus() == Status.ACTIVE) {
@@ -125,6 +125,15 @@ public class Domaincontroller {
             }
         }
     }
+
+    public void addFaultUMV() {
+        match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.UMV));
+    }
+
+    public void addFaultUMV4() {
+        match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.UMV4));
+    }
+
 
     //Function: appendLog - add an event to the processLog
     public void appendLog(String eventDescription, String eventCode){
@@ -260,6 +269,7 @@ public class Domaincontroller {
         match.setHomeTeam(hometeam);
         match.setAwayTeam(awayteam);
     }
+
 
 
 

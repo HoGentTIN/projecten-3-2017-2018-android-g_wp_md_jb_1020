@@ -30,7 +30,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
         private TextView txtFaultField;
 
     //to use colors in resources
-    private int res[] = {R.color.colorNoFaults, R.color.color1Fault,R.color.color2Faults,R.color.color3Faults};
+    private int res[] = {R.color.colorWhite, R.color.btnColorU20,R.color.btnColorU20Pressed,R.color.btnColorUMV4Pressed};
 
         public CustomPlayerListAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<Player> players) {
             super(context, textViewResourceId, players);

@@ -138,11 +138,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
                 dc.addFaultU20();
 
                 //update the background color
-                if(sp.getTeam().equals(dc.getHomeTeam())){
-                    homeTeam.updateBackgroundPlayer();
-                } else {
-                    awayTeam.updateBackgroundPlayer();
-                }
+                updateBackgroundPlayer(sp);
 
                 //Logging
                 addToLog(sp, "U","Fault U20 for " + sp.getFullName() + ".");
@@ -173,9 +169,23 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     }
 
+    private void updateBackgroundPlayer(Player sp){
+        if(sp.getTeam().equals(dc.getHomeTeam())){
+            homeTeam.updateBackgroundPlayer();
+        } else {
+            awayTeam.updateBackgroundPlayer();
+        }
+    }
+
     public void faultUMV(View view) {
         Player sp = dc.getSelectedPlayer();
         if(sp!=null){
+
+            dc.addFaultUMV();
+
+            activities.updateActivities(dc.getMatch().getCurrentRound());
+            addToLog(sp, "UMV","Fault UMV for " + sp.getFullName() + ".");
+            updateBackgroundPlayer(sp);
 
             clearSelectedPlayer();
 
@@ -188,6 +198,12 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         Player sp = dc.getSelectedPlayer();
         if(sp!=null){
+
+            dc.addFaultUMV4();
+
+            activities.updateActivities(dc.getMatch().getCurrentRound());
+            addToLog(sp, "UMV4","Fault UMV for " + sp.getFullName() + ".");
+            updateBackgroundPlayer(sp);
 
             clearSelectedPlayer();
 

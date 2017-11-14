@@ -3,14 +3,23 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="btnColorStart">#1E6520</color>
+
     <color name="colorGoaly">#e1111f</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorGray">#8c8b8b</color>
     <color name="colorWhite">#ffffff</color>
 
-    // kleuren voor de verschillende fouten van een speler aan te tonen.
-    <color name="colorNoFaults">#ffffff</color>
-    <color name="color1Fault">#d6c442</color>
-    <color name="color2Faults">#e6912f</color>
-    <color name="color3Faults">#cc291e</color>
+    //action button colors
+    <color name="btnColorGoal">#87b95e</color>
+    <color name="btnColorGoalPressed">#588638</color>
+    <color name="btnColorU20">#fbcd5f</color>
+    <color name="btnColorU20Pressed">#df9815</color>
+    <color name="btnColorUMV">#eb6059</color>
+    <color name="btnColorUMVPressed">#d74f45</color>
+    <color name="btnColorUMV4">#cc291e</color>
+    <color name="btnColorUMV4Pressed">#931209</color>
+    <color name="btnColorChange">#5f9fea</color>
+    <color name="btnColorChangePressed">#3973b7</color>
+    <color name="btnColorInjury">#949ae9</color>
+    <color name="btnColorInjuryPressed">#5d63b6</color>
 </resources>
