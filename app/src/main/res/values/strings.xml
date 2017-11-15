@@ -16,6 +16,8 @@
     <string name="button_UMV4">UMV 4</string>
     <string name="button_Injury">Injury</string>
     <string name="button_shotclock">Shotclock</string>
+    <string name="button_undoAction">Undo</string>
+    <string name="button_revertToAction">Revert to</string>
 
     <!-- Button tooltips -->
     <string name="t_button_goal">Goal was scored.</string>

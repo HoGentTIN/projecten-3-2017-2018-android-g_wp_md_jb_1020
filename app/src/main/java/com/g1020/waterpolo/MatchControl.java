@@ -213,6 +213,15 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     }
 
+    //sets the game back to the selected action. everything gets deleted except BRUTALITIES
+    public void revertToAction(View view) {
+    }
+
+    //deletes the last added action. //Maybe also possible to undo method revertToAction()
+    public void undoAction(View view) {
+    }
+
+
     //Function togglechrono - backup function to pauze match and simply halt the shotlock
     public void toggleChrono(View view){
         if(matchTimer.isChronoOn()){
@@ -402,6 +411,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     public void onArticleSelected(Boolean hometeam, int playerId) {
         dc.setSelectedPlayer(hometeam, playerId);
     }
+
+
     //end testcode log
 
 

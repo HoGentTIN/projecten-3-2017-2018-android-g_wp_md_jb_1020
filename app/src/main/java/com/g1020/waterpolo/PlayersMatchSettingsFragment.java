@@ -53,8 +53,8 @@ public class PlayersMatchSettingsFragment extends Fragment {
               players.add(player);
           }
         }
-        playerTitle = (TextView) view.findViewById(R.id.playerTitle);
-        playerTitle.setText(String.format("<-players as starter players that are not starters ->"));
+        //playerTitle = (TextView) view.findViewById(R.id.playerTitle);
+       // playerTitle.setText(String.format("<-players as starter players that are not starters ->"));
         playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, players);
         List<Player> players2 = new ArrayList<>();
         for (Player player : dc.getMatch().getHomeTeam().getPlayers()){
