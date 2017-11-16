@@ -72,6 +72,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
             }
             return v;
         }
+
         private void setTeamColors(View v, Player p){
 
             v.setBackgroundResource(R.drawable.player_tile);
@@ -98,11 +99,11 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
 
 
         //Function to set the name style of a list item
-        public void setSelectedPlayer(int position, View convertView, int t){
+        public void setSelectedPlayer(int position, View convertView, int drawableId){
             View v = convertView;
+            v.setBackgroundResource(drawableId);
             Player p = getItem(position);
             txtPlayername = (TextView) v.findViewById(R.id.txtplayername);
-            txtPlayername.setTypeface(null, t);
         }
 
     public void updateBackgroundColors(int position, View v){

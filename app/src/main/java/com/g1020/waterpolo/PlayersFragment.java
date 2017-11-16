@@ -139,11 +139,11 @@ public class PlayersFragment extends Fragment {
                 //Change look of selected item
                 if(selectedPlayer.getTeam().equals(dc.getHomeTeam())){
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-                    ca.setSelectedPlayer(position,  listview.getChildAt(position), Typeface.BOLD );
+                    ca.setSelectedPlayer(position,  listview.getChildAt(position), R.drawable.player_tile_selected );
 
                 }else{
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
-                    ca.setSelectedPlayer(position,  listview.getChildAt(position), Typeface.BOLD );
+                    ca.setSelectedPlayer(position,  listview.getChildAt(position), R.drawable.player_tile_selected );
                 }
 
             }
@@ -154,10 +154,10 @@ public class PlayersFragment extends Fragment {
     public void resetFontPlayers(){
         if(selectedPlayer!=null){
             //Change look of previous item
-            CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-            ca.setSelectedPlayer(previousPlayerPosition,  lvPlayers.getChildAt(previousPlayerPosition), Typeface.NORMAL );
-            ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
-            ca.setSelectedPlayer(previousPlayerPosition,  lvPlayers2.getChildAt(previousPlayerPosition), Typeface.NORMAL );
+                CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
+                ca.setSelectedPlayer(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition), R.drawable.player_tile);
+                ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
+                ca.setSelectedPlayer(previousPlayerPosition, lvPlayers2.getChildAt(previousPlayerPosition), R.drawable.player_tile);
 
         }
     }
