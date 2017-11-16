@@ -71,13 +71,17 @@
 
                 <TextView
                     android:id="@+id/txtTimer"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
+                    android:paddingRight="8dp"
+                    android:paddingLeft="8dp"
                     android:gravity="center"
                     android:onClick="toggleChrono"
                     android:textAlignment="center"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/colorBlack"
+                    android:background="@drawable/player_tile"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

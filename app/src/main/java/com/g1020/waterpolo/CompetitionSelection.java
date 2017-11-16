@@ -2,6 +2,7 @@ package com.g1020.waterpolo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -35,14 +36,10 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_competition_selection);
 
-
         //Get runtime singleton class
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
-        ar = ApplicationRuntime.getInstance();
-        dc = ar.getDc();
 
-        // PIETER
         dc.startMatch();
         dc.createTeams("Oostende", new Division("U20", 7,2),"Aalst",new Division("U20", 7,2));
         dc.createPlayers();

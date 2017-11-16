@@ -44,6 +44,11 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_control);
 
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.logo_waterpolo);
+
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
 

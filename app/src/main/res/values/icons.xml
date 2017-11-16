@@ -6,4 +6,6 @@
     <string name="fa_icon_change">&#xf021;</string>
     <string name="fa_icon_square">&#xf096;</string>
     <string name="fa_icon_umv">&#xf021;</string>
+    <string name="fa_icon_revert">&#xf112;</string>
+    <string name="fa_icon_rotate_left">&#xf0e2;</string>
 </resources>

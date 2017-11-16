@@ -35,10 +35,6 @@
         <activity
             android:name=".roundSetup"
             android:parentActivityName=".MatchControl" />
-        <activity
-            android:name=".PlayersHomeFaultFragment"
-            android:label="@string/title_activity_players_home_fault_fragment"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

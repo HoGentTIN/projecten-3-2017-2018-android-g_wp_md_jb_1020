@@ -2,6 +2,7 @@ package com.g1020.waterpolo;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ import java.util.List;
 
 import Application.ApplicationRuntime;
 import Domain.Domaincontroller;
+import views.FontManager;
 
 
 /**
@@ -31,6 +35,8 @@ public class ActivityFragment extends Fragment {
     ListView roundActivities;
     String[] activityArray;
     private static ActivityFragment activityFragment;
+    RelativeLayout btnUndo,btnRevert;
+    TextView iconUndo, iconRevert;
 
     public ActivityFragment() {
         // Required empty public constructor
@@ -54,6 +60,13 @@ public class ActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_activity, container, false);
         activityArray = dc.getLogForRound(getArguments().getInt("roundNumber")).toArray(new String[0]);
 
+        btnUndo = (RelativeLayout) view.findViewById(R.id.btnUndoAction);
+        btnRevert = (RelativeLayout) view.findViewById(R.id.btnRevertToAction);
+        iconRevert = (TextView) view.findViewById(R.id.iconRevertToAction);
+        iconUndo = (TextView) view.findViewById(R.id.iconUndoAction);
+        setIconFont(iconRevert);
+        setIconFont(iconUndo);
+
         roundActivities = (ListView) view.findViewById(R.id.lsvActivities);
         roundActivities.setAdapter(createListAdaptor(activityArray));
         return view;
@@ -64,7 +77,6 @@ public class ActivityFragment extends Fragment {
         //reverse list to put last activity on top
         List<String> tempList = Arrays.asList(activities);
         Collections.reverse(tempList);
-
         return new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, tempList);
     }
 
@@ -73,6 +85,11 @@ public class ActivityFragment extends Fragment {
         roundActivities.setAdapter(createListAdaptor(activityArray));
     }
 
+    private void setIconFont(TextView icon) {
+            icon.setTypeface(FontManager.getTypeface(getContext(), FontManager.FONTAWESOME));
+            icon.setTextColor(Color.BLACK);
+        }
+    }
 
 
 
@@ -119,4 +136,3 @@ public class ActivityFragment extends Fragment {
     }
     */
 
-}
