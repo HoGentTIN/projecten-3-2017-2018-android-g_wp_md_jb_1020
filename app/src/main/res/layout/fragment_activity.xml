@@ -6,26 +6,15 @@
     tools:context="com.g1020.waterpolo.ActivityFragment">
 
 
-    <ListView
-        android:id="@+id/lsvActivities"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/listview_activities"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/linearLayout9"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:id="@+id/btnUndoAction"
@@ -33,6 +22,7 @@
             android:layout_height="30dp"
             android:layout_marginRight="2dp"
             android:layout_weight="1"
+            android:layout_marginBottom="2dp"
             android:background="@drawable/button_change"
             android:clickable="true"
             android:onClick="undoAction">
@@ -43,23 +33,23 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:text="@string/fa_icon_change"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
+                android:text="@string/fa_icon_change"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txtBtnNumberChange"
+                style="@style/actionbuttontextsmall"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginTop="4dp"
                 android:layout_toEndOf="@id/iconUndoAction"
                 android:layout_toRightOf="@id/iconUndoAction"
-                android:layout_centerVertical="true"
-                android:text="@string/button_undoAction"
-                style="@style/actionbuttontextsmall"/>
+                android:text="@string/button_undoAction" />
 
 
         </RelativeLayout>
@@ -72,30 +62,45 @@
             android:background="@drawable/button_change"
             android:clickable="true"
             android:onClick="revertToAction">
+
             <TextView
                 android:id="@+id/iconRevertToAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:text="@string/fa_icon_change"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
+                android:text="@string/fa_icon_change"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txtBtnRevertToAction"
+                style="@style/actionbuttontextsmall"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/iconRevertToAction"
                 android:layout_toRightOf="@id/iconRevertToAction"
-                android:layout_centerVertical="true"
-                android:text="@string/button_revertToAction"
-                style="@style/actionbuttontextsmall"/>
+                android:text="@string/button_revertToAction" />
 
         </RelativeLayout>
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/lsvActivities"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/listview_activities"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
 
 </android.support.constraint.ConstraintLayout>
