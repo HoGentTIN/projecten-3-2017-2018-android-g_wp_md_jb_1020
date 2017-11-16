@@ -1,7 +1,10 @@
 package Domain;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,7 +16,7 @@ public class Team {
     //Variables
     private int team_id;
     private String teamName;
-
+    private String logo;
 
     private Location location;      // now hear me out on this one, when we need to replace a member they can be replaced by anyone of the same organization that has the same division so In my oppinion this should be added to class diagram
     private Division division;
@@ -51,6 +54,11 @@ public class Team {
 
     public void addPlayers(Player[] p){
         players.addAll(Arrays.asList(p));
+        sortPlayersByNumber();
+    }
+
+    public void sortPlayersByNumber(){
+        Collections.sort(players);
     }
 
     public List<Player> getPlayersByStatus(Status s){

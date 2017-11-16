@@ -26,8 +26,29 @@
     <style name="actionbuttontextsmall">
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:shadowColor">#000000</item>
-        <item name="android:shadowRadius">1</item>
     </style>
+
+    <style name="player_number">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="player_name">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <declare-styleable name="PlayerNumberTextView">
+        <attr name="outerShadowRadius" format="dimension" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="strokeMiter" format="dimension" />
+        <attr name="strokeColor" format="color" />
+        <attr name="strokeJoinStyle">
+            <enum name="miter" value="0" />
+            <enum name="bevel" value="1" />
+            <enum name="round" value="2" />
+        </attr>
+    </declare-styleable>
 
 </resources>

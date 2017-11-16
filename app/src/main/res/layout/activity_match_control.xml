@@ -50,16 +50,14 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/playerlist_hometeam"
                     android:padding="4dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.5">
-
                 </FrameLayout>
-
+                <!--            android:background="@drawable/playerlist_hometeam" -->
             </LinearLayout>
 
             <LinearLayout
@@ -123,16 +121,14 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/playerlist_hometeam"
                     android:padding="4dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.5" />
-
             </LinearLayout>
-
+<!--                     android:background="@drawable/playerlist_awayteam" -->
         </LinearLayout>
 
         <android.support.constraint.ConstraintLayout

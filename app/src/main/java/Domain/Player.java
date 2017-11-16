@@ -1,13 +1,16 @@
 package Domain;
 
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.util.Log;
+
+import persistency.PlayerRest;
 
 /**
  * Created by timos on 5-10-2017.
  */
 
-public class Player {
+public class Player implements Comparable<Player>{
 
     //variables
 
@@ -19,6 +22,7 @@ public class Player {
     private Status status;
     private boolean starter;
     private Team team;
+    private String photo;
 
     //FaultTimer
     private CountDownTimer faultTimer;
@@ -141,5 +145,16 @@ public class Player {
 
     public void setFaultTimeRemaining(long faultTimeRemaining) {
         this.faultTimeRemaining = faultTimeRemaining;
+    }
+
+    @Override
+    public int compareTo(@NonNull Player p) {
+        if(playerNumber > p.getPlayerNumber()){
+            return 1;
+        } else if(playerNumber < p.getPlayerNumber()){
+            return -1;
+        } else{
+            return 0;
+        }
     }
 }

@@ -19,11 +19,12 @@
 
         <ListView
             android:id="@+id/lsvplayers"
-            style="@style/Widget.AppCompat.Light.ListView.DropDown"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="8dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="5sp">
 
         </ListView>
 
@@ -31,7 +32,9 @@
             android:id="@+id/lsvplayers2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="5sp"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

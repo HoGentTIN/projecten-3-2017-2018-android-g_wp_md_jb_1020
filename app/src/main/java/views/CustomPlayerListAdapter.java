@@ -2,6 +2,7 @@ package views;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,8 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
         private ApplicationRuntime ar = ApplicationRuntime.getInstance();  //this adds temporary code to this class
         private Domaincontroller dc = ar.getDc();
 
-        private TextView txtPlayernumber;
+        //private TextView txtPlayernumber;
+        private PlayerNumberTextView playerNumberTxtV;
         private TextView txtPlayername;
         private TextView txtFaultField;
 
@@ -49,41 +51,45 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                 Player p = getItem(position);
 
                 if (p != null) {
-                    txtPlayernumber = (TextView) v.findViewById(R.id.txtplayernumber);
+                    playerNumberTxtV = (PlayerNumberTextView) v.findViewById(R.id.txtplayernumber);
+                    //txtPlayernumber = (TextView) v.findViewById(R.id.txtplayernumber);
                     txtPlayername = (TextView) v.findViewById(R.id.txtplayername);
 
                     if (txtPlayername != null) {
                         txtPlayername.setText(p.getFullName());
                     }
-                    if (txtPlayernumber != null){
+                    if (playerNumberTxtV != null){
                         int pNumber = p.getPlayerNumber();
 
-                        setTeamColors(p);
+                        setTeamColors(v,p);
 
                         StringBuilder sbPlayerNumber = new StringBuilder();
                         sbPlayerNumber.append(pNumber);
-                        txtPlayernumber.setText((sbPlayerNumber.toString()));
+                        playerNumberTxtV.setText((sbPlayerNumber.toString()));
                     }
                 }
 
             }
             return v;
         }
-        private void setTeamColors(Player p){
+        private void setTeamColors(View v, Player p){
+
+            v.setBackgroundResource(R.drawable.player_tile);
+
             if(p.getTeam().equals(dc.getMatch().getHomeTeam())) {
-                txtPlayernumber.setBackgroundColor(Color.WHITE);
-                txtPlayernumber.setTextColor(Color.BLACK);
+                playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_home);
             }
             else{
-                txtPlayernumber.setBackgroundColor(Color.BLUE);
-                txtPlayernumber.setTextColor(Color.WHITE);
+                playerNumberTxtV.setStroke(1,Color.BLACK, Paint.Join.ROUND,1);
+                playerNumberTxtV.setTextColor(Color.WHITE);
+                playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_away);
             }
             switch (p.getPlayerNumber()) {
                 case 1:
-                    txtPlayernumber.setBackgroundColor(Color.RED);
+                    playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_goaly);
                     break;
                 case 13:
-                    txtPlayernumber.setBackgroundColor(Color.RED);
+                    playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_goaly);
                     break;
                 default:
                     break;
