@@ -28,6 +28,10 @@ public class ApplicationRuntime extends Application {
         dc = new Domaincontroller();
     }
 
+    public MatchTimer getMt() {
+        return mt;
+    }
+
     //Getter of runtime instance
     public static ApplicationRuntime getInstance(){
         return singleInstance;

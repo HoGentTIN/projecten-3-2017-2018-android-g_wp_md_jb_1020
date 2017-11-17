@@ -191,7 +191,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_umv"
                 android:clickable="true"
-                android:onClick="goalMade">
+                android:onClick="faultUMV">
                 <TextView
                     android:id="@+id/iconUMV"
                     android:layout_width="match_parent"
@@ -255,30 +255,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_margin="4dp"
             android:layout_weight="3"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtShotlock"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@drawable/button_other"
                 android:clickable="true"
-                android:onClick="stopShotlock"
+                android:onClick="shotlock"
+                android:gravity="center"
+                android:longClickable="true"
                 android:text="@string/text_shotlock"
                 android:textAlignment="center"
-                android:textSize="40sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btnShotlock"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:onClick="shotlock"
-                android:text="@string/button_shotclock"
-                android:background="@drawable/button_other"/>
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"/>
         </LinearLayout>
     </LinearLayout>
 

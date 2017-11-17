@@ -3,6 +3,7 @@ package com.g1020.waterpolo;
 import android.os.CountDownTimer;
 import android.support.v7.app.*;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -84,11 +85,25 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         btnFragment = new ActivityButtonsFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.activitiesbuttonContainer, btnFragment).commit();
-        //Testcode for adding logging functionallity
 
+        //Testcode for adding logging functionallity
 
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        btnFragment.getTxtShotClock().setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                stopShotlock(v);
+                Log.i("game","Shotclock reset");
+                return true;
+            }
+        });
+
+    }
     //PROCESS FUNCTIONS
     //Function: GoalMade - press goal button to change view so you can select who scored
     public void goalMade(View view){
