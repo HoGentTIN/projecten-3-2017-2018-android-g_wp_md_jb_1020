@@ -61,6 +61,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                     if (playerNumberTxtV != null){
                         int pNumber = p.getPlayerNumber();
 
+                        // in comments to reduce laptop fan
                         //setTeamColors(v,p);
 
                         StringBuilder sbPlayerNumber = new StringBuilder();
