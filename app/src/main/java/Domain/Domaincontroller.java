@@ -1,5 +1,6 @@
 package Domain;
 
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public class Domaincontroller {
     //pretty sure this isn't the correct way to switch players, but it works
     private Boolean switchPlayer = false;
     private Player playerToSwitch;
+
+    private AppCompatActivity currentActivity;
 
     public Domaincontroller(){
 
@@ -202,6 +205,14 @@ public class Domaincontroller {
 
     public Team getAwayTeam(){
         return match.getAwayTeam();
+    }
+
+    public AppCompatActivity getCurrentActivity() {
+        return currentActivity;
+    }
+
+    public void setCurrentActivity(AppCompatActivity currentActivity) {
+        this.currentActivity = currentActivity;
     }
 
     public void startMatch(){
