@@ -122,7 +122,7 @@ public class PlayersFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 resetFontPlayers();
-                otherTeam.resetFontPlayers();
+                //otherTeam.resetFontPlayers();
 
                 // retrieve the selected player
                 previousPlayerPosition = position;
@@ -136,11 +136,17 @@ public class PlayersFragment extends Fragment {
                 playerListener.onArticleSelected(team, selectedPlayer.getPlayer_id());
 
 
-                //Change look of selected item
+                //look for the place of the player in currentplayer list to determine in which list he's in
+/*                int playerListNumber = 0;
+                for(Player cp: currentPlayers){
+                    while(!cp.equals(selectedPlayer)){
+                        playerListNumber++;
+                    }
+                }
+*/               //Change look of selected item  playerListNumber < 7
                 if(selectedPlayer.getTeam().equals(dc.getHomeTeam())){
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
                     ca.setSelectedPlayer(position,  listview.getChildAt(position), R.drawable.player_tile_selected );
-
                 }else{
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
                     ca.setSelectedPlayer(position,  listview.getChildAt(position), R.drawable.player_tile_selected );
@@ -165,6 +171,7 @@ public class PlayersFragment extends Fragment {
     public void updateBackgroundPlayer(){
             CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
             ca.updateBackgroundColors(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition));
+
             CustomPlayerListAdapter ca2 = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
             ca2.updateBackgroundColors(previousPlayerPosition, lvPlayers2.getChildAt(previousPlayerPosition));
     }
