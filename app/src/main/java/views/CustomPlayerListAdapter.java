@@ -32,7 +32,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
         private TextView txtFaultField;
 
     //to use colors in resources
-    private int res[] = {R.color.colorWhite, R.color.btnColorU20,R.color.btnColorU20Pressed,R.color.btnColorUMV4Pressed};
+    private int res[] = {R.color.btnColorU20,R.color.btnColorU20Pressed,R.color.btnColorUMV4Pressed};
 
         public CustomPlayerListAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<Player> players) {
             super(context, textViewResourceId, players);
@@ -109,10 +109,18 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
 
     public void updateBackgroundColors(int position, View v){
         Player p = getItem(position);
+        //number of fault a player has
+        int playerweight = dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(p.getPlayer_id());
 
         txtFaultField = (TextView) v.findViewById(R.id.txtFaultField);
 
-        txtFaultField.setBackgroundResource(res[dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(p.getPlayer_id())]);
+        if(playerweight > 0) {
+            if (playerweight > 3) {
+                txtFaultField.setBackgroundResource(res[2]);
+            } else {
+                txtFaultField.setBackgroundResource(res[playerweight - 1]);
+            }
+        }
 
         //entire cell backgroundcolor
         //v.setBackgroundResource(res[p.getFaults()]);
