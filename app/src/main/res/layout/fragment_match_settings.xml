@@ -91,8 +91,8 @@ android:orientation="vertical"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/txtTeamName"
+                <Button
+                    android:id="@+id/btnTeamName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="6dp"
@@ -100,11 +100,11 @@ android:orientation="vertical"
                     android:text="Aalst"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <TextView
-                    android:id="@+id/txtVisitorName"
+                <Button
+                    android:id="@+id/btnVisitorName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
+
                     android:layout_marginRight="6dp"
                     android:layout_weight="1"
                     android:text="TextView"

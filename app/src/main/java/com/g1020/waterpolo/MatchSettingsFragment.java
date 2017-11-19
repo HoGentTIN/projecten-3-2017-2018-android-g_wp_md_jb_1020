@@ -1,11 +1,13 @@
 package com.g1020.waterpolo;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import Application.ApplicationRuntime;
@@ -21,8 +23,11 @@ import Domain.Domaincontroller;
  * create an instance of this fragment.
  */
 public class MatchSettingsFragment extends Fragment {
+    public onTeamclickedinteractionListener mListener;
 
-
+public interface onTeamclickedinteractionListener{
+     public void changeTeams(int id);
+}
 
     public MatchSettingsFragment() {
         // Required empty public constructor
@@ -31,8 +36,8 @@ public class MatchSettingsFragment extends Fragment {
 
     // TODO: Rename and change types and number of parameters
     private TextView txtDuration;
-    private TextView txtTeamName;
-    private TextView txtVisitorName;
+    private Button btnTeamName;
+    private Button btnVisitorName;
 
     private ApplicationRuntime ar;  //this adds temporary code to this class
     private Domaincontroller dc;
@@ -43,18 +48,33 @@ public class MatchSettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_match_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_match_settings, container, false);
 
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
 
-        txtDuration = (TextView)view.findViewById(R.id.txtDuration);
-        txtTeamName = (TextView)view.findViewById(R.id.txtTeamName);
-        txtVisitorName = (TextView)view.findViewById(R.id.txtVisitorName);
+        txtDuration = (TextView) view.findViewById(R.id.txtDuration);
+        btnTeamName = (Button) view.findViewById(R.id.btnTeamName);
+        btnVisitorName = (Button) view.findViewById(R.id.btnVisitorName);
 
 
-        txtTeamName.setText(dc.getSelectedMatch().getHome().getTeamName());
-        txtVisitorName.setText(dc.getSelectedMatch().getVisitor().getTeamName());
+        btnTeamName.setText(dc.getSelectedMatch().getHome().getTeamName());
+
+        btnTeamName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.changeTeams(1);
+            }
+        });
+
+
+        btnVisitorName.setText(dc.getSelectedMatch().getVisitor().getTeamName());
+        btnVisitorName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.changeTeams(2);
+            }
+        });
 txtDuration.setText("8:00");
 
 
@@ -71,6 +91,23 @@ txtDuration.setText("8:00");
 
         //Intent intent = new Intent(this, AdministrationSetup.class);
         startActivity(intent);
+    }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (onTeamclickedinteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement onTeamclickedinteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+
     }
 
 

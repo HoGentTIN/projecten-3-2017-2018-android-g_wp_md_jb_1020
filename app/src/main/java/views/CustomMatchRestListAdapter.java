@@ -66,11 +66,13 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
 
 
             txtTeams.setText(p.getHome().getTeamName()+" - "+p.getVisitor().getTeamName());
+
             txtDate.setText(p.getDate());
             txtDateDetail.setText(p.getDate());
             txtDivision.setText(p.getHome().getDivision().getDivisionName());
-            txtLocation.setText(p.getLocation().getFullAddress());
-            txtTime.setText("12:00");
+            txtLocation.setText("Locatie:   " +p.getLocation().getFullAddress());
+            txtTime.setText("TIME:   "+"12:00" + " h");
+           // txtDivision.setText("Division "+ p.getDivision().getDivisionName());
         }
         return v;
     }
@@ -92,6 +94,7 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
         TextView txtDate = (TextView) v.findViewById(R.id.txtDatum);
         TextView txtTeams = (TextView)v.findViewById(R.id.txtTeamsDetail);
         txtTeams.setGravity(Gravity.LEFT);
+        txtTeams.setGravity(Gravity.CENTER_VERTICAL);
         txtDate.setVisibility(View.VISIBLE);
         llunfold.setVisibility(View.GONE);
 
