@@ -29,6 +29,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
     MatchFragment matches;
     MatchSettingsFragment matchSettings;
     PlayersMatchSettingsFragment playersFrag;
+    ApiInterface apiService;
 
 
     @Override
@@ -50,7 +51,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
 
 
         //Retrieve list of Matches being played -- TEMPORARY THIS RETURNS ALL MATCHES PRACTICLY SHOULD ONLY BE MATCHES OF LOGGED IN OFFICIAL
-        final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        apiService = dc.getApiService();
         Call<List<MatchRest>> call = apiService.getMatches();
         call.enqueue(new Callback<List<MatchRest>>() {
             @Override
@@ -69,7 +70,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
                 //retrieve for each match the teams and needed info
                 MatchRest mtest = matchesR.get(0);
                 String ptest = mtest.getHome().getPlayers().get(0).getName();
-                Log.d(TAG,"random test player retrival from Matchrest object: " + ptest + ". Player who made the first goal " + mtest.getGoals().get(0).getPlayer().getName());
+                //Log.d(TAG,"random test player retrival from Matchrest object: " + ptest + ". Player who made the first goal " + mtest.getGoals().get(0).getPlayer().getName());
 
                 /* Technicly not needed since Match knows its TeamRest objects and its PlayerRestObjects - Normaly when a match is finished it cannot be played anymore so should always initialize on empty array
                 Call<TeamRest> tCallHome = apiService.getTeam(mtest.getHome_id());

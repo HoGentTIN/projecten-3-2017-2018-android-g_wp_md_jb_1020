@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +19,18 @@ import Domain.Division;
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
 import Domain.Player;
+import persistency.GoalRest;
+import persistency.MatchRest;
+import persistency.PlayerRest;
+import rest.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MatchControl extends AppCompatActivity implements PlayersFragment.OnPlayerSelectedListener{
 
+    //backend variables
+    ApiInterface apiService;
     private static final String TAG = MatchControl.class.getSimpleName();
     private final static String API_KEY = "";
 
@@ -52,6 +62,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
+        apiService = dc.getApiService();
 
         //test code to see if function in activity can be called from the timerlistner in matchtimer
         dc.setCurrentActivity(this);
@@ -202,6 +213,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     }
 
     public void faultUMV(View view) {
+
+
+
         Player sp = dc.getSelectedPlayer();
         if(sp!=null){
 
@@ -215,8 +229,24 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         }else {
             toast("Select a player first.");
+            //TESTCODE POST API
+
+            dc.testPost();
+
+            /*
+            try {
+                Response<PlayerRest> response = call.execute();
+                Log.d("POST", response.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            */
+
+            //end testcode POSTAPI
         }
     }
+
+
 
     public void faultUMV4(View view) {
 

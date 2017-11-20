@@ -3,6 +3,7 @@ package Domain;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +11,9 @@ import java.util.List;
 
 import persistency.MatchRest;
 import persistency.PlayerRest;
+import rest.ApiClient;
+import rest.ApiInterface;
+import retrofit2.Call;
 
 /**
  * Created by timos on 5-10-2017.
@@ -17,6 +21,9 @@ import persistency.PlayerRest;
 
 
 public class Domaincontroller {
+
+    //Backend connector
+    final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
     private Match match;
     private MatchRest matchR;
@@ -47,6 +54,39 @@ public class Domaincontroller {
 
     public Domaincontroller(){
 
+    }
+
+    //TESTCODE ASYNC START
+    public void testPost(){
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    playerPost();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
+    }
+
+    public int playerPost() throws InterruptedException {
+        PlayerRest playerRest = new PlayerRest(50,10,2,"Not Hitler","",1,1);
+        Call<PlayerRest> call = apiService.addPlayer(playerRest);
+        try {
+            call.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Thread.sleep(5000);
+        //long process
+        return 1;
+    }
+    //END TESTCODE ASYNC
+
+    public ApiInterface getApiService() {
+        return apiService;
     }
 
     public Player getSelectedPlayer() {
@@ -114,6 +154,7 @@ public class Domaincontroller {
         m.setHomeTeam(teams.get(0));
         m.setAwayTeam(teams.get(1));
         m.setLocation(selectedMatch.getLocation());
+        m.setMatch_id(selectedMatch.getMatch_id());
         //still need code to set date of match after adding string to date converter in Rest class
         //after backend adds official to match setofficial
 
@@ -131,6 +172,7 @@ public class Domaincontroller {
 
                 Player p = new Player(pr.getPlayerNumber(), firstName, lastName);
                 p.setTeam(t);
+                p.setPlayer_id(pr.getPlayerId());
                 //still need code to get status enum for player
                 //add converter in restobject to turn birthdate into date instead of string and calculate age
                 //add code for adding player image? only needed in rest yes or no.
@@ -161,8 +203,10 @@ public class Domaincontroller {
 
         Team homeTeam = new Team(selectedMatch.getHome().getTeam_id(), selectedMatch.getHome().getTeamName(), selectedMatch.getHome().getDivision());
         homeTeam.setCoach(selectedMatch.getHome().getCoach());
+        homeTeam.setTeam_id(selectedMatch.getHome().getTeam_id());
         Team awayTeam = new Team(selectedMatch.getVisitor().getTeam_id(), selectedMatch.getVisitor().getTeamName(), selectedMatch.getVisitor().getDivision());
         awayTeam.setCoach(selectedMatch.getVisitor().getCoach());
+        awayTeam.setTeam_id(selectedMatch.getVisitor().getTeam_id());
         teams.add(homeTeam);
         teams.add(awayTeam);
 

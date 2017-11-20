@@ -14,15 +14,15 @@ public class GoalRest {
     private int matchId;
     @SerializedName("team_id")
     private int teamId;
-    @SerializedName("player")
-    private PlayerRest player;
+    @SerializedName("player_id")
+    private int playerId;
 
 
-    public GoalRest(int goalId, int matchId, int teamId, PlayerRest player) {
+    public GoalRest(int matchId, int teamId, int player) {
         this.goalId = goalId;
         this.matchId = matchId;
         this.teamId = teamId;
-        this.player = player;
+        this.playerId = player;
     }
 
     public int getGoalId() {
@@ -49,11 +49,11 @@ public class GoalRest {
         this.teamId = teamId;
     }
 
-    public PlayerRest getPlayer() {
-        return player;
+    public int getPlayer() {
+        return playerId;
     }
 
-    public void setPlayer(PlayerRest player) {
-        this.player = player;
+    public void setPlayer(int player) {
+        this.playerId = player;
     }
 }

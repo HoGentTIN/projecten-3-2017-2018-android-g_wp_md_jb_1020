@@ -3,6 +3,8 @@ package rest;
 /**
  * Created by timos on 7-11-2017.
  */
+import android.os.AsyncTask;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -17,10 +19,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class ApiClient {
+public class ApiClient extends AsyncTask {
 
     public static final String BASE_URL = "http://voom.be:12005/";
     private static Retrofit retrofit = null;
+    private static ApiInterface resource;
 
 
 
@@ -39,6 +42,13 @@ public class ApiClient {
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
+
         return retrofit;
+
+    }
+
+    @Override
+    protected Object doInBackground(Object[] objects) {
+        return null;
     }
 }

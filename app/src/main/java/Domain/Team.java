@@ -59,6 +59,10 @@ public class Team {
         return teamName;
     }
 
+    public void setTeam_id(int team_id) {
+        this.team_id = team_id;
+    }
+
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
