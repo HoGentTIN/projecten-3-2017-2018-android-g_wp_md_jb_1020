@@ -129,6 +129,7 @@ public class MatchTimer {
             public void onFinish() {
                 txtTimer.setText("0");
                 Log.i("Info","Matchtimer has expired.");
+                stopChrono();
 
             }
         };
