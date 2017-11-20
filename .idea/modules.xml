@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/WaterPolo.iml" filepath="$PROJECT_DIR$/WaterPolo.iml" />
       <module fileurl="file://C:\Users\laure\Desktop\projecten 3\WaterPolo_G1020\projecten_waterpolo\WaterPolo.iml" filepath="C:\Users\laure\Desktop\projecten 3\WaterPolo_G1020\projecten_waterpolo\WaterPolo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Waterpolo.iml" filepath="$PROJECT_DIR$/Waterpolo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Users\Impling\Documents\Hogent_Jaar_3\PROJECT_III\WATERPOLO\WaterPolo\projecten_waterpolo.iml" filepath="C:\Users\Impling\Documents\Hogent_Jaar_3\PROJECT_III\WATERPOLO\WaterPolo\projecten_waterpolo.iml" />
     </modules>

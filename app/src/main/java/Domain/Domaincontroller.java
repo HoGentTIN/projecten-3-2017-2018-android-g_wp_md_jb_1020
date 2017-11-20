@@ -136,6 +136,21 @@ public class Domaincontroller {
                 //add code for adding player image? only needed in rest yes or no.
                 players.add(p);
             }
+        }else{
+            List<PlayerRest> playersR = selectedMatch.getVisitor().getPlayers();
+            for (PlayerRest pr : playersR){
+                int firstSpace = pr.getName().indexOf(" ");                     // find divide between first and lastname
+                String firstName = pr.getName().substring(0, firstSpace);       // get everything upto the first space character
+                String lastName = pr.getName().substring(firstSpace).trim();
+
+                Player p = new Player(pr.getPlayerNumber(), firstName, lastName);
+                p.setTeam(t);
+                //still need code to get status enum for player
+                //add converter in restobject to turn birthdate into date instead of string and calculate age
+                //add code for adding player image? only needed in rest yes or no.
+                players.add(p);
+            }
+
         }
 
         return players;
