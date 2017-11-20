@@ -91,7 +91,7 @@
             </FrameLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/matchSettingsContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -103,7 +103,7 @@
             app:layout_constraintTop_toBottomOf="@+id/titleBar">
 
 
-        </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
 

@@ -53,11 +53,15 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
 
+        //test code to see if function in activity can be called from the timerlistner in matchtimer
+        dc.setCurrentActivity(this);
+
+
         // PIETER
         dc.startMatch();
-        Division heren = new Division("Eerste klasse Heren", 8,2);
-        dc.createTeams("Oostende", heren,"Aalst",heren);
-        dc.createPlayers();
+        //Division heren = new Division("Eerste klasse Heren", 8,2);
+        //dc.createTeams("Oostende", heren,"Aalst",heren);
+        //dc.createPlayers();
         // END PIETER
 
         matchTimer = ar.chronoSetup((TextView) findViewById(R.id.txtTimer), dc.getRoundTime());
@@ -434,6 +438,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
 
     //end testcode log
-
+    public void testFunction(){
+        Log.d("SHARED TEST CALL", "Function was succesfully called");
+    }
 
 }

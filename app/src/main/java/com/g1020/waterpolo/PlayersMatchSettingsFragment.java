@@ -16,15 +16,18 @@ import Domain.Domaincontroller;
 import Domain.Player;
 import Domain.Status;
 import Domain.Team;
+import persistency.PlayerRest;
+import persistency.TeamRest;
 import views.CustomPlayerListAdapter;
+import views.CustomPlayerRestListAdapter;
 
 
 public class PlayersMatchSettingsFragment extends Fragment {
 
     private ApplicationRuntime ar;  //this adds temporary code to this class
     private Domaincontroller dc;
-    private CustomPlayerListAdapter playerAdapter1;
-    private CustomPlayerListAdapter playerAdapter2;
+    private CustomPlayerRestListAdapter playerAdapter1;
+    private CustomPlayerRestListAdapter playerAdapter2;
     private ListView lvPlayers;
     private ListView lvPlayers2;
     private TextView playerTitle;
@@ -50,35 +53,33 @@ public void setHometeam(int id){
         View view =  inflater.inflate(R.layout.fragment_players, container, false);
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
-        Team team;
+        TeamRest team;
 
         if(hometeam)
-            team =dc.getMatch().getHomeTeam();
+            team = dc.getSelectedMatch().getHome();
         else
-            team =dc.getMatch().getAwayTeam();
+            team = dc.getSelectedMatch().getVisitor();
 
 
         //ga nu nog de dummydata uit match gebruiken omdat de adapter voor players nog op player ipv playerRest staat
-        List<Player> players = new ArrayList<>();
+        List<PlayerRest> players = new ArrayList<>();
 
 
-        for (Player player : team.getPlayers()){
+        for (PlayerRest player : team.getPlayers()){
           if(player.getStarter()) {
               players.add(player);
           }
         }
         //playerTitle = (TextView) view.findViewById(R.id.playerTitle);
        // playerTitle.setText(String.format("<-players as starter players that are not starters ->"));
-        playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, players);
-        List<Player> players2 = new ArrayList<>();
-        for (Player player : team.getPlayers()){
+        playerAdapter1 = new CustomPlayerRestListAdapter(getContext(),android.R.id.text1, players);
+        List<PlayerRest> players2 = new ArrayList<>();
+        for (PlayerRest player : team.getPlayers()){
             if(!player.getStarter()) {
                 players2.add(player);
             }
         }
-        playerAdapter2= new CustomPlayerListAdapter(getContext(),android.R.id.text1,players2);
-
-
+        playerAdapter2= new CustomPlayerRestListAdapter(getContext(),android.R.id.text1,players2);
 
 
         lvPlayers = (ListView) view.findViewById(R.id.lsvplayers);

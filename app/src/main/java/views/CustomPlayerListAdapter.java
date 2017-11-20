@@ -126,4 +126,4 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
         //v.setBackgroundResource(res[p.getFaults()]);
     }
 
-    }
+}

@@ -1,5 +1,6 @@
 package Domain;
 
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import persistency.MatchRest;
+import persistency.PlayerRest;
 
 /**
  * Created by timos on 5-10-2017.
@@ -40,6 +42,8 @@ public class Domaincontroller {
     //pretty sure this isn't the correct way to switch players, but it works
     private Boolean switchPlayer = false;
     private Player playerToSwitch;
+
+    private AppCompatActivity currentActivity;
 
     public Domaincontroller(){
 
@@ -94,6 +98,64 @@ public class Domaincontroller {
     public List<MatchRest> getOwnedMatchesR(){return ownedMatchesR;}
 
     public List<Match> getOwnedMatches(){return ownedMatches;}
+
+    public void convertBackendToClass(){
+
+        //first create team objects widouth player list
+        List<Team> teams = convertTeamRestToTeam();
+        //create player lists with team objects and PlayerRest
+        List<Player> homePlayers = convertPlayerRestToPlayer(teams.get(0),true);
+        List<Player> awayPlayers = convertPlayerRestToPlayer(teams.get(1), false);
+        //add playerlist to team objects
+        teams.get(0).setPlayers(homePlayers);
+        teams.get(1).setPlayers(awayPlayers);
+        //set match variable from dc using team and playerlists
+        Match m = new Match();
+        m.setHomeTeam(teams.get(0));
+        m.setAwayTeam(teams.get(1));
+        m.setLocation(selectedMatch.getLocation());
+        //still need code to set date of match after adding string to date converter in Rest class
+        //after backend adds official to match setofficial
+
+        this.match = m;
+    }
+
+    public List<Player> convertPlayerRestToPlayer(Team t, boolean home){
+        List<Player> players = new ArrayList<>();
+        if(home){
+            List<PlayerRest> playersR = selectedMatch.getHome().getPlayers();
+            for (PlayerRest pr : playersR){
+                int firstSpace = pr.getName().indexOf(" ");                     // find divide between first and lastname
+                String firstName = pr.getName().substring(0, firstSpace);       // get everything upto the first space character
+                String lastName = pr.getName().substring(firstSpace).trim();
+
+                Player p = new Player(pr.getPlayerNumber(), firstName, lastName);
+                p.setTeam(t);
+                //still need code to get status enum for player
+                //add converter in restobject to turn birthdate into date instead of string and calculate age
+                //add code for adding player image? only needed in rest yes or no.
+                players.add(p);
+            }
+        }
+
+        return players;
+    }
+
+    public List<Team> convertTeamRestToTeam(){
+        List<Team> teams = new ArrayList<>();
+
+        Team homeTeam = new Team(selectedMatch.getHome().getTeam_id(), selectedMatch.getHome().getTeamName(), selectedMatch.getHome().getDivision());
+        homeTeam.setCoach(selectedMatch.getHome().getCoach());
+        Team awayTeam = new Team(selectedMatch.getVisitor().getTeam_id(), selectedMatch.getVisitor().getTeamName(), selectedMatch.getVisitor().getDivision());
+        awayTeam.setCoach(selectedMatch.getVisitor().getCoach());
+        teams.add(homeTeam);
+        teams.add(awayTeam);
+
+        //still need to add location to teams
+        //still need to add teamlogo image to team
+
+        return teams;
+    }
 
     //Actions
     public void addGoal(){
@@ -204,7 +266,20 @@ public class Domaincontroller {
         return match.getAwayTeam();
     }
 
+    public AppCompatActivity getCurrentActivity() {
+        return currentActivity;
+    }
+
+    public void setCurrentActivity(AppCompatActivity currentActivity) {
+        this.currentActivity = currentActivity;
+    }
+
     public void startMatch(){
+
+        //these steps should now already be done in endselection of competitionselection
+
+        //Original test code
+        /*
         match = new Match();
         matchR = new MatchRest();
         matchR.setDate(new Date(2017,11,11).toString());
@@ -223,8 +298,7 @@ public class Domaincontroller {
         testMatch2.setAwayTeam(new Team(3,"Lochristi",Dames));
         ownedMatches.add(testMatch1);
         ownedMatches.add(testMatch2);
-
-
+        */
     }
 
     public void createPlayers(){

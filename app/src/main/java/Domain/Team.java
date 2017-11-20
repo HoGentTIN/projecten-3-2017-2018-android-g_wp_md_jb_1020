@@ -43,6 +43,14 @@ public class Team {
         this.location = location;
     }
 
+    public Official getCoach() {
+        return coach;
+    }
+
+    public void setCoach(Official coach) {
+        this.coach = coach;
+    }
+
     public void addPlayers(Player p){
         players.add(p);
     }
@@ -51,6 +59,9 @@ public class Team {
         return teamName;
     }
 
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
 
     public void addPlayers(Player[] p){
         players.addAll(Arrays.asList(p));

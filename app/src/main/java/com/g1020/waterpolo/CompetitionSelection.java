@@ -40,9 +40,10 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
 
-        dc.startMatch();
-        dc.createTeams("Oostende", new Division("U20", 7,2),"Aalst",new Division("U20", 7,2));
-        dc.createPlayers();
+        //original testcode for hardcoded match
+        //dc.startMatch();
+        //dc.createTeams("Oostende", new Division("U20", 7,2),"Aalst",new Division("U20", 7,2));
+        //dc.createPlayers();
 
         //matches = new MatchFragment();
         //getSupportFragmentManager().beginTransaction().add(R.id.matchesContainer, matches).commit();
@@ -131,15 +132,8 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
 
     //TEMP function to move to administration activity
     public void endSelection(View view) {
-        //get selected match value from layout -> create Match object from the MatchRest Object and store it in the applicationruntime domaincontroller
 
-
-
-        //Create Team object from RestTeam object
-
-             //Create player objects from RestPlayer objects + add Right team object from
-
-        //Create Match object from Matchrest and the created team and player objects // + add Goal ojbect or not if it is initialized in matchconstructor itself
+        dc.convertBackendToClass();
 
         Intent intent = new Intent(this, MatchControl.class);
         //Intent intent = new Intent(this, AdministrationSetup.class);

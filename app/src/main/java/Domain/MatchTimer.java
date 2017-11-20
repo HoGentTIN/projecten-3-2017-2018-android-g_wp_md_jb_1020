@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.g1020.waterpolo.MatchControl;
+
+import Application.ApplicationRuntime;
+
 /**
  * Created by timos on 24-10-2017.
  */
@@ -18,6 +22,9 @@ import android.widget.TextView;
 public class MatchTimer {
 
     //VARIABLES
+    ApplicationRuntime ar;
+    Domaincontroller dc;
+
     private boolean isChronoOn = false;
     private boolean isShotlockOn = false;
     private boolean istimoutUsed = false;
@@ -36,6 +43,9 @@ public class MatchTimer {
         setMaxTime(roundtime);
         setShotlockTimeRemaining((long) 30000);
         initTimer(txtTimer, (this.roundTime*1000*60));
+
+        ar = ApplicationRuntime.getInstance();
+        dc = ar.getDc();
     }
 
     //GETTERS AND SETTERS
@@ -74,6 +84,7 @@ public class MatchTimer {
             if(cdtTimer!=null)
                 cdtTimer.cancel();
             txtTimer.setText(roundTime + ":00");
+
         }
 
         cdtTimer = new CountDownTimer(timeRemaining, 1000) {
@@ -101,6 +112,7 @@ public class MatchTimer {
             public void onFinish() {
                 txtTimer.setText("0");
                 Log.i("Info","Matchtimer has expired.");
+
             }
         };
     }
@@ -129,6 +141,10 @@ public class MatchTimer {
                 txtShotlock.setText("0");
                 Log.i("Info","Shotlock has expired.");
                 setShotlockTimeRemaining(0);
+
+                //testcode for calling current activity screen
+                MatchControl mc = (MatchControl) dc.getCurrentActivity();
+                mc.testFunction();
             }
         };
     }
