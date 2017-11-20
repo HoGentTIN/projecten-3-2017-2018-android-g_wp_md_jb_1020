@@ -265,10 +265,15 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             //Cancel first, to prevent another shotlock running in the bacground
             if(matchTimer!=null)
                 matchTimer.getCdtShotlock().cancel();
+                matchTimer.getCdtTimer().cancel();
 
             //re-initialize shot lock to set remaining time back to 30 sec
             matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
+            matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), matchTimer.getTimeRemaining());
+
             matchTimer.getCdtShotlock().start();
+            matchTimer.getCdtTimer().start();
+
 
         }else {
             resumeShotlock();           //restart shotlock on the time it had before start of timeout

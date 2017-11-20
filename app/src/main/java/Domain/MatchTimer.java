@@ -31,11 +31,13 @@ public class MatchTimer {
 
     private long timeRemaining;
     private long shotlockTimeRemaining;     //Stores the shotlock time when pausing the match
+    private long shotlockTotalTime = 0;
 
     private CountDownTimer cdtTimer;
     private CountDownTimer cdtShotlock;             //shotlock to follow timelimit on ball possesion
     private CountDownTimer cdtTimout;          //Each team can call 1 time out per round, even if not all time used they cant do again time out = 01:00
     private long roundTime = 8;                     //roundtime in minutes
+
 
 
     //CONSTRUCTORS
@@ -62,6 +64,9 @@ public class MatchTimer {
         this.roundTime = roundTime;
         setTimeRemaining( (roundTime*1000*60));
     }
+    public Long getMaxTime(){
+        return (roundTime*1000*60);
+    }
 
     public void setTimeRemaining(long timeRemaining){
         this.timeRemaining = timeRemaining;
@@ -75,6 +80,13 @@ public class MatchTimer {
     }
     public long getShotlockTimeRemaining(){
         return this.shotlockTimeRemaining;
+    }
+
+    public long getShotlockTotalTime() {
+        return shotlockTotalTime;
+    }
+    public void setShotlockTotalTime(long shotlockTotalTime) {
+        this.shotlockTotalTime = shotlockTotalTime;
     }
 
     //CLASS FUNCTIONS
@@ -105,6 +117,7 @@ public class MatchTimer {
                     }
                 }
                 setTimeRemaining(millisUntilFinished);
+                shotlockTotalTime = shotlockTotalTime + millisUntilFinished;
 
                 //Update matchTimerView before stopping otherwise it will be 1 second behind
                 if(getShotlockTimeRemaining()==0){
