@@ -31,6 +31,7 @@ public class PlayerRest {
         this.birthDate = birthDate;
         this.status = status;
         this.starter = starter;
+
     }
 
     public int getPlayerId() {
@@ -81,11 +82,16 @@ public class PlayerRest {
         this.status = status;
     }
 
-    public int getStarter() {
-        return starter;
+    public boolean getStarter() {
+        if(starter==1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public void setStarter(int starter) {
         this.starter = starter;
     }
+
 }

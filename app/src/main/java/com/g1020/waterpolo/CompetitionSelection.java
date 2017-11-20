@@ -134,7 +134,6 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         //get selected match value from layout -> create Match object from the MatchRest Object and store it in the applicationruntime domaincontroller
 
 
-
         //Create Team object from RestTeam object
 
              //Create player objects from RestPlayer objects + add Right team object from

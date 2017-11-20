@@ -45,8 +45,7 @@ public interface onTeamclickedinteractionListener{
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_match_settings, container, false);
 
@@ -75,7 +74,7 @@ public interface onTeamclickedinteractionListener{
                 mListener.changeTeams(2);
             }
         });
-txtDuration.setText("8:00");
+        txtDuration.setText("8:00");
 
 
         return view;
