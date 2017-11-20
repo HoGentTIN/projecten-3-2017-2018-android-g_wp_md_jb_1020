@@ -33,9 +33,11 @@
             <TextView
                 android:id="@+id/txtDatum"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="0.2"
-                android:background="#ffff4d"
+                android:background="@drawable/txt_datum_expanded"
+
                 android:gravity="center_vertical"
                 android:text="TextView" />
 
@@ -46,15 +48,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:visibility="gone"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtDatumDetail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/txt_datum_expanded"
 
-                android:background="#ffff4d"
                 android:gravity="center_horizontal"
                 android:text="TextView" />
 
