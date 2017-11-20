@@ -13,6 +13,7 @@
         android:layout_height="30dp"
         android:layout_weight="1"
         android:layout_marginTop="0dp"
+        android:layout_marginLeft="20dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -94,7 +95,7 @@
             android:id="@+id/matchSettingsContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.4"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/titleBar"
             app:layout_constraintLeft_toRightOf="@+id/linearLayout"

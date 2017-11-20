@@ -15,6 +15,7 @@ import Application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import Domain.Player;
 import Domain.Status;
+import Domain.Team;
 import views.CustomPlayerListAdapter;
 
 
@@ -27,28 +28,41 @@ public class PlayersMatchSettingsFragment extends Fragment {
     private ListView lvPlayers;
     private ListView lvPlayers2;
     private TextView playerTitle;
+    private boolean hometeam;
 
 
     // TODO: Rename and change types of parameters
 
 
-
+public void setHometeam(int id){
+    if (id ==1)
+        hometeam = true;
+    else
+        hometeam=false;
+}
 
     public PlayersMatchSettingsFragment() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_players, container, false);
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
+        Team team;
+
+        if(hometeam)
+            team =dc.getMatch().getHomeTeam();
+        else
+            team =dc.getMatch().getAwayTeam();
 
 
         //ga nu nog de dummydata uit match gebruiken omdat de adapter voor players nog op player ipv playerRest staat
         List<Player> players = new ArrayList<>();
 
 
-        for (Player player : dc.getMatch().getHomeTeam().getPlayers()){
+        for (Player player : team.getPlayers()){
           if(player.getStarter()) {
               players.add(player);
           }
@@ -57,7 +71,7 @@ public class PlayersMatchSettingsFragment extends Fragment {
        // playerTitle.setText(String.format("<-players as starter players that are not starters ->"));
         playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, players);
         List<Player> players2 = new ArrayList<>();
-        for (Player player : dc.getMatch().getHomeTeam().getPlayers()){
+        for (Player player : team.getPlayers()){
             if(!player.getStarter()) {
                 players2.add(player);
             }

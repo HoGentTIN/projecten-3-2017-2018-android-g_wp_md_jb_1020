@@ -20,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CompetitionSelection extends AppCompatActivity implements MatchFragment.OnMatchSelectedListener{
+public class CompetitionSelection extends AppCompatActivity implements MatchFragment.OnMatchSelectedListener,MatchSettingsFragment.onTeamclickedinteractionListener{
 
     private static final String TAG = CompetitionSelection.class.getSimpleName();
 
@@ -151,8 +151,18 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         dc.setMatch(matchNumber);
         matchSettings = new MatchSettingsFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.matchSettingsContainer,matchSettings).commit();
-        playersFrag = new PlayersMatchSettingsFragment();       //keeps adding to list on reloading the fragment try to prevent this TO DO
+        playersFrag = new PlayersMatchSettingsFragment();
+        playersFrag.setHometeam(1);//keeps adding to list on reloading the fragment try to prevent this TO DO
         getSupportFragmentManager().beginTransaction().add(R.id.homeContainer1,playersFrag).commit();
+
+    }
+
+    @Override
+    public void changeTeams(int id) {
+        playersFrag = new PlayersMatchSettingsFragment();
+        playersFrag.setHometeam(id);
+        //keeps adding to list on reloading the fragment try to prevent this TO DO
+        getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();
 
     }
 }

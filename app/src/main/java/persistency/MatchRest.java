@@ -40,6 +40,9 @@ public class MatchRest {
     @SerializedName("location")
     private Location location;
 
+    @SerializedName("division")
+    private Division division;
+
     @SerializedName("goals")
     private List<GoalRest> goals;
 
@@ -175,6 +178,10 @@ public class MatchRest {
     public void setGoals(List<GoalRest> goals) {
         this.goals = goals;
     }
+
+    public void setDivision(Division division){ this.division = division;}
+
+    public Division getDivision(){ return division;}
 }
 
 
