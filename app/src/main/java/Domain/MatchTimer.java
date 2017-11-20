@@ -98,7 +98,11 @@ public class MatchTimer {
                 else if(secondRemaining==60){
                     txtTimer.setText(String.format("%d:00",minutesRemaining));
                 }else {
-                    txtTimer.setText(String.format("%d:%d",minutesRemaining , secondRemaining));
+                    if(secondRemaining<10){
+                        txtTimer.setText(String.format("%d:0%d", minutesRemaining, secondRemaining));
+                    }else {
+                        txtTimer.setText(String.format("%d:%d", minutesRemaining, secondRemaining));
+                    }
                 }
                 setTimeRemaining(millisUntilFinished);
 
