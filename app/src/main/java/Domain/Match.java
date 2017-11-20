@@ -100,6 +100,13 @@ public class Match {
         return numberOfGoals;
     }
 
+    public Official getOfficial() {
+        return official;
+    }
+
+    public void setOfficial(Official official) {
+        this.official = official;
+    }
 
     public void addGoal(Goal g){
         goals.add(g);

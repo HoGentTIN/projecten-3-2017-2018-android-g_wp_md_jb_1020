@@ -184,11 +184,13 @@ public class PlayersFragment extends Fragment {
 
     public void setListPlayers(Team team){
         currentPlayers = team.getPlayers();
-        playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,7));
-        playerAdapter2 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(7,currentPlayers.size()));
+        //playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,7));
+        //playerAdapter2 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(7,currentPlayers.size()));
+
+        playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,currentPlayers.size()));
 
         lvPlayers.setAdapter(playerAdapter1);
-        lvPlayers2.setAdapter(playerAdapter2);
+        //lvPlayers2.setAdapter(playerAdapter2);
 
     }
 }
