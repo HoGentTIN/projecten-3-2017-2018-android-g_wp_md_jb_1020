@@ -118,10 +118,12 @@ public class MatchFragment extends Fragment {
 
                 //Change look of selected item and the others
                 CustomMatchRestListAdapter ca = (CustomMatchRestListAdapter) lvMatches.getAdapter();
-                for (int i =0;i<itemAmount;i++){
-                    ca.unselectMatch(i,listview.getChildAt(i));
-                }
+
                 ca.setSelectedMatch(position,  listview.getChildAt(position));
+                for (int i =0;i<itemAmount;i++){
+                    if(i!=position)
+                        ca.unselectMatch(i,listview.getChildAt(i));
+                }
 
 
 

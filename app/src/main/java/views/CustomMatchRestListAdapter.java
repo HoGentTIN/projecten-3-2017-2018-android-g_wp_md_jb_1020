@@ -69,7 +69,7 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
 
             txtDate.setText(p.getDate());
             txtDateDetail.setText(p.getDate());
-            txtDivision.setText(p.getHome().getDivision().getDivisionName());
+            txtDivision.setText("Division:  "+p.getHome().getDivision().getDivisionName());
             txtLocation.setText("Locatie:   " +p.getLocation().getFullAddress());
             txtTime.setText("TIME:   "+"12:00" + " h");
            // txtDivision.setText("Division "+ p.getDivision().getDivisionName());

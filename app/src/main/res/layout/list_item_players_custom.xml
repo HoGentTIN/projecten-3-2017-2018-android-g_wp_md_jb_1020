@@ -14,6 +14,7 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        android:background="@drawable/player_row_matchsettings"
         app:layout_constraintStart_toEndOf="@+id/linearLayout2">
 
         <views.PlayerNumberTextView
@@ -23,6 +24,8 @@
             android:layout_height="40dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:background="@drawable/player_row_matchsettings"
+
             android:gravity="center"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -38,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:layout_marginRight="4dp"
+
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txtFaultField"

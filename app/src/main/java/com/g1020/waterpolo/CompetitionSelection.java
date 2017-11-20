@@ -147,7 +147,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         getSupportFragmentManager().beginTransaction().replace(R.id.matchSettingsContainer,matchSettings).commit();
         playersFrag = new PlayersMatchSettingsFragment();
         playersFrag.setHometeam(1);//keeps adding to list on reloading the fragment try to prevent this TO DO
-        getSupportFragmentManager().beginTransaction().add(R.id.homeContainer1,playersFrag).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();
 
     }
 
