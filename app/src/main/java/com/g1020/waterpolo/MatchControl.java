@@ -139,7 +139,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             activities.updateActivities(dc.getMatch().getCurrentRound());
 
             stopShotlock(view);
-            
+
             //loadPlayers();
         }else {
             toast("Select a player first.");
