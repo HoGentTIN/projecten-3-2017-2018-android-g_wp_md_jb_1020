@@ -42,7 +42,7 @@ public interface ApiInterface {
 
 
 
-    //TEST: update goal
+    //Update goal
     @FormUrlEncoded
     @POST("api/goals/")
     Call<Void> addGoal(
@@ -50,6 +50,14 @@ public interface ApiInterface {
             @Field("player_id") int player_id,
             @Field("team_id") int team_id
     );
-    //Call<PlayerRest> addPlayer(@Body PlayerRest rest);
+    //
+
+    @FormUrlEncoded
+    @POST("api/penaltybooks/")
+    Call<Void> addPenalty(
+            @Field("match_id") int match_id,
+            @Field("player_id") int player_id,
+            @Field("penalty_type_id") int penalty_id
+    );
 
 }

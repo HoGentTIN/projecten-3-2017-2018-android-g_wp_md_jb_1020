@@ -18,6 +18,7 @@ import Application.ApplicationRuntime;
 import Domain.Division;
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
+import Domain.PenaltyType;
 import Domain.Player;
 import persistency.GoalRest;
 import persistency.MatchRest;
@@ -129,7 +130,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             dc.addGoal();
 
             //Post goal to live
-            dc.asyncPostGoal();
+            dc.asyncPostGoal(sp);
 
             //Logging
             addToLog(sp, "G","Goal by " + dc.getSelectedPlayer().getFullName());
@@ -174,6 +175,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             if(!faultPlayers.contains(sp)){
                 //add the fault to the current selected player in domaincontroller
                 dc.addFaultU20();
+                //post fault
+                dc.asyncPostFault(sp, PenaltyType.U20);
 
                 //update the background color
                 updateBackgroundPlayer(sp);
@@ -223,9 +226,12 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         if(sp!=null){
 
             dc.addFaultUMV();
+            //post fault
+            dc.asyncPostFault(sp, PenaltyType.UMV);
 
-            activities.updateActivities(dc.getMatch().getCurrentRound());
             addToLog(sp, "UMV","Fault UMV for " + sp.getFullName() + ".");
+            activities.updateActivities(dc.getMatch().getCurrentRound());
+
             updateBackgroundPlayer(sp);
 
             clearSelectedPlayer();
@@ -244,6 +250,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         if(sp!=null){
 
             dc.addFaultUMV4();
+            //post fault
+            dc.asyncPostFault(sp, PenaltyType.UMV4);
 
             activities.updateActivities(dc.getMatch().getCurrentRound());
             addToLog(sp, "UMV4","Fault UMV for " + sp.getFullName() + ".");
