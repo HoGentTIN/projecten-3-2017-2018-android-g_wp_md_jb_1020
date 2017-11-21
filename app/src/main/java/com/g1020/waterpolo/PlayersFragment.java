@@ -122,7 +122,7 @@ public class PlayersFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 resetFontPlayers();
-                //otherTeam.resetFontPlayers();
+                otherTeam.resetFontPlayers();
 
                 // retrieve the selected player
                 previousPlayerPosition = position;
@@ -136,15 +136,8 @@ public class PlayersFragment extends Fragment {
                 playerListener.onArticleSelected(team, selectedPlayer.getPlayer_id());
 
 
-                //look for the place of the player in currentplayer list to determine in which list he's in
-/*                int playerListNumber = 0;
-                for(Player cp: currentPlayers){
-                    while(!cp.equals(selectedPlayer)){
-                        playerListNumber++;
-                    }
-                }
-*/               //Change look of selected item  playerListNumber < 7
-                if(selectedPlayer.getTeam().equals(dc.getHomeTeam())){
+                //Change look of selected item  playerListNumber < 7
+                if(getCurrentPlayerPositionList() < 8){
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
                     ca.setSelectedPlayer(position,  listview.getChildAt(position), R.drawable.player_tile_selected );
                 }else{
@@ -156,27 +149,43 @@ public class PlayersFragment extends Fragment {
         });
     }
 
+    //look for the place of the player in currentplayer list to determine in which list he's in
+    private int getCurrentPlayerPositionList(){
+                int playerListNumber = 0;
+                for(Player cp: currentPlayers){
+                    playerListNumber++;
+                    if(cp.equals(selectedPlayer)){
+                        Log.i("game", selectedPlayer.getFullName() + "has number in list: " + String.valueOf(playerListNumber));
+                        return playerListNumber;
+                    }
+                }
+                return 0;
+    }
+
     //function to reset the visibility of currently selected player
     public void resetFontPlayers(){
         if(selectedPlayer!=null){
-            //Change look of previous item
+            if(getCurrentPlayerPositionList() < 8) {
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
                 ca.setSelectedPlayer(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition), R.drawable.player_tile);
-                ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
+            } else {
+                CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
                 ca.setSelectedPlayer(previousPlayerPosition, lvPlayers2.getChildAt(previousPlayerPosition), R.drawable.player_tile);
-
+            }
         }
     }
 
     public void updateBackgroundPlayer(){
-            CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-            ca.updateBackgroundColors(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition));
-
-            CustomPlayerListAdapter ca2 = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
-            ca2.updateBackgroundColors(previousPlayerPosition, lvPlayers2.getChildAt(previousPlayerPosition));
+        if(selectedPlayer != null) {
+            if (getCurrentPlayerPositionList() < 8) {
+                CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
+                ca.updateBackgroundColors(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition));
+            } else {
+                CustomPlayerListAdapter ca2 = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
+                ca2.updateBackgroundColors(previousPlayerPosition, lvPlayers2.getChildAt(previousPlayerPosition));
+            }
+        }
     }
-
-
 
     public void setOtherTeam(PlayersFragment opponent){
         otherTeam = opponent;
