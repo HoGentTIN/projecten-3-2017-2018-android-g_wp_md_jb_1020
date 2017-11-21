@@ -128,6 +128,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             //add the goal to the current selected player in domaincontroller
             dc.addGoal();
 
+            //Post goal to live
+            dc.asyncPostGoal();
+
             //Logging
             addToLog(sp, "G","Goal by " + dc.getSelectedPlayer().getFullName());
             clearSelectedPlayer();
@@ -136,7 +139,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             activities.updateActivities(dc.getMatch().getCurrentRound());
 
             stopShotlock(view);
-
+            
             //loadPlayers();
         }else {
             toast("Select a player first.");
@@ -229,20 +232,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         }else {
             toast("Select a player first.");
-            //TESTCODE POST API
 
-            dc.testPost();
-
-            /*
-            try {
-                Response<PlayerRest> response = call.execute();
-                Log.d("POST", response.toString());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            */
-
-            //end testcode POSTAPI
         }
     }
 

@@ -43,7 +43,13 @@ public interface ApiInterface {
 
 
     //TEST: update goal
-    @POST("api/players")
-    Call<PlayerRest> addPlayer(@Body PlayerRest rest);
+    @FormUrlEncoded
+    @POST("api/goals/")
+    Call<Void> addGoal(
+            @Field("match_id") int match_id,
+            @Field("player_id") int player_id,
+            @Field("team_id") int team_id
+    );
+    //Call<PlayerRest> addPlayer(@Body PlayerRest rest);
 
 }

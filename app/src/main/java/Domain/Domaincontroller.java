@@ -56,13 +56,14 @@ public class Domaincontroller {
 
     }
 
+
     //TESTCODE ASYNC START
-    public void testPost(){
+    public void asyncPostGoal(){
         Runnable task = new Runnable() {
             @Override
             public void run() {
                 try {
-                    playerPost();
+                    postGoal();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -71,9 +72,8 @@ public class Domaincontroller {
         new Thread(task, "Service thread testpost").start();
     }
 
-    public int playerPost() throws InterruptedException {
-        PlayerRest playerRest = new PlayerRest(50,10,2,"Not Hitler","",1,1);
-        Call<PlayerRest> call = apiService.addPlayer(playerRest);
+    public int postGoal() throws InterruptedException {
+        Call<Void> call = apiService.addGoal(match.getMatch_id(),selectedPlayer.getPlayer_id(),selectedPlayer.getTeam().getTeam_id());
         try {
             call.execute();
         } catch (Exception e) {
