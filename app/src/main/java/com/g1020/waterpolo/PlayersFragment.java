@@ -127,6 +127,7 @@ public class PlayersFragment extends Fragment {
                 // retrieve the selected player
                 previousPlayerPosition = position;
                 selectedPlayer = (Player) listview.getItemAtPosition(position);
+
                 Boolean team = selectedPlayer.getTeam().equals(dc.getHomeTeam());
 
                 Toast toast = Toast.makeText(getActivity(), "You've selected player " + selectedPlayer.getFullName(), Toast.LENGTH_SHORT);
@@ -135,6 +136,7 @@ public class PlayersFragment extends Fragment {
 
                 playerListener.onArticleSelected(team, selectedPlayer.getPlayer_id());
 
+                dc.setSelectedPlayer(team, selectedPlayer.getPlayer_id());
 
                 //Change look of selected item  playerListNumber < 7
                 if(getCurrentPlayerPositionList() < 8){

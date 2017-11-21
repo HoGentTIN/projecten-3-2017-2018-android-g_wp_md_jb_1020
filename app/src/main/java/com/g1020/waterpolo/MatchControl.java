@@ -18,6 +18,7 @@ import Application.ApplicationRuntime;
 import Domain.Division;
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
+import Domain.PenaltyType;
 import Domain.Player;
 import persistency.GoalRest;
 import persistency.MatchRest;
@@ -128,6 +129,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             //add the goal to the current selected player in domaincontroller
             dc.addGoal();
 
+            //Post goal to live
+            dc.asyncPostGoal(sp);
+
             //Logging
             addToLog(sp, "G","Goal by " + dc.getSelectedPlayer().getFullName());
             clearSelectedPlayer();
@@ -171,6 +175,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             if(!faultPlayers.contains(sp)){
                 //add the fault to the current selected player in domaincontroller
                 dc.addFaultU20();
+                //post fault
+                dc.asyncPostFault(sp, PenaltyType.U20);
 
                 //update the background color
                 updateBackgroundPlayer(sp);
@@ -220,29 +226,19 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         if(sp!=null){
 
             dc.addFaultUMV();
+            //post fault
+            dc.asyncPostFault(sp, PenaltyType.UMV);
 
-            activities.updateActivities(dc.getMatch().getCurrentRound());
             addToLog(sp, "UMV","Fault UMV for " + sp.getFullName() + ".");
+            activities.updateActivities(dc.getMatch().getCurrentRound());
+
             updateBackgroundPlayer(sp);
 
             clearSelectedPlayer();
 
         }else {
             toast("Select a player first.");
-            //TESTCODE POST API
 
-            dc.testPost();
-
-            /*
-            try {
-                Response<PlayerRest> response = call.execute();
-                Log.d("POST", response.toString());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            */
-
-            //end testcode POSTAPI
         }
     }
 
@@ -254,6 +250,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         if(sp!=null){
 
             dc.addFaultUMV4();
+            //post fault
+            dc.asyncPostFault(sp, PenaltyType.UMV4);
 
             activities.updateActivities(dc.getMatch().getCurrentRound());
             addToLog(sp, "UMV4","Fault UMV for " + sp.getFullName() + ".");

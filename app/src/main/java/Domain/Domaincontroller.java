@@ -36,7 +36,6 @@ public class Domaincontroller {
     private Match testMatch2 = new Match();
 
 
-    private List<Match> ownedMatches;
     private List<MatchRest> ownedMatchesR;
     private Official o;
     private String startTime;
@@ -56,13 +55,16 @@ public class Domaincontroller {
 
     }
 
+
     //TESTCODE ASYNC START
-    public void testPost(){
+    //Player needs to be passed since async could allow the activity to reset the selected player to null before it can be called
+    public void asyncPostGoal(Player player){
+        final Player p = player;
         Runnable task = new Runnable() {
             @Override
             public void run() {
                 try {
-                    playerPost();
+                    postGoal(p);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -71,18 +73,42 @@ public class Domaincontroller {
         new Thread(task, "Service thread testpost").start();
     }
 
-    public int playerPost() throws InterruptedException {
-        PlayerRest playerRest = new PlayerRest(50,10,2,"Not Hitler","",1,1);
-        Call<PlayerRest> call = apiService.addPlayer(playerRest);
+    public int postGoal(Player p) throws InterruptedException {
+        Call<Void> call = apiService.addGoal(match.getMatch_id(),p.getPlayer_id(),p.getTeam().getTeam_id());
         try {
             call.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Thread.sleep(5000);
+
         //long process
         return 1;
     }
+
+    public void asyncPostFault(Player player, PenaltyType penaltyType){
+        final int penalty = penaltyType.getWeight();
+        final Player p = player;
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                    postfault(p, penalty);
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
+    }
+
+    public int postfault(Player p, int penaltyTypeId){
+        Call<Void> call = apiService.addPenalty(match.getMatch_id(),p.getPlayer_id(),penaltyTypeId);
+        try {
+            call.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //long process
+        return 1;
+    }
+
+
     //END TESTCODE ASYNC
 
     public ApiInterface getApiService() {
@@ -104,6 +130,7 @@ public class Domaincontroller {
         }
     }
 
+    //set player via team and player id
     public void setSelectedPlayer(Boolean homeTeam, int playerId) {
         int teamNr;
         if (homeTeam){
@@ -137,7 +164,6 @@ public class Domaincontroller {
 
     public List<MatchRest> getOwnedMatchesR(){return ownedMatchesR;}
 
-    public List<Match> getOwnedMatches(){return ownedMatches;}
 
     public void convertBackendToClass(){
 
