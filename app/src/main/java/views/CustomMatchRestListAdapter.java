@@ -67,12 +67,12 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
 
             txtTeams.setText(p.getHome().getTeamName()+" - "+p.getVisitor().getTeamName());
 
-            txtDate.setText(p.getDate());
-            txtDateDetail.setText(p.getDate());
-            txtDivision.setText("Division:  "+p.getHome().getDivision().getDivisionName());
+            txtDate.setText(p.getRealFullDate().toString());
+            txtDateDetail.setText(p.getRealDate().toString());
+            txtDivision.setText("Division:  "+p.getHome().getDivision().getDivision_name());
             txtLocation.setText("Locatie:   " +p.getLocation().getFullAddress());
-            txtTime.setText("TIME:   "+"12:00" + " h");
-           // txtDivision.setText("Division "+ p.getDivision().getDivisionName());
+            txtTime.setText("TIME:   "+ p.getRealTime().toString());
+            // txtDivision.setText("Division "+ p.getDivision().getDivisionName());
         }
         return v;
     }

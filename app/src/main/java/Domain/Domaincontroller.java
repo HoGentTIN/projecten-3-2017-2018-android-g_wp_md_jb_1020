@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import persistency.DivisionRest;
 import persistency.MatchRest;
 import persistency.PlayerRest;
 import rest.ApiClient;
@@ -227,10 +228,10 @@ public class Domaincontroller {
     public List<Team> convertTeamRestToTeam(){
         List<Team> teams = new ArrayList<>();
 
-        Team homeTeam = new Team(selectedMatch.getHome().getTeam_id(), selectedMatch.getHome().getTeamName(), selectedMatch.getHome().getDivision());
+        Team homeTeam = new Team(selectedMatch.getHome().getTeam_id(), selectedMatch.getHome().getTeamName(), convertDivisionRestToDivision(selectedMatch.getHome().getDivision()));
         homeTeam.setCoach(selectedMatch.getHome().getCoach());
         homeTeam.setTeam_id(selectedMatch.getHome().getTeam_id());
-        Team awayTeam = new Team(selectedMatch.getVisitor().getTeam_id(), selectedMatch.getVisitor().getTeamName(), selectedMatch.getVisitor().getDivision());
+        Team awayTeam = new Team(selectedMatch.getVisitor().getTeam_id(), selectedMatch.getVisitor().getTeamName(), convertDivisionRestToDivision(selectedMatch.getVisitor().getDivision()));
         awayTeam.setCoach(selectedMatch.getVisitor().getCoach());
         awayTeam.setTeam_id(selectedMatch.getVisitor().getTeam_id());
         teams.add(homeTeam);
@@ -240,6 +241,9 @@ public class Domaincontroller {
         //still need to add teamlogo image to team
 
         return teams;
+    }
+    public Division convertDivisionRestToDivision(DivisionRest divisionR){
+        return new Division(divisionR.getDivision_name(),8,2);
     }
 
     //Actions

@@ -23,7 +23,7 @@ public class TeamRest {
     @SerializedName("division_id")
     private int division_id;
     @SerializedName("division")
-    private Division division;
+    private DivisionRest division;
     @SerializedName("coach")
     private Official coach;
 
@@ -31,7 +31,7 @@ public class TeamRest {
     private List<PlayerRest> players = new ArrayList<>();
 
 
-    public TeamRest(String teamName, int division_id, Division division, Official coach, List<PlayerRest> players) {
+    public TeamRest(String teamName, int division_id, DivisionRest division, Official coach, List<PlayerRest> players) {
         this.teamName = teamName;
         this.division_id = division_id;
         this.division = division;
@@ -68,11 +68,11 @@ public class TeamRest {
         this.division_id = division_id;
     }
 
-    public Division getDivision() {
+    public DivisionRest getDivision() {
         return division;
     }
 
-    public void setDivision(Division division) {
+    public void setDivision(DivisionRest division) {
         this.division = division;
     }
 

@@ -25,9 +25,9 @@ import Domain.Domaincontroller;
 public class MatchSettingsFragment extends Fragment {
     public onTeamclickedinteractionListener mListener;
 
-public interface onTeamclickedinteractionListener{
-     public void changeTeams(int id);
-}
+    public interface onTeamclickedinteractionListener{
+        public void changeTeams(int id);
+    }
 
     public MatchSettingsFragment() {
         // Required empty public constructor

@@ -3,6 +3,11 @@ package persistency;
 import com.google.gson.annotations.SerializedName;
 
 import Domain.*;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,7 +26,7 @@ public class MatchRest {
     private int scoreHome;
     @SerializedName("score_visitor")
     private int scoreAway;
-    @SerializedName("date")
+    @SerializedName("datum")
     private String date;
     @SerializedName("location_id")
     private int location_id;
@@ -182,6 +187,46 @@ public class MatchRest {
     public void setDivision(Division division){ this.division = division;}
 
     public Division getDivision(){ return division;}
+
+    public Date getRealDate(){
+        DateFormat df =  new SimpleDateFormat("MM/dd/yyyy");
+        Date realDate;
+        try {
+            realDate = df.parse(getDate().replace('-','/'));
+            return realDate;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+    public Date getRealTime(){
+        DateFormat df = new SimpleDateFormat("kk:mm");
+        Date realTime = new Date();
+        try {
+            realTime = df.parse(getDate().replace('-','/'));
+            return realTime;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return realTime;
+
+    }
+    public Date getRealFullDate(){
+        DateFormat df =  new SimpleDateFormat("MM/dd/yyyy");
+        Date realDate;
+        try {
+            realDate = df.parse(getDate().replace('-','/'));
+            return realDate;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
 }
 
 

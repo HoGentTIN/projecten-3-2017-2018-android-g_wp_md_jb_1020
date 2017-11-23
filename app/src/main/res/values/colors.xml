@@ -11,6 +11,7 @@
     <color name="colorYellow">#ffff4d</color>
     <color name="colorBlue">#6878CC</color>
     <color name="colorHeader">#3d4555</color>
+    <color name="colorGreen">#4CA64C</color>
 
     //action button colors
     <color name="btnColorGoal">#87b95e</color>
