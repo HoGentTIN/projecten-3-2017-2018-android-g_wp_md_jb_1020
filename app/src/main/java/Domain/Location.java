@@ -1,5 +1,7 @@
 package Domain;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Impling on 18-Oct-17.
  */
@@ -12,6 +14,8 @@ public class Location {
 
     private String name;
     private String street;
+
+    @SerializedName("postalcode")
     private String postalCode;
     private String city;
     private String country;
