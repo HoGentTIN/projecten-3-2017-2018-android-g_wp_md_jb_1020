@@ -75,7 +75,7 @@ public class Domaincontroller {
     }
 
     public int postGoal(Player p) throws InterruptedException {
-        Call<Void> call = apiService.addGoal(match.getMatch_id(),p.getPlayer_id(),p.getTeam().getTeam_id());
+        Call<Void> call = apiService.addGoal(match.getMatch_id(),p.getPlayer_id());
         try {
             call.execute();
         } catch (Exception e) {

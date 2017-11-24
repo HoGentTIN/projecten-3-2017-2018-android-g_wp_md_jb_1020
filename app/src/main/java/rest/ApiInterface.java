@@ -47,8 +47,7 @@ public interface ApiInterface {
     @POST("api/goals/")
     Call<Void> addGoal(
             @Field("match_id") int match_id,
-            @Field("player_id") int player_id,
-            @Field("team_id") int team_id
+            @Field("player_id") int player_id
     );
     //
 
