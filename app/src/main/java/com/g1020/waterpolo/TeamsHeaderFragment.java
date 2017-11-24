@@ -73,8 +73,8 @@ public class TeamsHeaderFragment extends Fragment {
 
 
         try {
-            imgHomeLogo.setImageBitmap(createScaledBitmap(loadTeamLogo(true)));
-            imgAwayLogo.setImageBitmap(createScaledBitmap(loadTeamLogo(false)));
+            imgHomeLogo.setImageBitmap(createScaledBitmap(loadTeamLogo(true),100));
+            imgAwayLogo.setImageBitmap(createScaledBitmap(loadTeamLogo(false),100));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -88,11 +88,11 @@ public class TeamsHeaderFragment extends Fragment {
         txtVAwayScore.setText(String.valueOf(dc.getMatch().getScoreForTeam(dc.getAwayTeam().getTeam_id())));
     }
 
-
-    public Bitmap loadTeamLogo(final boolean flag) throws InterruptedException {
+    // returns initial bitmap from team logo url
+    private Bitmap loadTeamLogo(final boolean flag) throws InterruptedException {
 
         final Bitmap[] bmp = {null};
-
+        // new thread because network operation can't be on main thread
         Runnable task = new Runnable() {
             @Override
             public void run(){
@@ -105,6 +105,7 @@ public class TeamsHeaderFragment extends Fragment {
                     } else {
                         urlLogo = new URL(dc.getAwayTeam().getLogo());
                     }
+                    //create image from url
                     bmp[0] = BitmapFactory.decodeStream(urlLogo.openConnection().getInputStream());
                     Log.i("game", bmp[0].toString());
                 } catch (IOException e) {
@@ -115,6 +116,7 @@ public class TeamsHeaderFragment extends Fragment {
         Thread t = new Thread(task, "Logos");
         t.start();
         try {
+            //wait till thread is finished so bitmap isn't null
             t.join();
             return bmp[0];
         } catch (Exception e) {
@@ -123,9 +125,10 @@ public class TeamsHeaderFragment extends Fragment {
         return null;
     }
 
-    private Bitmap createScaledBitmap(Bitmap bmp){
+    // scale bitmap to preferred size
+    private Bitmap createScaledBitmap(Bitmap bmp, int size){
         if(bmp != null) {
-            Bitmap scaledBmp = Bitmap.createScaledBitmap(bmp, 100, 100, false);
+            Bitmap scaledBmp = Bitmap.createScaledBitmap(bmp, size, size, false);
             return scaledBmp;
         }
         return null;

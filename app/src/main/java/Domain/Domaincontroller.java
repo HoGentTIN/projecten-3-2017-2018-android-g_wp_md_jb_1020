@@ -205,6 +205,7 @@ public class Domaincontroller {
                 p.setTeam(t);
                 p.setPlayer_id(pr.getPlayerId());
                 //still need code to get status enum for player
+                p.setStatus(pr.getStatus());
                 //add converter in restobject to turn birthdate into date instead of string and calculate age
                 //add code for adding player image? only needed in rest yes or no.
                 players.add(p);
@@ -220,6 +221,7 @@ public class Domaincontroller {
                 p.setPlayer_id(pr.getPlayerId());
                 p.setTeam(t);
                 //still need code to get status enum for player
+                p.setStatus(pr.getStatus());
                 //add converter in restobject to turn birthdate into date instead of string and calculate age
                 //add code for adding player image? only needed in rest yes or no.
                 players.add(p);
