@@ -212,6 +212,7 @@ public class Domaincontroller {
                 String lastName = pr.getName().substring(firstSpace).trim();
 
                 Player p = new Player(pr.getPlayerNumber(), firstName, lastName);
+                p.setPlayer_id(pr.getPlayerId());
                 p.setTeam(t);
                 //still need code to get status enum for player
                 //add converter in restobject to turn birthdate into date instead of string and calculate age
@@ -249,7 +250,7 @@ public class Domaincontroller {
     public void addGoal(){
         if(selectedPlayer != null) {
             if(selectedPlayer.getStatus() == Status.ACTIVE) {
-                match.addGoal(new Goal(match.getMatch_id(), selectedPlayer.getTeam().getTeam_id(),selectedPlayer));
+                match.addGoal(new Goal(match.getMatch_id(), selectedPlayer.getTeam().getTeam_id(),selectedPlayer.getPlayer_id()));
             }
         }
     }

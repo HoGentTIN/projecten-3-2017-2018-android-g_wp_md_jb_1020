@@ -71,7 +71,7 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
             txtDateDetail.setText(p.getRealDate().toString());
             txtDivision.setText("Division:  "+p.getHome().getDivision().getDivision_name());
             txtLocation.setText("Locatie:   " +p.getLocation().getFullAddress());
-            txtTime.setText("TIME:   "+ p.getRealTime().toString());
+            txtTime.setText("TIME:   "/*+ p.getRealTime().toString()*/);
             // txtDivision.setText("Division "+ p.getDivision().getDivisionName());
         }
         return v;

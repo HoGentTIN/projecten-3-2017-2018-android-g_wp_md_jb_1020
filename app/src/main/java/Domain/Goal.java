@@ -13,11 +13,11 @@ public class Goal {
 
     private Player p;
 
-    public Goal(int matchid, int teamid, Player p){
+    public Goal(int matchid, int teamid, int playerid){
         this.teamid = teamid;
         this.matchid = matchid;
         this.p = p;
-        this.playerid = p.getPlayer_id();
+        this.playerid = playerid;
     }
 
     public int getTeamid() {
