@@ -133,7 +133,6 @@ public class Domaincontroller {
 
     //set player via team and player id
     public void setSelectedPlayer(Boolean homeTeam, int playerId) {
-        int teamNr;
         if (homeTeam){
             selectedPlayer = match.getHomeTeam().getPlayerById(playerId);
         } else {

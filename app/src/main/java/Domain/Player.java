@@ -34,8 +34,6 @@ public class Player implements Comparable<Player>{
         this.playerNumber = n;
         this.status = status;
 
-        //temporary
-        player_id = playerNumber;
     }
 
     public Team getTeam() {
