@@ -30,6 +30,9 @@ public class TeamRest {
     @SerializedName("players")
     private List<PlayerRest> players = new ArrayList<>();
 
+    @SerializedName("logo")
+    private String logo;
+
 
     public TeamRest(String teamName, int division_id, DivisionRest division, Official coach, List<PlayerRest> players) {
         this.teamName = teamName;
@@ -90,5 +93,13 @@ public class TeamRest {
 
     public void setPlayers(List<PlayerRest> players) {
         this.players = players;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 }

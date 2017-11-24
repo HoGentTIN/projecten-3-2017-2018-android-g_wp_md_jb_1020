@@ -1,9 +1,15 @@
 package Domain;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -108,7 +114,6 @@ public class Domaincontroller {
         //long process
         return 1;
     }
-
 
     //END TESTCODE ASYNC
 
@@ -239,6 +244,8 @@ public class Domaincontroller {
 
         //still need to add location to teams
         //still need to add teamlogo image to team
+        homeTeam.setLogo(selectedMatch.getHome().getLogo());
+        awayTeam.setLogo(selectedMatch.getVisitor().getLogo());
 
         return teams;
     }

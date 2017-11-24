@@ -35,6 +35,14 @@ public class Team {
         return team_id;
     }
 
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
     public Location getLocation() {
         return location;
     }
@@ -112,4 +120,5 @@ public class Team {
         p2.setPlayerNumber(firstPlayerNumber);
 
     }
+
 }

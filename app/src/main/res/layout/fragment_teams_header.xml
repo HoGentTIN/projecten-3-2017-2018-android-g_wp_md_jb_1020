@@ -76,17 +76,16 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/imglogoawayteam"
+                android:id="@+id/imglogohometeam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:contentDescription="logo_home_team"
-                app:layout_constraintBottom_toBottomOf="@+id/imglogohometeam"
+                app:layout_constraintBottom_toBottomOf="@+id/imglogoawayteam"
                 app:layout_constraintEnd_toStartOf="@+id/txtscorehometeam"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imglogohometeam"
+                app:layout_constraintTop_toTopOf="@+id/imglogoawayteam"
                 app:srcCompat="@android:drawable/ic_menu_gallery" />
 
             <TextView
@@ -97,21 +96,21 @@
                 android:textSize="30sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtperiod"
                 app:layout_constraintEnd_toStartOf="@+id/txtperiod"
-                app:layout_constraintStart_toEndOf="@+id/imglogoawayteam" />
+                app:layout_constraintStart_toEndOf="@+id/imglogohometeam" />
 
             <TextView
                 android:id="@+id/txtperiod"
+                style="@style/player_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
-                android:text="TextView"
-                android:padding="4dp"
-                android:textSize="20sp"
                 android:background="@drawable/player_tile_selected"
-                app:layout_constraintBottom_toBottomOf="@+id/imglogoawayteam"
+                android:padding="4dp"
+                android:text="TextView"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imglogohometeam"
                 app:layout_constraintEnd_toStartOf="@+id/txtscoreawayteam"
-                app:layout_constraintStart_toEndOf="@+id/txtscorehometeam"
-                style="@style/player_number"/>
+                app:layout_constraintStart_toEndOf="@+id/txtscorehometeam" />
 
             <TextView
                 android:id="@+id/txtscoreawayteam"
@@ -120,15 +119,17 @@
                 android:text="TextView"
                 android:textSize="30sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtperiod"
-                app:layout_constraintEnd_toStartOf="@+id/imglogohometeam"
+                app:layout_constraintEnd_toStartOf="@+id/imglogoawayteam"
                 app:layout_constraintStart_toEndOf="@+id/txtperiod" />
 
             <ImageView
-                android:id="@+id/imglogohometeam"
+                android:id="@+id/imglogoawayteam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:contentDescription="logo_away_team"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txtscoreawayteam"
                 app:layout_constraintTop_toTopOf="parent"
