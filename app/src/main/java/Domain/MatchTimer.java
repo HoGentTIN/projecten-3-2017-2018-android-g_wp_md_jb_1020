@@ -28,21 +28,26 @@ public class MatchTimer {
     private boolean isChronoOn = false;
     private boolean isShotlockOn = false;
     private boolean istimoutUsed = false;
+    private boolean isPauzeOn = false;
 
     private long timeRemaining;
     private long shotlockTimeRemaining;     //Stores the shotlock time when pausing the match
     private long shotlockTotalTime = 0;
+    private long breakRemaining;
 
     private CountDownTimer cdtTimer;
     private CountDownTimer cdtShotlock;             //shotlock to follow timelimit on ball possesion
     private CountDownTimer cdtTimout;          //Each team can call 1 time out per round, even if not all time used they cant do again time out = 01:00
-    private long roundTime = 8;                     //roundtime in minutes
+    private CountDownTimer cdtBreak;            //timer for the break
+    private long roundTime = 8;                  //roundtime in minutes set default for testing
+    private long breakTime = 3;
 
 
 
     //CONSTRUCTORS
-    public MatchTimer(TextView txtTimer, long roundtime){
+    public MatchTimer(TextView txtTimer, long roundtime, long breakTime){
         setMaxTime(roundtime);
+        setBreaktime(breakTime);
         setShotlockTimeRemaining((long) 30000);
         initTimer(txtTimer, (this.roundTime*1000*60));
 
@@ -66,6 +71,9 @@ public class MatchTimer {
     }
     public Long getMaxTime(){
         return (roundTime*1000*60);
+    }
+    public void setBreaktime(long breakTime){
+        this.breakTime = breakTime;
     }
 
     public void setTimeRemaining(long timeRemaining){
@@ -96,7 +104,6 @@ public class MatchTimer {
             if(cdtTimer!=null)
                 cdtTimer.cancel();
             txtTimer.setText(roundTime + ":00");
-
         }
 
         cdtTimer = new CountDownTimer(timeRemaining, 1000) {
@@ -132,7 +139,9 @@ public class MatchTimer {
                 if(isChronoOn()){
                     stopChrono();
                 }
-
+                //starts function in matchcontrol to start the break
+                MatchControl mc = (MatchControl) dc.getCurrentActivity();
+                mc.prepareBreak();
             }
         };
     }
@@ -192,6 +201,45 @@ public class MatchTimer {
         istimoutUsed = true;          //Remember timout was used
 
     }
+    //Function intiBreak
+    public void initBreak(final TextView txtTimer){
+        //before starting timer initvalue
+        long fullBreakTime = breakTime*1000*60;
+        if(timeRemaining==fullBreakTime){
+            if(cdtTimer!=null)
+                cdtTimer.cancel();
+            txtTimer.setText(breakTime + ":00");
+        }
+        cdtBreak = new CountDownTimer(fullBreakTime, 100) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //round down for correct textview
+                long minutesRemaining = (long) Math.ceil(millisUntilFinished/(1000.0*60.0))-1;
+                long secondRemaining = (long) Math.ceil((millisUntilFinished - (minutesRemaining*(1000*60)))/1000.0);
+
+                if(secondRemaining==60 && minutesRemaining+1 == roundTime)
+                    txtTimer.setText(roundTime + ":00");
+                else if(secondRemaining==60){
+                    txtTimer.setText(String.format("%d:00",minutesRemaining));
+                }else {
+                    if(secondRemaining<10){
+                        txtTimer.setText(String.format("%d:0%d", minutesRemaining, secondRemaining));
+                    }else {
+                        txtTimer.setText(String.format("%d:%d", minutesRemaining, secondRemaining));
+                    }
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                //setup variables for next round
+                dc.nextRound();
+                MatchControl mc = (MatchControl) dc.getCurrentActivity();
+                mc.setupNewRound();
+            }
+        };
+
+    }
 
     //Function resetTimer
     public void resetTimer(final TextView txtTimer){
@@ -212,6 +260,10 @@ public class MatchTimer {
         cdtTimer.cancel();
         isChronoOn = false;
         cdtShotlock.cancel();   //stop running shotlocktimer
+    }
+    //start breaktimer
+    public void startBreak(){
+        this.cdtBreak.start();
     }
 
 

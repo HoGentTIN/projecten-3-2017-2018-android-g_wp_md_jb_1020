@@ -243,7 +243,7 @@ public class Domaincontroller {
         return teams;
     }
     public Division convertDivisionRestToDivision(DivisionRest divisionR){
-        return new Division(divisionR.getDivision_name(),8,2);
+        return new Division(divisionR.getDivision_name(),divisionR.getPeriod_length(), divisionR.getBreak_length());
     }
 
     //Actions
@@ -285,6 +285,11 @@ public class Domaincontroller {
         match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.UMV4));
     }
 
+
+    //function to increase current round
+    public void nextRound(){
+        this.match.setCurrentRound(match.getCurrentRound()+1);
+    }
 
     //Function: appendLog - add an event to the processLog
     public void appendLog(String eventDescription, String eventCode){
@@ -342,10 +347,11 @@ public class Domaincontroller {
         logList.remove(logList.size()-1);
     }
 
-    //temporary static value until we set it in code
+    //funcion to set timer times
     public long getRoundTime(){
-        return 8;
+        return match.getHomeTeam().getDivision().getRoundLength();
     }
+    public long getBreakTime() {return match.getHomeTeam().getDivision().getPauseLength();}
 
     public Team getHomeTeam(){
        return match.getHomeTeam();

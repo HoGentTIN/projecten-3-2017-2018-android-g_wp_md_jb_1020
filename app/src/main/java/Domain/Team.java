@@ -63,6 +63,14 @@ public class Team {
         this.team_id = team_id;
     }
 
+    public Division getDivision() {
+        return division;
+    }
+
+    public void setDivision(Division division) {
+        this.division = division;
+    }
+
     public void setPlayers(List<Player> players) {
         this.players = players;
     }

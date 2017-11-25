@@ -68,7 +68,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //test code to see if function in activity can be called from the timerlistner in matchtimer
         dc.setCurrentActivity(this);
 
-
         // PIETER
         dc.startMatch();
         //Division heren = new Division("Eerste klasse Heren", 8,2);
@@ -76,11 +75,11 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //dc.createPlayers();
         // END PIETER
 
-        matchTimer = ar.chronoSetup((TextView) findViewById(R.id.txtTimer), dc.getRoundTime());
+        matchTimer = ar.chronoSetup((TextView) findViewById(R.id.txtTimer), dc.getRoundTime(), dc.getBreakTime());
 
         //initialize shotlock timer
         matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
-        matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (long) (8*1000*60));
+        matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (dc.getRoundTime()*1000*60));
 
         teamsHeader = new TeamsHeaderFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.teamsheadercontainer, teamsHeader).commit();
@@ -210,14 +209,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     }
 
-    private void updateBackgroundPlayer(Player sp){
-        if(sp.getTeam().equals(dc.getHomeTeam())){
-            homeTeam.updateBackgroundPlayer();
-        } else {
-            awayTeam.updateBackgroundPlayer();
-        }
-    }
-
     public void faultUMV(View view) {
 
 
@@ -241,8 +232,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         }
     }
-
-
 
     public void faultUMV4(View view) {
 
@@ -272,7 +261,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     //deletes the last added action. //Maybe also possible to undo method revertToAction()
     public void undoAction(View view) {
     }
-
 
     //Function togglechrono - backup function to pauze match and simply halt the shotlock
     public void toggleChrono(View view){
@@ -360,6 +348,27 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     }
 
+    public void prepareBreak(){
+        //setup breaktimer view
+        matchTimer.initBreak((TextView) findViewById(R.id.txtTimer));
+        matchTimer.startBreak();
+
+        //disable certain buttons on screen - timout buttons, shotlock, timertext, goal
+
+
+
+    }
+
+    public void setupNewRound(){
+        //setup matchtimer view
+        matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (dc.getRoundTime()*1000*60));
+
+        //reenable certain buttons on screen
+
+        //reenable timouttimers and reset them (break onfinish already ups roundvalue)
+
+    }
+
     //Time out for each round each team can call time out once, cannot be paused, when clicked cannot be used again in same round for that team
     //2 buttons 1 for each team
     public void homeTimeout(View view){
@@ -388,6 +397,14 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             matchTimer.getCdtShotlock().cancel();
     }
 
+
+    private void updateBackgroundPlayer(Player sp){
+        if(sp.getTeam().equals(dc.getHomeTeam())){
+            homeTeam.updateBackgroundPlayer();
+        } else {
+            awayTeam.updateBackgroundPlayer();
+        }
+    }
     //Function to clear selectedPlayer after performing buttonAction
     public void clearSelectedPlayer(){
         homeTeam.resetFontPlayers();

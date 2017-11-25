@@ -13,6 +13,8 @@ public class DivisionRest {
     private String division_name;
     @SerializedName("period_length")
     private String period_length;
+    @SerializedName("break_length")
+    private String break_length;
     @SerializedName("ranking")
     private int goalId;
 
@@ -32,8 +34,11 @@ public class DivisionRest {
         this.division_name = division_name;
     }
 
-    public String getPeriod_length() {
-        return period_length;
+    public long getPeriod_length() {
+        return Long.parseLong(period_length.substring(1,2));
+    }
+    public long getBreak_length() {
+        return Long.parseLong(break_length.substring(1,2));
     }
 
     public void setPeriod_length(String period_length) {
