@@ -349,9 +349,13 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     }
 
     public void prepareBreak(){
+        //clear matchtimer
+        matchTimer.clearTimer();
         //setup breaktimer view
         matchTimer.initBreak((TextView) findViewById(R.id.txtTimer));
         matchTimer.startBreak();
+
+        //reset shotlock value to 30
 
         //disable certain buttons on screen - timout buttons, shotlock, timertext, goal
 
@@ -361,7 +365,11 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     public void setupNewRound(){
         //setup matchtimer view
+        matchTimer = ar.chronoSetup((TextView) findViewById(R.id.txtTimer), dc.getRoundTime(), dc.getBreakTime());
+        matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
         matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (dc.getRoundTime()*1000*60));
+        //update round view
+        teamsHeader.updateHeader();
 
         //reenable certain buttons on screen
 
