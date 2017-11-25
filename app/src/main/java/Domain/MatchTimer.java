@@ -158,7 +158,7 @@ public class MatchTimer {
                 cdtShotlock.cancel();                                                               //Stop previous countdowntimers, to prevent needless background process
         }
 
-        cdtShotlock = new CountDownTimer(shotlockTimeRemaining,500) {               //Initialize countdowntimer on correct starting time
+        cdtShotlock = new CountDownTimer(shotlockTimeRemaining,100) {               //Initialize countdowntimer on correct starting time
 
             @Override
             public void onTick(long millisUntilFinished) {

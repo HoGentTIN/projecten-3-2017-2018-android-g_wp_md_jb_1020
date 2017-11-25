@@ -93,7 +93,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         homeTeam.setOtherTeam(awayTeam);
         awayTeam.setOtherTeam(homeTeam);
 
-        dc.appendLog("Round 1 started","SR1","8:00",1); //relocate to startchrono for first time only here for testing
+        int round = dc.getMatch().getCurrentRound();
+        dc.appendLog("Round " + round  + " started","SR" + round,dc.getMatch().getHomeTeam().getDivision().getRoundLengthS(),round); //relocate to startchrono for first time only here for testing
         activities = ActivityFragment.newInstance(1);
 
         getSupportFragmentManager().beginTransaction().add(R.id.activitiesContainer, activities).commit();
@@ -355,25 +356,63 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         matchTimer.initBreak((TextView) findViewById(R.id.txtTimer));
         matchTimer.startBreak();
 
-        //reset shotlock value to 30
-
         //disable certain buttons on screen - timout buttons, shotlock, timertext, goal
-
+        disableActions();
 
 
     }
 
     public void setupNewRound(){
-        //setup matchtimer view
-        matchTimer = ar.chronoSetup((TextView) findViewById(R.id.txtTimer), dc.getRoundTime(), dc.getBreakTime());
-        matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
-        matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (dc.getRoundTime()*1000*60));
-        //update round view
-        teamsHeader.updateHeader();
 
-        //reenable certain buttons on screen
+        //check if round = 5 yes go to finishscreen
+        if(dc.getMatch().getCurrentRound()>4){
+            finishMatch();
+        }else{
+            //log new round start
+            int round = dc.getMatch().getCurrentRound();
+            dc.appendLog("Round " + round  + " started","SR" + round,dc.getMatch().getHomeTeam().getDivision().getRoundLengthS(),round);
+            //setup matchtimer view
+            matchTimer = ar.chronoSetup((TextView) findViewById(R.id.txtTimer), dc.getRoundTime(), dc.getBreakTime());
+            matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
+            matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (dc.getRoundTime()*1000*60));
+            //update round view - to update currentround in view
+            teamsHeader.updateHeader();
+            activities.updateActivities(dc.getMatch().getCurrentRound());
 
-        //reenable timouttimers and reset them (break onfinish already ups roundvalue)
+            //reenable certain buttons on screen
+            enableActions();
+
+            //reenable timouttimers and reset them (break onfinish already ups roundvalue)
+        }
+    }
+
+    public void finishMatch(){
+
+    }
+
+    public void disableActions(){
+        //get all actions to disable
+        Button btnTimoutHome = (Button) findViewById(R.id.btnTimeOutHome);
+        Button btnTimoutAway = (Button) findViewById(R.id.btnTimeOutAway);
+        TextView txtTimer = (TextView) findViewById(R.id.txtTimer);
+        TextView txtShotlock = (TextView) findViewById(R.id.txtShotlock);
+        //disable buttons
+        btnTimoutHome.setClickable(false);
+        btnTimoutAway.setClickable(false);
+        txtTimer.setEnabled(false);
+        txtShotlock.setEnabled(false);
+
+    }
+    //re enable actions
+    public void enableActions(){
+        //get all actions to disable
+        TextView txtTimer = (TextView) findViewById(R.id.txtTimer);
+        TextView txtShotlock = (TextView) findViewById(R.id.txtShotlock);
+        //disable buttons
+        resetTimout();
+        txtTimer.setEnabled(true);
+        txtShotlock.setEnabled(true);
+        txtShotlock.setText("30");
 
     }
 
@@ -404,7 +443,14 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         if(matchTimer!=null)
             matchTimer.getCdtShotlock().cancel();
     }
-
+    public void resetTimout(){
+        Button btnTimoutHome = (Button) findViewById(R.id.btnTimeOutHome);
+        Button btnTimoutAway = (Button) findViewById(R.id.btnTimeOutAway);
+        btnTimoutHome.setClickable(true);
+        btnTimoutAway.setClickable(true);
+        btnTimoutHome.setText("TIMEOUT HOME");
+        btnTimoutAway.setText("TIMEOUT AWAY");
+    }
 
     private void updateBackgroundPlayer(Player sp){
         if(sp.getTeam().equals(dc.getHomeTeam())){
