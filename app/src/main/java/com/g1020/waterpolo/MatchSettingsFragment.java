@@ -24,9 +24,13 @@ import Domain.Domaincontroller;
  */
 public class MatchSettingsFragment extends Fragment {
     public onTeamclickedinteractionListener mListener;
+    public onArrowclickedinteractionListener cListener;
 
     public interface onTeamclickedinteractionListener{
         public void changeTeams(int id);
+    }
+    public interface onArrowclickedinteractionListener{
+        public void switchPlayer(boolean starter);
     }
 
     public MatchSettingsFragment() {
@@ -38,6 +42,8 @@ public class MatchSettingsFragment extends Fragment {
     private TextView txtDuration;
     private Button btnTeamName;
     private Button btnVisitorName;
+    private Button btnLeft;
+    private Button btnRight;
 
     private ApplicationRuntime ar;  //this adds temporary code to this class
     private Domaincontroller dc;
@@ -55,6 +61,8 @@ public class MatchSettingsFragment extends Fragment {
         txtDuration = (TextView) view.findViewById(R.id.txtDuration);
         btnTeamName = (Button) view.findViewById(R.id.btnTeamName);
         btnVisitorName = (Button) view.findViewById(R.id.btnVisitorName);
+        btnLeft = (Button) view.findViewById(R.id.btnToLeft);
+        btnRight = (Button) view.findViewById(R.id.btnToRight);
 
 
         btnTeamName.setText(dc.getSelectedMatch().getHome().getTeamName());
@@ -66,6 +74,19 @@ public class MatchSettingsFragment extends Fragment {
             }
         });
 
+        btnLeft.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+        cListener.switchPlayer(false);
+            }
+        });
+
+        btnRight.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                cListener.switchPlayer(true);
+            }
+        });
 
         btnVisitorName.setText(dc.getSelectedMatch().getVisitor().getTeamName());
         btnVisitorName.setOnClickListener(new View.OnClickListener() {
@@ -100,12 +121,19 @@ public class MatchSettingsFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement onTeamclickedinteractionListener");
         }
+        try {
+            cListener = (onArrowclickedinteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement onArrowClickedInteractionListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        cListener =null;
 
     }
 

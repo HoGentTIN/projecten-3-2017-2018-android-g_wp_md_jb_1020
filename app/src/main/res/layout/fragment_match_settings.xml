@@ -159,7 +159,7 @@
                         style="@style/matchsettings_tabletitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.8"
                         android:text="@string/field"
                         android:textSize="20dp" />
 
@@ -193,13 +193,32 @@
 
                     </FrameLayout>
 
-                    <FrameLayout
-                        android:id="@+id/logoContainer"
+                    <LinearLayout
                         android:layout_width="100dp"
-                        android:layout_height="100dp">
+                        android:layout_height="match_parent"
 
-                    </FrameLayout>
+                        android:orientation="vertical">
 
+                        <FrameLayout
+                            android:id="@+id/logoContainer"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp">
+
+                        </FrameLayout>
+
+                        <Button
+                            android:id="@+id/btnToRight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text='-&gt;&gt;' />
+
+                        <Button
+                            android:id="@+id/btnToLeft"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text= '&lt;&lt;-' />
+
+                    </LinearLayout>
 
 
                 </LinearLayout>
