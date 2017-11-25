@@ -16,12 +16,15 @@ public class PlayerRest {
     private int playerNumber;
     @SerializedName("name")
     private String name;
-    @SerializedName("Birtdate")
+    @SerializedName("birthdate")
     private String birthDate;
     @SerializedName("status")
     private int status;
     @SerializedName("starter")
     private int starter;
+
+    @SerializedName("photo")
+    private String photo ;
 
     public PlayerRest(int playerId, int teamId, int playerNumber, String name, String birthDate, int status, int starter) {
         this.playerId = playerId;
@@ -94,4 +97,11 @@ public class PlayerRest {
         this.starter = starter;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 }

@@ -41,7 +41,7 @@ public class LogoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_logo, container, false);
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
-        URL url = null;
+
         imglogo = (ImageView) view.findViewById(R.id.imgLogo);
         if (hometeam) {
             new DownloadImageTask(imglogo).execute(dc.getSelectedMatch().getHome().getLogo());

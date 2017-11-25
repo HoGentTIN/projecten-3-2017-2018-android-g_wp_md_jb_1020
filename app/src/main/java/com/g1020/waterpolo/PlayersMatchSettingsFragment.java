@@ -1,25 +1,36 @@
 package com.g1020.waterpolo;
 
+import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import Application.ApplicationRuntime;
 import Domain.Domaincontroller;
-import Domain.Player;
-import Domain.Status;
-import Domain.Team;
+import persistency.MatchRest;
 import persistency.PlayerRest;
 import persistency.TeamRest;
-import views.CustomPlayerListAdapter;
+import rest.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import views.CustomPlayerRestListAdapter;
+
+import static android.content.ContentValues.TAG;
 
 
 public class PlayersMatchSettingsFragment extends Fragment {
@@ -32,7 +43,7 @@ public class PlayersMatchSettingsFragment extends Fragment {
     private ListView lvPlayers2;
     private TextView TeamTitle;
     private boolean hometeam;
-
+    ApiInterface apiService;
 
     // TODO: Rename and change types of parameters
 
@@ -83,12 +94,94 @@ public class PlayersMatchSettingsFragment extends Fragment {
 
 
         lvPlayers = (ListView) view.findViewById(R.id.lsvplayers);
+
         lvPlayers.setAdapter(playerAdapter1);
+        playerClickAction(lvPlayers);
         lvPlayers2 = (ListView) view.findViewById(R.id.lsvplayers2);
+
         lvPlayers2.setAdapter(playerAdapter2);
+        playerClickAction(lvPlayers2);
         return view;
 
     }
+
+    private void playerClickAction(final ListView listview) {
+        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int pos, long id) {
+
+                PlayerRest currentplayer = (PlayerRest)listview.getItemAtPosition(pos);
+
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.players_detail);
+                dialog.show();
+
+
+                ((TextView)dialog.findViewById(R.id.txtPlayerDetName)).setText("Name:  " + currentplayer.getName());
+                ImageView imgPlayer = (ImageView)dialog.findViewById(R.id.imgPlayer);
+                new DownloadImageTask(imgPlayer).execute(currentplayer.getPhoto());
+                ((TextView)dialog.findViewById(R.id.txtPlayerDetBirthdate)).setText("BirthDate:  " + currentplayer.getBirthDate().substring(0,10));
+                ((TextView)dialog.findViewById(R.id.txtPlayerDetNumber)).setText("PlayerNumber:  " + currentplayer.getPlayerNumber());
+
+
+                //get the team from the database
+                apiService = dc.getApiService();
+                Call<TeamRest> call = apiService.getTeam(currentplayer.getTeamId());
+                call.enqueue(new Callback<TeamRest>() {
+                    @Override
+                    public void onResponse(Call<TeamRest> call, Response<TeamRest> response) {
+                        TeamRest team = response.body();
+                        ((TextView)dialog.findViewById(R.id.txtPlayerDetTeam)).setText("Team:  " + team.getTeamName());}
+                                 @Override
+                                 public void onFailure(Call<TeamRest> call, Throwable t) {
+                                     Log.e(TAG,t.toString());
+                                 }});
+
+
+
+
+
+                // set a listener for the ok-button to close the popup
+                final View okButton = dialog.findViewById(R.id.okButton); // From layout
+                okButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+
+                return true;
+            }
+        });
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
+
 
 
 
