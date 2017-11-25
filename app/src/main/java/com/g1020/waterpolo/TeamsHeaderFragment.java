@@ -20,6 +20,7 @@ import java.net.URL;
 
 import Application.ApplicationRuntime;
 import Domain.Domaincontroller;
+import views.DownloadImageTask;
 
 
 /**
@@ -72,13 +73,18 @@ public class TeamsHeaderFragment extends Fragment {
         txtVAwayScore.setText(String.valueOf(dc.getMatch().getScoreForTeam(dc.getAwayTeam().getTeam_id())));
 
 
-        try {
+        new DownloadImageTask(imgHomeLogo).execute(dc.getHomeTeam().getLogo());
+        new DownloadImageTask(imgAwayLogo).execute(dc.getAwayTeam().getLogo());
+
+
+
+    /*    try {
             imgHomeLogo.setImageBitmap(createScaledBitmap(loadTeamLogo(true),100));
             imgAwayLogo.setImageBitmap(createScaledBitmap(loadTeamLogo(false),100));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+    */
         return view;
     }
 
@@ -88,6 +94,7 @@ public class TeamsHeaderFragment extends Fragment {
         txtVAwayScore.setText(String.valueOf(dc.getMatch().getScoreForTeam(dc.getAwayTeam().getTeam_id())));
     }
 
+    /*
     // returns initial bitmap from team logo url
     private Bitmap loadTeamLogo(final boolean flag) throws InterruptedException {
 
@@ -133,5 +140,5 @@ public class TeamsHeaderFragment extends Fragment {
         }
         return null;
     }
-
+    */
 }

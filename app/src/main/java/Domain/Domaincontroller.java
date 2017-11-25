@@ -358,7 +358,8 @@ public class Domaincontroller {
 
     //funcion to set timer times
     public long getRoundTime(){
-        return match.getHomeTeam().getDivision().getRoundLength();
+        //return match.getHomeTeam().getDivision().getRoundLength();
+        return 1;
     }
     public long getBreakTime() {return match.getHomeTeam().getDivision().getPauseLength();}
 

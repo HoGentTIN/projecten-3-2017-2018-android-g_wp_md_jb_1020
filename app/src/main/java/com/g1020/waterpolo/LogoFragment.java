@@ -18,6 +18,7 @@ import java.net.URL;
 
 import Application.ApplicationRuntime;
 import Domain.Domaincontroller;
+import views.DownloadImageTask;
 
 
 public class LogoFragment extends Fragment {
@@ -49,7 +50,6 @@ public class LogoFragment extends Fragment {
             new DownloadImageTask(imglogo).execute(dc.getSelectedMatch().getVisitor().getLogo());
         }
 
-
         return view;
 
     }
@@ -59,32 +59,5 @@ public class LogoFragment extends Fragment {
             this.hometeam = true;
         else
             this.hometeam = false;
-    }
-
-
-    // als dit zou werken is dit een apart klasse om op een juiste manier de afbeelding te kunnen inladen
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
     }
 }

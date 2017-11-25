@@ -94,6 +94,7 @@
                 android:layout_height="0dp"
                 android:text="TextView"
                 android:textSize="30sp"
+                android:textColor="@color/colorBlack"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtperiod"
                 app:layout_constraintEnd_toStartOf="@+id/txtperiod"
                 app:layout_constraintStart_toEndOf="@+id/imglogohometeam" />
@@ -118,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textSize="30sp"
+                android:textColor="@color/colorBlack"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtperiod"
                 app:layout_constraintEnd_toStartOf="@+id/imglogoawayteam"
                 app:layout_constraintStart_toEndOf="@+id/txtperiod" />
