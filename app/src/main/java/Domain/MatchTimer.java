@@ -46,8 +46,7 @@ public class MatchTimer {
 
     //CONSTRUCTORS
     public MatchTimer(TextView txtTimer, long roundtime, long breakTime){
-        //setMaxTime(roundtime);
-        setMaxTime(1); //set to test breaktimer
+        setMaxTime(roundtime);
         setBreaktime(breakTime);
         setShotlockTimeRemaining((long) 30000);
         initTimer(txtTimer, (this.roundTime*1000*60));
