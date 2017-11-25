@@ -14,13 +14,15 @@ import Application.ApplicationRuntime;
 import Domain.Division;
 import Domain.Domaincontroller;
 import persistency.MatchRest;
+import persistency.PlayerRest;
 import rest.ApiClient;
 import rest.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CompetitionSelection extends AppCompatActivity implements MatchFragment.OnMatchSelectedListener,MatchSettingsFragment.onTeamclickedinteractionListener{
+public class CompetitionSelection extends AppCompatActivity implements MatchFragment.OnMatchSelectedListener,MatchSettingsFragment.onTeamclickedinteractionListener,MatchSettingsFragment.onArrowclickedinteractionListener
+,PlayersMatchSettingsFragment.onPlayerClickedInteractionListener{
 
     private static final String TAG = CompetitionSelection.class.getSimpleName();
 
@@ -32,6 +34,8 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
     TeamNameFragment teamNameFrag;
     LogoFragment logoFrag;
     ApiInterface apiService;
+    private PlayerRest selectedPlayer;
+    private int hometeam;
 
 
     @Override
@@ -153,6 +157,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();
 
         teamNameFrag = new TeamNameFragment();
+        hometeam =1;
         teamNameFrag.setHometeam(1);
         getSupportFragmentManager().beginTransaction().replace(R.id.llTeamName,teamNameFrag).commit();
         logoFrag = new LogoFragment();
@@ -165,6 +170,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
 
     @Override
     public void changeTeams(int id) {
+        hometeam = id;
         playersFrag = new PlayersMatchSettingsFragment();
         playersFrag.setHometeam(id);
         //keeps adding to list on reloading the fragment try to prevent this TO DO
@@ -176,5 +182,45 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         logoFrag.setHometeam(id);
         getSupportFragmentManager().beginTransaction().replace(R.id.logoContainer,logoFrag).commit();
 
+    }
+
+    @Override
+    public void switchPlayer(boolean starter) {
+        //if starter = true then that means he comes from the column where starter = true and vice versa
+        if(selectedPlayer!=null){
+        if(starter){
+            this.selectedPlayer.setStarter(0);
+        }
+        else
+        {
+            if(hometeam==1){
+              int counter =0;
+              for(PlayerRest player : dc.getSelectedMatch().getHome().getPlayers()){
+                  if( player.getStarter())
+                      counter+=1;
+              }
+              if(counter<13)
+                  this.selectedPlayer.setStarter(1);
+            }
+            else if(hometeam!=1){
+                int counter =0;
+                for(PlayerRest player : dc.getSelectedMatch().getVisitor().getPlayers()){
+                    if( player.getStarter())
+                        counter+=1;
+                }
+                if(counter<13)
+                    this.selectedPlayer.setStarter(1);
+            }
+            this.selectedPlayer.setStarter(1);
+        }
+        playersFrag = new PlayersMatchSettingsFragment();
+        playersFrag.setHometeam(hometeam);
+        getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();}
+
+    }
+
+    @Override
+    public void setSelectedPlayer(PlayerRest selectedPlayer) {
+        this.selectedPlayer = selectedPlayer;
     }
 }

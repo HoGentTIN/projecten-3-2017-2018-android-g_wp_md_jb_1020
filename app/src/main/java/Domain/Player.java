@@ -80,6 +80,23 @@ public class Player implements Comparable<Player>{
         this.status = status;
     }
 
+    public void setStatus(int statusNr){
+        switch (statusNr){
+            case 1:
+                setStatus(Status.ACTIVE);
+                break;
+            case 2:
+                setStatus(Status.SUSPENDED);
+                break;
+            case 3:
+                setStatus(Status.GAMEOVER);
+                break;
+            case 4:
+                setStatus(Status.INJURED);
+                break;
+        }
+    }
+
     public int getPlayer_id() {
         return player_id;
     }
