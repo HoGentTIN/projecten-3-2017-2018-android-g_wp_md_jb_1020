@@ -45,7 +45,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     ActivityFragment activities;
     ActivityInfoFragment infoFragment;
-    ActivityButtonsFragment btnFragment;
+    ButtonsFragment btnFragment;
+    TimeOutFragment timeOutFragment;
+    ShotClockFragment shotClockFragment;
 
     //Fault playerTimers
     List<Player> faultPlayers = new ArrayList<>();
@@ -99,9 +101,12 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         getSupportFragmentManager().beginTransaction().add(R.id.activitiesContainer, activities).commit();
 
-        btnFragment = new ActivityButtonsFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.activitiesbuttonContainer, btnFragment).commit();
-
+        btnFragment = new ButtonsFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.buttonsContainer, btnFragment).commit();
+        timeOutFragment = new TimeOutFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.timeoutcontainer, timeOutFragment).commit();
+        shotClockFragment = new ShotClockFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.shotclockcontainer, shotClockFragment).commit();
         //Testcode for adding logging functionallity
 
     }
@@ -110,7 +115,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     protected void onResume(){
         super.onResume();
 
-        btnFragment.getTxtShotClock().setOnLongClickListener(new View.OnLongClickListener() {
+        shotClockFragment.getTxtShotClock().setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 stopShotlock(v);

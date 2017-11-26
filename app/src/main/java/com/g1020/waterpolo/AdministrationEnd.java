@@ -10,4 +10,6 @@ public class AdministrationEnd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administration_end);
     }
+
+
 }

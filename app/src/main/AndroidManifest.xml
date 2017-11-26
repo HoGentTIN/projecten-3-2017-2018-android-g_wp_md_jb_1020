@@ -21,9 +21,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AdministrationSetup"
-            android:parentActivityName=".CompetitionSelection" />
-        <activity
             android:name=".MatchControl"
             android:parentActivityName=".AdministrationSetup" />
         <activity
