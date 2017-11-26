@@ -23,4 +23,26 @@ public class Division {
         return divisionName;
     }
 
+    public long getRoundLength() {
+        return roundLength;
+    }
+    public String getRoundLengthS() {
+        return roundLength + ":00";
+    }
+
+    public void setRoundLength(long roundLength) {
+        this.roundLength = roundLength;
+    }
+
+    public long getPauseLength() {
+        return pauseLength;
+    }
+    public String getPauseLengthS() {
+        return pauseLength + ":00";
+    }
+
+
+    public void setPauseLength(long pauseLength) {
+        this.pauseLength = pauseLength;
+    }
 }

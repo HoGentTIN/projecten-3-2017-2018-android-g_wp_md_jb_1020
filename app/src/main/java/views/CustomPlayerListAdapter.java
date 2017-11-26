@@ -62,7 +62,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                         int pNumber = p.getPlayerNumber();
 
                         // in comments to reduce laptop fan
-                        //setTeamColors(v,p);
+                        setTeamColors(v,p);
 
                         StringBuilder sbPlayerNumber = new StringBuilder();
                         sbPlayerNumber.append(pNumber);

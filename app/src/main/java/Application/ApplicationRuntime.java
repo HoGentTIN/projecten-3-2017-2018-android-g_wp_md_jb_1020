@@ -39,8 +39,8 @@ public class ApplicationRuntime extends Application {
 
     //FUNCTIONS
     //Function chronoSetup - create chronometer
-    public MatchTimer chronoSetup(TextView txtTimer, long roundtime){
-        return mt = new MatchTimer(txtTimer, roundtime);
+    public MatchTimer chronoSetup(TextView txtTimer, long roundtime, long breaktime){
+        return mt = new MatchTimer(txtTimer, roundtime, breaktime);
     }
 
     //Function getDomeincontroller

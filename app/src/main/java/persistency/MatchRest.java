@@ -46,7 +46,7 @@ public class MatchRest {
     private Location location;
 
     @SerializedName("division")
-    private Division division;
+    private DivisionRest division;
 
     @SerializedName("goals")
     private List<GoalRest> goals;
@@ -184,9 +184,9 @@ public class MatchRest {
         this.goals = goals;
     }
 
-    public void setDivision(Division division){ this.division = division;}
+    public void setDivision(DivisionRest division){ this.division = division;}
 
-    public Division getDivision(){ return division;}
+    public DivisionRest getDivision(){ return division;}
 
     public Date getRealDate(){
         DateFormat df =  new SimpleDateFormat("MM/dd/yyyy");
