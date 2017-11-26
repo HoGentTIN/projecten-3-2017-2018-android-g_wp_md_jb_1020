@@ -165,7 +165,6 @@
                 android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:layout_editor_absoluteY="8dp">
-
             </FrameLayout>
 
         </android.support.constraint.ConstraintLayout>

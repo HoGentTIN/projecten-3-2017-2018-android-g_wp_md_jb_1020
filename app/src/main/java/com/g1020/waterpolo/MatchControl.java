@@ -1,5 +1,6 @@
 package com.g1020.waterpolo;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.*;
 import android.os.Bundle;
@@ -44,7 +45,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     PlayersFragment awayTeam;
 
     ActivityFragment activities;
-    ActivityInfoFragment infoFragment;
     ButtonsFragment btnFragment;
     TimeOutFragment timeOutFragment;
     ShotClockFragment shotClockFragment;
@@ -57,6 +57,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_control);
+
+        //finishMatch();
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -273,8 +275,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         if(matchTimer.isChronoOn()){
             matchTimer.stopChrono();
         }
-            //show the button again
-            loadActivitiesButtons();
 
 
         loadPlayers();
@@ -392,6 +392,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     }
 
     public void finishMatch(){
+        Intent intent = new Intent(this, AdministrationEnd.class);
+        startActivity(intent);
 
     }
 
@@ -489,19 +491,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         }
     }
 
-    public void showActionInfo(){
-        if(infoFragment == null) {
-            infoFragment = new ActivityInfoFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.activitiesbuttonContainer, infoFragment).commit();
-        }
-        getSupportFragmentManager().beginTransaction().replace(R.id.activitiesbuttonContainer, infoFragment).commit();
-
-    }
-
-    public void loadActivitiesButtons(){
-        getSupportFragmentManager().beginTransaction().replace(R.id.activitiesbuttonContainer, btnFragment).commit();
-
-    }
 
     public void loadPlayers(){
 

@@ -33,4 +33,8 @@
     <string name="injury">Injury</string>
     <string name="field">field</string>
     <string name="bench">bench</string>
+    <string name="official_name">Official name:</string>
+    <string name="official_name_hint">Enter your name</string>
+    <string name="referee_code">Referee code:</string>
+    <string name="referee_code_hint">Code</string>
 </resources>

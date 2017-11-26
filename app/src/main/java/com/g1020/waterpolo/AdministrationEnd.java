@@ -5,10 +5,16 @@ import android.os.Bundle;
 
 public class AdministrationEnd extends AppCompatActivity {
 
+    ButtonsFragment btnFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administration_end);
+
+        btnFragment = new ButtonsFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.adminbuttonsContainer, btnFragment).commit();
+
     }
 
 
