@@ -141,6 +141,27 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
     public void endSelection(View view) {
 
         dc.convertBackendToClass();
+        //een keer de update van hun starters doen voor de hometeam
+        List<PlayerRest> players = dc.getSelectedMatch().getHome().getPlayers();
+        for(PlayerRest player : players){
+            int starter;
+            if(player.getStarter())
+                starter = 1;
+            else
+                starter = 2;
+            apiService.updateStarter(player.getPlayerId(),starter);
+        }
+        //en nu eens voor de visitor
+        players = dc.getSelectedMatch().getHome().getPlayers();
+        for(PlayerRest player : players){
+            int starter;
+            if(player.getStarter())
+                starter = 1;
+            else
+                starter = 2;
+            apiService.updateStarter(player.getPlayerId(),starter);
+        }
+
 
         Intent intent = new Intent(this, MatchControl.class);
         //Intent intent = new Intent(this, AdministrationSetup.class);
