@@ -18,6 +18,7 @@
     <string name="button_shotclock">Shotclock</string>
     <string name="button_undoAction">Undo</string>
     <string name="button_revertToAction">Revert to</string>
+    <string name="button_signMatch">Sign</string>
 
     <!-- Button tooltips -->
     <string name="t_button_goal">Goal was scored.</string>
@@ -33,8 +34,6 @@
     <string name="injury">Injury</string>
     <string name="field">field</string>
     <string name="bench">bench</string>
-    <string name="official_name">Official name:</string>
-    <string name="official_name_hint">Enter your name</string>
-    <string name="referee_code">Referee code:</string>
-    <string name="referee_code_hint">Code</string>
+    <string name="official_name_hint">Name of the official</string>
+    <string name="referee_code_hint">Referee code</string>
 </resources>

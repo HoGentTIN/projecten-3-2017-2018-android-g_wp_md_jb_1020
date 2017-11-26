@@ -24,13 +24,7 @@
             android:name=".MatchControl"
             android:parentActivityName=".AdministrationSetup" />
         <activity
-            android:name=".PlayerControl"
-            android:parentActivityName=".MatchControl" />
-        <activity
             android:name=".AdministrationEnd"
-            android:parentActivityName=".MatchControl" />
-        <activity
-            android:name=".roundSetup"
             android:parentActivityName=".MatchControl" />
     </application>
 

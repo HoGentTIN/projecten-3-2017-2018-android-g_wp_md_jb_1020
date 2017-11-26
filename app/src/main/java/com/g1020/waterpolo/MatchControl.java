@@ -58,8 +58,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_control);
 
-        //finishMatch();
-
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayShowHomeEnabled(true);
@@ -148,7 +146,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
             stopShotlock(view);
 
-            //loadPlayers();
         }else {
             toast("Select a player first.");
         }
@@ -169,6 +166,13 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //PlayersFragment awayTeam = new PlayersFragment();
         //getSupportFragmentManager().beginTransaction().detach(faultAwayTeam).commit();
         //getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
+
+    }
+
+    public void injurySustained(View view){
+
+        finishMatch();
+        Player sp = dc.getSelectedPlayer();
 
     }
 

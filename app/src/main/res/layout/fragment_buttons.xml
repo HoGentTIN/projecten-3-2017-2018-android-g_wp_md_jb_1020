@@ -19,7 +19,7 @@
             android:layout_weight="1"
             android:background="@drawable/button_injury"
             android:clickable="true"
-            android:onClick="goalMade">
+            android:onClick="injurySustained">
             <TextView
                 android:id="@+id/iconInjury"
                 android:layout_width="match_parent"
