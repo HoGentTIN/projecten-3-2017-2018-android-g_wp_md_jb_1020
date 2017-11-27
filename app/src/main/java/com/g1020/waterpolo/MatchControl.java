@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Domain.Status;
 import application.ApplicationRuntime;
 import Domain.Division;
 import Domain.Domaincontroller;
@@ -132,16 +133,14 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     public void goalMade(View view){
 
         Player sp = dc.getSelectedPlayer();
-        if(sp!=null){
+        if(sp!=null && sp.getStatus() != Status.GAMEOVER){
             //add the goal to the current selected player in domaincontroller
             dc.addGoal();
 
-            //Post goal to live
-            dc.asyncPostGoal(sp);
+            clearSelectedPlayer();
 
             //Logging
             addToLog(sp, "G","Goal by " + dc.getSelectedPlayer().getFullName());
-            clearSelectedPlayer();
 
             teamsHeader.updateHeader();
             activities.updateActivities(dc.getMatch().getCurrentRound());
@@ -151,6 +150,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         }else {
             toast("Select a player first.");
         }
+
     }
 
     //TEMP function to move to PlayerControl activity
@@ -174,12 +174,10 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     public void injurySustained(View view){
 
-        //guessing this is here to test end administration
-        finishMatch();
-        /*
         Player sp = dc.getSelectedPlayer();
         if(sp!=null){
-            //dc.asyncPostInjury();
+
+            dc.addInjury();
 
             addToLog(sp, "I",dc.getSelectedPlayer().getFullName() + " got injured");
             activities.updateActivities(dc.getMatch().getCurrentRound());
@@ -187,7 +185,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         }else {
             toast("Select a player first.");
         }
-        */
 
     }
 
@@ -202,8 +199,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             if(!faultPlayers.contains(sp)){
                 //add the fault to the current selected player in domaincontroller
                 dc.addFaultU20();
-                //post fault
-                dc.asyncPostFault(sp, PenaltyType.U20);
 
                 //update the background color
                 updateBackgroundPlayer(sp);
@@ -245,8 +240,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         if(sp!=null){
 
             dc.addFaultUMV();
-            //post fault
-            dc.asyncPostFault(sp, PenaltyType.UMV);
 
             addToLog(sp, "UMV","Fault UMV for " + sp.getFullName() + ".");
             activities.updateActivities(dc.getMatch().getCurrentRound());
@@ -267,11 +260,10 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         if(sp!=null){
 
             dc.addFaultUMV4();
-            //post fault
-            dc.asyncPostFault(sp, PenaltyType.UMV4);
 
+            addToLog(sp, "UMV4","Fault UMV4 for " + sp.getFullName() + ".");
             activities.updateActivities(dc.getMatch().getCurrentRound());
-            addToLog(sp, "UMV4","Fault UMV for " + sp.getFullName() + ".");
+
             updateBackgroundPlayer(sp);
 
             clearSelectedPlayer();
@@ -317,6 +309,11 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     //deletes the last added action. //Maybe also possible to undo method revertToAction()
     public void undoAction(View view) {
+
+        //guessing this is here to test end administration. //you have guessed correctly kind sir!
+        finishMatch();
+
+    //    dc.undoLog();
     }
 
     //Function togglechrono - backup function to pauze match and simply halt the shotlock

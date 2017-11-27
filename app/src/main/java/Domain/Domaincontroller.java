@@ -263,18 +263,31 @@ public class Domaincontroller {
         if(selectedPlayer != null) {
             if(selectedPlayer.getStatus() == Status.ACTIVE) {
                 match.addGoal(new Goal(match.getMatch_id(), selectedPlayer.getTeam().getTeam_id(),selectedPlayer.getPlayer_id()));
+
+                //Post goal to live
+                asyncPostGoal(selectedPlayer);
             }
         }
     }
 
     public void addFaultU20() {
         match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.U20));
+
+        //post fault
+        asyncPostFault(selectedPlayer, PenaltyType.U20);
     }
 
     // indicate that players want to change number & store first player object
     public void switchPlayerCaps() {
         playerToSwitch = selectedPlayer;
         switchPlayer = true;
+    }
+
+    public void addInjury() {
+        selectedPlayer.setStatus(Status.GAMEOVER);
+
+        //dc.asyncPostInjury();
+
     }
 
     // calls method in team to switch the player numbers when both players are from the same team and passes both player id's
@@ -291,10 +304,20 @@ public class Domaincontroller {
 
     public void addFaultUMV() {
         match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.UMV));
+
+        selectedPlayer.setStatus(Status.GAMEOVER);
+
+        //post fault
+        asyncPostFault(selectedPlayer, PenaltyType.UMV);
     }
 
     public void addFaultUMV4() {
         match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.UMV4));
+
+        selectedPlayer.setStatus(Status.GAMEOVER);
+
+        //post fault
+        asyncPostFault(selectedPlayer, PenaltyType.UMV4);
     }
 
 

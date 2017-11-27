@@ -6,9 +6,8 @@ package Domain;
 
 public enum PenaltyType {
 
-    // Not sure about these weights
     U20("U20",1),
-    UMV("UMV",2),
+    UMV("UMV",3),
     UMV4("UMV4", 3);
 
     // I guess 'weight' is the number of strikes a player gets for a certain fault
