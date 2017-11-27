@@ -20,6 +20,7 @@ import Domain.PenaltyType;
 import Domain.Player;
 import application.ApplicationRuntime;
 import Domain.Domaincontroller;
+import views.FontManager;
 
 public class AdministrationEnd extends AppCompatActivity implements PlayersFragmentSingleList.OnPlayerSelectedListener {
 
@@ -32,6 +33,7 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
     List q1,q2,q3,q4;
 
     TextInputLayout txtInputLayName, txtInputLayCode;
+    TextView txtIconSign;
 
     ApplicationRuntime ar;  //this adds temporary code to this class
     Domaincontroller dc;
@@ -110,6 +112,8 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
 //        homeTeam.updateBackgroundPlayers();
 //        awayTeam.updateBackgroundPlayers();
+        txtIconSign = (TextView) findViewById(R.id.iconSignMatch);
+        setIconFont(txtIconSign);
 
         //setPasswordVisibilityToggleEnabled(boolean)
 
@@ -282,5 +286,9 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
+    }
+
+    private void setIconFont(TextView icon) {
+            icon.setTypeface(FontManager.getTypeface(this, FontManager.FONTAWESOME));
     }
 }
