@@ -1,5 +1,6 @@
 package com.g1020.waterpolo;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.*;
@@ -15,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Application.ApplicationRuntime;
+import application.ApplicationRuntime;
 import Domain.Division;
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
@@ -170,13 +171,27 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     }
 
+
     public void injurySustained(View view){
 
+        //guessing this is here to test end administration
         finishMatch();
+        /*
         Player sp = dc.getSelectedPlayer();
+        if(sp!=null){
+            //dc.asyncPostInjury();
+
+            addToLog(sp, "I",dc.getSelectedPlayer().getFullName() + " got injured");
+            activities.updateActivities(dc.getMatch().getCurrentRound());
+            clearSelectedPlayer();
+        }else {
+            toast("Select a player first.");
+        }
+        */
 
     }
 
+    
     public void faultU20(View view){
 
         //FIRST CHECK IF PLAYER ALREADY HAS 20 sec FAULT if not ignore press of button or give message player allready punished

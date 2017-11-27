@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import Application.ApplicationRuntime;
+import application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import views.FontManager;
 

@@ -14,7 +14,7 @@ import com.g1020.waterpolo.R;
 
 import java.util.List;
 
-import Application.ApplicationRuntime;
+import application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import Domain.Match;
 import persistency.MatchRest;

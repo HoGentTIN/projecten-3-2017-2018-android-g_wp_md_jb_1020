@@ -12,7 +12,7 @@ import android.widget.TabHost;
 import java.util.ArrayList;
 import java.util.List;
 
-import Application.ApplicationRuntime;
+import application.ApplicationRuntime;
 import Domain.Domaincontroller;
 
 public class AdministrationEnd extends AppCompatActivity implements PlayersFragment.OnPlayerSelectedListener {

@@ -1,4 +1,4 @@
-package Application;
+package application;
 
 import android.app.Application;
 import android.content.res.Resources;

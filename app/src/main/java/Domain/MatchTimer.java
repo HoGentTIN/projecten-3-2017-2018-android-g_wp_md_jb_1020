@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.g1020.waterpolo.MatchControl;
 
-import Application.ApplicationRuntime;
+import application.ApplicationRuntime;
 
 /**
  * Created by timos on 24-10-2017.

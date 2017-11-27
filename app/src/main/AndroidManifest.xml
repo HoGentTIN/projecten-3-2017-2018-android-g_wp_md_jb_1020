@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name="Application.ApplicationRuntime"
+        android:name="application.ApplicationRuntime"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".MatchControl"
-            android:parentActivityName=".AdministrationSetup" />
+            android:parentActivityName=".CompetitionSelection" />
         <activity
             android:name=".AdministrationEnd"
             android:parentActivityName=".MatchControl" />
