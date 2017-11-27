@@ -15,12 +15,12 @@ import java.util.List;
 import application.ApplicationRuntime;
 import Domain.Domaincontroller;
 
-public class AdministrationEnd extends AppCompatActivity implements PlayersFragment.OnPlayerSelectedListener {
+public class AdministrationEnd extends AppCompatActivity implements PlayersFragmentSingleList.OnPlayerSelectedListener {
 
     ButtonsFragment btnFragment;
     TeamsHeaderFragment teamsHeaderFragment;
-    PlayersFragment homeTeam;
-    PlayersFragment awayTeam;
+    PlayersFragmentSingleList homeTeam;
+    PlayersFragmentSingleList awayTeam;
 
     ListView lvActivitiesQ1,lvActivitiesQ2, lvActivitiesQ3, lvActivitiesQ4;
     List q1,q2,q3,q4;
@@ -49,10 +49,10 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         teamsHeaderFragment = new TeamsHeaderFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.teamsheadercontainer, teamsHeaderFragment).commit();
 
-        homeTeam = PlayersFragment.newInstance(0);
+        homeTeam = PlayersFragmentSingleList.newInstance(0);
         getSupportFragmentManager().beginTransaction().add(R.id.homeContainer, homeTeam).commit();
 
-        awayTeam = PlayersFragment.newInstance(1);
+        awayTeam = PlayersFragmentSingleList.newInstance(1);
         getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
 
         TabHost host = (TabHost)findViewById(R.id.tab_host);
