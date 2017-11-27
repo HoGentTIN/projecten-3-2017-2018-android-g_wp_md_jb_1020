@@ -35,6 +35,7 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="5dp"
+                android:textAlignment="center"
                 android:layout_weight="0.2"
                 android:background="@drawable/txt_datum_expanded"
 

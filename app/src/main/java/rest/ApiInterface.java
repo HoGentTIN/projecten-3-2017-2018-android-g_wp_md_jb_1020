@@ -7,6 +7,7 @@ package rest;
 import java.util.List;
 
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import persistency.GoalRest;
 import persistency.MatchRest;
 import persistency.PlayerRest;
@@ -59,10 +60,15 @@ public interface ApiInterface {
             @Field("player_id") int player_id,
             @Field("penalty_type_id") int penalty_id
     );
-@FormUrlEncoded
+
+    @FormUrlEncoded
     @PUT("api/matches/{id}/starters")
-    Call<Void> updateStarter(
-            @Field("player_id") int player_id,
-            @Field("starter") int starter
-);
+    Call<ResponseBody> putListOfStarters(
+            @Path("id") int id,
+            @Body ApiClient.ArrayListStarters starters
+        );
+
+
+
 }
+

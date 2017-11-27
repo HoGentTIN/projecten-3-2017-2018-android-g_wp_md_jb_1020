@@ -2,6 +2,7 @@ package views;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 
 import com.g1020.waterpolo.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import Application.ApplicationRuntime;
@@ -66,9 +69,15 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
 
 
             txtTeams.setText(p.getHome().getTeamName()+" - "+p.getVisitor().getTeamName());
+            String day = (String) DateFormat.format("dd",   p.getRealDate());
+            String month = (String) DateFormat.format("mm",   p.getRealDate());
+            String year =(String) DateFormat.format("yyyy",p.getRealDate());
 
-            txtDate.setText(p.getRealFullDate().toString());
-            txtDateDetail.setText(p.getRealDate().toString());
+            txtDate.setText(day + "/" + month );
+
+
+
+            txtDateDetail.setText(day + "/" + month + "/" + year);
             txtDivision.setText("Division:  "+p.getHome().getDivision().getDivision_name());
             txtLocation.setText("Locatie:   " +p.getLocation().getFullAddress());
             txtTime.setText("TIME:   "/*+ p.getRealTime().toString()*/);

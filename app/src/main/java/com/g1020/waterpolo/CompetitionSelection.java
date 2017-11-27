@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Application.ApplicationRuntime;
@@ -142,6 +143,13 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
 
         dc.convertBackendToClass();
         //een keer de update van hun starters doen voor de hometeam
+        //aantal spelers tellen om de array een grootte te geven
+        int aantal=0;
+        aantal +=dc.getSelectedMatch().getHome().getPlayers().size();
+        aantal+=dc.getSelectedMatch().getVisitor().getPlayers().size();
+
+        List<ApiClient.Starter> upstarters = new ArrayList<>();
+int teller =0;
         List<PlayerRest> players = dc.getSelectedMatch().getHome().getPlayers();
         for(PlayerRest player : players){
             int starter;
@@ -149,7 +157,9 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
                 starter = 1;
             else
                 starter = 2;
-            apiService.updateStarter(player.getPlayerId(),starter);
+            upstarters.add(new ApiClient.Starter(player.getPlayerId(), starter));
+            teller+=1;
+
         }
         //en nu eens voor de visitor
         players = dc.getSelectedMatch().getHome().getPlayers();
@@ -159,8 +169,16 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
                 starter = 1;
             else
                 starter = 2;
-            apiService.updateStarter(player.getPlayerId(),starter);
+            upstarters.add(new ApiClient.Starter(player.getPlayerId(), starter));
+            teller+=1;
         }
+
+
+        //apiService.updateStarter(dc.getSelectedMatch().getMatch_id(),upstarters);
+        ApiClient.ArrayListStarters arrStarters = new ApiClient.ArrayListStarters();
+        arrStarters.addStarters((ArrayList<ApiClient.Starter>) upstarters);
+
+       // apiService.putListOfStarters(dc.getSelectedMatch().getMatch_id(), arrStarters);
 
 
         Intent intent = new Intent(this, MatchControl.class);
@@ -244,4 +262,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
     public void setSelectedPlayer(PlayerRest selectedPlayer) {
         this.selectedPlayer = selectedPlayer;
     }
+
+    // custom class to use for the api put of updatestarters
+
 }
