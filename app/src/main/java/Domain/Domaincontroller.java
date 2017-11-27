@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -354,6 +356,40 @@ public class Domaincontroller {
 
     public void undoLog(){
         logList.remove(logList.size()-1);
+    }
+
+    //Function to get latest log in case of revert command, user gives ammount of time to go back in minutes and seconds long:long (for matchtimer) concert it into string and
+    //execute this functions how many events to go back to
+    //after this one reverse loop throuhg loglist chech what event and revert it, stop when reaching loglist
+    public int getLogIndex(String time){
+        int index = -1; //imposible value in case no log found
+        SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss");
+        Date timeInDate = new Date();
+        Date loggedTime = new Date();
+        try {
+            timeInDate = dateFormat.parse(time);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        for(int i=0; i<logList.size(); i++){
+            String[] s = logList.get(i);
+            //for current round only
+            if(s[0] == (""+ getMatch().getCurrentRound())){
+                try {
+                    loggedTime = dateFormat.parse(s[1]);
+                } catch (ParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                //get last log before or at revertime - countdowntimer so reverse
+                if(loggedTime.before(timeInDate) || loggedTime.equals(timeInDate)){
+                    index = i;  //last
+                    return index;
+                }
+            }
+        }
+        return index;
     }
 
     //funcion to set timer times

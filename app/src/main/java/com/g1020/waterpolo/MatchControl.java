@@ -268,6 +268,35 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     //sets the game back to the selected action. everything gets deleted except BRUTALITIES
     public void revertToAction(View view) {
+        //user gets 2 input fields in view minutes field and seconds view
+        //this value is the time we want to revert to
+
+        //matchtimer reset - using placeholder values until view is in order
+        long min = 8;
+        long sec = 0;
+        TextView txtTime = (TextView) findViewById(R.id.txtTimer);
+        //check layout element if input is valid and filled in
+        //TODO
+
+        //calc timeremaing matchtimer
+        long millisecondremaining = ((min*60*1000)+(sec*1000));
+        matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), millisecondremaining);
+
+        //use txtshotlock to get new string value
+        String revertime = txtTime.getText().toString();
+
+        //get log to revert to
+        int i = dc.getLogIndex(revertime);
+
+        //if no revertlog found return 1 show message cannot be reverted
+        if(i==-1){
+            toast("Cannot be reverted, check validity of input.");
+        }else{
+            
+
+
+        }
+
     }
 
     //deletes the last added action. //Maybe also possible to undo method revertToAction()
