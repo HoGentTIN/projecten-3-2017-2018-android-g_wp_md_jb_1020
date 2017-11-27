@@ -46,7 +46,6 @@ public class PlayersFragmentSingleList extends Fragment {
 
 
 
-
     //TEMPORARY
 
     //interface for passing data to matchcontrol
@@ -165,6 +164,13 @@ public class PlayersFragmentSingleList extends Fragment {
         if(selectedPlayer != null) {
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
                 ca.updateBackgroundColors(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition));
+        }
+    }
+
+    public void updateBackgroundPlayers() {
+        CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
+        for(int i = 0; i < currentPlayers.size(); i++){
+            ca.updateBackgroundColors(i, lvPlayers.getChildAt(i));
         }
     }
 

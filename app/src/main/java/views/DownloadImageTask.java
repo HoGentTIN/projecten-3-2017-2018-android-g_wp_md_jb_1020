@@ -37,7 +37,9 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
         protected void onPostExecute(Bitmap result) {
             //rescale image for matchcontroll, don't know why it doens't happen in matchsetup
-            result = Bitmap.createScaledBitmap(result, 100, 100, false);
+            if(result != null) {
+                result = Bitmap.createScaledBitmap(result, 100, 100, false);
+            }
             bmImage.setImageBitmap(result);
         }
 
