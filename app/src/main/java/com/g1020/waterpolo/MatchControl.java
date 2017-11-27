@@ -66,6 +66,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
         apiService = dc.getApiService();
+        //ar.setLocale("fr");
 
         //test code to see if function in activity can be called from the timerlistner in matchtimer
         dc.setCurrentActivity(this);
@@ -292,7 +293,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         if(i==-1){
             toast("Cannot be reverted, check validity of input.");
         }else{
-            
+
 
 
         }

@@ -1,8 +1,12 @@
 package Application;
 
 import android.app.Application;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 import android.widget.Chronometer;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
@@ -46,5 +50,18 @@ public class ApplicationRuntime extends Application {
     //Function getDomeincontroller
     public Domaincontroller getDc(){
         return this.dc;
+    }
+
+    public void setLocale(String l){
+        //for testing - default value for l
+        l = "FR";
+
+        Resources res = getApplicationContext().getResources();
+        // Change locale settings in the app.
+        DisplayMetrics dm = res.getDisplayMetrics();
+        android.content.res.Configuration conf = res.getConfiguration();
+        //conf.setLocale(new Locale(language_code.toLowerCase())); // API 17+ only.
+        conf.locale = new Locale(l); //if targeting lower versions
+        res.updateConfiguration(conf, dm);
     }
 }

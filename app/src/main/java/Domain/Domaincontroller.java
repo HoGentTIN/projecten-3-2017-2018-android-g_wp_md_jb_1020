@@ -53,6 +53,7 @@ public class Domaincontroller {
 
     private List<String[]> logList = new ArrayList<>();                                             //List of all events, event = String[] => [0] = roundNumber, [1] = roundTime, [2] = eventCode ,[3] = eventDescription
     private int eventCounter = 0;                                                                   //eventCode used for filtering logs, show all goals, faults, [G|C|P|U|V|V4][H,A][1,2,3,4] {G,C,P,U,V,V4 = goal|change of player|Penalty|faults.. , H,A = Home|Away, 1,2,3,4 = Round}
+    private int latestSyncedlog;
 
     //pretty sure this isn't the correct way to switch players, but it works
     private Boolean switchPlayer = false;
