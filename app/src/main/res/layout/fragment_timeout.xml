@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnTimeOutHome"
+            style="@style/player_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_other"
+            android:onClick="homeTimeout"
+            android:text="@string/button_home"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
+
+        <Button
+            android:id="@+id/btnTimeOutAway"
+            style="@style/player_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_other"
+            android:onClick="awayTimeout"
+            android:text="@string/button_away"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

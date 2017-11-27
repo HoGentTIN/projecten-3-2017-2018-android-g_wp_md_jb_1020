@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import Application.ApplicationRuntime;
+import application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import Domain.Player;
 import Domain.Team;
@@ -138,7 +138,7 @@ public class PlayersFragment extends Fragment {
 
                 dc.setSelectedPlayer(team, selectedPlayer.getPlayer_id());
 
-                //Change look of selected item  playerListNumber < 7
+                //Change look of selected item  playerListNumber < 8
                 if(getCurrentPlayerPositionList() < 8){
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
                     ca.setSelectedPlayer(position,  listview.getChildAt(position), R.drawable.player_tile_selected );

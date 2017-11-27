@@ -10,7 +10,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import Application.ApplicationRuntime;
+import application.ApplicationRuntime;
 
 import Domain.Division;
 import Domain.Domaincontroller;

@@ -1,5 +1,7 @@
 package com.g1020.waterpolo;
 
+import android.app.Application;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.*;
 import android.os.Bundle;
@@ -14,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Application.ApplicationRuntime;
+import application.ApplicationRuntime;
 import Domain.Division;
 import Domain.Domaincontroller;
 import Domain.MatchTimer;
@@ -44,8 +46,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     PlayersFragment awayTeam;
 
     ActivityFragment activities;
-    ActivityInfoFragment infoFragment;
-    ActivityButtonsFragment btnFragment;
+    ButtonsFragment btnFragment;
+    TimeOutFragment timeOutFragment;
+    ShotClockFragment shotClockFragment;
 
     //Fault playerTimers
     List<Player> faultPlayers = new ArrayList<>();
@@ -64,6 +67,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
         apiService = dc.getApiService();
+        //ar.setLocale("fr");
 
         //test code to see if function in activity can be called from the timerlistner in matchtimer
         dc.setCurrentActivity(this);
@@ -99,9 +103,12 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         getSupportFragmentManager().beginTransaction().add(R.id.activitiesContainer, activities).commit();
 
-        btnFragment = new ActivityButtonsFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.activitiesbuttonContainer, btnFragment).commit();
-
+        btnFragment = new ButtonsFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.buttonsContainer, btnFragment).commit();
+        timeOutFragment = new TimeOutFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.timeoutcontainer, timeOutFragment).commit();
+        shotClockFragment = new ShotClockFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.shotclockcontainer, shotClockFragment).commit();
         //Testcode for adding logging functionallity
 
     }
@@ -110,7 +117,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     protected void onResume(){
         super.onResume();
 
-        btnFragment.getTxtShotClock().setOnLongClickListener(new View.OnLongClickListener() {
+        shotClockFragment.getTxtShotClock().setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 stopShotlock(v);
@@ -141,7 +148,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
             stopShotlock(view);
 
-            //loadPlayers();
         }else {
             toast("Select a player first.");
         }
@@ -165,6 +171,27 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     }
 
+
+    public void injurySustained(View view){
+
+        //guessing this is here to test end administration
+        finishMatch();
+        /*
+        Player sp = dc.getSelectedPlayer();
+        if(sp!=null){
+            //dc.asyncPostInjury();
+
+            addToLog(sp, "I",dc.getSelectedPlayer().getFullName() + " got injured");
+            activities.updateActivities(dc.getMatch().getCurrentRound());
+            clearSelectedPlayer();
+        }else {
+            toast("Select a player first.");
+        }
+        */
+
+    }
+
+    
     public void faultU20(View view){
 
         //FIRST CHECK IF PLAYER ALREADY HAS 20 sec FAULT if not ignore press of button or give message player allready punished
@@ -257,6 +284,35 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     //sets the game back to the selected action. everything gets deleted except BRUTALITIES
     public void revertToAction(View view) {
+        //user gets 2 input fields in view minutes field and seconds view
+        //this value is the time we want to revert to
+
+        //matchtimer reset - using placeholder values until view is in order
+        long min = 8;
+        long sec = 0;
+        TextView txtTime = (TextView) findViewById(R.id.txtTimer);
+        //check layout element if input is valid and filled in
+        //TODO
+
+        //calc timeremaing matchtimer
+        long millisecondremaining = ((min*60*1000)+(sec*1000));
+        matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), millisecondremaining);
+
+        //use txtshotlock to get new string value
+        String revertime = txtTime.getText().toString();
+
+        //get log to revert to
+        int i = dc.getLogIndex(revertime);
+
+        //if no revertlog found return 1 show message cannot be reverted
+        if(i==-1){
+            toast("Cannot be reverted, check validity of input.");
+        }else{
+
+
+
+        }
+
     }
 
     //deletes the last added action. //Maybe also possible to undo method revertToAction()
@@ -268,8 +324,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         if(matchTimer.isChronoOn()){
             matchTimer.stopChrono();
         }
-            //show the button again
-            loadActivitiesButtons();
 
 
         loadPlayers();
@@ -387,6 +441,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     }
 
     public void finishMatch(){
+        Intent intent = new Intent(this, AdministrationEnd.class);
+        startActivity(intent);
 
     }
 
@@ -484,19 +540,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         }
     }
 
-    public void showActionInfo(){
-        if(infoFragment == null) {
-            infoFragment = new ActivityInfoFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.activitiesbuttonContainer, infoFragment).commit();
-        }
-        getSupportFragmentManager().beginTransaction().replace(R.id.activitiesbuttonContainer, infoFragment).commit();
-
-    }
-
-    public void loadActivitiesButtons(){
-        getSupportFragmentManager().beginTransaction().replace(R.id.activitiesbuttonContainer, btnFragment).commit();
-
-    }
 
     public void loadPlayers(){
 

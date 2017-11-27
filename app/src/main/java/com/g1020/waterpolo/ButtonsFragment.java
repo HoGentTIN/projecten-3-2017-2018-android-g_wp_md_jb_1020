@@ -1,52 +1,35 @@
 package com.g1020.waterpolo;
 
-
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import Application.ApplicationRuntime;
+import application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import views.FontManager;
 
-
 /**
- * A simple {@link Fragment} subclass.
+ * Created by pieter on 26/11/2017.
  */
-public class ActivityButtonsFragment extends Fragment {
 
+public class ButtonsFragment extends Fragment {
 
-    private TextView iconGoal, iconUMV4, iconInjury, iconNumberChange, iconU20, iconUMV, txtShotClock;
+    private TextView iconGoal, iconUMV4, iconInjury, iconNumberChange, iconU20, iconUMV;
     private RelativeLayout btnGoal, btnUMV4, btnInjury, btnNumberChange, btnU20, btnUMV;
     private RelativeLayout btnList[];
     private TextView iconList[];
     private ApplicationRuntime ar;
     private Domaincontroller dc;
 
-    public ActivityButtonsFragment() {
-        // Required empty public constructor
-    }
-
-
-    public TextView getTxtShotClock() {
-        return txtShotClock;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_activity_buttons, container, false);
+        View view = inflater.inflate(R.layout.fragment_buttons, container, false);
 
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
@@ -64,8 +47,6 @@ public class ActivityButtonsFragment extends Fragment {
         iconU20 = (TextView) view.findViewById(R.id.iconU20);
         iconUMV = (TextView) view.findViewById(R.id.iconUMV);
 
-        txtShotClock = (TextView) view.findViewById(R.id.txtShotlock);
-
         btnList = new RelativeLayout[]{btnGoal, btnInjury, btnNumberChange, btnU20, btnUMV, btnUMV4};
         iconList = new TextView[] {iconGoal, iconInjury, iconNumberChange, iconU20, iconUMV,iconUMV4};
 
@@ -74,24 +55,10 @@ public class ActivityButtonsFragment extends Fragment {
         return view;
     }
 
-
-    public void disableButtons(){
-        for(RelativeLayout rl: btnList){
-            rl.setEnabled(false);
-        }
-    }
-
-    public void enableButtons(){
-        for(RelativeLayout rl: btnList){
-            rl.setEnabled(true);
-        }
-    }
-
     private void setIconFont(TextView[] icons) {
         for(TextView icon: icons) {
             icon.setAlpha(0.4f);
             icon.setTypeface(FontManager.getTypeface(getContext(), FontManager.FONTAWESOME));
         }
     }
-
 }

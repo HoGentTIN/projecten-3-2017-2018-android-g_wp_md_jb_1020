@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import Application.ApplicationRuntime;
+import application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import Domain.Match;
 import persistency.MatchRest;

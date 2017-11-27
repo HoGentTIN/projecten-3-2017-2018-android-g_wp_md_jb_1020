@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -51,6 +53,7 @@ public class Domaincontroller {
 
     private List<String[]> logList = new ArrayList<>();                                             //List of all events, event = String[] => [0] = roundNumber, [1] = roundTime, [2] = eventCode ,[3] = eventDescription
     private int eventCounter = 0;                                                                   //eventCode used for filtering logs, show all goals, faults, [G|C|P|U|V|V4][H,A][1,2,3,4] {G,C,P,U,V,V4 = goal|change of player|Penalty|faults.. , H,A = Home|Away, 1,2,3,4 = Round}
+    private int latestSyncedlog;
 
     //pretty sure this isn't the correct way to switch players, but it works
     private Boolean switchPlayer = false;
@@ -354,6 +357,40 @@ public class Domaincontroller {
 
     public void undoLog(){
         logList.remove(logList.size()-1);
+    }
+
+    //Function to get latest log in case of revert command, user gives ammount of time to go back in minutes and seconds long:long (for matchtimer) concert it into string and
+    //execute this functions how many events to go back to
+    //after this one reverse loop throuhg loglist chech what event and revert it, stop when reaching loglist
+    public int getLogIndex(String time){
+        int index = -1; //imposible value in case no log found
+        SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss");
+        Date timeInDate = new Date();
+        Date loggedTime = new Date();
+        try {
+            timeInDate = dateFormat.parse(time);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        for(int i=0; i<logList.size(); i++){
+            String[] s = logList.get(i);
+            //for current round only
+            if(s[0] == (""+ getMatch().getCurrentRound())){
+                try {
+                    loggedTime = dateFormat.parse(s[1]);
+                } catch (ParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                //get last log before or at revertime - countdowntimer so reverse
+                if(loggedTime.before(timeInDate) || loggedTime.equals(timeInDate)){
+                    index = i;  //last
+                    return index;
+                }
+            }
+        }
+        return index;
     }
 
     //funcion to set timer times

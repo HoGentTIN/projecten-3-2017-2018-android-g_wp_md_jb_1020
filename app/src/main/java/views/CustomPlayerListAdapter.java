@@ -14,7 +14,7 @@ import com.g1020.waterpolo.R;
 
 import java.util.List;
 
-import Application.ApplicationRuntime;
+import application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import Domain.Player;
 
@@ -54,6 +54,8 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                     playerNumberTxtV = (PlayerNumberTextView) v.findViewById(R.id.txtplayernumber);
                     //txtPlayernumber = (TextView) v.findViewById(R.id.txtplayernumber);
                     txtPlayername = (TextView) v.findViewById(R.id.txtplayername);
+                    setTeamColors(v,p);
+
 
                     if (txtPlayername != null) {
                         txtPlayername.setText(p.getFullName());
@@ -62,7 +64,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                         int pNumber = p.getPlayerNumber();
 
                         // in comments to reduce laptop fan
-                        setTeamColors(v,p);
+                        //setTeamColors(v,p);
 
                         StringBuilder sbPlayerNumber = new StringBuilder();
                         sbPlayerNumber.append(pNumber);
