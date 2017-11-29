@@ -137,13 +137,13 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             //add the goal to the current selected player in domaincontroller
             dc.addGoal();
 
-            clearSelectedPlayer();
-
             //Logging
             addToLog(sp, "G","Goal by " + dc.getSelectedPlayer().getFullName());
 
             teamsHeader.updateHeader();
             activities.updateActivities(dc.getMatch().getCurrentRound());
+
+            clearSelectedPlayer();
 
             stopShotlock(view);
 
