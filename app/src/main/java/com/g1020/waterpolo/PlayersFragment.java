@@ -39,6 +39,8 @@ public class PlayersFragment extends Fragment {
     private ListView lvPlayers;
     private ListView lvPlayers2;
 
+    private View viewToReset;
+
     //Playerselection parameters
     private int previousPlayerPosition;
     private PlayersFragment otherTeam;
@@ -104,8 +106,6 @@ public class PlayersFragment extends Fragment {
         lvPlayers = (ListView) view.findViewById(R.id.lsvplayers);
         lvPlayers2 = (ListView) view.findViewById(R.id.lsvplayers2);
 
-        Log.i("game",dc.getMatch().getHomeTeam().getPlayers().get(0).getFullName());
-
         teamClickAction(lvPlayers);
         teamClickAction(lvPlayers2);
 
@@ -141,11 +141,13 @@ public class PlayersFragment extends Fragment {
                 //Change look of selected item  playerListNumber < 8
                 if(getCurrentPlayerPositionList() < 8){
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-                    ca.setSelectedPlayer(position,  listview.getChildAt(position), R.drawable.player_tile_selected );
+                    ca.setSelectedPlayer(view, R.drawable.player_tile_selected );
                 }else{
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
-                    ca.setSelectedPlayer(position,  listview.getChildAt(position), R.drawable.player_tile_selected );
+                    ca.setSelectedPlayer(view, R.drawable.player_tile_selected );
                 }
+
+                viewToReset = view;
 
             }
         });
@@ -157,7 +159,7 @@ public class PlayersFragment extends Fragment {
                 for(Player cp: currentPlayers){
                     playerListNumber++;
                     if(cp.equals(selectedPlayer)){
-                        Log.i("game", selectedPlayer.getFullName() + "has number in list: " + String.valueOf(playerListNumber));
+                    //    Log.i("game", selectedPlayer.getFullName() + "has number in list: " + String.valueOf(playerListNumber));
                         return playerListNumber;
                     }
                 }
@@ -169,10 +171,10 @@ public class PlayersFragment extends Fragment {
         if(selectedPlayer!=null){
             if(getCurrentPlayerPositionList() < 8) {
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-                ca.setSelectedPlayer(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition), R.drawable.player_tile);
+                ca.setSelectedPlayer(viewToReset, R.drawable.player_tile);
             } else {
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
-                ca.setSelectedPlayer(previousPlayerPosition, lvPlayers2.getChildAt(previousPlayerPosition), R.drawable.player_tile);
+                ca.setSelectedPlayer(viewToReset, R.drawable.player_tile);
             }
         }
     }
@@ -181,10 +183,10 @@ public class PlayersFragment extends Fragment {
         if(selectedPlayer != null) {
             if (getCurrentPlayerPositionList() < 8) {
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-                ca.updateBackgroundColors(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition));
+                ca.updateBackgroundColors(selectedPlayer.getPlayer_id(), viewToReset);
             } else {
                 CustomPlayerListAdapter ca2 = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
-                ca2.updateBackgroundColors(previousPlayerPosition, lvPlayers2.getChildAt(previousPlayerPosition));
+                ca2.updateBackgroundColors(selectedPlayer.getPlayer_id(), viewToReset);
             }
         }
     }
@@ -196,7 +198,7 @@ public class PlayersFragment extends Fragment {
     public void setListPlayers(Team team){
         currentPlayers = team.getPlayers();
         playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,7));
-        playerAdapter2 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(7,currentPlayers.size()));
+        playerAdapter2 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(7,13));
 
         lvPlayers.setAdapter(playerAdapter1);
         lvPlayers2.setAdapter(playerAdapter2);

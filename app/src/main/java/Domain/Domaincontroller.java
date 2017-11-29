@@ -286,7 +286,7 @@ public class Domaincontroller {
     public void addInjury() {
         selectedPlayer.setStatus(Status.GAMEOVER);
 
-        //dc.asyncPostInjury();
+        //asyncPostInjury();
 
     }
 

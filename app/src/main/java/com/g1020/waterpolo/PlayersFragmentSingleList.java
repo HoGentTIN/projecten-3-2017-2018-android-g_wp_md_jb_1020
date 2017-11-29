@@ -35,8 +35,11 @@ public class PlayersFragmentSingleList extends Fragment {
     Player selectedPlayer;
     private ListView lvPlayers;
 
+    private View viewToReset;
+
     //Playerselection parameters
     private int previousPlayerPosition;
+
     private PlayersFragmentSingleList otherTeam;
 
     // interface object to pass data
@@ -121,6 +124,9 @@ public class PlayersFragmentSingleList extends Fragment {
                 previousPlayerPosition = position;
                 selectedPlayer = (Player) listview.getItemAtPosition(position);
 
+
+                Log.i("game","Position in list: " + Integer.toString(position) + ", Player name: " + selectedPlayer.getFullName());
+
                 Boolean team = selectedPlayer.getTeam().equals(dc.getHomeTeam());
 
                 Toast toast = Toast.makeText(getActivity(), "You've selected player " + selectedPlayer.getFullName(), Toast.LENGTH_SHORT);
@@ -132,7 +138,12 @@ public class PlayersFragmentSingleList extends Fragment {
                 dc.setSelectedPlayer(team, selectedPlayer.getPlayer_id());
 
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-                ca.setSelectedPlayer(position,  listview.getChildAt(position), R.drawable.player_tile_selected );
+
+                Log.i("game", Integer.toString(listview.getChildCount()));
+                Log.i("game", Integer.toString(selectedPlayer.getPlayerNumber()-1));
+
+                ca.setSelectedPlayer(view,R.drawable.player_tile_selected );
+                viewToReset = view;
 
 
             }
@@ -156,14 +167,14 @@ public class PlayersFragmentSingleList extends Fragment {
     public void resetFontPlayers(){
         if(selectedPlayer!=null){
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-                ca.setSelectedPlayer(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition), R.drawable.player_tile);
+                ca.setSelectedPlayer(viewToReset, R.drawable.player_tile);
         }
     }
 
     public void updateBackgroundPlayer(){
         if(selectedPlayer != null) {
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-                ca.updateBackgroundColors(previousPlayerPosition, lvPlayers.getChildAt(previousPlayerPosition));
+                ca.updateBackgroundColors(selectedPlayer.getPlayer_id(), viewToReset);
         }
     }
 
@@ -180,7 +191,7 @@ public class PlayersFragmentSingleList extends Fragment {
 
     public void setListPlayers(Team team){
         currentPlayers = team.getPlayers();
-        playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers);
+        playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,13));
 
         lvPlayers.setAdapter(playerAdapter1);
 

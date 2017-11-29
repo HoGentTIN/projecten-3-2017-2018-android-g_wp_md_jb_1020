@@ -51,6 +51,8 @@ public class PlayersMatchSettingsFragment extends Fragment {
     ApiInterface apiService;
     public onPlayerClickedInteractionListener pListener;
 
+    private View viewToReset;
+
     // TODO: Rename and change types of parameters
 
     public interface onPlayerClickedInteractionListener{
@@ -93,6 +95,7 @@ public class PlayersMatchSettingsFragment extends Fragment {
         //playerTitle = (TextView) view.findViewById(R.id.playerTitle);
         // playerTitle.setText(String.format("<-players as starter players that are not starters ->"));
         playerAdapter1 = new CustomPlayerRestListAdapter(getContext(),android.R.id.text1, players);
+
         List<PlayerRest> players2 = new ArrayList<>();
         for (PlayerRest player : team.getPlayers()){
             if(!player.getStarter()) {
@@ -115,13 +118,13 @@ public class PlayersMatchSettingsFragment extends Fragment {
         CustomPlayerRestListAdapter ca = (CustomPlayerRestListAdapter) lvPlayers.getAdapter();
 
         for(int i =0 ; i<lvPlayers.getChildCount();i++){
-            ca.setSelectedPlayer(i, lvPlayers.getChildAt(i),R.drawable.player_tile);
+            ca.setSelectedPlayer(view,R.drawable.player_tile);
 
         }
         ca = (CustomPlayerRestListAdapter) lvPlayers2.getAdapter();
 
         for(int i =0 ; i<lvPlayers2.getChildCount();i++){
-            ca.setSelectedPlayer(i, lvPlayers2.getChildAt(i),R.drawable.player_tile);
+            ca.setSelectedPlayer(view,R.drawable.player_tile);
 
         }
         return view;
@@ -194,17 +197,19 @@ public class PlayersMatchSettingsFragment extends Fragment {
                 CustomPlayerRestListAdapter ca = (CustomPlayerRestListAdapter) lvPlayers.getAdapter();
 
                 for(int i =0 ; i<lvPlayers.getChildCount();i++){
-                    ca.setSelectedPlayer(i, lvPlayers.getChildAt(i),R.drawable.player_tile);
+                    ca.setSelectedPlayer(view,R.drawable.player_tile);
 
                 }
                 ca = (CustomPlayerRestListAdapter) lvPlayers2.getAdapter();
 
                 for(int i =0 ; i<lvPlayers2.getChildCount();i++){
-                    ca.setSelectedPlayer(i, lvPlayers2.getChildAt(i),R.drawable.player_tile);
+                    ca.setSelectedPlayer(view,R.drawable.player_tile);
 
                 }
                 ca = (CustomPlayerRestListAdapter) listview.getAdapter();
-                ca.setSelectedPlayer(position, listview.getChildAt(position),R.drawable.player_tile_selected);
+                ca.setSelectedPlayer(view,R.drawable.player_tile_selected);
+
+                viewToReset = view;
 
 
             }

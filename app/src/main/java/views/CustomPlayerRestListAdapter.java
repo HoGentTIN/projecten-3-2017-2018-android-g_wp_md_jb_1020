@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ public class CustomPlayerRestListAdapter extends ArrayAdapter<PlayerRest> {
     private TextView txtPlayername;
     private TextView txtFaultField;
 
+    private PlayerHolder playerHolder;
+
     //to use colors in resources
     private int res[] = {R.color.btnColorU20,R.color.btnColorU20Pressed,R.color.btnColorUMV4Pressed};
 
@@ -42,57 +45,70 @@ public class CustomPlayerRestListAdapter extends ArrayAdapter<PlayerRest> {
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
 
-        View v = convertView;
-
-        if (v == null) {
+        if (convertView == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.list_item_players_custom, null);
-
-            PlayerRest p = getItem(position);
-
-            if (p != null) {
-                playerNumberTxtV = (PlayerNumberTextView) v.findViewById(R.id.txtplayernumber);
-                //txtPlayernumber = (TextView) v.findViewById(R.id.txtplayernumber);
-                txtPlayername = (TextView) v.findViewById(R.id.txtplayername);
-
-                if (txtPlayername != null) {
-                    txtPlayername.setText(p.getName());
-                }
-                if (playerNumberTxtV != null){
-                    int pNumber = p.getPlayerNumber();
-
-                    // in comments to reduce laptop fan
-                    //setTeamColors(v,p);
-
-                    StringBuilder sbPlayerNumber = new StringBuilder();
-                    sbPlayerNumber.append(pNumber);
-                    playerNumberTxtV.setText((sbPlayerNumber.toString()));
-                }
-            }
-
+            convertView = vi.inflate(R.layout.list_item_players_custom, null);
+            playerHolder = new PlayerHolder(convertView);
+            convertView.setTag(playerHolder);
         }
-        return v;
+        else {
+            playerHolder = (PlayerHolder) convertView.getTag();
+        }
+
+        PlayerRest p = getItem(position);
+
+        if (p != null) {
+
+            if (playerHolder.txtPlayername != null) {
+                playerHolder.txtPlayername.setText(p.getName());
+            }
+            if (playerHolder.playerNumberTxtV != null){
+                int pNumber = p.getPlayerNumber();
+
+                // in comments to reduce laptop fan
+                //setTeamColors(convertView,p);
+
+                StringBuilder sbPlayerNumber = new StringBuilder();
+                sbPlayerNumber.append(pNumber);
+                playerHolder.playerNumberTxtV.setText((sbPlayerNumber.toString()));
+            }
+        }
+
+        return convertView;
     }
+
+    @Override
+    public int getViewTypeCount() {
+
+        return getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
+    }
+
 
     private void setTeamColors(View v, Player p){
 
         v.setBackgroundResource(R.drawable.player_tile);
 
         if(p.getTeam().equals(dc.getMatch().getHomeTeam())) {
-            playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_home);
+            playerHolder.playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_home);
         }
         else{
-            playerNumberTxtV.setStroke(1,Color.BLACK, Paint.Join.ROUND,1);
-            playerNumberTxtV.setTextColor(Color.WHITE);
-            playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_away);
+            playerHolder.playerNumberTxtV.setStroke(1,Color.BLACK, Paint.Join.ROUND,1);
+            playerHolder.playerNumberTxtV.setTextColor(Color.WHITE);
+            playerHolder.playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_away);
         }
         switch (p.getPlayerNumber()) {
             case 1:
-                playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_goaly);
+                playerHolder.playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_goaly);
                 break;
             case 13:
-                playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_goaly);
+                playerHolder.playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_goaly);
                 break;
             default:
                 break;
@@ -101,30 +117,28 @@ public class CustomPlayerRestListAdapter extends ArrayAdapter<PlayerRest> {
 
 
     //Function to set the name style of a list item
-    public void setSelectedPlayer(int position, View convertView, int drawableId){
-        View v = convertView;
-        v.setBackgroundResource(drawableId);
-        PlayerRest p = getItem(position);
-        txtPlayername = (TextView) v.findViewById(R.id.txtplayername);
+    public void setSelectedPlayer(View convertView, int drawableId){
+        convertView.setBackgroundResource(drawableId);
     }
 
-    public void updateBackgroundColors(int position, View v){
-        PlayerRest p = getItem(position);
-        //number of fault a player has
-        int playerweight = dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(p.getPlayerId());
+    public void updateBackgroundColors(int id, View v){
 
-        txtFaultField = (TextView) v.findViewById(R.id.txtFaultField);
+        playerHolder = (PlayerHolder) v.getTag();
 
-        if(playerweight > 0) {
-            if (playerweight > 3) {
-                txtFaultField.setBackgroundResource(res[2]);
+        //number of faults a player has
+        int playerFaults = dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(id);
+
+        Log.i("faults", "Player " + playerHolder.txtPlayername.getText() + " has " + playerFaults + " faults");
+
+        if (dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(id) > 0) {
+            if (playerFaults > 3) {
+                playerHolder.txtFaultField.setBackgroundResource(res[2]);
             } else {
-                txtFaultField.setBackgroundResource(res[playerweight - 1]);
+                playerHolder.txtFaultField.setBackgroundResource(res[dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(id) - 1]);
             }
         }
 
         //entire cell backgroundcolor
         //v.setBackgroundResource(res[p.getFaults()]);
     }
-
 }

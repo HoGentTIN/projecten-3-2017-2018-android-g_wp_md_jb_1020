@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import Domain.Status;
 import application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import Domain.Player;
+import persistency.PlayerRest;
 
 /**
  * Created by pieter on 29/10/2017.
@@ -40,19 +42,17 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
         @Override
         public View getView(int position, View convertView, ViewGroup viewGroup) {
 
-            View v = convertView;
-
-            if (v == null) {
+            if (convertView == null) {
                 LayoutInflater vi;
                 vi = LayoutInflater.from(getContext());
-                v = vi.inflate(R.layout.list_item_players_custom, null);
-                playerHolder = new PlayerHolder(v);
-                v.setTag(playerHolder);
-
+                convertView = vi.inflate(R.layout.list_item_players_custom, null);
+                playerHolder = new PlayerHolder(convertView);
+                convertView.setTag(playerHolder);
             }
             else {
-                playerHolder = (PlayerHolder) v.getTag();
+                playerHolder = (PlayerHolder) convertView.getTag();
             }
+
             Player p = getItem(position);
 
             if (p != null) {
@@ -64,7 +64,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                     int pNumber = p.getPlayerNumber();
 
                     // in comments to reduce laptop fan
-                    setTeamColors(v,p);
+                    setTeamColors(convertView,p);
 
                     StringBuilder sbPlayerNumber = new StringBuilder();
                     sbPlayerNumber.append(pNumber);
@@ -72,10 +72,23 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                 }
             }
 
-            return v;
+            return convertView;
         }
 
-        private void setTeamColors(View v, Player p){
+    @Override
+    public int getViewTypeCount() {
+
+        return getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
+    }
+
+
+    private void setTeamColors(View v, Player p){
 
             v.setBackgroundResource(R.drawable.player_tile);
 
@@ -101,28 +114,28 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
 
 
         //Function to set the name style of a list item
-        public void setSelectedPlayer(int position, View convertView, int drawableId){
-            View v = convertView;
-            v.setBackgroundResource(drawableId);
-        }
+    public void setSelectedPlayer(View convertView, int drawableId){
+            convertView.setBackgroundResource(drawableId);
+    }
 
-    public void updateBackgroundColors(int position, View v){
-        Player p = getItem(position);
-        //number of fault a player has
-        int playerweight = dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(p.getPlayer_id());
+    public void updateBackgroundColors(int id, View v){
 
-        playerHolder.txtFaultField = (TextView) v.findViewById(R.id.txtFaultField);
+        playerHolder = (PlayerHolder) v.getTag();
 
-        if(playerweight > 0) {
-            if (playerweight > 3) {
-                playerHolder.txtFaultField.setBackgroundResource(res[2]);
-            } else {
-                playerHolder.txtFaultField.setBackgroundResource(res[playerweight - 1]);
+        //number of faults a player has
+        int playerFaults = dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(id);
+
+        Log.i("faults", "Player " + playerHolder.txtPlayername.getText() + " has " + playerFaults + " faults");
+
+            if (dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(id) > 0) {
+                if (playerFaults > 3) {
+                    playerHolder.txtFaultField.setBackgroundResource(res[2]);
+                } else {
+                    playerHolder.txtFaultField.setBackgroundResource(res[dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(id) - 1]);
+                }
             }
-        }
 
         //entire cell backgroundcolor
         //v.setBackgroundResource(res[p.getFaults()]);
     }
-
 }

@@ -15,9 +15,10 @@ public class PlayerHolder {
     TextView txtPlayername;
     TextView txtFaultField;
 
-        public PlayerHolder(View v) {
+    PlayerHolder(View v) {
             playerNumberTxtV = (PlayerNumberTextView) v.findViewById(R.id.txtplayernumber);
             txtPlayername = (TextView) v.findViewById(R.id.txtplayername);
+            txtFaultField = (TextView) v.findViewById(R.id.txtFaultField);
         }
 
 }
