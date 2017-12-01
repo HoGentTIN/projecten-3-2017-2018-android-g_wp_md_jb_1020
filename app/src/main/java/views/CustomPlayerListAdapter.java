@@ -31,12 +31,14 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
         private Domaincontroller dc = ar.getDc();
 
         private PlayerHolder playerHolder;
+        private int listLayout;
 
     //to use colors in resources
     private int res[] = {R.color.btnColorU20,R.color.btnColorU20Pressed,R.color.btnColorUMV4Pressed};
 
-        public CustomPlayerListAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<Player> players) {
+        public CustomPlayerListAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<Player> players, int listLay) {
             super(context, textViewResourceId, players);
+            listLayout = listLay;
         }
 
         @Override
@@ -45,7 +47,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
             if (convertView == null) {
                 LayoutInflater vi;
                 vi = LayoutInflater.from(getContext());
-                convertView = vi.inflate(R.layout.list_item_players_custom, null);
+                convertView = vi.inflate(listLayout, null);
                 playerHolder = new PlayerHolder(convertView);
                 convertView.setTag(playerHolder);
             }
@@ -124,8 +126,6 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
 
         //number of faults a player has
         int playerFaults = dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(id);
-
-        Log.i("faults", "Player " + playerHolder.txtPlayername.getText() + " has " + playerFaults + " faults");
 
             if (dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(id) > 0) {
                 if (playerFaults > 3) {

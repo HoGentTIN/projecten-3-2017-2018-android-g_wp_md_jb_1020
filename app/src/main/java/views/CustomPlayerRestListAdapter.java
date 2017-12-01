@@ -48,7 +48,7 @@ public class CustomPlayerRestListAdapter extends ArrayAdapter<PlayerRest> {
         if (convertView == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            convertView = vi.inflate(R.layout.list_item_players_custom, null);
+            convertView = vi.inflate(R.layout.list_item_players_administration, null);
             playerHolder = new PlayerHolder(convertView);
             convertView.setTag(playerHolder);
         }

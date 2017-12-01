@@ -2,10 +2,8 @@ package com.g1020.waterpolo;
 
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +20,6 @@ import Domain.Domaincontroller;
 import Domain.Player;
 import Domain.Team;
 import views.CustomPlayerListAdapter;
-import views.FontManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -197,8 +194,8 @@ public class PlayersFragment extends Fragment {
 
     public void setListPlayers(Team team){
         currentPlayers = team.getPlayers();
-        playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,7));
-        playerAdapter2 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(7,13));
+        playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,7),R.layout.list_item_players_match_control);
+        playerAdapter2 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(7,13),R.layout.list_item_players_match_control);
 
         lvPlayers.setAdapter(playerAdapter1);
         lvPlayers2.setAdapter(playerAdapter2);

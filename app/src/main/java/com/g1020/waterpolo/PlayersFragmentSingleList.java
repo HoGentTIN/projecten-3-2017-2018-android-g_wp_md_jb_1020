@@ -191,7 +191,7 @@ public class PlayersFragmentSingleList extends Fragment {
 
     public void setListPlayers(Team team){
         currentPlayers = team.getPlayers();
-        playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,13));
+        playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,13),R.layout.list_item_players_administration);
 
         lvPlayers.setAdapter(playerAdapter1);
 
