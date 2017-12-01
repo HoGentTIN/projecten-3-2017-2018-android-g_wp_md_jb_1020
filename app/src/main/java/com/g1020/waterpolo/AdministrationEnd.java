@@ -136,9 +136,6 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
             //add the goal to the current selected player in domaincontroller
             dc.addGoal();
 
-            //Post goal to live
-            dc.asyncPostGoal(sp);
-
             //Logging
             addToLog(sp, "G","Goal by " + dc.getSelectedPlayer().getFullName());
             clearSelectedPlayer();
@@ -152,7 +149,6 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         }
     }
 
-    //TEMP function to move to PlayerControl activity
     public void changePlayers(View view) {
 
         Player sp = dc.getSelectedPlayer();
@@ -170,14 +166,12 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
     }
 
-
     public void injurySustained(View view){
 
         //guessing this is here to test end administration
         /*
         Player sp = dc.getSelectedPlayer();
         if(sp!=null){
-            //dc.asyncPostInjury();
 
             addToLog(sp, "I",dc.getSelectedPlayer().getFullName() + " got injured");
             activities.updateActivities(dc.getMatch().getCurrentRound());
@@ -189,7 +183,6 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
     }
 
-
     public void faultU20(View view){
 
         //FIRST CHECK IF PLAYER ALREADY HAS 20 sec FAULT if not ignore press of button or give message player allready punished
@@ -199,8 +192,6 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
             Player sp = dc.getSelectedPlayer();
                 //add the fault to the current selected player in domaincontroller
                 dc.addFaultU20();
-                //post fault
-                dc.asyncPostFault(sp, PenaltyType.U20);
 
                 //update the background color
                 updateBackgroundPlayer(sp);
@@ -218,14 +209,10 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
     public void faultUMV(View view) {
 
-
-
         Player sp = dc.getSelectedPlayer();
         if(sp!=null){
 
             dc.addFaultUMV();
-            //post fault
-            dc.asyncPostFault(sp, PenaltyType.UMV);
 
             addToLog(sp, "UMV","Fault UMV for " + sp.getFullName() + ".");
 
@@ -245,8 +232,6 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         if(sp!=null){
 
             dc.addFaultUMV4();
-            //post fault
-            dc.asyncPostFault(sp, PenaltyType.UMV4);
 
             addToLog(sp, "UMV4","Fault UMV for " + sp.getFullName() + ".");
             updateBackgroundPlayer(sp);
@@ -274,6 +259,7 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
             awayTeam.updateBackgroundPlayer();
         }
     }
+
     //Function to clear selectedPlayer after performing buttonAction
     public void clearSelectedPlayer(){
         homeTeam.resetFontPlayers();
