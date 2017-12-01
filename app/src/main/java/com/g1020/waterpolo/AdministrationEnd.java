@@ -247,9 +247,22 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
     public void addToLog(Player sp, String event, String description){
         //Determine home or away team
         String t;
-        if(sp.getTeam().equals(dc.getHomeTeam())){t = "H";}else {t = "A";}
+        if(sp.getTeam().equals(dc.getHomeTeam())){
+            t = "H";
+        } else {
+            t = "A";
+        }
 
         dc.appendLog(description,event + t + dc.getMatch().getCurrentRound(), "END",dc.getMatch().getCurrentRound());
+
+        updateLog();
+    }
+
+    // reloads the lof for the fourth quarter
+    private void updateLog() {
+        q4 = dc.getLogForRound(4);
+        lvActivitiesQ4.setAdapter(new ArrayAdapter<String>(AdministrationEnd.this,
+                android.R.layout.simple_list_item_1, q4));
     }
 
     private void updateBackgroundPlayer(Player sp){
