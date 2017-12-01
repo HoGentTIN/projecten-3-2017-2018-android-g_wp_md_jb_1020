@@ -110,15 +110,15 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         lvActivitiesQ4.setAdapter(new ArrayAdapter<String>(AdministrationEnd.this,
                 android.R.layout.simple_list_item_1, q4));
 
-//        homeTeam.updateBackgroundPlayers();
-//        awayTeam.updateBackgroundPlayers();
         txtIconSign = (TextView) findViewById(R.id.iconSignMatch);
         setIconFont(txtIconSign);
 
         //setPasswordVisibilityToggleEnabled(boolean)
 
-    }
+        //homeTeam.updateBackgroundPlayers();
+        //awayTeam.updateBackgroundPlayers();
 
+    }
 
     public void SignMatch(View view) {
     }
@@ -233,7 +233,7 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
             dc.addFaultUMV4();
 
-            addToLog(sp, "UMV4","Fault UMV for " + sp.getFullName() + ".");
+            addToLog(sp, "UMV4","Fault UMV4 for " + sp.getFullName() + ".");
             updateBackgroundPlayer(sp);
 
             clearSelectedPlayer();

@@ -105,7 +105,6 @@ public class PlayersFragmentSingleList extends Fragment {
 
         teamClickAction(lvPlayers);
 
-        //playerTitle = (TextView) view.findViewById(R.id.playerTitle);
         setListPlayers(team);
 
         return view;
@@ -181,7 +180,7 @@ public class PlayersFragmentSingleList extends Fragment {
     public void updateBackgroundPlayers() {
         CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
         for(int i = 0; i < currentPlayers.size(); i++){
-            ca.updateBackgroundColors(i, lvPlayers.getChildAt(i));
+            ca.updateBackgroundColors(currentPlayers.get(i).getPlayer_id(), lvPlayers.getChildAt(i));
         }
     }
 

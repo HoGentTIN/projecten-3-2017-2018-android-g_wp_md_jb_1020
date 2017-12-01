@@ -72,7 +72,10 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                     sbPlayerNumber.append(pNumber);
                     playerHolder.playerNumberTxtV.setText((sbPlayerNumber.toString()));
                 }
+                //check if player already has faults, this way it's correctly displayed in administrationEnd
+                updateBackgroundColors(p.getPlayer_id(),convertView);
             }
+
 
             return convertView;
         }
