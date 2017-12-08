@@ -46,13 +46,17 @@ public class MatchTimer {
 
     //CONSTRUCTORS
     public MatchTimer(TextView txtTimer, long roundtime, long breakTime){
-        setMaxTime(roundtime);
-        setBreaktime(breakTime);
-        setShotlockTimeRemaining((long) 30000);
-        initTimer(txtTimer, (this.roundTime*1000*60));
-
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
+        setMaxTime(roundtime);
+        if(dc.getMatch().getCurrentRound()==2){
+            setBreaktime(1);
+        }else{
+            setBreaktime(breakTime);
+        }
+
+        setShotlockTimeRemaining((long) 30000);
+        initTimer(txtTimer, (this.roundTime*1000*60));
     }
 
     //GETTERS AND SETTERS
