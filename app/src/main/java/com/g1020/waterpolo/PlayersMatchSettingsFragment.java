@@ -98,7 +98,7 @@ public class PlayersMatchSettingsFragment extends Fragment {
 
         List<PlayerRest> players2 = new ArrayList<>();
         for (PlayerRest player : team.getPlayers()){
-            if(!player.getStarter()) {
+            if(player.getStarter()) {
                 players2.add(player);
             }
         }
