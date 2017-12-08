@@ -162,6 +162,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             dc.switchPlayerCaps();
             clearSelectedPlayer();
 
+            stopShotlock(view);
+
         }else {
             toast("Select a player first.");
         }
@@ -182,6 +184,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             addToLog(sp, "I",dc.getSelectedPlayer().getFullName() + " got injured");
             activities.updateActivities(dc.getMatch().getCurrentRound());
             clearSelectedPlayer();
+
+            stopShotlock(view);
         }else {
             toast("Select a player first.");
         }
@@ -208,6 +212,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
                 loadPlayers();
                 clearSelectedPlayer();      //clear selected player from layout
+
+                stopShotlock(view);
 
                 activities.updateActivities(dc.getMatch().getCurrentRound());
 
@@ -248,6 +254,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
             clearSelectedPlayer();
 
+            stopShotlock(view);
+
         }else {
             toast("Select a player first.");
 
@@ -267,6 +275,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             updateBackgroundPlayer(sp);
 
             clearSelectedPlayer();
+
+            stopShotlock(view);
 
         }else {
             toast("Select a player first.");
