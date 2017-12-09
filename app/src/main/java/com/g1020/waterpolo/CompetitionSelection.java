@@ -32,7 +32,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
     MatchFragment matches;
     MatchSettingsFragment matchSettings;
     PlayersMatchSettingsFragment playersFrag;
-    TeamNameFragment teamNameFrag;
+
     LogoFragment logoFrag;
     ApiInterface apiService;
     private PlayerRest selectedPlayer;
@@ -195,10 +195,10 @@ int teller =0;
         playersFrag.setHometeam(1);//keeps adding to list on reloading the fragment try to prevent this TO DO
         getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();
 
-        teamNameFrag = new TeamNameFragment();
+
         hometeam =1;
-        teamNameFrag.setHometeam(1);
-        getSupportFragmentManager().beginTransaction().replace(R.id.llTeamName,teamNameFrag).commit();
+
+
         logoFrag = new LogoFragment();
         logoFrag.setHometeam(1);
         getSupportFragmentManager().beginTransaction().replace(R.id.logoContainer,logoFrag).commit();
@@ -214,9 +214,9 @@ int teller =0;
         playersFrag.setHometeam(id);
         //keeps adding to list on reloading the fragment try to prevent this TO DO
         getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();
-        teamNameFrag = new TeamNameFragment();
-        teamNameFrag.setHometeam(id);
-        getSupportFragmentManager().beginTransaction().replace(R.id.llTeamName,teamNameFrag).commit();
+
+
+
         logoFrag = new LogoFragment();
         logoFrag.setHometeam(id);
         getSupportFragmentManager().beginTransaction().replace(R.id.logoContainer,logoFrag).commit();
@@ -287,7 +287,8 @@ int teller =0;
                 for(int i=1;i<=13;i++) {
                     if(!playernumbers.contains(i)){
                         this.selectedPlayer.setPlayerNumber(i);
-                    this.selectedPlayer.setStarter(1);}
+                    this.selectedPlayer.setStarter(1);
+                        dc.asyncUpdatePlayerNumber(selectedPlayer.getPlayerId(),i);}
                 }
 
             }
@@ -306,7 +307,9 @@ int teller =0;
                     for(int i=1;i<=13;i++) {
                         if(!playernumbers.contains(i)){
                             this.selectedPlayer.setPlayerNumber(i);
-                            this.selectedPlayer.setStarter(1);}
+                            this.selectedPlayer.setStarter(1);
+                            apiService.updateNumber(selectedPlayer.getPlayerId(),i);
+                        }
                     }
 
                 }

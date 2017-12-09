@@ -68,6 +68,15 @@ public interface ApiInterface {
             @Body ApiClient.ArrayListStarters starters
         );
 
+    @FormUrlEncoded
+    @PUT("api/players/{id}/changenumber")
+    Call<Void> updateNumber(
+            @Path("id") int id,
+            @Field("player_number") int player_number
+
+    );
+
+
 
 
 }

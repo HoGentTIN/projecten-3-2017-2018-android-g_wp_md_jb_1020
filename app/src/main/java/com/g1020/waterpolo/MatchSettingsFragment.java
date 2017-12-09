@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import application.ApplicationRuntime;
@@ -63,6 +64,33 @@ public class MatchSettingsFragment extends Fragment {
         btnVisitorName = (Button) view.findViewById(R.id.btnVisitorName);
         btnLeft = (Button) view.findViewById(R.id.btnToLeft);
         btnRight = (Button) view.findViewById(R.id.btnToRight);
+
+        TabHost host = (TabHost)view.findViewById(R.id.tab_host);
+        host.setup();
+
+        final TabHost.TabSpec spec1 = host.newTabSpec(dc.getSelectedMatch().getHome().getTeamName())
+                .setContent(R.id.txtTeamHome)
+                .setIndicator(dc.getSelectedMatch().getHome().getTeamName());
+
+        host.addTab(spec1);
+        final TabHost.TabSpec spec2 = host.newTabSpec(dc.getSelectedMatch().getVisitor().getTeamName())
+                .setContent(R.id.txtTeamAway)
+                .setIndicator(dc.getSelectedMatch().getVisitor().getTeamName());
+        host.addTab(spec2);
+
+        host.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
+            @Override
+            public void onTabChanged(String tabId) {
+                if(spec1.getTag().equals(tabId)) {
+                    mListener.changeTeams(1);
+                }
+                if(spec2.getTag().equals(tabId)) {
+                    mListener.changeTeams(2);
+                }
+            }});
+
+
+
 
 
         btnTeamName.setText(dc.getSelectedMatch().getHome().getTeamName());

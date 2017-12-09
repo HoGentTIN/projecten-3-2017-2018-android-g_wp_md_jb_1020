@@ -509,6 +509,32 @@ public class Domaincontroller {
         match.setHomeTeam(hometeam);
         match.setAwayTeam(awayteam);
     }
+    public int updateNumber(int playerid,int number) throws InterruptedException {
+        Call<Void> call = apiService.updateNumber(playerid,number);
+        try {
+            call.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //long process
+        return 1;
+    }
+    public void asyncUpdatePlayerNumber(int playerid, int number){
+        final int p = playerid;
+        final int n = number;
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    updateNumber(p,n);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
+    }
 
 
 
