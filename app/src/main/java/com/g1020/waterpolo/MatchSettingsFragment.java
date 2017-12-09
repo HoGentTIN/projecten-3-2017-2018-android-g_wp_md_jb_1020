@@ -85,6 +85,7 @@ public class MatchSettingsFragment extends Fragment {
             @Override
             public void onClick(View view){
                 cListener.switchPlayer(true);
+
             }
         });
 

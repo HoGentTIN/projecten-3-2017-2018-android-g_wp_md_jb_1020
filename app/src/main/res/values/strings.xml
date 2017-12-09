@@ -32,8 +32,8 @@
     <string name="text_shotlock">30</string>
     <string name="playerFragmentTitle">TEAM</string>
     <string name="injury">Injury</string>
-    <string name="field">field</string>
-    <string name="bench">bench</string>
+    <string name="field">Active</string>
+    <string name="bench">not Active</string>
     <string name="official_name_hint">Name of the official</string>
     <string name="referee_code_hint">Referee code</string>
 </resources>

@@ -225,33 +225,95 @@ int teller =0;
 
     @Override
     public void switchPlayer(boolean starter) {
-        //if starter = true then that means he comes from the column where starter = true and vice versa
-        if(selectedPlayer!=null){
-        if(starter){
-            this.selectedPlayer.setStarter(0);
+        //if starter = true then that means he comes from the column from the screen  where starter = true(the left column) and vice versa
+        if(selectedPlayer!=null) {
+            if (starter) {
+//these ifs will block the possibility of removing more than one active player from the list just so you know what number the player you will add afterwards will get
+                if (hometeam == 1) {
+                    int counter = 0;
+
+
+                    for (PlayerRest player : dc.getSelectedMatch().getHome().getPlayers()) {
+
+                        if (player.getStarter()) {
+                            counter += 1;
+
+                        }
+
+                    }
+                    if (counter == 13) {
+
+                        this.selectedPlayer.setStarter(0);
+                    }
+
+
+                }
+
+             else if (hometeam != 1) {
+                int counter = 0;
+
+                for (PlayerRest player : dc.getSelectedMatch().getVisitor().getPlayers()) {
+                    if (player.getStarter()) {
+                        counter += 1;
+
+                    }
+                }
+                if (counter == 13) {
+
+                    this.selectedPlayer.setStarter(0);
+                }
+
+            }
+
+
         }
+        //here is the else statement when a player wants to become an active player
         else
         {
             if(hometeam==1){
-              int counter =0;
-              for(PlayerRest player : dc.getSelectedMatch().getHome().getPlayers()){
-                  if( player.getStarter())
-                      counter+=1;
-              }
-              if(counter<13)
-                  this.selectedPlayer.setStarter(1);
-            }
-            else if(hometeam!=1){
-                int counter =0;
-                for(PlayerRest player : dc.getSelectedMatch().getVisitor().getPlayers()){
-                    if( player.getStarter())
-                        counter+=1;
+            int counter =0;
+            List<Integer> playernumbers=  new ArrayList<>();
+
+            //here I normally check if there are already 13 active players
+            for(PlayerRest player : dc.getSelectedMatch().getHome().getPlayers()){
+
+                if( player.getStarter()) {
+                    counter += 1;
+                    playernumbers.add(player.getPlayerNumber());
                 }
-                if(counter<13)
-                    this.selectedPlayer.setStarter(1);
+
             }
-            this.selectedPlayer.setStarter(1);
+            if(counter<13) {
+                for(int i=1;i<=13;i++) {
+                    if(!playernumbers.contains(i)){
+                        this.selectedPlayer.setPlayerNumber(i);
+                    this.selectedPlayer.setStarter(1);}
+                }
+
+            }
+
         }
+        else if(hometeam!=1){
+            int counter =0;
+                List<Integer> playernumbers=  new ArrayList<>();
+            for(PlayerRest player : dc.getSelectedMatch().getVisitor().getPlayers()){
+                if( player.getStarter()) {
+                    counter += 1;
+                    playernumbers.add(player.getPlayerNumber());
+                }
+            }
+                if(counter<13) {
+                    for(int i=1;i<=13;i++) {
+                        if(!playernumbers.contains(i)){
+                            this.selectedPlayer.setPlayerNumber(i);
+                            this.selectedPlayer.setStarter(1);}
+                    }
+
+                }
+        }
+
+        }
+
         playersFrag = new PlayersMatchSettingsFragment();
         playersFrag.setHometeam(hometeam);
         getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();}

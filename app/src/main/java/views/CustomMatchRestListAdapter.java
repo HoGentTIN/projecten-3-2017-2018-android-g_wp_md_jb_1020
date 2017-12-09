@@ -69,18 +69,19 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
 
 
             txtTeams.setText(p.getHome().getTeamName()+" - "+p.getVisitor().getTeamName());
-            String day = (String) DateFormat.format("dd",   p.getRealDate());
-            String month = (String) DateFormat.format("mm",   p.getRealDate());
-            String year =(String) DateFormat.format("yyyy",p.getRealDate());
+          //  String day = (String) DateFormat.format("d",   p.getRealDate());
 
-            txtDate.setText(day + "/" + month );
+         //   String month = (String) DateFormat.format("M",   p.getRealDate());
+          //  String year =(String) DateFormat.format("y",p.getRealDate());
+
+            txtDate.setText(p.getRealDate());
 
 
 
-            txtDateDetail.setText(day + "/" + month + "/" + year);
+            txtDateDetail.setText(p.getRealFullDate());
             txtDivision.setText("Division:  "+p.getHome().getDivision().getDivision_name());
             txtLocation.setText("Locatie:   " +p.getLocation().getFullAddress());
-            txtTime.setText("TIME:   "/*+ p.getRealTime().toString()*/);
+            txtTime.setText("TIME:   "+p.getRealTime());
             // txtDivision.setText("Division "+ p.getDivision().getDivisionName());
         }
         return v;
