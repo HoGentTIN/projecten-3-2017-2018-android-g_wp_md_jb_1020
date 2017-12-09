@@ -110,22 +110,26 @@ public class PlayersMatchSettingsFragment extends Fragment {
         lvPlayers.setAdapter(playerAdapter1);
         playerClickAction(lvPlayers);
         teamClickAction(lvPlayers);
-        lvPlayers2 = (ListView) view.findViewById(R.id.lsvplayers2);
 
-        lvPlayers2.setAdapter(playerAdapter2);
-        playerClickAction(lvPlayers2);
-        teamClickAction(lvPlayers2);
+        lvPlayers2 = (ListView) view.findViewById(R.id.lsvplayers2);
+        if(!(players2==null || players2.isEmpty())) {
+            lvPlayers2.setAdapter(playerAdapter2);
+            playerClickAction(lvPlayers2);
+            teamClickAction(lvPlayers2);
+        }
+
         CustomPlayerRestListAdapter ca = (CustomPlayerRestListAdapter) lvPlayers.getAdapter();
 
         for(int i =0 ; i<lvPlayers.getChildCount();i++){
             ca.setSelectedPlayer(view,R.drawable.player_tile);
 
         }
-        ca = (CustomPlayerRestListAdapter) lvPlayers2.getAdapter();
+        if(!(players2==null || players2.isEmpty())) {
+            ca = (CustomPlayerRestListAdapter) lvPlayers2.getAdapter();
 
-        for(int i =0 ; i<lvPlayers2.getChildCount();i++){
-            ca.setSelectedPlayer(view,R.drawable.player_tile);
-
+            for(int i =0 ; i<lvPlayers2.getChildCount();i++){
+                ca.setSelectedPlayer(view,R.drawable.player_tile);
+            }
         }
         return view;
 
