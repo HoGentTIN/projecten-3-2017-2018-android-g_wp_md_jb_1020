@@ -61,7 +61,7 @@ public interface ApiInterface {
             @Field("penalty_type_id") int penalty_id
     );
 
-    @FormUrlEncoded
+
     @PUT("api/matches/{id}/starters")
     Call<ResponseBody> putListOfStarters(
             @Path("id") int id,
@@ -75,6 +75,15 @@ public interface ApiInterface {
             @Field("player_number") int player_number
 
     );
+
+
+    @PUT("api/matches/{id}/cancel")
+    Call<Void> cancelMatch(
+            @Path("id") int id
+
+    );
+
+
 
 
 

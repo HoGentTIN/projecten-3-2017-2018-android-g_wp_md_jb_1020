@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import persistency.DivisionRest;
 import persistency.MatchRest;
 import persistency.PlayerRest;
@@ -509,7 +510,7 @@ public class Domaincontroller {
         match.setHomeTeam(hometeam);
         match.setAwayTeam(awayteam);
     }
-    public int updateNumber(int playerid,int number) throws InterruptedException {
+    private int updateNumber(int playerid,int number) throws InterruptedException {
         Call<Void> call = apiService.updateNumber(playerid,number);
         try {
             call.execute();
@@ -535,6 +536,60 @@ public class Domaincontroller {
         };
         new Thread(task, "Service thread testpost").start();
     }
+    private int cancelMatch() throws InterruptedException{
+        Call<Void> call = apiService.cancelMatch(this.getSelectedMatch().getMatch_id());
+        try {
+            call.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //long process
+        return 1;
+    }
+
+    private int updatestarters(ApiClient.ArrayListStarters starters) throws InterruptedException {
+        Call<ResponseBody> call = apiService.putListOfStarters(getSelectedMatch().getMatch_id(),starters);
+        try {
+            call.execute();
+        } catch (Exception e) {
+            Log.e("log_tag","den eersten eeft nie gewerkt");
+        }
+
+        //long process
+        return 1;
+    }
+
+    public void asyncUpdateStarters(ApiClient.ArrayListStarters starters){
+        final ApiClient.ArrayListStarters s =  starters;
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    updatestarters(s);
+                } catch (InterruptedException e) {
+                    Log.e("log_tag","theeft nie gewerkt 2");
+                }
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
+    }
+    public void asyncCancelMatch(){
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    cancelMatch();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
+
+    }
+
+
 
 
 

@@ -190,7 +190,7 @@ public class MatchRest {
 
     public String getRealDate(){
 
-            return getDate().substring(5,10).replace('-','/') ;
+            return getDate().substring(8,10).replace('-','/')+"/"+ getDate().substring(5,7).replace('-','/')  ;
 
 
 
@@ -200,7 +200,7 @@ public class MatchRest {
 
     }
     public String getRealFullDate(){
-        return getDate().substring(5,9).replace('-','/') + getDate().substring(9,10).replace('-','/') +"/"+getDate().substring(0,4).replace('-','/') ;
+        return getDate().substring(8,10).replace('-','/')+"/"+ getDate().substring(5,7).replace('-','/') +"/"+getDate().substring(0,4).replace('-','/') ;
 
     }
 }

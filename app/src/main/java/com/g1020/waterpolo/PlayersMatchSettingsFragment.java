@@ -106,7 +106,7 @@ public class PlayersMatchSettingsFragment extends Fragment {
 
 
         lvPlayers = (ListView) view.findViewById(R.id.lsvplayers);
-
+try{
         lvPlayers.setAdapter(playerAdapter1);
         playerClickAction(lvPlayers);
         teamClickAction(lvPlayers);
@@ -127,10 +127,12 @@ public class PlayersMatchSettingsFragment extends Fragment {
         if(!(players2==null || players2.isEmpty())) {
             ca = (CustomPlayerRestListAdapter) lvPlayers2.getAdapter();
 
-            for(int i =0 ; i<lvPlayers2.getChildCount();i++){
-                ca.setSelectedPlayer(view,R.drawable.player_tile);
+            for (int i = 0; i < lvPlayers2.getChildCount(); i++) {
+                ca.setSelectedPlayer(view, R.drawable.player_tile);
             }
         }
+    }catch(IllegalArgumentException e){
+            Log.e("log_tag","there are no players set for the teams");}
         return view;
 
     }

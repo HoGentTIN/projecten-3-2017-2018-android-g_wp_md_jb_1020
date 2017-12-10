@@ -24,7 +24,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/colorGreen"
+                android:background="@drawable/button_begin"
+                android:paddingRight="3dp"
+
 
                 android:onClick="endSelection"
                 android:text="Begin"
@@ -36,10 +38,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#E00707"
+                android:background="@drawable/button_cancel"
+                android:paddingLeft="3dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff"
-                android:text="Cancel" />
+                android:text="Cancel"
+                android:onClick="cancelMatch"/>
 
 
         </LinearLayout>

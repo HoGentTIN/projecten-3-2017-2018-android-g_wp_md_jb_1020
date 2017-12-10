@@ -3,12 +3,17 @@ package com.g1020.waterpolo;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import application.ApplicationRuntime;
@@ -38,7 +43,7 @@ public class MatchFragment extends Fragment {
         // Required empty public constructor
     }
     public interface OnMatchSelectedListener{
-        public void onMatchSelected(int matchNumber);
+        public void onMatchSelected(int position);
     }
 
     public static MatchFragment newInstance(int matchNumber) {
@@ -63,8 +68,24 @@ public class MatchFragment extends Fragment {
         lvMatches = (ListView) view.findViewById(R.id.lsvMatches);
 
 
+List<MatchRest> filterList = new ArrayList<MatchRest>();
 
-        hostedmatchesR = dc.getOwnedMatchesR();
+              filterList =  dc.getOwnedMatchesR();
+hostedmatchesR = new ArrayList<MatchRest>();
+              for(MatchRest match : filterList){
+                  SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                  try {
+                      Date strDate = sdf.parse(match.getRealFullDate());
+                      if (! new Date().after(strDate)){
+                          hostedmatchesR.add(match);
+                      }
+                  } catch (ParseException e) {
+                      Log.e("log_tag","de datumconversie is niet gelukt");
+                  }
+
+              }
+
+
         matchRestAdapter = new CustomMatchRestListAdapter(getContext(),android.R.id.text1,hostedmatchesR);
 
         lvMatches.setAdapter(matchRestAdapter);
@@ -111,23 +132,30 @@ public class MatchFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 // retrieve the selected player
-                int itemAmount = listview.getChildCount();
+
                 MatchRest selectedMatch = (MatchRest) listview.getItemAtPosition(position);
 
-                mListener.onMatchSelected(selectedMatch.getMatch_id());
+                dc.setMatch(selectedMatch.getMatch_id());
 
+                mListener.onMatchSelected(position);
                 //Change look of selected item and the others
-                CustomMatchRestListAdapter ca = (CustomMatchRestListAdapter) lvMatches.getAdapter();
 
-                ca.setSelectedMatch(position,  listview.getChildAt(position));
-                for (int i =0;i<itemAmount;i++){
-                    if(i!=position)
-                        ca.unselectMatch(i,listview.getChildAt(i));
-                }
+
+
 
 
 
             }
         });
+    }
+    public void changeMatch(int position){
+        int itemAmount = lvMatches.getChildCount();
+        CustomMatchRestListAdapter ca = (CustomMatchRestListAdapter) lvMatches.getAdapter();
+        ca.setSelectedMatch(position,  lvMatches.getChildAt(position));
+
+        for (int i =0;i<itemAmount;i++){
+            if(i!=position)
+                ca.unselectMatch(i,lvMatches.getChildAt(i));
+        }
     }
 }

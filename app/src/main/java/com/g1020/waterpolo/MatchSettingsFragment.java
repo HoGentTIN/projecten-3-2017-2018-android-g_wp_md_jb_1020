@@ -60,8 +60,8 @@ public class MatchSettingsFragment extends Fragment {
         dc = ar.getDc();
 
         txtDuration = (TextView) view.findViewById(R.id.txtDuration);
-        btnTeamName = (Button) view.findViewById(R.id.btnTeamName);
-        btnVisitorName = (Button) view.findViewById(R.id.btnVisitorName);
+        //btnTeamName = (Button) view.findViewById(R.id.btnTeamName);
+       // btnVisitorName = (Button) view.findViewById(R.id.btnVisitorName);
         btnLeft = (Button) view.findViewById(R.id.btnToLeft);
         btnRight = (Button) view.findViewById(R.id.btnToRight);
 
@@ -93,14 +93,14 @@ public class MatchSettingsFragment extends Fragment {
 
 
 
-        btnTeamName.setText(dc.getSelectedMatch().getHome().getTeamName());
+       // btnTeamName.setText(dc.getSelectedMatch().getHome().getTeamName());
 
-        btnTeamName.setOnClickListener(new View.OnClickListener() {
+      /*  btnTeamName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mListener.changeTeams(1);
             }
-        });
+        });*/
 
         btnLeft.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -117,13 +117,13 @@ public class MatchSettingsFragment extends Fragment {
             }
         });
 
-        btnVisitorName.setText(dc.getSelectedMatch().getVisitor().getTeamName());
+        /*btnVisitorName.setText(dc.getSelectedMatch().getVisitor().getTeamName());
         btnVisitorName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mListener.changeTeams(2);
             }
-        });
+        });*/
         txtDuration.setText("8:00");
 
 
@@ -141,6 +141,14 @@ public class MatchSettingsFragment extends Fragment {
         //Intent intent = new Intent(this, AdministrationSetup.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        ((CompetitionSelection)getActivity()).changeMatch();
+    }
+
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

@@ -14,6 +14,7 @@ import application.ApplicationRuntime;
 
 import Domain.Division;
 import Domain.Domaincontroller;
+import okhttp3.ResponseBody;
 import persistency.MatchRest;
 import persistency.PlayerRest;
 import rest.ApiClient;
@@ -21,6 +22,9 @@ import rest.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Body;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public class CompetitionSelection extends AppCompatActivity implements MatchFragment.OnMatchSelectedListener,MatchSettingsFragment.onTeamclickedinteractionListener,MatchSettingsFragment.onArrowclickedinteractionListener
 ,PlayersMatchSettingsFragment.onPlayerClickedInteractionListener{
@@ -32,6 +36,8 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
     MatchFragment matches;
     MatchSettingsFragment matchSettings;
     PlayersMatchSettingsFragment playersFrag;
+//save the position of the selectedmatch
+    private int position;
 
     LogoFragment logoFrag;
     ApiInterface apiService;
@@ -154,9 +160,9 @@ int teller =0;
         for(PlayerRest player : players){
             int starter;
             if(player.getStarter())
-                starter = 1;
+                starter =1;
             else
-                starter = 2;
+                starter = 0;
             upstarters.add(new ApiClient.Starter(player.getPlayerId(), starter));
             teller+=1;
 
@@ -168,7 +174,7 @@ int teller =0;
             if(player.getStarter())
                 starter = 1;
             else
-                starter = 2;
+                starter = 0;
             upstarters.add(new ApiClient.Starter(player.getPlayerId(), starter));
             teller+=1;
         }
@@ -178,7 +184,11 @@ int teller =0;
         ApiClient.ArrayListStarters arrStarters = new ApiClient.ArrayListStarters();
         arrStarters.addStarters((ArrayList<ApiClient.Starter>) upstarters);
 
-       // apiService.putListOfStarters(dc.getSelectedMatch().getMatch_id(), arrStarters);
+        dc.asyncUpdateStarters(arrStarters);
+
+
+
+
 
 
         Intent intent = new Intent(this, MatchControl.class);
@@ -187,10 +197,12 @@ int teller =0;
     }
 
     @Override
-    public void onMatchSelected(int matchNumber) {
-        dc.setMatch(matchNumber);
+    public void onMatchSelected(int position) {
+this.position = position;
         matchSettings = new MatchSettingsFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.matchSettingsContainer,matchSettings).commit();
+
+
         playersFrag = new PlayersMatchSettingsFragment();
         playersFrag.setHometeam(1);//keeps adding to list on reloading the fragment try to prevent this TO DO
         getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();
@@ -326,6 +338,14 @@ int teller =0;
     @Override
     public void setSelectedPlayer(PlayerRest selectedPlayer) {
         this.selectedPlayer = selectedPlayer;
+    }
+    public void cancelMatch(View view){
+        dc.asyncCancelMatch();
+        finish();
+        startActivity(getIntent());
+    }
+    public void changeMatch(){
+        matches.changeMatch(this.position);
     }
 
     // custom class to use for the api put of updatestarters
