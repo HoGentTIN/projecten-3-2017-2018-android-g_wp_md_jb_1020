@@ -14,6 +14,7 @@ import application.ApplicationRuntime;
 
 import Domain.Division;
 import Domain.Domaincontroller;
+import okhttp3.ResponseBody;
 import persistency.MatchRest;
 import persistency.PlayerRest;
 import rest.ApiClient;
@@ -21,6 +22,9 @@ import rest.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Body;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public class CompetitionSelection extends AppCompatActivity implements MatchFragment.OnMatchSelectedListener,MatchSettingsFragment.onTeamclickedinteractionListener,MatchSettingsFragment.onArrowclickedinteractionListener
 ,PlayersMatchSettingsFragment.onPlayerClickedInteractionListener{
@@ -32,7 +36,9 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
     MatchFragment matches;
     MatchSettingsFragment matchSettings;
     PlayersMatchSettingsFragment playersFrag;
-    TeamNameFragment teamNameFrag;
+//save the position of the selectedmatch
+    private int position;
+
     LogoFragment logoFrag;
     ApiInterface apiService;
     private PlayerRest selectedPlayer;
@@ -154,9 +160,9 @@ int teller =0;
         for(PlayerRest player : players){
             int starter;
             if(player.getStarter())
-                starter = 1;
+                starter =1;
             else
-                starter = 2;
+                starter = 0;
             upstarters.add(new ApiClient.Starter(player.getPlayerId(), starter));
             teller+=1;
 
@@ -168,7 +174,7 @@ int teller =0;
             if(player.getStarter())
                 starter = 1;
             else
-                starter = 2;
+                starter = 0;
             upstarters.add(new ApiClient.Starter(player.getPlayerId(), starter));
             teller+=1;
         }
@@ -178,7 +184,11 @@ int teller =0;
         ApiClient.ArrayListStarters arrStarters = new ApiClient.ArrayListStarters();
         arrStarters.addStarters((ArrayList<ApiClient.Starter>) upstarters);
 
-       // apiService.putListOfStarters(dc.getSelectedMatch().getMatch_id(), arrStarters);
+        dc.asyncUpdateStarters(arrStarters);
+
+
+
+
 
 
         Intent intent = new Intent(this, MatchControl.class);
@@ -187,18 +197,20 @@ int teller =0;
     }
 
     @Override
-    public void onMatchSelected(int matchNumber) {
-        dc.setMatch(matchNumber);
+    public void onMatchSelected(int position) {
+this.position = position;
         matchSettings = new MatchSettingsFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.matchSettingsContainer,matchSettings).commit();
+
+
         playersFrag = new PlayersMatchSettingsFragment();
         playersFrag.setHometeam(1);//keeps adding to list on reloading the fragment try to prevent this TO DO
         getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();
 
-        teamNameFrag = new TeamNameFragment();
+
         hometeam =1;
-        teamNameFrag.setHometeam(1);
-        getSupportFragmentManager().beginTransaction().replace(R.id.llTeamName,teamNameFrag).commit();
+
+
         logoFrag = new LogoFragment();
         logoFrag.setHometeam(1);
         getSupportFragmentManager().beginTransaction().replace(R.id.logoContainer,logoFrag).commit();
@@ -214,9 +226,9 @@ int teller =0;
         playersFrag.setHometeam(id);
         //keeps adding to list on reloading the fragment try to prevent this TO DO
         getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();
-        teamNameFrag = new TeamNameFragment();
-        teamNameFrag.setHometeam(id);
-        getSupportFragmentManager().beginTransaction().replace(R.id.llTeamName,teamNameFrag).commit();
+
+
+
         logoFrag = new LogoFragment();
         logoFrag.setHometeam(id);
         getSupportFragmentManager().beginTransaction().replace(R.id.logoContainer,logoFrag).commit();
@@ -225,33 +237,98 @@ int teller =0;
 
     @Override
     public void switchPlayer(boolean starter) {
-        //if starter = true then that means he comes from the column where starter = true and vice versa
-        if(selectedPlayer!=null){
-        if(starter){
-            this.selectedPlayer.setStarter(0);
+        //if starter = true then that means he comes from the column from the screen  where starter = true(the left column) and vice versa
+        if(selectedPlayer!=null) {
+            if (starter) {
+//these ifs will block the possibility of removing more than one active player from the list just so you know what number the player you will add afterwards will get
+                if (hometeam == 1) {
+                    int counter = 0;
+
+
+                    for (PlayerRest player : dc.getSelectedMatch().getHome().getPlayers()) {
+
+                        if (player.getStarter()) {
+                            counter += 1;
+
+                        }
+
+                    }
+                    if (counter == 13) {
+
+                        this.selectedPlayer.setStarter(0);
+                    }
+
+
+                }
+
+             else if (hometeam != 1) {
+                int counter = 0;
+
+                for (PlayerRest player : dc.getSelectedMatch().getVisitor().getPlayers()) {
+                    if (player.getStarter()) {
+                        counter += 1;
+
+                    }
+                }
+                if (counter == 13) {
+
+                    this.selectedPlayer.setStarter(0);
+                }
+
+            }
+
+
         }
+        //here is the else statement when a player wants to become an active player
         else
         {
             if(hometeam==1){
-              int counter =0;
-              for(PlayerRest player : dc.getSelectedMatch().getHome().getPlayers()){
-                  if( player.getStarter())
-                      counter+=1;
-              }
-              if(counter<13)
-                  this.selectedPlayer.setStarter(1);
-            }
-            else if(hometeam!=1){
-                int counter =0;
-                for(PlayerRest player : dc.getSelectedMatch().getVisitor().getPlayers()){
-                    if( player.getStarter())
-                        counter+=1;
+            int counter =0;
+            List<Integer> playernumbers=  new ArrayList<>();
+
+            //here I normally check if there are already 13 active players
+            for(PlayerRest player : dc.getSelectedMatch().getHome().getPlayers()){
+
+                if( player.getStarter()) {
+                    counter += 1;
+                    playernumbers.add(player.getPlayerNumber());
                 }
-                if(counter<13)
-                    this.selectedPlayer.setStarter(1);
+
             }
-            this.selectedPlayer.setStarter(1);
+            if(counter<13) {
+                for(int i=1;i<=13;i++) {
+                    if(!playernumbers.contains(i)){
+                        this.selectedPlayer.setPlayerNumber(i);
+                    this.selectedPlayer.setStarter(1);
+                        dc.asyncUpdatePlayerNumber(selectedPlayer.getPlayerId(),i);}
+                }
+
+            }
+
         }
+        else if(hometeam!=1){
+            int counter =0;
+                List<Integer> playernumbers=  new ArrayList<>();
+            for(PlayerRest player : dc.getSelectedMatch().getVisitor().getPlayers()){
+                if( player.getStarter()) {
+                    counter += 1;
+                    playernumbers.add(player.getPlayerNumber());
+                }
+            }
+                if(counter<13) {
+                    for(int i=1;i<=13;i++) {
+                        if(!playernumbers.contains(i)){
+                            this.selectedPlayer.setPlayerNumber(i);
+                            this.selectedPlayer.setStarter(1);
+                            apiService.updateNumber(selectedPlayer.getPlayerId(),i);
+                        }
+                    }
+
+                }
+        }
+
+        }
+
         playersFrag = new PlayersMatchSettingsFragment();
         playersFrag.setHometeam(hometeam);
         getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();}
@@ -261,6 +338,14 @@ int teller =0;
     @Override
     public void setSelectedPlayer(PlayerRest selectedPlayer) {
         this.selectedPlayer = selectedPlayer;
+    }
+    public void cancelMatch(View view){
+        dc.asyncCancelMatch();
+        finish();
+        startActivity(getIntent());
+    }
+    public void changeMatch(){
+        matches.changeMatch(this.position);
     }
 
     // custom class to use for the api put of updatestarters

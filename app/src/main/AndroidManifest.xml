@@ -12,7 +12,8 @@
         android:roundIcon="@drawable/logo_waterpolo_large"
         android:supportsRtl="true"
         android:largeHeap="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity android:name=".CompetitionSelection">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,10 +23,13 @@
         </activity>
         <activity
             android:name=".MatchControl"
-            android:parentActivityName=".CompetitionSelection" />
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AdministrationEnd"
-            android:parentActivityName=".MatchControl" />
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

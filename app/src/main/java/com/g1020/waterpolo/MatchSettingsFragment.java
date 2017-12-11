@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import application.ApplicationRuntime;
@@ -59,20 +60,47 @@ public class MatchSettingsFragment extends Fragment {
         dc = ar.getDc();
 
         txtDuration = (TextView) view.findViewById(R.id.txtDuration);
-        btnTeamName = (Button) view.findViewById(R.id.btnTeamName);
-        btnVisitorName = (Button) view.findViewById(R.id.btnVisitorName);
+        //btnTeamName = (Button) view.findViewById(R.id.btnTeamName);
+       // btnVisitorName = (Button) view.findViewById(R.id.btnVisitorName);
         btnLeft = (Button) view.findViewById(R.id.btnToLeft);
         btnRight = (Button) view.findViewById(R.id.btnToRight);
 
+        TabHost host = (TabHost)view.findViewById(R.id.tab_host);
+        host.setup();
 
-        btnTeamName.setText(dc.getSelectedMatch().getHome().getTeamName());
+        final TabHost.TabSpec spec1 = host.newTabSpec(dc.getSelectedMatch().getHome().getTeamName())
+                .setContent(R.id.txtTeamHome)
+                .setIndicator(dc.getSelectedMatch().getHome().getTeamName());
 
-        btnTeamName.setOnClickListener(new View.OnClickListener() {
+        host.addTab(spec1);
+        final TabHost.TabSpec spec2 = host.newTabSpec(dc.getSelectedMatch().getVisitor().getTeamName())
+                .setContent(R.id.txtTeamAway)
+                .setIndicator(dc.getSelectedMatch().getVisitor().getTeamName());
+        host.addTab(spec2);
+
+        host.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
+            @Override
+            public void onTabChanged(String tabId) {
+                if(spec1.getTag().equals(tabId)) {
+                    mListener.changeTeams(1);
+                }
+                if(spec2.getTag().equals(tabId)) {
+                    mListener.changeTeams(2);
+                }
+            }});
+
+
+
+
+
+       // btnTeamName.setText(dc.getSelectedMatch().getHome().getTeamName());
+
+      /*  btnTeamName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mListener.changeTeams(1);
             }
-        });
+        });*/
 
         btnLeft.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -85,16 +113,17 @@ public class MatchSettingsFragment extends Fragment {
             @Override
             public void onClick(View view){
                 cListener.switchPlayer(true);
+
             }
         });
 
-        btnVisitorName.setText(dc.getSelectedMatch().getVisitor().getTeamName());
+        /*btnVisitorName.setText(dc.getSelectedMatch().getVisitor().getTeamName());
         btnVisitorName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mListener.changeTeams(2);
             }
-        });
+        });*/
         txtDuration.setText("8:00");
 
 
@@ -112,6 +141,14 @@ public class MatchSettingsFragment extends Fragment {
         //Intent intent = new Intent(this, AdministrationSetup.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        ((CompetitionSelection)getActivity()).changeMatch();
+    }
+
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

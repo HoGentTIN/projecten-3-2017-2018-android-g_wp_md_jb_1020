@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import persistency.DivisionRest;
 import persistency.MatchRest;
 import persistency.PlayerRest;
@@ -50,6 +51,8 @@ public class Domaincontroller {
     private String startTime;
 
     private Player selectedPlayer;
+
+
 
     private List<String[]> logList = new ArrayList<>();                                             //List of all events, event = String[] => [0] = roundNumber, [1] = roundTime, [2] = eventCode ,[3] = eventDescription
     private int eventCounter = 0;                                                                   //eventCode used for filtering logs, show all goals, faults, [G|C|P|U|V|V4][H,A][1,2,3,4] {G,C,P,U,V,V4 = goal|change of player|Penalty|faults.. , H,A = Home|Away, 1,2,3,4 = Round}
@@ -507,6 +510,86 @@ public class Domaincontroller {
         match.setHomeTeam(hometeam);
         match.setAwayTeam(awayteam);
     }
+    private int updateNumber(int playerid,int number) throws InterruptedException {
+        Call<Void> call = apiService.updateNumber(playerid,number);
+        try {
+            call.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //long process
+        return 1;
+    }
+    public void asyncUpdatePlayerNumber(int playerid, int number){
+        final int p = playerid;
+        final int n = number;
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    updateNumber(p,n);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
+    }
+    private int cancelMatch() throws InterruptedException{
+        Call<Void> call = apiService.cancelMatch(this.getSelectedMatch().getMatch_id());
+        try {
+            call.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //long process
+        return 1;
+    }
+
+    private int updatestarters(ApiClient.ArrayListStarters starters) throws InterruptedException {
+        Call<ResponseBody> call = apiService.putListOfStarters(getSelectedMatch().getMatch_id(),starters);
+        try {
+            call.execute();
+        } catch (Exception e) {
+            Log.e("log_tag","den eersten eeft nie gewerkt");
+        }
+
+        //long process
+        return 1;
+    }
+
+    public void asyncUpdateStarters(ApiClient.ArrayListStarters starters){
+        final ApiClient.ArrayListStarters s =  starters;
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    updatestarters(s);
+                } catch (InterruptedException e) {
+                    Log.e("log_tag","theeft nie gewerkt 2");
+                }
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
+    }
+    public void asyncCancelMatch(){
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    cancelMatch();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
+
+    }
+
+
 
 
 

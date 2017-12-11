@@ -24,7 +24,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/colorGreen"
+                android:background="@drawable/button_begin"
+                android:paddingRight="3dp"
+
 
                 android:onClick="endSelection"
                 android:text="Begin"
@@ -36,10 +38,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#E00707"
+                android:background="@drawable/button_cancel"
+                android:paddingLeft="3dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff"
-                android:text="Cancel" />
+                android:text="Cancel"
+                android:onClick="cancelMatch"/>
 
 
         </LinearLayout>
@@ -103,8 +107,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
+                <TabHost
+                    android:id="@+id/tab_host"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+                    <FrameLayout
+                        android:id="@android:id/tabcontent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/txtTeamHome"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/txtTeamAway"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </FrameLayout>
+                </TabHost>
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/btnTeamName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -115,6 +141,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/btnVisitorName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -127,16 +154,6 @@
 
             </LinearLayout>
 
-
-            <LinearLayout
-                android:id="@+id/llTeamName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

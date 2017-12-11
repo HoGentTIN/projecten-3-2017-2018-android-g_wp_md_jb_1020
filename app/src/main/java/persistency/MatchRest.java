@@ -188,43 +188,19 @@ public class MatchRest {
 
     public DivisionRest getDivision(){ return division;}
 
-    public Date getRealDate(){
-        DateFormat df =  new SimpleDateFormat("MM/dd/yyyy");
-        Date realDate;
-        try {
-            realDate = df.parse(getDate().replace('-','/'));
-            return realDate;
+    public String getRealDate(){
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+            return getDate().substring(8,10).replace('-','/')+"/"+ getDate().substring(5,7).replace('-','/')  ;
+
+
 
     }
-    public Date getRealTime(){
-        DateFormat df = new SimpleDateFormat("kk:mm");
-        Date realTime = new Date();
-        try {
-            realTime = df.parse(getDate().replace('-','/'));
-            return realTime;
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return realTime;
+    public String getRealTime(){
+       return getDate().substring(11,16).replace('-','/');
 
     }
-    public Date getRealFullDate(){
-        DateFormat df =  new SimpleDateFormat("MM/dd/yyyy");
-        Date realDate;
-        try {
-            realDate = df.parse(getDate().replace('-','/'));
-            return realDate;
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public String getRealFullDate(){
+        return getDate().substring(8,10).replace('-','/')+"/"+ getDate().substring(5,7).replace('-','/') +"/"+getDate().substring(0,4).replace('-','/') ;
 
     }
 }

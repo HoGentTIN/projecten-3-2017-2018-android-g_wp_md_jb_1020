@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,12 +60,11 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_match_control);
 
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.drawable.logo_waterpolo);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        setContentView(R.layout.activity_match_control);
 
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
@@ -73,36 +74,23 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //test code to see if function in activity can be called from the timerlistner in matchtimer
         dc.setCurrentActivity(this);
 
-        // PIETER
         dc.startMatch();
-        //Division heren = new Division("Eerste klasse Heren", 8,2);
-        //dc.createTeams("Oostende", heren,"Aalst",heren);
-        //dc.createPlayers();
-        // END PIETER
-
-        matchTimer = ar.chronoSetup((TextView) findViewById(R.id.txtTimer), dc.getRoundTime(), dc.getBreakTime());
 
         //initialize shotlock timer
+        matchTimer = ar.chronoSetup((TextView) findViewById(R.id.txtTimer), dc.getRoundTime(), dc.getBreakTime());
         matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
         matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), (dc.getRoundTime()*1000*60));
 
+        // Creating fragments for this activity
         teamsHeader = new TeamsHeaderFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.teamsheadercontainer, teamsHeader).commit();
 
         homeTeam = PlayersFragment.newInstance(0);
         getSupportFragmentManager().beginTransaction().add(R.id.homeContainer, homeTeam).commit();
-
         awayTeam = PlayersFragment.newInstance(1);
         getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
-
         homeTeam.setOtherTeam(awayTeam);
         awayTeam.setOtherTeam(homeTeam);
-
-        int round = dc.getMatch().getCurrentRound();
-        dc.appendLog("Round " + round  + " started","SR" + round,dc.getMatch().getHomeTeam().getDivision().getRoundLengthS(),round); //relocate to startchrono for first time only here for testing
-        activities = ActivityFragment.newInstance(1);
-
-        getSupportFragmentManager().beginTransaction().add(R.id.activitiesContainer, activities).commit();
 
         btnFragment = new ButtonsFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.buttonsContainer, btnFragment).commit();
@@ -110,8 +98,12 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         getSupportFragmentManager().beginTransaction().add(R.id.timeoutcontainer, timeOutFragment).commit();
         shotClockFragment = new ShotClockFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.shotclockcontainer, shotClockFragment).commit();
-        //Testcode for adding logging functionallity
 
+        //setting up the round, creating the activitylog and providing start-entry in log
+        int round = dc.getMatch().getCurrentRound();
+        dc.appendLog("Round " + round  + " started","SR" + round,dc.getMatch().getHomeTeam().getDivision().getRoundLengthS(),round); //relocate to startchrono for first time only here for testing
+        activities = ActivityFragment.newInstance(1);
+        getSupportFragmentManager().beginTransaction().add(R.id.activitiesContainer, activities).commit();
     }
 
     @Override
@@ -122,7 +114,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             @Override
             public boolean onLongClick(View v) {
                 stopShotlock(v);
-                Log.i("game","Shotclock reset");
                 return true;
             }
         });

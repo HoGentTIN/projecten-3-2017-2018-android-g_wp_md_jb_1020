@@ -30,6 +30,6 @@ public class Location {
     }
 
     public String getFullAddress(){
-        return String.format("%s%n%s%n%s %s%n%s",name,street,postalCode,city,country);
+        return String.format("%s%n%s%n%s %s %s",name,street,postalCode,city,country);
     }
 }

@@ -32,6 +32,9 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
     private Domaincontroller dc = ar.getDc();
 
     private TextView txtTeams;
+    //this is a variable that i will make to resolve an issue when a fragment loads while another function isn't finished
+    //this will return just a boolean which will be set true when the function has finished
+    private boolean waiter;
 
     private TextView txtDate;
     private TextView txtDateDetail;
@@ -46,6 +49,7 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
+        this.waiter = false;
         View v = convertView;
         if (v == null) {
             LayoutInflater vi;
@@ -69,18 +73,19 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
 
 
             txtTeams.setText(p.getHome().getTeamName()+" - "+p.getVisitor().getTeamName());
-            String day = (String) DateFormat.format("dd",   p.getRealDate());
-            String month = (String) DateFormat.format("mm",   p.getRealDate());
-            String year =(String) DateFormat.format("yyyy",p.getRealDate());
+          //  String day = (String) DateFormat.format("d",   p.getRealDate());
 
-            txtDate.setText(day + "/" + month );
+         //   String month = (String) DateFormat.format("M",   p.getRealDate());
+          //  String year =(String) DateFormat.format("y",p.getRealDate());
+
+            txtDate.setText(p.getRealDate());
 
 
 
-            txtDateDetail.setText(day + "/" + month + "/" + year);
+            txtDateDetail.setText(p.getRealFullDate());
             txtDivision.setText("Division:  "+p.getHome().getDivision().getDivision_name());
             txtLocation.setText("Locatie:   " +p.getLocation().getFullAddress());
-            txtTime.setText("TIME:   "/*+ p.getRealTime().toString()*/);
+            txtTime.setText("TIME:   "+p.getRealTime());
             // txtDivision.setText("Division "+ p.getDivision().getDivisionName());
         }
         return v;
@@ -92,7 +97,9 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
         TextView txtTeams = (TextView)v.findViewById(R.id.txtTeamsDetail);
         txtTeams.setGravity(Gravity.CENTER_HORIZONTAL);
         txtDate.setVisibility(View.GONE);
+
         llunfold.setVisibility(View.VISIBLE);
+        this.waiter = true;
 
 
 
@@ -109,5 +116,9 @@ public class CustomMatchRestListAdapter extends ArrayAdapter<MatchRest> {
 
 
 
+    }
+
+    public boolean getWaiter() {
+        return waiter;
     }
 }
