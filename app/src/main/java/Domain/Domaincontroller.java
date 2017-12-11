@@ -121,6 +121,27 @@ public class Domaincontroller {
         return 1;
     }
 
+    public void asyncPostSignMatch(final String email, final String password){
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                postSignMatch(email, password);
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
+    }
+
+    public int postSignMatch(String email, String password){
+        Call<Void> call = apiService.signMatch(match.getMatch_id(),email,password);
+        try {
+            call.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //long process
+        return 1;
+    }
+
     //END TESTCODE ASYNC
 
     public ApiInterface getApiService() {
@@ -323,6 +344,9 @@ public class Domaincontroller {
         asyncPostFault(selectedPlayer, PenaltyType.UMV4);
     }
 
+    public void signMatch(String email, String password){
+        asyncPostSignMatch(email, password);
+    }
 
     //function to increase current round
     public void nextRound(){

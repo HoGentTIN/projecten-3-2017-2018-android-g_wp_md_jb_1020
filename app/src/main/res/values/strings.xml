@@ -34,6 +34,6 @@
     <string name="injury">Injury</string>
     <string name="field">Active</string>
     <string name="bench">not Active</string>
-    <string name="official_name_hint">Name of the official</string>
+    <string name="referee_email_hint">Referee email</string>
     <string name="referee_code_hint">Referee code</string>
 </resources>

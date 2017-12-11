@@ -83,7 +83,13 @@ public interface ApiInterface {
 
     );
 
-
+    @FormUrlEncoded
+    @POST("api/matches/{id}/sign")
+    Call<Void> signMatch(
+            @Path("id") int id,
+            @Field("email") String email,
+            @Field("password") String password
+    );
 
 
 

@@ -1,7 +1,7 @@
 package com.g1020.waterpolo;
 
-import android.os.CountDownTimer;
-import android.support.design.widget.TextInputLayout;
+import android.content.Intent;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,14 +9,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import Domain.PenaltyType;
 import Domain.Player;
 import application.ApplicationRuntime;
 import Domain.Domaincontroller;
@@ -29,10 +28,11 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
     PlayersFragmentSingleList homeTeam;
     PlayersFragmentSingleList awayTeam;
 
+    RelativeLayout btnSign;
     ListView lvActivitiesQ1,lvActivitiesQ2, lvActivitiesQ3, lvActivitiesQ4;
     List q1,q2,q3,q4;
 
-    TextInputLayout txtInputLayName, txtInputLayCode;
+    TextInputEditText txtInputLayName, txtInputLayCode;
     TextView txtIconSign;
 
     ApplicationRuntime ar;  //this adds temporary code to this class
@@ -48,8 +48,8 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         dc = ar.getDc();
         dc.getMatch().setCurrentRound(4);
 
-        txtInputLayName = (TextInputLayout) findViewById(R.id.txtInputLayName);
-        txtInputLayCode = (TextInputLayout) findViewById(R.id.txtInputLayCode);
+        txtInputLayName = (TextInputEditText) findViewById(R.id.txtInputLayName);
+        txtInputLayCode = (TextInputEditText) findViewById(R.id.txtInputLayCode);
 
         btnFragment = new ButtonsFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.adminbuttonsContainer, btnFragment).commit();
@@ -120,7 +120,20 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
     }
 
-    public void SignMatch(View view) {
+    public void signMatch(View view) {
+
+        String pss = txtInputLayCode.getText().toString();
+        String email = txtInputLayName.getText().toString();
+
+        dc.signMatch(email,pss);
+
+        finishAdmin();
+
+    }
+
+    public void finishAdmin(){
+        Intent intent = new Intent(this, CompetitionSelection.class);
+        startActivity(intent);
     }
 
     @Override
