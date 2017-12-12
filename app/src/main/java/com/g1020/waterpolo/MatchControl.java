@@ -478,6 +478,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         matchTimer.getCdtTimout().start();
 
         //ADD FUNCTION TO LIMIT CLICKABILITY
+        disableActions();
 
         //stop matchTimer
         matchTimer.stopChrono();
@@ -491,6 +492,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         matchTimer.getCdtTimout().start();
 
         //ADD FUNCTION TO LIMIT CLICKABILITY
+        disableActions();
 
         //stop matchTimer
         matchTimer.stopChrono();
