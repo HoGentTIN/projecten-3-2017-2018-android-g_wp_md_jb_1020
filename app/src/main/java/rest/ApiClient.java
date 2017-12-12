@@ -54,20 +54,19 @@ public class ApiClient extends AsyncTask {
 
                     switch(response.code()) {
                         case 400:
-                            Toast.makeText(dc.getCurrentActivity().getApplicationContext(), response.code() +
-                                    "Authentication failed when signing form, please fill in your credentials correctly", Toast.LENGTH_SHORT).show();
-
+                            AdministrationEnd adminEnd = (AdministrationEnd) dc.getCurrentActivity();
+                            adminEnd.toast();
                             return response;
                         case 401:
-                            Toast.makeText(dc.getCurrentActivity().getApplicationContext(), response.code() +
-                                    "Authentication failed when signing form, please fill in your credentials correctly", Toast.LENGTH_SHORT).show();
+                            adminEnd = (AdministrationEnd) dc.getCurrentActivity();
+                            adminEnd.toast();
                             return response;
                         case 402:
-                            Toast.makeText(dc.getCurrentActivity().getApplicationContext(), response.code() +
-                                    "Authentication failed when signing form, please fill in your credentials correctly", Toast.LENGTH_SHORT).show();
+                            adminEnd = (AdministrationEnd) dc.getCurrentActivity();
+                            adminEnd.toast();
                             return response;
                         case 403:
-                            AdministrationEnd adminEnd = (AdministrationEnd) dc.getCurrentActivity();
+                            adminEnd = (AdministrationEnd) dc.getCurrentActivity();
                             adminEnd.toast();
                             return response;
                         case 422:
@@ -88,7 +87,7 @@ public class ApiClient extends AsyncTask {
                             return response;
 
                         default:
-                                Log.i("servertest", "shit happens " + response.code());
+                                //Log.i("servertest", "shit happens " + response.code());
                     }
                         return response;
                 }

@@ -130,15 +130,16 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
         dc.asyncPostSignMatch(email,pss);
 
-        // if the match is signed
-    //    if() {
-    //        finishAdmin();
-    //    }
+        finishAdmin();
+
     }
 
     public void finishAdmin(){
-        Intent intent = new Intent(this, CompetitionSelection.class);
-        startActivity(intent);
+        // if the match is signed
+        if(dc.getMatch().isSigned()) {
+            Intent intent = new Intent(this, CompetitionSelection.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -316,6 +317,7 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
            toast.show();
     }
     public void toast(){
+        //calls this method when signing fails
         Message msg = handler.obtainMessage();
         msg.arg1 = 1;
         handler.sendMessage(msg);
