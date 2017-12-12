@@ -198,6 +198,8 @@ public class MatchTimer {
             public void onFinish() {
                 btnTimeout.setText("T");
                 Log.i("Info","Timeout has expired.");
+                MatchControl m = (MatchControl) dc.getCurrentActivity();
+                m.enableActions();
             }
 
         };
