@@ -123,23 +123,20 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
     }
 
-    public void signMatch(View view) {
+    public void signMatch(View view) throws InterruptedException {
 
         String pss = txtInputLayCode.getText().toString();
         String email = txtInputLayName.getText().toString();
 
         dc.asyncPostSignMatch(email,pss);
 
-        finishAdmin();
-
     }
 
-    public void finishAdmin(){
-        // if the match is signed
-        if(dc.getMatch().isSigned()) {
+    public void finishAdmin() throws InterruptedException {
+
             Intent intent = new Intent(this, CompetitionSelection.class);
             startActivity(intent);
-        }
+
     }
 
     @Override
@@ -299,30 +296,13 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         dc.resetSelectedPlayer();
     }
 
-    Toast toast;
-    private Handler handler = new Handler() {
-        public void handleMessage(Message msg) {
-            if(msg.arg1 == 1) {
-                toast = Toast.makeText(getApplicationContext(), "Authentication failed when signing form, please fill in your credentials correctly", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
-                toast.show();
-            }
-        }
-    };
-
     //Setup toast notification
     public void toast(final String message){
            Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
            toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
            toast.show();
     }
-    public void toast(){
-        //calls this method when signing fails
-        Message msg = handler.obtainMessage();
-        msg.arg1 = 1;
-        handler.sendMessage(msg);
 
-    }
 
     private void setIconFont(TextView icon) {
             icon.setTypeface(FontManager.getTypeface(this, FontManager.FONTAWESOME));

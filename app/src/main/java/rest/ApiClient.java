@@ -43,6 +43,7 @@ public class ApiClient extends AsyncTask {
 
                 @Override
                 public okhttp3.Response intercept(Chain chain) throws IOException {
+
                     ApplicationRuntime ar = ApplicationRuntime.getInstance();
                     Domaincontroller dc = ar.getDc();
 
@@ -52,27 +53,8 @@ public class ApiClient extends AsyncTask {
                     Log.i("servertest","" + request);
                     Log.i("servertest","" + response);
 
+     //               if(response.isSuccessful())
                     switch(response.code()) {
-                        case 400:
-                            AdministrationEnd adminEnd = (AdministrationEnd) dc.getCurrentActivity();
-                            adminEnd.toast();
-                            return response;
-                        case 401:
-                            adminEnd = (AdministrationEnd) dc.getCurrentActivity();
-                            adminEnd.toast();
-                            return response;
-                        case 402:
-                            adminEnd = (AdministrationEnd) dc.getCurrentActivity();
-                            adminEnd.toast();
-                            return response;
-                        case 403:
-                            adminEnd = (AdministrationEnd) dc.getCurrentActivity();
-                            adminEnd.toast();
-                            return response;
-                        case 422:
-                            adminEnd = (AdministrationEnd) dc.getCurrentActivity();
-                            adminEnd.toast();
-                            return response;
                         case 500:
                             Toast.makeText(dc.getCurrentActivity().getApplicationContext(), "Server error", Toast.LENGTH_SHORT).show();
                             Log.i("servertest", "" + response);

@@ -2,6 +2,10 @@ package Domain;
 
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
+
+import com.g1020.waterpolo.AdministrationEnd;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +21,8 @@ import persistency.PlayerRest;
 import rest.ApiClient;
 import rest.ApiInterface;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by timos on 5-10-2017.
@@ -122,12 +128,54 @@ public class Domaincontroller {
             }
         };
         new Thread(task, "Service thread testpost").start();
+
+    }
+
+    private void displayToast(String message){
+        Toast toast = Toast.makeText(getCurrentActivity(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 
     public void postSignMatch(String email, String password){
+        final AdministrationEnd[] adminEnd = {(AdministrationEnd) getCurrentActivity()};
+
         Call<Void> call = apiService.signMatch(match.getMatch_id(),email,password);
         try {
-            call.execute();
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if(response.isSuccessful()){
+                        displayToast("You have succesfully signed the match");
+                        try {
+                            adminEnd[0].finishAdmin();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        switch(response.code()) {
+                            case 400:
+                                displayToast("Authentication failed when signing form, please fill in your credentials correctly");
+                                break;
+                            case 401:
+                                displayToast("Authentication failed when signing form, please fill in your credentials correctly");
+                                break;
+                            case 402:
+                                displayToast("Authentication failed when signing form, please fill in your credentials correctly");
+                                break;
+                            case 403:
+                                displayToast("Authentication failed when signing form, please fill in your credentials correctly");
+                                break;
+                            case 422:
+                                displayToast("Authentication failed when signing form, please fill in your credentials correctly");
+                                break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {}
+            });
 
         } catch (Exception e) {
 

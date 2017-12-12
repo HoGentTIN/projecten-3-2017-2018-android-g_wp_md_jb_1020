@@ -15,7 +15,6 @@ public class Match {
     private Date date;
     private Location location;
     private boolean cancelled;
-    private boolean signed;
 
     private Team homeTeam;
     private Team awayTeam;
@@ -34,7 +33,6 @@ public class Match {
         penaltyBook = new PenaltyBook();
         cancelled = false;
         currentRound = 1;
-        signed = false;
     }
 
     //Functions
@@ -87,14 +85,6 @@ public class Match {
 
     public PenaltyBook getPenaltyBook() {
         return penaltyBook;
-    }
-
-    public boolean isSigned() {
-        return signed;
-    }
-
-    public void setSigned(boolean signed) {
-        this.signed = signed;
     }
 
     //Calculate the number of point a certain team has scored
