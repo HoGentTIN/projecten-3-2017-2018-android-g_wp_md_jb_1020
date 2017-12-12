@@ -254,7 +254,9 @@
                                 android:id="@+id/txtInputLayCode"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp"
+                                android:inputType="textPassword"
+                                />
                         </android.support.design.widget.TextInputLayout>
 
 

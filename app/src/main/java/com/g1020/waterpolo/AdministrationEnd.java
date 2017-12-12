@@ -176,9 +176,7 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         }else {
             toast("Select a player first.");
         }
-        //PlayersFragment awayTeam = new PlayersFragment();
-        //getSupportFragmentManager().beginTransaction().detach(faultAwayTeam).commit();
-        //getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
+
 
     }
 
@@ -196,6 +194,21 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
             toast("Select a player first.");
         }
         */
+
+        Player sp = dc.getSelectedPlayer();
+        if(sp!=null){
+
+            dc.addInjury();
+
+            addToLog(sp, "I",dc.getSelectedPlayer().getFullName() + " got injured");
+
+            updateBackgroundPlayer(sp);
+
+            clearSelectedPlayer();
+
+        }else {
+            toast("Select a player first.");
+        }
 
     }
 
