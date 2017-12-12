@@ -172,6 +172,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
             addToLog(sp, "I",dc.getSelectedPlayer().getFullName() + " got injured");
             activities.updateActivities(dc.getMatch().getCurrentRound());
+
+            updateBackgroundPlayer(sp);
             clearSelectedPlayer();
 
             stopShotlock(view);

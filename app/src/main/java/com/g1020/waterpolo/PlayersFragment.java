@@ -180,10 +180,10 @@ public class PlayersFragment extends Fragment {
         if(selectedPlayer != null) {
             if (getCurrentPlayerPositionList() < 8) {
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-                ca.updateBackgroundColors(selectedPlayer.getPlayer_id(), viewToReset);
+                ca.updateBackgroundColors(selectedPlayer, viewToReset);
             } else {
                 CustomPlayerListAdapter ca2 = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
-                ca2.updateBackgroundColors(selectedPlayer.getPlayer_id(), viewToReset);
+                ca2.updateBackgroundColors(selectedPlayer, viewToReset);
             }
         }
     }

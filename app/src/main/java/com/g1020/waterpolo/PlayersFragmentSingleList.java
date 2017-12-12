@@ -173,14 +173,14 @@ public class PlayersFragmentSingleList extends Fragment {
     public void updateBackgroundPlayer(){
         if(selectedPlayer != null) {
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-                ca.updateBackgroundColors(selectedPlayer.getPlayer_id(), viewToReset);
+                ca.updateBackgroundColors(selectedPlayer, viewToReset);
         }
     }
 
     public void updateBackgroundPlayers() {
         CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
         for(int i = 0; i < currentPlayers.size(); i++){
-            ca.updateBackgroundColors(currentPlayers.get(i).getPlayer_id(), lvPlayers.getChildAt(i));
+            ca.updateBackgroundColors(currentPlayers.get(i), lvPlayers.getChildAt(i));
         }
     }
 

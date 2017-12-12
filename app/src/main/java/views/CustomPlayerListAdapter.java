@@ -73,7 +73,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
                     playerHolder.playerNumberTxtV.setText((sbPlayerNumber.toString()));
                 }
                 //check if player already has faults, this way it's correctly displayed in administrationEnd
-                updateBackgroundColors(p.getPlayer_id(),convertView);
+                updateBackgroundColors(p,convertView);
             }
 
 
@@ -95,6 +95,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
 
     private void setTeamColors(View v, Player p){
 
+            //assign a standerd player tile to the players
             v.setBackgroundResource(R.drawable.player_tile);
 
             if(p.getTeam().equals(dc.getMatch().getHomeTeam())) {
@@ -123,21 +124,25 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
             convertView.setBackgroundResource(drawableId);
     }
 
-    public void updateBackgroundColors(int id, View v){
+    public void updateBackgroundColors(Player p, View v){
 
         playerHolder = (PlayerHolder) v.getTag();
 
         //number of faults a player has
-        int playerFaults = dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(id);
+        int playerFaults = dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(p.getPlayer_id());
 
-            if (dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(id) > 0) {
+            if (dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(p.getPlayer_id()) > 0) {
                 if (playerFaults > 3) {
                     playerHolder.txtFaultField.setBackgroundResource(res[2]);
                 } else {
-                    playerHolder.txtFaultField.setBackgroundResource(res[dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(id) - 1]);
+                    playerHolder.txtFaultField.setBackgroundResource(res[dc.getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(p.getPlayer_id()) - 1]);
                 }
             }
 
+        if(p.getStatus() == Status.GAMEOVER){
+                Log.i("game", "changing background color to game over");
+            playerHolder.playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_gameover);
+        }
         //entire cell backgroundcolor
         //v.setBackgroundResource(res[p.getFaults()]);
     }

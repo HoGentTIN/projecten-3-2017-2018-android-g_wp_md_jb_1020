@@ -174,7 +174,9 @@ public class Domaincontroller {
                 }
 
                 @Override
-                public void onFailure(Call<Void> call, Throwable t) {}
+                public void onFailure(Call<Void> call, Throwable t) {
+                    displayToast("Connection with server failed");
+                }
             });
 
         } catch (Exception e) {
