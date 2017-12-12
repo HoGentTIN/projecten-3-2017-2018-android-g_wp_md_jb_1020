@@ -1,15 +1,8 @@
 package Domain;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -131,15 +124,16 @@ public class Domaincontroller {
         new Thread(task, "Service thread testpost").start();
     }
 
-    public int postSignMatch(String email, String password){
+    public void postSignMatch(String email, String password){
         Call<Void> call = apiService.signMatch(match.getMatch_id(),email,password);
         try {
             call.execute();
+
         } catch (Exception e) {
+
             e.printStackTrace();
         }
         //long process
-        return 1;
     }
 
     //END TESTCODE ASYNC
@@ -217,6 +211,8 @@ public class Domaincontroller {
         //after backend adds official to match setofficial
 
         this.match = m;
+
+        startMatch();
     }
 
     public List<Player> convertPlayerRestToPlayer(Team t, boolean home){
@@ -342,10 +338,6 @@ public class Domaincontroller {
 
         //post fault
         asyncPostFault(selectedPlayer, PenaltyType.UMV4);
-    }
-
-    public void signMatch(String email, String password){
-        asyncPostSignMatch(email, password);
     }
 
     //function to increase current round
@@ -490,6 +482,39 @@ public class Domaincontroller {
         ownedMatches.add(testMatch1);
         ownedMatches.add(testMatch2);
         */
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Call<Void> call = apiService.startMatch(getSelectedMatch().getMatch_id());
+                    try {
+                        call.execute();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Error e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+
+    public void endMatch(){
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Call<Void> call = apiService.endMatch(getSelectedMatch().getMatch_id());
+                    try {
+                        call.execute();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Error e) {
+                    e.printStackTrace();
+                }
+            }
+        };
     }
 
     public void createPlayers(){

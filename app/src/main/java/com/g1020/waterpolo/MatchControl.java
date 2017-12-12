@@ -74,8 +74,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //test code to see if function in activity can be called from the timerlistner in matchtimer
         dc.setCurrentActivity(this);
 
-        dc.startMatch();
-
         //initialize shotlock timer
         matchTimer = ar.chronoSetup((TextView) findViewById(R.id.txtTimer), dc.getRoundTime(), dc.getBreakTime());
         matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
@@ -439,6 +437,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     }
 
     public void finishMatch(){
+        //post to the backend that the match ended
+        dc.endMatch();
+
         Intent intent = new Intent(this, AdministrationEnd.class);
         startActivity(intent);
 

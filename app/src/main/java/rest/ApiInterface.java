@@ -83,6 +83,16 @@ public interface ApiInterface {
 
     );
 
+    @PUT("api/matches/{id}/start")
+    Call<Void> startMatch(
+            @Path("id") int id
+    );
+
+    @PUT("api/matches/{id}/end")
+    Call<Void> endMatch(
+            @Path("id") int id
+    );
+
     @FormUrlEncoded
     @POST("api/matches/{id}/sign")
     Call<Void> signMatch(

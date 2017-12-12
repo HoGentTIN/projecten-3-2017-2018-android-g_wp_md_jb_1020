@@ -1,6 +1,8 @@
 package com.g1020.waterpolo;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,6 +49,7 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
         dc.getMatch().setCurrentRound(4);
+        dc.setCurrentActivity(this);
 
         txtInputLayName = (TextInputEditText) findViewById(R.id.txtInputLayName);
         txtInputLayCode = (TextInputEditText) findViewById(R.id.txtInputLayCode);
@@ -125,10 +128,12 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         String pss = txtInputLayCode.getText().toString();
         String email = txtInputLayName.getText().toString();
 
-        dc.signMatch(email,pss);
+        dc.asyncPostSignMatch(email,pss);
 
-        finishAdmin();
-
+        // if the match is signed
+    //    if() {
+    //        finishAdmin();
+    //    }
     }
 
     public void finishAdmin(){
@@ -293,14 +298,34 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         dc.resetSelectedPlayer();
     }
 
+    Toast toast;
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            if(msg.arg1 == 1) {
+                toast = Toast.makeText(getApplicationContext(), "Authentication failed when signing form, please fill in your credentials correctly", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+            }
+        }
+    };
+
     //Setup toast notification
-    public void toast(String message){
-        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
+    public void toast(final String message){
+           Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+           toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+           toast.show();
+    }
+    public void toast(){
+        Message msg = handler.obtainMessage();
+        msg.arg1 = 1;
+        handler.sendMessage(msg);
+
     }
 
     private void setIconFont(TextView icon) {
             icon.setTypeface(FontManager.getTypeface(this, FontManager.FONTAWESOME));
     }
+
+
+
 }
