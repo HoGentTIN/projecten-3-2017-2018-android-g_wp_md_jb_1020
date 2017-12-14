@@ -288,12 +288,13 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //user gets 2 input fields in view minutes field and seconds view
         //this value is the time we want to revert to
 
+        /*
         //matchtimer reset - using placeholder values until view is in order
         long min = 8;
         long sec = 0;
         TextView txtTime = (TextView) findViewById(R.id.txtTimer);
         //check layout element if input is valid and filled in
-        //TODO
+        //TODO: update from customer, require to work with local DB during match, keep code as placeholder for future but cannot be used right now to revert.
 
         //calc timeremaing matchtimer
         long millisecondremaining = ((min*60*1000)+(sec*1000));
@@ -313,16 +314,17 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
 
         }
+        */
+
+        //guessing this is here to test end administration. //you have guessed correctly kind sir! //moved it since undoaction is more likly to become functional then this one as it only works localy (ingoring call to undo event in backend)
+        finishMatch();
 
     }
 
     //deletes the last added action. //Maybe also possible to undo method revertToAction()
     public void undoAction(View view) {
-
-        //guessing this is here to test end administration. //you have guessed correctly kind sir!
-        finishMatch();
-
-    //    dc.undoLog();
+        dc.undoLog();
+        activities.updateActivities(dc.getMatch().getCurrentRound());
     }
 
     //Function togglechrono - backup function to pauze match and simply halt the shotlock

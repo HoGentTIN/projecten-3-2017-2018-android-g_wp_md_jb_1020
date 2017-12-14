@@ -448,6 +448,7 @@ public class Domaincontroller {
     }
 
     public void undoLog(){
+        eventCounter--;
         logList.remove(logList.size()-1);
     }
 
