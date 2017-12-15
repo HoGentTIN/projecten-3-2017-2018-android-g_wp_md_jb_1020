@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.g1020.waterpolo.AdministrationEnd;
+import com.g1020.waterpolo.MatchControl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,8 +59,7 @@ public class Domaincontroller {
     private int latestSyncedlog;
 
     //pretty sure this isn't the correct way to switch players, but it works
-    private Boolean switchPlayer = false;
-    private Player playerToSwitch;
+    private Player playerToSwitch = null;
 
     private AppCompatActivity currentActivity;
 
@@ -195,6 +195,9 @@ public class Domaincontroller {
     public Player getSelectedPlayer() {
         return selectedPlayer;
     }
+    public Player getPlayerToSwitch(){return playerToSwitch;}
+
+    public void setPlayerToSwitch(Player sp){this.playerToSwitch=sp;}
 
     public void setMatch(int matchNumber){
         //hier moet er nog vanuit de lijst van ownedmathes de juiste match worden gehaald om die vervolgens in match te steken wat de
@@ -219,6 +222,10 @@ public class Domaincontroller {
 
         //check if there's a player to switch
         checkPlayerSwitch();
+
+        MatchControl mc = (MatchControl) getCurrentActivity();
+
+        mc.ReloadFragments(); //see matchcontrol line 554
     }
 
     public void resetSelectedPlayer() {
@@ -349,8 +356,11 @@ public class Domaincontroller {
 
     // indicate that players want to change number & store first player object
     public void switchPlayerCaps() {
-        playerToSwitch = selectedPlayer;
-        switchPlayer = true;
+        //int switchNumber = playerToSwitch.getPlayerNumber();
+        //playerToSwitch.setPlayerNumber(selectedPlayer.getPlayerNumber());
+        //selectedPlayer.setPlayerNumber(switchNumber);
+        //checkPlayerSwitch();
+        //switchPlayer = true;
     }
 
     public void addInjury() {
@@ -362,12 +372,12 @@ public class Domaincontroller {
 
     // calls method in team to switch the player numbers when both players are from the same team and passes both player id's
     private void checkPlayerSwitch(){
-        if(switchPlayer){
+        if(playerToSwitch!=null){
             if(playerToSwitch.getTeam().equals(selectedPlayer.getTeam())) {
                 playerToSwitch.getTeam().switchPlayerCaps(playerToSwitch.getPlayer_id(), selectedPlayer.getPlayer_id());
                 Log.i("game", playerToSwitch.getFullName() + " switched numbers with " + selectedPlayer.getFullName());
 
-                switchPlayer = false;
+                setPlayerToSwitch(null);
             }
         }
     }

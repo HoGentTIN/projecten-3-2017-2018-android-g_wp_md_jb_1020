@@ -3,6 +3,7 @@ package com.g1020.waterpolo;
 import android.app.Application;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.*;
 import android.os.Bundle;
 import android.util.Log;
@@ -106,6 +107,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         getSupportFragmentManager().beginTransaction().add(R.id.activitiesContainer, activities).commit();
     }
 
+
+
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -149,14 +153,21 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     public void changePlayers(View view) {
 
         Player sp = dc.getSelectedPlayer();
+
         if(sp!=null){
+            if(dc.getPlayerToSwitch()==null){
+                dc.setPlayerToSwitch(sp);
+                if(!this.isBreak)
+                    stopShotlock(view);
+                toast("Select the player you want to switch with and press the button again.");
+            }else{
+                dc.switchPlayerCaps();
+                dc.setPlayerToSwitch(null);//reset for next switch
 
-            dc.switchPlayerCaps();
+                if(!this.isBreak)
+                    stopShotlock(view);
+            }
             clearSelectedPlayer();
-
-            if(!this.isBreak)
-                stopShotlock(view);
-
         }else {
             toast("Select a player first.");
         }
@@ -534,6 +545,17 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             awayTeam.updateBackgroundPlayer();
         }
     }
+
+    //Testcode for seeing if caps change
+    public void ReloadFragments(){
+        homeTeam = PlayersFragment.newInstance(0);
+        getSupportFragmentManager().beginTransaction().add(R.id.homeContainer, homeTeam).commit();
+        awayTeam = PlayersFragment.newInstance(1);
+        getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
+        homeTeam.setOtherTeam(awayTeam);
+        awayTeam.setOtherTeam(homeTeam);
+    }
+
     //Function to clear selectedPlayer after performing buttonAction
     public void clearSelectedPlayer(){
         homeTeam.resetFontPlayers();

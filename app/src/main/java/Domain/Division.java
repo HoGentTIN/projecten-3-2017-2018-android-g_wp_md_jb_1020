@@ -24,8 +24,8 @@ public class Division {
     }
 
     public long getRoundLength() {
-        return 1;
-        //return roundLength;
+        //return 1; //for testing
+        return roundLength;
     }
     public String getRoundLengthS() {
         return roundLength + ":00";
