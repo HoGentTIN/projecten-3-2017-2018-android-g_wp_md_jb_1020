@@ -331,6 +331,10 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     public void toggleChrono(View view){
         if(matchTimer.isChronoOn()){
             matchTimer.stopChrono();
+        }else{
+            resumeTimer();
+            resumeShotlock();
+            matchTimer.startChrono();
         }
 
 
@@ -344,14 +348,15 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             //Cancel first, to prevent another shotlock running in the bacground
             if(matchTimer!=null)
                 matchTimer.getCdtShotlock().cancel();
-                toggleChrono(view);
+            matchTimer.stopChrono();
 
             //re-initialize shot lock to set remaining time back to 30 sec
             matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
             matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), matchTimer.getTimeRemaining());
 
             matchTimer.getCdtShotlock().start();
-            toggleChrono(view);
+            matchTimer.startChrono();
+            //toggleChrono(view);
 
 
         }else {
