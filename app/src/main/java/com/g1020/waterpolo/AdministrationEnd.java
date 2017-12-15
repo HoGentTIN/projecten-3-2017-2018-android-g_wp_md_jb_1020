@@ -182,19 +182,6 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
     public void injurySustained(View view){
 
-        //guessing this is here to test end administration
-        /*
-        Player sp = dc.getSelectedPlayer();
-        if(sp!=null){
-
-            addToLog(sp, "I",dc.getSelectedPlayer().getFullName() + " got injured");
-            activities.updateActivities(dc.getMatch().getCurrentRound());
-            clearSelectedPlayer();
-        }else {
-            toast("Select a player first.");
-        }
-        */
-
         Player sp = dc.getSelectedPlayer();
         if(sp!=null){
 

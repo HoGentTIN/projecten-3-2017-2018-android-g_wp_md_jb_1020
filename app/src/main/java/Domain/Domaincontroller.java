@@ -261,8 +261,6 @@ public class Domaincontroller {
         //after backend adds official to match setofficial
 
         this.match = m;
-
-        startMatch();
     }
 
     public List<Player> convertPlayerRestToPlayer(Team t, boolean home){
@@ -547,6 +545,8 @@ public class Domaincontroller {
                 }
             }
         };
+
+        new Thread(task, "Service thread testpost").start();
     }
 
     public void endMatch(){
@@ -565,6 +565,7 @@ public class Domaincontroller {
                 }
             }
         };
+        new Thread(task, "Service thread testpost").start();
     }
 
     public void createPlayers(){

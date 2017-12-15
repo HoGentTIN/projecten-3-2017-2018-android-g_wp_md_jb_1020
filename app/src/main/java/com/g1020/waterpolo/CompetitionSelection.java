@@ -187,10 +187,6 @@ int teller =0;
         dc.asyncUpdateStarters(arrStarters);
 
 
-
-
-
-
         Intent intent = new Intent(this, MatchControl.class);
         //Intent intent = new Intent(this, AdministrationSetup.class);
         startActivity(intent);

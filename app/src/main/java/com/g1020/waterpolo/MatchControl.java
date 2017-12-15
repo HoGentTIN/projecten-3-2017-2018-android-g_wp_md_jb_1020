@@ -102,6 +102,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         dc.appendLog("Round " + round  + " started","SR" + round,dc.getMatch().getHomeTeam().getDivision().getRoundLengthS(),round); //relocate to startchrono for first time only here for testing
         activities = ActivityFragment.newInstance(1);
         getSupportFragmentManager().beginTransaction().add(R.id.activitiesContainer, activities).commit();
+
+        dc.startMatch();
     }
 
     @Override
