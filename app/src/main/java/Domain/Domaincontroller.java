@@ -223,9 +223,6 @@ public class Domaincontroller {
         //check if there's a player to switch
         checkPlayerSwitch();
 
-        MatchControl mc = (MatchControl) getCurrentActivity();
-
-        mc.ReloadFragments(); //see matchcontrol line 554
     }
 
     public void resetSelectedPlayer() {
@@ -377,7 +374,12 @@ public class Domaincontroller {
 
                 setPlayerToSwitch(null);
             }
+
+            MatchControl mc = (MatchControl) getCurrentActivity();
+
+            mc.ReloadFragments(); //see matchcontrol line 554
         }
+
     }
 
     public void addFaultUMV() {

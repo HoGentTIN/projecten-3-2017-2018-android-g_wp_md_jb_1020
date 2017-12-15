@@ -550,10 +550,11 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     //Testcode for seeing if caps change
     public void ReloadFragments(){
+
         homeTeam = PlayersFragment.newInstance(0);
-        getSupportFragmentManager().beginTransaction().add(R.id.homeContainer, homeTeam).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer, homeTeam).commit();
         awayTeam = PlayersFragment.newInstance(1);
-        getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.awayContainer, awayTeam).commit();
         homeTeam.setOtherTeam(awayTeam);
         awayTeam.setOtherTeam(homeTeam);
     }
