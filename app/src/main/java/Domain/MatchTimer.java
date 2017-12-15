@@ -110,7 +110,7 @@ public class MatchTimer {
             txtTimer.setText(roundTime + ":00");
         }
 
-        cdtTimer = new CountDownTimer(timeRemaining, 500) {
+        cdtTimer = new CountDownTimer(timeRemaining, 150) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long minutesRemaining = (long) Math.ceil(millisUntilFinished/(1000.0*60.0))-1;
@@ -155,11 +155,9 @@ public class MatchTimer {
         //textview clickable, reset shotlock to no team, only possible during player edit events
 
         //No team has bal possesion neutral shotlock state
-        if(shotlockTimeRemaining==30000){                                                           //Set layout if neither teams have ball possesion
-//            txtShotlock.setBackgroundColor(Color.MAGENTA);
+
             if(cdtShotlock!=null)
                 cdtShotlock.cancel();                                                               //Stop previous countdowntimers, to prevent needless background process
-        }
 
         cdtShotlock = new CountDownTimer(shotlockTimeRemaining,100) {               //Initialize countdowntimer on correct starting time
 
@@ -260,6 +258,7 @@ public class MatchTimer {
     //Function startTimer
     public void startChrono(){
         cdtTimer.start();
+        cdtShotlock.start();
         isChronoOn = true;
     }
     //Function stopTimer

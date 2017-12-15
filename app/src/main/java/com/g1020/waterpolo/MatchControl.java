@@ -3,6 +3,7 @@ package com.g1020.waterpolo;
 import android.app.Application;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.*;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,6 +53,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     ButtonsFragment btnFragment;
     TimeOutFragment timeOutFragment;
     ShotClockFragment shotClockFragment;
+
+    boolean isBreak = false;
 
     //Fault playerTimers
     List<Player> faultPlayers = new ArrayList<>();
@@ -106,6 +109,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         dc.startMatch();
     }
 
+
+
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -136,7 +142,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
             clearSelectedPlayer();
 
-            stopShotlock(view);
+            if(!this.isBreak)
+                stopShotlock(view);
 
         }else {
             toast("Select a player first.");
@@ -148,13 +155,21 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     public void changePlayers(View view) {
 
         Player sp = dc.getSelectedPlayer();
+
         if(sp!=null){
+            if(dc.getPlayerToSwitch()==null){
+                dc.setPlayerToSwitch(sp);
+                if(!this.isBreak)
+                    stopShotlock(view);
+                toast("Select the player you want to switch with and press the button again.");
+            }else{
+                dc.switchPlayerCaps();
+                dc.setPlayerToSwitch(null);//reset for next switch
 
-            dc.switchPlayerCaps();
+                if(!this.isBreak)
+                    stopShotlock(view);
+            }
             clearSelectedPlayer();
-
-            stopShotlock(view);
-
         }else {
             toast("Select a player first.");
         }
@@ -178,7 +193,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             updateBackgroundPlayer(sp);
             clearSelectedPlayer();
 
-            stopShotlock(view);
+            if(!this.isBreak)
+                stopShotlock(view);
         }else {
             toast("Select a player first.");
         }
@@ -206,7 +222,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
                 loadPlayers();
                 clearSelectedPlayer();      //clear selected player from layout
 
-                stopShotlock(view);
+                if(!this.isBreak)
+                    stopShotlock(view);
 
                 activities.updateActivities(dc.getMatch().getCurrentRound());
 
@@ -247,7 +264,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
             clearSelectedPlayer();
 
-            stopShotlock(view);
+            if(!this.isBreak)
+                stopShotlock(view);
 
         }else {
             toast("Select a player first.");
@@ -269,7 +287,8 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
             clearSelectedPlayer();
 
-            stopShotlock(view);
+            if(!this.isBreak)
+                stopShotlock(view);
 
         }else {
             toast("Select a player first.");
@@ -282,12 +301,13 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //user gets 2 input fields in view minutes field and seconds view
         //this value is the time we want to revert to
 
+        /*
         //matchtimer reset - using placeholder values until view is in order
         long min = 8;
         long sec = 0;
         TextView txtTime = (TextView) findViewById(R.id.txtTimer);
         //check layout element if input is valid and filled in
-        //TODO
+        //TODO: update from customer, require to work with local DB during match, keep code as placeholder for future but cannot be used right now to revert.
 
         //calc timeremaing matchtimer
         long millisecondremaining = ((min*60*1000)+(sec*1000));
@@ -307,22 +327,27 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
 
         }
+        */
+
+        //guessing this is here to test end administration. //you have guessed correctly kind sir! //moved it since undoaction is more likly to become functional then this one as it only works localy (ingoring call to undo event in backend)
+        finishMatch();
 
     }
 
     //deletes the last added action. //Maybe also possible to undo method revertToAction()
     public void undoAction(View view) {
-
-        //guessing this is here to test end administration. //you have guessed correctly kind sir!
-        finishMatch();
-
-    //    dc.undoLog();
+        dc.undoLog();
+        activities.updateActivities(dc.getMatch().getCurrentRound());
     }
 
     //Function togglechrono - backup function to pauze match and simply halt the shotlock
     public void toggleChrono(View view){
         if(matchTimer.isChronoOn()){
             matchTimer.stopChrono();
+        }else{
+            resumeTimer();
+            resumeShotlock();
+            matchTimer.startChrono();
         }
 
 
@@ -336,14 +361,15 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             //Cancel first, to prevent another shotlock running in the bacground
             if(matchTimer!=null)
                 matchTimer.getCdtShotlock().cancel();
-                toggleChrono(view);
+            matchTimer.stopChrono();
 
             //re-initialize shot lock to set remaining time back to 30 sec
             matchTimer.initShotlock((TextView) findViewById(R.id.txtShotlock), (long) 30000);
             matchTimer.initTimer((TextView) findViewById(R.id.txtTimer), matchTimer.getTimeRemaining());
 
             matchTimer.getCdtShotlock().start();
-            toggleChrono(view);
+            matchTimer.startChrono();
+            //toggleChrono(view);
 
 
         }else {
@@ -409,7 +435,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //setup breaktimer view
         matchTimer.initBreak((TextView) findViewById(R.id.txtTimer));
         matchTimer.startBreak();
-
+        this.isBreak = true;
         //disable certain buttons on screen - timout buttons, shotlock, timertext, goal
         disableActions();
 
@@ -438,6 +464,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
             //reenable timouttimers and reset them (break onfinish already ups roundvalue)
         }
+        this.isBreak = false;
     }
 
     public void finishMatch(){
@@ -520,6 +547,17 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             awayTeam.updateBackgroundPlayer();
         }
     }
+
+    //Testcode for seeing if caps change
+    public void ReloadFragments(){
+        homeTeam = PlayersFragment.newInstance(0);
+        getSupportFragmentManager().beginTransaction().add(R.id.homeContainer, homeTeam).commit();
+        awayTeam = PlayersFragment.newInstance(1);
+        getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
+        homeTeam.setOtherTeam(awayTeam);
+        awayTeam.setOtherTeam(homeTeam);
+    }
+
     //Function to clear selectedPlayer after performing buttonAction
     public void clearSelectedPlayer(){
         homeTeam.resetFontPlayers();
