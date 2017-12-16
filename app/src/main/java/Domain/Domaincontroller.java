@@ -37,6 +37,9 @@ public class Domaincontroller {
 
     private Match match;
     private MatchRest matchR;
+    private List<DivisionRest> divisions;
+    private String selectedDivisionName =null;
+    private String selectedDivisionNameTemp = null;
     //hier ga ik een selectedmatch maken in principe is dit exact hetzelfde als 'match' dat hierboven staat maar ik ga et voor de functionaliteit even apart declareren
     private MatchRest selectedMatch;
 
@@ -65,6 +68,30 @@ public class Domaincontroller {
 
     public Domaincontroller(){
 
+    }
+    public List<DivisionRest> getDivisions() {
+
+        DivisionRest nullDivision =  new DivisionRest();
+        nullDivision.setDivision_name("All");
+        this.divisions.add(nullDivision);
+        return divisions;
+    }
+    public void setDivisions(List<DivisionRest> divisions) {
+        this.divisions = divisions;
+    }
+    public String getSelectedDivisionName() {
+        return selectedDivisionName;
+    }
+
+    public void setSelectedDivisionName() {
+        this.selectedDivisionName = this.getSelectedDivisionNameTemp();
+    }
+    public String getSelectedDivisionNameTemp() {
+        return selectedDivisionNameTemp;
+    }
+
+    public void setSelectedDivisionNameTemp(String selectedDivisionNameTemp) {
+        this.selectedDivisionNameTemp = selectedDivisionNameTemp;
     }
 
 

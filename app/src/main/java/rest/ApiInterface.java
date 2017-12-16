@@ -8,6 +8,7 @@ import java.util.List;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import persistency.DivisionRest;
 import persistency.GoalRest;
 import persistency.MatchRest;
 import persistency.PlayerRest;
@@ -100,6 +101,8 @@ public interface ApiInterface {
             @Field("email") String email,
             @Field("password") String password
     );
+    @GET("api/divisions")
+    Call<List<DivisionRest>> getDivisions();
 
 
 

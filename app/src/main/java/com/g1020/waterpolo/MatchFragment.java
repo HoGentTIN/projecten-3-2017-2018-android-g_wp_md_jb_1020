@@ -1,5 +1,6 @@
 package com.g1020.waterpolo;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.text.ParseException;
@@ -19,7 +21,9 @@ import java.util.List;
 import application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import Domain.Match;
+import persistency.DivisionRest;
 import persistency.MatchRest;
+import views.CustomDivisionRestListAdapter;
 import views.CustomMatchRestListAdapter;
 
 
@@ -31,10 +35,14 @@ public class MatchFragment extends Fragment {
     CustomMatchRestListAdapter matchAdapter;
     List<MatchRest> hostedmatchesR;
     CustomMatchRestListAdapter matchRestAdapter;
+    CustomDivisionRestListAdapter divisionRestAdapter;
+    private Dialog dialog;
 
     Match selectedMatch;
 
     private ListView lvMatches;
+    private ListView lvDivisions;
+    private Button btnFilter;
     private OnMatchSelectedListener mListener;
 
     public MatchFragment() {
@@ -66,24 +74,32 @@ public class MatchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_matches, container, false);
         lvMatches = (ListView) view.findViewById(R.id.lsvMatches);
+        btnFilter = (Button) view.findViewById(R.id.btnFilter);
+        filterClickAction(btnFilter);
 
 
-List<MatchRest> filterList = new ArrayList<MatchRest>();
+        List<MatchRest> filterList = new ArrayList<MatchRest>();
 
-              filterList =  dc.getOwnedMatchesR();
-hostedmatchesR = new ArrayList<MatchRest>();
-              for(MatchRest match : filterList){
-                  SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                  try {
-                      Date strDate = sdf.parse(match.getRealFullDate());
-                      if (! new Date().after(strDate)){
-                          hostedmatchesR.add(match);
-                      }
-                  } catch (ParseException e) {
-                      Log.e("log_tag","de datumconversie is niet gelukt");
-                  }
+        filterList =  dc.getOwnedMatchesR();
+        hostedmatchesR = new ArrayList<MatchRest>();
+        for(MatchRest match : filterList){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                Date strDate = sdf.parse(match.getRealFullDate());
+                if (! new Date().after(strDate)){
+                    if(dc.getSelectedDivisionName()==null)
+                        hostedmatchesR.add(match);
+                    else{
+                        if(match.getDivision().getDivision_name()==dc.getSelectedDivisionName()){
+                            hostedmatchesR.add(match);
+                        }
+                    }
+                }
+            } catch (ParseException e) {
+                Log.e("log_tag","de datumconversie is niet gelukt");
+            }
 
-              }
+        }
 
 
         matchRestAdapter = new CustomMatchRestListAdapter(getContext(),android.R.id.text1,hostedmatchesR);
@@ -157,5 +173,81 @@ hostedmatchesR = new ArrayList<MatchRest>();
             if(i!=position)
                 ca.unselectMatch(i,lvMatches.getChildAt(i));
         }
+    }
+    private void divisionClickAction(final ListView listview) {
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // retrieve the selected player
+
+                DivisionRest selectedDivision = (DivisionRest) listview.getItemAtPosition(position);
+
+                dc.setSelectedDivisionNameTemp(selectedDivision.getDivision_name());
+                List<MatchRest> filterList = new ArrayList<MatchRest>();
+                hostedmatchesR = new ArrayList<MatchRest>();
+                filterList =  dc.getOwnedMatchesR();
+                dc.setSelectedDivisionName();
+                for(MatchRest match : filterList){
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    try {
+                        Date strDate = sdf.parse(match.getRealFullDate());
+                        if (! new Date().after(strDate)){
+                            if(dc.getSelectedDivisionName()==null||dc.getSelectedDivisionName().equals("All"))
+                                hostedmatchesR.add(match);
+                            else{
+                                if(match.getDivision().getDivision_name().equals(dc.getSelectedDivisionName())){
+                                    hostedmatchesR.add(match);
+                                }
+                            }
+                        }
+                    } catch (ParseException e) {
+                        Log.e("log_tag","de datumconversie is niet gelukt");
+                    }
+
+                }
+                matchRestAdapter = new CustomMatchRestListAdapter(getContext(),android.R.id.text1,hostedmatchesR);
+
+                lvMatches.setAdapter(matchRestAdapter);
+                dialog.dismiss();
+
+
+
+
+
+
+
+
+                //Change look of selected item and the others
+
+
+
+
+
+
+            }
+        });
+    }
+    private void filterClickAction(Button btnfilter){
+        btnfilter.setOnClickListener(new AdapterView.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.division_filter);
+                dialog.show();
+
+                lvDivisions = (ListView) dialog.findViewById(R.id.lsvDivisions);
+                List<DivisionRest> divisions = dc.getDivisions();
+                divisionRestAdapter = new CustomDivisionRestListAdapter(getContext(),android.R.id.text1, divisions);
+                lvDivisions.setAdapter(divisionRestAdapter);
+                divisionClickAction(lvDivisions);
+
+
+
+            }
+
+
+        });
     }
 }

@@ -10,11 +10,13 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import Domain.Player;
 import application.ApplicationRuntime;
 
 import Domain.Division;
 import Domain.Domaincontroller;
 import okhttp3.ResponseBody;
+import persistency.DivisionRest;
 import persistency.MatchRest;
 import persistency.PlayerRest;
 import rest.ApiClient;
@@ -142,54 +144,89 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         //show list of match ..... vs ......
 
 
-    }
+
+    apiService = dc.getApiService();
+    Call<List<DivisionRest>> call2 = apiService.getDivisions();
+        call2.enqueue(new Callback<List<DivisionRest>>() {
+        @Override
+        public void onResponse(Call<List<DivisionRest>> call, Response<List<DivisionRest>> response) {
+            List<DivisionRest> divisionsR = response.body();
+            dc.setDivisions(divisionsR);
+
+
+
+
+            Log.d(TAG,"Retrieved " + divisionsR.size() + " division objects.");
+
+            //for each match offical has filter matches
+
+            //retrieve for each match the teams and needed info
+
+
+
+        }
+
+        @Override
+        public void onFailure(Call<List<DivisionRest>> call, Throwable t) {
+            Log.e(TAG,t.toString());
+        }
+    });
+
+    //show list of match ..... vs ......
+
+
+}
 
     //TEMP function to move to administration activity
     public void endSelection(View view) {
 
-        dc.convertBackendToClass();
-        //een keer de update van hun starters doen voor de hometeam
-        //aantal spelers tellen om de array een grootte te geven
-        int aantal=0;
-        aantal +=dc.getSelectedMatch().getHome().getPlayers().size();
-        aantal+=dc.getSelectedMatch().getVisitor().getPlayers().size();
+        //checking if there are 13 starters in each team
+        if (this.checkTeams()) {
 
-        List<ApiClient.Starter> upstarters = new ArrayList<>();
-int teller =0;
-        List<PlayerRest> players = dc.getSelectedMatch().getHome().getPlayers();
-        for(PlayerRest player : players){
-            int starter;
-            if(player.getStarter())
-                starter =1;
-            else
-                starter = 0;
-            upstarters.add(new ApiClient.Starter(player.getPlayerId(), starter));
-            teller+=1;
+            dc.convertBackendToClass();
+            //een keer de update van hun starters doen voor de hometeam
+            //aantal spelers tellen om de array een grootte te geven
+            int aantal = 0;
+            aantal += dc.getSelectedMatch().getHome().getPlayers().size();
+            aantal += dc.getSelectedMatch().getVisitor().getPlayers().size();
 
+            List<ApiClient.Starter> upstarters = new ArrayList<>();
+            int teller = 0;
+            List<PlayerRest> players = dc.getSelectedMatch().getHome().getPlayers();
+            for (PlayerRest player : players) {
+                int starter;
+                if (player.getStarter())
+                    starter = 1;
+                else
+                    starter = 0;
+                upstarters.add(new ApiClient.Starter(player.getPlayerId(), starter));
+                teller += 1;
+
+            }
+            //en nu eens voor de visitor
+            players = dc.getSelectedMatch().getHome().getPlayers();
+            for (PlayerRest player : players) {
+                int starter;
+                if (player.getStarter())
+                    starter = 1;
+                else
+                    starter = 0;
+                upstarters.add(new ApiClient.Starter(player.getPlayerId(), starter));
+                teller += 1;
+            }
+
+
+            //apiService.updateStarter(dc.getSelectedMatch().getMatch_id(),upstarters);
+            ApiClient.ArrayListStarters arrStarters = new ApiClient.ArrayListStarters();
+            arrStarters.addStarters((ArrayList<ApiClient.Starter>) upstarters);
+
+            dc.asyncUpdateStarters(arrStarters);
+
+
+            Intent intent = new Intent(this, MatchControl.class);
+            //Intent intent = new Intent(this, AdministrationSetup.class);
+            startActivity(intent);
         }
-        //en nu eens voor de visitor
-        players = dc.getSelectedMatch().getHome().getPlayers();
-        for(PlayerRest player : players){
-            int starter;
-            if(player.getStarter())
-                starter = 1;
-            else
-                starter = 0;
-            upstarters.add(new ApiClient.Starter(player.getPlayerId(), starter));
-            teller+=1;
-        }
-
-
-        //apiService.updateStarter(dc.getSelectedMatch().getMatch_id(),upstarters);
-        ApiClient.ArrayListStarters arrStarters = new ApiClient.ArrayListStarters();
-        arrStarters.addStarters((ArrayList<ApiClient.Starter>) upstarters);
-
-        dc.asyncUpdateStarters(arrStarters);
-
-
-        Intent intent = new Intent(this, MatchControl.class);
-        //Intent intent = new Intent(this, AdministrationSetup.class);
-        startActivity(intent);
     }
 
     @Override
@@ -345,5 +382,27 @@ this.position = position;
     }
 
     // custom class to use for the api put of updatestarters
+
+    private boolean checkTeams(){
+        List<PlayerRest> homePlayers = new ArrayList<PlayerRest>();
+        List<PlayerRest> visitorPlayers = new ArrayList<PlayerRest>();
+
+        for(PlayerRest p : dc.getSelectedMatch().getHome().getPlayers()){
+            if(p.getStarter()){
+                homePlayers.add(p);
+            }
+        }
+        for(PlayerRest p : dc.getSelectedMatch().getVisitor().getPlayers()){
+            if(p.getStarter()){
+                visitorPlayers.add(p);
+            }
+        }
+
+        if(homePlayers.size()==13 && visitorPlayers.size()==13)
+            return true;
+
+            return false;
+
+    }
 
 }

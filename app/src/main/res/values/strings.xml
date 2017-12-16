@@ -27,6 +27,7 @@
     <string name="t_button_U20">U 20</string>
     <string name="t_button_UMV">UMV</string>
     <string name="t_button_UMV4">UMV 4</string>
+    <string name="button_filter">filter</string>
 
     <!-- Text -->
     <string name="text_shotlock">30</string>
@@ -36,4 +37,5 @@
     <string name="bench">not Active</string>
     <string name="referee_email_hint">Referee email</string>
     <string name="referee_code_hint">Referee code</string>
+    <string name="filter">Filter on Division</string>
 </resources>

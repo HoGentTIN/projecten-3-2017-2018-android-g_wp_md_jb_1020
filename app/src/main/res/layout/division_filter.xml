@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+
+        android:gravity="center"
+        android:background="@drawable/title_filter"
+        android:text="@string/filter" />
+
+    <ListView
+        android:id="@+id/lsvDivisions"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:layout_weight="0.1"/>
+
+
+</LinearLayout>
+
