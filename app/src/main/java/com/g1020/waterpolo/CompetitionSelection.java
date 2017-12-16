@@ -151,6 +151,9 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         @Override
         public void onResponse(Call<List<DivisionRest>> call, Response<List<DivisionRest>> response) {
             List<DivisionRest> divisionsR = response.body();
+            DivisionRest nullDivision =  new DivisionRest();
+            nullDivision.setDivision_name("All");
+            divisionsR.add(0,nullDivision);
             dc.setDivisions(divisionsR);
 
 

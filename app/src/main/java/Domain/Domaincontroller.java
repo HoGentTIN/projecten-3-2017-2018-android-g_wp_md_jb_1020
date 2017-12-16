@@ -71,9 +71,7 @@ public class Domaincontroller {
     }
     public List<DivisionRest> getDivisions() {
 
-        DivisionRest nullDivision =  new DivisionRest();
-        nullDivision.setDivision_name("All");
-        this.divisions.add(nullDivision);
+
         return divisions;
     }
 

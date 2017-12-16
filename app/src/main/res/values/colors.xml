@@ -12,7 +12,8 @@
     <color name="colorBlue">#6878CC</color>
     <color name="colorHeader">#3d4555</color>
     <color name="colorGreen">#4CA64C</color>
-
+    <color name="colorGrey">#949C98</color>
+    <color name="colorLightGreen">#A5D2A5</color>
     //action button colors
     <color name="btnColorGoal">#87b95e</color>
     <color name="btnColorGoalPressed">#588638</color>
@@ -26,4 +27,5 @@
     <color name="btnColorChangePressed">#3973b7</color>
     <color name="btnColorInjury">#949ae9</color>
     <color name="btnColorInjuryPressed">#5d63b6</color>
+
 </resources>
