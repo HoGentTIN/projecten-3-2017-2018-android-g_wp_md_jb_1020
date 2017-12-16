@@ -40,10 +40,6 @@ import retrofit2.Response;
  */
 public class MatchControl extends AppCompatActivity implements PlayersFragment.OnPlayerSelectedListener{
 
-    private ApplicationRuntime ar;
-    private Domaincontroller dc;
-    private MatchTimer matchTimer;
-
     private TeamsHeaderFragment teamsHeader;
     private PlayersFragment homeTeam;
     private PlayersFragment awayTeam;
@@ -52,10 +48,12 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     private TimeOutFragment timeOutFragment;
     private ShotClockFragment shotClockFragment;
 
-    boolean isBreak = false;
-
+    private ApplicationRuntime ar;
+    private Domaincontroller dc;
+    private MatchTimer matchTimer;
     //Fault playerTimers
     private List<Player> faultPlayers = new ArrayList<>();
+    boolean isBreak = false;
 
     //LIFECYCLE FUNCTIONS
     @Override
@@ -524,11 +522,13 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         Button btnTimoutAway = (Button) findViewById(R.id.btnTimeOutAway);
         TextView txtTimer = (TextView) findViewById(R.id.txtTimer);
         TextView txtShotlock = (TextView) findViewById(R.id.txtShotlock);
+        TextView txtResetShotlock = (TextView) findViewById(R.id.txtResetShotlock);
         //disable buttons
         btnTimoutHome.setClickable(false);
         btnTimoutAway.setClickable(false);
         txtTimer.setEnabled(false);
         txtShotlock.setEnabled(false);
+        txtResetShotlock.setEnabled(false);
 
     }
 
@@ -539,11 +539,13 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         //get all actions to disable
         TextView txtTimer = (TextView) findViewById(R.id.txtTimer);
         TextView txtShotlock = (TextView) findViewById(R.id.txtShotlock);
+        TextView txtResetShotlock = (TextView) findViewById(R.id.txtResetShotlock);
         //enable buttons
         resetTimout();
         txtTimer.setEnabled(true);
         txtShotlock.setEnabled(true);
         txtShotlock.setText("30");
+        txtResetShotlock.setEnabled(true);
 
     }
 

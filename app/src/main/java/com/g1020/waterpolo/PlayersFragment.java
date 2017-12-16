@@ -23,40 +23,43 @@ import views.CustomPlayerListAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
+ * This fragment is used to display the players of a team
  */
 public class PlayersFragment extends Fragment {
 
-    //TEMPORARY
-    Domaincontroller dc;
-    private static PlayersFragment pf;
-    private CustomPlayerListAdapter playerAdapter1;
-    private CustomPlayerListAdapter playerAdapter2;
-    List<Player> currentPlayers;
-    Player selectedPlayer;
+    private Domaincontroller dc;
+    private PlayersFragment otherTeam;
+
+    private List<Player> currentPlayers;
     private ListView lvPlayers;
     private ListView lvPlayers2;
 
+    private Player selectedPlayer;
     private View viewToReset;
 
-    //Playerselection parameters
-    private int previousPlayerPosition;
-    private PlayersFragment otherTeam;
-
     // interface object to pass data
-    OnPlayerSelectedListener playerListener;
-
-    TextView playerTitle;
+    private OnPlayerSelectedListener playerListener;
 
 
-
-
-    //TEMPORARY
-
-    //interface for passing data to matchcontrol
+    /**
+     * Interface class for passing data to matchcontrol
+     *
+     */
     public interface OnPlayerSelectedListener{
-        public void onArticleSelected(Boolean homeTeam, int playerId);
+        /**
+         * Method to pass objects from the fragment to the activity
+         *
+         * @param homeTeam indicates if the player his team is the home or awayteam
+         * @param playerId the id of the selected player
+         */
+        void onArticleSelected(Boolean homeTeam, int playerId);
     }
 
+    /**
+     * Method to initialize the listener object
+     *
+     * @param activity fragment interface
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -70,14 +73,23 @@ public class PlayersFragment extends Fragment {
 
     }
 
+    /**
+     * Default constructor.
+     * Initializes the domaincontroller
+     *
+     */
     public PlayersFragment() {
-        // Required empty public constructor
         ApplicationRuntime ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
     }
 
+    /**
+     * Static method that creates a new instance of playerfragment
+     *
+     *@param teamNumber can be "0" for hometeam or "1" for awayteam.
+     */
     public static PlayersFragment newInstance(int teamNumber) {
-        pf = new PlayersFragment();
+        PlayersFragment pf = new PlayersFragment();
 
         Bundle args = new Bundle();
         args.putInt("teamNumber",teamNumber);
@@ -86,6 +98,12 @@ public class PlayersFragment extends Fragment {
         return pf;
     }
 
+    /**
+     * Initializes the correct team depending on the teamnumber
+     * @see #newInstance(int)
+     *
+     * adds players into the listviews
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -106,12 +124,17 @@ public class PlayersFragment extends Fragment {
         teamClickAction(lvPlayers);
         teamClickAction(lvPlayers2);
 
-        //playerTitle = (TextView) view.findViewById(R.id.playerTitle);
         setListPlayers(team);
 
         return view;
     }
 
+    /**
+     * Method that sets the onclickListener for the player listviews.
+     * Sets the selected player in the domaincontroller and updates the playertiles for selected and unselected players
+     *
+     * @param listview listview on which the onItemClickListener resides
+     */
     private void teamClickAction(final ListView listview) {
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -122,7 +145,6 @@ public class PlayersFragment extends Fragment {
                 otherTeam.resetFontPlayers();
 
                 // retrieve the selected player
-                previousPlayerPosition = position;
                 selectedPlayer = (Player) listview.getItemAtPosition(position);
 
                 Boolean team = selectedPlayer.getTeam().equals(dc.getHomeTeam());
@@ -135,7 +157,6 @@ public class PlayersFragment extends Fragment {
 
                 dc.setSelectedPlayer(team, selectedPlayer.getPlayer_id());
 
-                //Change look of selected item  playerListNumber < 8
                 if(getCurrentPlayerPositionList() < 8){
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
                     ca.setSelectedPlayer(view, R.drawable.player_tile_selected );
@@ -151,19 +172,27 @@ public class PlayersFragment extends Fragment {
     }
 
     //look for the place of the player in currentplayer list to determine in which list he's in
+    /**
+     * Method that looks for the selected players position in the list of current players.
+     * This method is needed to access the correct listview of players to change the looks of the playertile
+     *
+     * @return the selected players position in the list
+     */
     private int getCurrentPlayerPositionList(){
                 int playerListNumber = 0;
                 for(Player cp: currentPlayers){
                     playerListNumber++;
                     if(cp.equals(selectedPlayer)){
-                    //    Log.i("game", selectedPlayer.getFullName() + "has number in list: " + String.valueOf(playerListNumber));
                         return playerListNumber;
                     }
                 }
                 return 0;
     }
 
-    //function to reset the visibility of currently selected player
+    /**
+     * Method that resets the layout of the previous selected player to a standard tile
+     *
+     */
     public void resetFontPlayers(){
         if(selectedPlayer!=null){
             if(getCurrentPlayerPositionList() < 8) {
@@ -176,6 +205,10 @@ public class PlayersFragment extends Fragment {
         }
     }
 
+    /**
+     * Method that looks for the correct adapter of the selected player to update the background
+     *
+     */
     public void updateBackgroundPlayer(){
         if(selectedPlayer != null) {
             if (getCurrentPlayerPositionList() < 8) {
@@ -188,15 +221,26 @@ public class PlayersFragment extends Fragment {
         }
     }
 
+    /**
+     * Method that sets the fragment of the other team.
+     *
+     * @param opponent the fragment of the other team
+     */
     public void setOtherTeam(PlayersFragment opponent){
         otherTeam = opponent;
     }
 
+    /**
+     * Method that loads the players of the correct team into the class.
+     * Sets the adapters to the listviews
+     *
+     * @param team the team that is displayed in this fragment
+     */
     public void setListPlayers(Team team){
         currentPlayers = team.getPlayers();
-        playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,7),R.layout.list_item_players_match_control);
-        playerAdapter2 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(7,13),R.layout.list_item_players_match_control);
 
+        CustomPlayerListAdapter playerAdapter1 = new CustomPlayerListAdapter(getContext(), android.R.id.text1, currentPlayers.subList(0, 7), R.layout.list_item_players_match_control);
+        CustomPlayerListAdapter playerAdapter2 = new CustomPlayerListAdapter(getContext(), android.R.id.text1, currentPlayers.subList(7, 13), R.layout.list_item_players_match_control);
         lvPlayers.setAdapter(playerAdapter1);
         lvPlayers2.setAdapter(playerAdapter2);
 
