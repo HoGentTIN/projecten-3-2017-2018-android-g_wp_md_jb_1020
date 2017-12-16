@@ -36,7 +36,6 @@ import retrofit2.Response;
 
 /**
  * Activity to process actions during a waterpolo match.
- *
  */
 public class MatchControl extends AppCompatActivity implements PlayersFragment.OnPlayerSelectedListener{
 
@@ -44,9 +43,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
     private PlayersFragment homeTeam;
     private PlayersFragment awayTeam;
     private ActivityFragment activities;
-    private ButtonsFragment btnFragment;
-    private TimeOutFragment timeOutFragment;
-    private ShotClockFragment shotClockFragment;
 
     private ApplicationRuntime ar;
     private Domaincontroller dc;
@@ -88,11 +84,11 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         homeTeam.setOtherTeam(awayTeam);
         awayTeam.setOtherTeam(homeTeam);
 
-        btnFragment = new ButtonsFragment();
+        ButtonsFragment btnFragment = new ButtonsFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.buttonsContainer, btnFragment).commit();
-        timeOutFragment = new TimeOutFragment();
+        TimeOutFragment timeOutFragment = new TimeOutFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.timeoutcontainer, timeOutFragment).commit();
-        shotClockFragment = new ShotClockFragment();
+        ShotClockFragment shotClockFragment = new ShotClockFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.shotclockcontainer, shotClockFragment).commit();
 
         //setting up the round, creating the activitylog and providing start-entry in log

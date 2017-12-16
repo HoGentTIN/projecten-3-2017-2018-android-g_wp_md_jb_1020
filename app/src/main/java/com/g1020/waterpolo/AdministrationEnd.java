@@ -23,30 +23,28 @@ import application.ApplicationRuntime;
 import Domain.Domaincontroller;
 import views.FontManager;
 
+/**
+ * Activity that displays an overview for the played match.
+ */
 public class AdministrationEnd extends AppCompatActivity implements PlayersFragmentSingleList.OnPlayerSelectedListener {
 
-    ButtonsFragment btnFragment;
-    TeamsHeaderFragment teamsHeaderFragment;
-    PlayersFragmentSingleList homeTeam;
-    PlayersFragmentSingleList awayTeam;
+    private TeamsHeaderFragment teamsHeaderFragment;
+    private PlayersFragmentSingleList homeTeam;
+    private PlayersFragmentSingleList awayTeam;
 
-    RelativeLayout btnSign;
-    ListView lvActivitiesQ1,lvActivitiesQ2, lvActivitiesQ3, lvActivitiesQ4;
-    List q1,q2,q3,q4;
+    private ListView lvActivitiesQ4;
+    private List q4;
 
-    TextInputEditText txtInputLayName, txtInputLayCode;
-    TextView txtIconSign;
+    private TextInputEditText txtInputLayName, txtInputLayCode;
 
-    ApplicationRuntime ar;  //this adds temporary code to this class
-    Domaincontroller dc;
-    MatchControl mc;
+    private Domaincontroller dc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administration_end);
 
-        ar = ApplicationRuntime.getInstance();
+        ApplicationRuntime ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
         dc.getMatch().setCurrentRound(4);
         dc.setCurrentActivity(this);
@@ -54,7 +52,7 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         txtInputLayName = (TextInputEditText) findViewById(R.id.txtInputLayName);
         txtInputLayCode = (TextInputEditText) findViewById(R.id.txtInputLayCode);
 
-        btnFragment = new ButtonsFragment();
+        ButtonsFragment btnFragment = new ButtonsFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.adminbuttonsContainer, btnFragment).commit();
 
         teamsHeaderFragment = new TeamsHeaderFragment();
@@ -75,7 +73,6 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         TabHost.TabSpec spec = host.newTabSpec("Quarter 1")
                 .setContent(R.id.activitiesContainerFirstRound)
                 .setIndicator("Quarter 1");
-
         host.addTab(spec);
 
         spec = host.newTabSpec("Quarter 2");
@@ -93,18 +90,18 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         spec.setIndicator("Quarter 4");
         host.addTab(spec);
 
-        lvActivitiesQ1 = (ListView) findViewById(R.id.activitiesContainerFirstRound) ;
-        q1 = dc.getLogForRound(1);
+        ListView lvActivitiesQ1 = (ListView) findViewById(R.id.activitiesContainerFirstRound);
+        List q1 = dc.getLogForRound(1);
         lvActivitiesQ1.setAdapter(new ArrayAdapter<String>(AdministrationEnd.this,
                 android.R.layout.simple_list_item_1, q1));
 
-        lvActivitiesQ2 = (ListView) findViewById(R.id.activitiesContainerSecondRound) ;
-        q2 = dc.getLogForRound(2);
+        ListView lvActivitiesQ2 = (ListView) findViewById(R.id.activitiesContainerSecondRound);
+        List q2 = dc.getLogForRound(2);
         lvActivitiesQ2.setAdapter(new ArrayAdapter<String>(AdministrationEnd.this,
                 android.R.layout.simple_list_item_1, q2));
 
-        lvActivitiesQ3 = (ListView) findViewById(R.id.activitiesContainerThirdRound) ;
-        q3 = dc.getLogForRound(3);
+        ListView lvActivitiesQ3 = (ListView) findViewById(R.id.activitiesContainerThirdRound);
+        List q3 = dc.getLogForRound(3);
         lvActivitiesQ3.setAdapter(new ArrayAdapter<String>(AdministrationEnd.this,
                 android.R.layout.simple_list_item_1, q3));
 
@@ -113,16 +110,13 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         lvActivitiesQ4.setAdapter(new ArrayAdapter<String>(AdministrationEnd.this,
                 android.R.layout.simple_list_item_1, q4));
 
-        txtIconSign = (TextView) findViewById(R.id.iconSignMatch);
+        TextView txtIconSign = (TextView) findViewById(R.id.iconSignMatch);
         setIconFont(txtIconSign);
-
-        //setPasswordVisibilityToggleEnabled(boolean)
-
-        //homeTeam.updateBackgroundPlayers();
-        //awayTeam.updateBackgroundPlayers();
-
     }
 
+    /**
+     * Method to sign the match after the referee has entered his credentials.
+     */
     public void signMatch(View view) throws InterruptedException {
 
         String pss = txtInputLayCode.getText().toString();
@@ -132,19 +126,27 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
     }
 
+    /**
+     * Method to return to competitionselection after the game is signed.
+     *
+     * @exception InterruptedException if method fails.
+     */
     public void finishAdmin() throws InterruptedException {
-
-            Intent intent = new Intent(this, CompetitionSelection.class);
-            startActivity(intent);
-
+        Intent intent = new Intent(this, CompetitionSelection.class);
+        startActivity(intent);
     }
 
+    /**
+     * @see MatchControl#onArticleSelected(Boolean, int)
+     */
     @Override
     public void onArticleSelected(Boolean homeTeam, int playerId) {
         dc.setSelectedPlayer(homeTeam, playerId);
     }
 
-    //Function: GoalMade - press goal button to change view so you can select who scored
+    /**
+     * adjusted version of {@link MatchControl#goalMade(View)}
+     */
     public void goalMade(View view){
 
         Player sp = dc.getSelectedPlayer();
@@ -165,6 +167,9 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         }
     }
 
+    /**
+     * adjusted version of {@link MatchControl#changePlayers(View)}
+     */
     public void changePlayers(View view) {
 
         Player sp = dc.getSelectedPlayer();
@@ -176,10 +181,11 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         }else {
             toast("Select a player first.");
         }
-
-
     }
 
+    /**
+     * adjusted version of {@link MatchControl#injurySustained(View)}
+     */
     public void injurySustained(View view){
 
         Player sp = dc.getSelectedPlayer();
@@ -199,6 +205,9 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
     }
 
+    /**
+     * adjusted version of {@link MatchControl#faultU20(View)}
+     */
     public void faultU20(View view){
 
         //FIRST CHECK IF PLAYER ALREADY HAS 20 sec FAULT if not ignore press of button or give message player allready punished
@@ -223,6 +232,9 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
     }
 
+    /**
+     * adjusted version of {@link MatchControl#faultUMV(View)}
+     */
     public void faultUMV(View view) {
 
         Player sp = dc.getSelectedPlayer();
@@ -242,6 +254,9 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         }
     }
 
+    /**
+     * adjusted version of {@link MatchControl#faultUMV4(View)}
+     */
     public void faultUMV4(View view) {
 
         Player sp = dc.getSelectedPlayer();
@@ -260,6 +275,10 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
 
     }
 
+    /**
+     * adjusted version of {@link MatchControl#addToLog(Player, String, String)}
+     * the roundtime is set to "END" to indicate changes happened after the official match time
+     */
     public void addToLog(Player sp, String event, String description){
         //Determine home or away team
         String t;
@@ -274,13 +293,18 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         updateLog();
     }
 
-    // reloads the lof for the fourth quarter
+    /**
+     * Method to reload the log for the fourth quarter.
+     */
     private void updateLog() {
         q4 = dc.getLogForRound(4);
         lvActivitiesQ4.setAdapter(new ArrayAdapter<String>(AdministrationEnd.this,
                 android.R.layout.simple_list_item_1, q4));
     }
 
+    /**
+     * {@link MatchControl#updateBackgroundPlayer(Player)}
+     */
     private void updateBackgroundPlayer(Player sp){
         if(sp.getTeam().equals(dc.getHomeTeam())){
             homeTeam.updateBackgroundPlayer();
@@ -289,21 +313,27 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         }
     }
 
-    //Function to clear selectedPlayer after performing buttonAction
+    /**
+     * {@link MatchControl#clearSelectedPlayer()}
+     */
     public void clearSelectedPlayer(){
         homeTeam.resetFontPlayers();
         awayTeam.resetFontPlayers();
         dc.resetSelectedPlayer();
     }
 
-    //Setup toast notification
+    /**
+     * {@link MatchControl#toast(String)}
+     */
     public void toast(final String message){
            Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
            toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
            toast.show();
     }
 
-
+    /**
+     * Method to set the font of the sign icon.
+     */
     private void setIconFont(TextView icon) {
             icon.setTypeface(FontManager.getTypeface(this, FontManager.FONTAWESOME));
     }

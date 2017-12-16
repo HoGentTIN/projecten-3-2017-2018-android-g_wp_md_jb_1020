@@ -28,7 +28,7 @@ import retrofit2.Response;
 public class Domaincontroller {
 
     //Backend connector
-    final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+    private final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
     private Match match;
     private MatchRest matchR;
