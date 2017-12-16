@@ -1,9 +1,8 @@
 package Domain;
 
 /**
- * Created by pieter on 09/11/2017.
+ * Class to represent a scored goal.
  */
-
 public class Goal {
 
     private int playerid;
