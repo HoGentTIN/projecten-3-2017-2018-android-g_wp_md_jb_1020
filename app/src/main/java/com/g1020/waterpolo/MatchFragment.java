@@ -52,6 +52,7 @@ public class MatchFragment extends Fragment {
     }
     public interface OnMatchSelectedListener{
         public void onMatchSelected(int position);
+        public void onFiltered();
     }
 
     public static MatchFragment newInstance(int matchNumber) {
@@ -212,6 +213,7 @@ public class MatchFragment extends Fragment {
                 lvMatches.setAdapter(matchRestAdapter);
                 dialog.dismiss();
 
+mListener.onFiltered();
 
 
 

@@ -76,6 +76,7 @@ public class Domaincontroller {
         this.divisions.add(nullDivision);
         return divisions;
     }
+
     public void setDivisions(List<DivisionRest> divisions) {
         this.divisions = divisions;
     }

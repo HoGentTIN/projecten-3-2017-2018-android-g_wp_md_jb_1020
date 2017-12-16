@@ -46,7 +46,7 @@ public class CustomDivisionRestListAdapter  extends ArrayAdapter<DivisionRest> {
             vi = LayoutInflater.from(getContext());
 
 
-            
+
 
 
             //here i look if the the match is selected, if so it will show a more detailed listitem

@@ -236,6 +236,7 @@ this.position = position;
         getSupportFragmentManager().beginTransaction().replace(R.id.matchSettingsContainer,matchSettings).commit();
 
 
+
         playersFrag = new PlayersMatchSettingsFragment();
         playersFrag.setHometeam(1);//keeps adding to list on reloading the fragment try to prevent this TO DO
         getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();
@@ -250,6 +251,13 @@ this.position = position;
 
 
 
+    }
+
+    @Override
+    public void onFiltered() {
+        MatchSettingsFragment fragment = (MatchSettingsFragment)getSupportFragmentManager().findFragmentById(matchSettings.getId());
+        if(fragment != null)
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
 
     @Override
