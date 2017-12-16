@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Created by pieter on 14/11/2017.
+ * Loads the fontawesome font into the app
  */
-
 public class FontManager {
 
     public static final String ROOT = "fonts/",
@@ -17,19 +16,5 @@ public class FontManager {
 
     public static Typeface getTypeface(Context context, String font) {
         return Typeface.createFromAsset(context.getAssets(), font);
-    }
-
-    //climbs the tree of a given XML parent and recursively overrides the typeface of each TextView it finds.
-    public static void markAsIconContainer(View v, Typeface typeface) {
-        if (v instanceof ViewGroup) {
-            ViewGroup vg = (ViewGroup) v;
-            for (int i = 0; i < vg.getChildCount(); i++) {
-                View child = vg.getChildAt(i);
-                markAsIconContainer(child, typeface);
-            }
-        } else if (v instanceof TextView) {
-            ((TextView) v).setTypeface(typeface);
-
-        }
     }
 }

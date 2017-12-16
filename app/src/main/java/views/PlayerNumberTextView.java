@@ -11,16 +11,14 @@ import android.widget.TextView;
 import com.g1020.waterpolo.R;
 
 /**
- * Created by pieter on 16/11/2017.
+ * Class to create a black stroke around white player numbers.
  */
-
 public class PlayerNumberTextView extends android.support.v7.widget.AppCompatTextView {
 
     private float strokeWidth;
     private Integer strokeColor;
     private Paint.Join strokeJoin;
     private float strokeMiter;
-
 
     public PlayerNumberTextView(Context context) {
         super(context);

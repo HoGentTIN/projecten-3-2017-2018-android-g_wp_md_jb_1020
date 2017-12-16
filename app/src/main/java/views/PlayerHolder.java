@@ -6,10 +6,10 @@ import android.widget.TextView;
 import com.g1020.waterpolo.R;
 
 /**
- * Created by pieter on 27/11/2017.
+ * Holder object for players in the listview.
+ * Has a field for the playernumber, playername and one to indicate the player's faults.
  */
-
-public class PlayerHolder {
+class PlayerHolder {
 
     PlayerNumberTextView playerNumberTxtV;
     TextView txtPlayername;

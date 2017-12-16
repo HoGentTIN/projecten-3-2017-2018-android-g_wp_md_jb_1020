@@ -10,9 +10,8 @@ import android.widget.ImageView;
 import java.io.InputStream;
 
 /**
- * Created by pieter on 25/11/2017.
+ * {@link AsyncTask} to download the images for teamlogo's and players
  */
-
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
         private ImageView bmImage;
@@ -36,7 +35,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         }
 
         protected void onPostExecute(Bitmap result) {
-            //rescale image for matchcontroll, don't know why it doens't happen in matchsetup
+            //rescale image for matchcontroll
             if(result != null) {
                 result = Bitmap.createScaledBitmap(result, 100, 100, false);
             }

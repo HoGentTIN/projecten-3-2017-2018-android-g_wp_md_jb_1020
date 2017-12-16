@@ -24,6 +24,9 @@ import persistency.PlayerRest;
  * Created by pieter on 29/10/2017.
  */
 
+/**
+ * @see CustomPlayerListAdapter for the used methods
+ */
 public class CustomPlayerRestListAdapter extends ArrayAdapter<PlayerRest> {
     private ApplicationRuntime ar = ApplicationRuntime.getInstance();  //this adds temporary code to this class
     private Domaincontroller dc = ar.getDc();
