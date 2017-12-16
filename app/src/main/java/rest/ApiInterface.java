@@ -27,7 +27,7 @@ import retrofit2.http.Path;
 public interface ApiInterface {
 
     //Get all matches
-    @GET("api/matches")
+    @GET("api/matches/active")
     Call<List<MatchRest>> getMatches();
 
     //Get all matches belonging to logged in official get list matchrest where official id = ... or get Logged in OfficialRest and retrieve his matches
