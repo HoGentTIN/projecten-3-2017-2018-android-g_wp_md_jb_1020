@@ -70,6 +70,12 @@ public class CustomDivisionRestListAdapter  extends ArrayAdapter<DivisionRest> {
             holder = (MyHolder) v.getTag();
         }
         holder.txtdivisionName.setText(getItem(position).getDivision_name());
+        if(getItem(position).getDivision_name().equals("All")){
+            holder.txtdivisionName.setBackgroundResource(R.drawable.listitem_division_all);
+        }else{
+            holder.txtdivisionName.setBackgroundResource(R.drawable.listitem_division);
+        }
+
         return v;
     }
     public class MyHolder {

@@ -151,6 +151,9 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         @Override
         public void onResponse(Call<List<DivisionRest>> call, Response<List<DivisionRest>> response) {
             List<DivisionRest> divisionsR = response.body();
+            DivisionRest nullDivision =  new DivisionRest();
+            nullDivision.setDivision_name("All");
+            divisionsR.add(0,nullDivision);
             dc.setDivisions(divisionsR);
 
 
@@ -223,6 +226,11 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
             dc.asyncUpdateStarters(arrStarters);
 
 
+
+
+
+
+
             Intent intent = new Intent(this, MatchControl.class);
             //Intent intent = new Intent(this, AdministrationSetup.class);
             startActivity(intent);
@@ -255,9 +263,10 @@ this.position = position;
 
     @Override
     public void onFiltered() {
+        if(matchSettings != null){
         MatchSettingsFragment fragment = (MatchSettingsFragment)getSupportFragmentManager().findFragmentById(matchSettings.getId());
         if(fragment != null)
-            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();}
     }
 
     @Override
