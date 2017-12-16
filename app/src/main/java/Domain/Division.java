@@ -1,6 +1,5 @@
 package Domain;
 
-import java.sql.Time;
 
 /**
  * Created by Impling on 18-Oct-17.
