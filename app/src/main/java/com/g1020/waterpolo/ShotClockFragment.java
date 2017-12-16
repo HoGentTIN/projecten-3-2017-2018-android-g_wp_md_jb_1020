@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Created by pieter on 26/11/2017.
+ * A simple {@link Fragment} subclass.
+ * This fragment is used to display the Shotclock used in {@link MatchControl}
  */
-
 public class ShotClockFragment extends Fragment {
 
     private TextView txtShotClock;

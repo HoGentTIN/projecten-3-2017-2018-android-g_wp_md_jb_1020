@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by pieter on 26/11/2017.
+ * A simple {@link Fragment} subclass.
+ * This fragment is used to display the team timeouts used in {@link MatchControl}.
  */
-
 public class TimeOutFragment extends Fragment {
 
     @Override
