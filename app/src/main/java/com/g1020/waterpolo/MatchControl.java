@@ -34,30 +34,28 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Activity to process actions during a waterpolo match.
+ *
+ */
 public class MatchControl extends AppCompatActivity implements PlayersFragment.OnPlayerSelectedListener{
 
-    //backend variables
-    ApiInterface apiService;
-    private static final String TAG = MatchControl.class.getSimpleName();
-    private final static String API_KEY = "";
+    private ApplicationRuntime ar;
+    private Domaincontroller dc;
+    private MatchTimer matchTimer;
 
-    ApplicationRuntime ar;  //this adds temporary code to this class
-    Domaincontroller dc;
-    MatchTimer matchTimer;
-
-    TeamsHeaderFragment teamsHeader;
-    PlayersFragment homeTeam;
-    PlayersFragment awayTeam;
-
-    ActivityFragment activities;
-    ButtonsFragment btnFragment;
-    TimeOutFragment timeOutFragment;
-    ShotClockFragment shotClockFragment;
+    private TeamsHeaderFragment teamsHeader;
+    private PlayersFragment homeTeam;
+    private PlayersFragment awayTeam;
+    private ActivityFragment activities;
+    private ButtonsFragment btnFragment;
+    private TimeOutFragment timeOutFragment;
+    private ShotClockFragment shotClockFragment;
 
     boolean isBreak = false;
 
     //Fault playerTimers
-    List<Player> faultPlayers = new ArrayList<>();
+    private List<Player> faultPlayers = new ArrayList<>();
 
     //LIFECYCLE FUNCTIONS
     @Override
@@ -71,7 +69,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
-        apiService = dc.getApiService();
         //ar.setLocale("fr");
 
         //test code to see if function in activity can be called from the timerlistner in matchtimer
