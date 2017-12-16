@@ -300,22 +300,25 @@ public class Domaincontroller {
         if(home){
             List<PlayerRest> playersR = selectedMatch.getHome().getPlayers();
             for (PlayerRest pr : playersR){
-                int firstSpace = pr.getName().indexOf(" ");                     // find divide between first and lastname
-                String firstName = pr.getName().substring(0, firstSpace);       // get everything upto the first space character
-                String lastName = pr.getName().substring(firstSpace).trim();
+                if(pr.getStarter()) {
+                    int firstSpace = pr.getName().indexOf(" ");                     // find divide between first and lastname
+                    String firstName = pr.getName().substring(0, firstSpace);       // get everything upto the first space character
+                    String lastName = pr.getName().substring(firstSpace).trim();
 
-                Player p = new Player(pr.getPlayerNumber(), firstName, lastName);
-                p.setTeam(t);
-                p.setPlayer_id(pr.getPlayerId());
-                //still need code to get status enum for player
-                p.setStatus(pr.getStatus());
-                //add converter in restobject to turn birthdate into date instead of string and calculate age
-                //add code for adding player image? only needed in rest yes or no.
-                players.add(p);
+                    Player p = new Player(pr.getPlayerNumber(), firstName, lastName);
+                    p.setTeam(t);
+                    p.setPlayer_id(pr.getPlayerId());
+                    //still need code to get status enum for player
+                    p.setStatus(pr.getStatus());
+                    //add converter in restobject to turn birthdate into date instead of string and calculate age
+                    //add code for adding player image? only needed in rest yes or no.
+                    players.add(p);
+                }
             }
         }else{
             List<PlayerRest> playersR = selectedMatch.getVisitor().getPlayers();
             for (PlayerRest pr : playersR){
+                if(pr.getStarter()) {
                 int firstSpace = pr.getName().indexOf(" ");                     // find divide between first and lastname
                 String firstName = pr.getName().substring(0, firstSpace);       // get everything upto the first space character
                 String lastName = pr.getName().substring(firstSpace).trim();
@@ -327,7 +330,7 @@ public class Domaincontroller {
                 p.setStatus(pr.getStatus());
                 //add converter in restobject to turn birthdate into date instead of string and calculate age
                 //add code for adding player image? only needed in rest yes or no.
-                players.add(p);
+                players.add(p);}
             }
 
         }
