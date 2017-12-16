@@ -109,23 +109,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         dc.startMatch();
     }
 
-
-
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-
-        shotClockFragment.getTxtShotClock().setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                stopShotlock(v);
-                return true;
-            }
-        });
-
-    }
-
     //PROCESS FUNCTIONS
     /**
      * Method that is called when goal button is pressed.
@@ -149,7 +132,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             clearSelectedPlayer();
 
             if(!this.isBreak)
-                stopShotlock(view);
+                toggleChrono(view);
 
         }else {
             toast("Select a player first.");
@@ -179,7 +162,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
                 dc.setPlayerToSwitch(null);//reset for next switch
 
                 if(!this.isBreak)
-                    stopShotlock(view);
+                    toggleChrono(view);
             }
             clearSelectedPlayer();
         }else {
@@ -202,8 +185,10 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             updateBackgroundPlayer(sp);
             clearSelectedPlayer();
 
-            if(!this.isBreak)
-                stopShotlock(view);
+            if(!this.isBreak){
+                toggleChrono(view);
+            }
+
         }else {
             toast("Select a player first.");
         }
@@ -232,7 +217,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
                 clearSelectedPlayer();      //clear selected player from layout
 
                 if(!this.isBreak)
-                    stopShotlock(view);
+                    toggleChrono(view);
 
                 activities.updateActivities(dc.getMatch().getCurrentRound());
 
@@ -274,7 +259,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             clearSelectedPlayer();
 
             if(!this.isBreak)
-                stopShotlock(view);
+                toggleChrono(view);
 
         }else {
             toast("Select a player first.");
@@ -297,7 +282,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             clearSelectedPlayer();
 
             if(!this.isBreak)
-                stopShotlock(view);
+                toggleChrono(view);
 
         }else {
             toast("Select a player first.");
@@ -404,8 +389,9 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         matchTimer.stopChrono();
 
         //reset shotlock to 30 seconds
-        //Cancel first, to prevent another shotlock running in the bacground
-        if(matchTimer!=null)
+        //Cancel first, to prevent another shotlock running in the background
+
+        //if(matchTimer!=null)
             matchTimer.getCdtShotlock().cancel();
 
         //re-initialize shot lock to set remaining time back to 30 sec

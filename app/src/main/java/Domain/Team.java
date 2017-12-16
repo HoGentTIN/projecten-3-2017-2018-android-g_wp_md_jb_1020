@@ -85,7 +85,6 @@ public class Team {
 
     public void addPlayers(Player[] p){
         players.addAll(Arrays.asList(p));
-        sortPlayersByNumber();
     }
 
     public void sortPlayersByNumber(){
@@ -104,6 +103,7 @@ public class Team {
 
 
     public List<Player> getPlayers(){
+        sortPlayersByNumber();
         return players;
     }
 
