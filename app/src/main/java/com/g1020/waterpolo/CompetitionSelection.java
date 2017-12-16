@@ -255,9 +255,10 @@ this.position = position;
 
     @Override
     public void onFiltered() {
+        if(matchSettings != null){
         MatchSettingsFragment fragment = (MatchSettingsFragment)getSupportFragmentManager().findFragmentById(matchSettings.getId());
         if(fragment != null)
-            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();}
     }
 
     @Override
