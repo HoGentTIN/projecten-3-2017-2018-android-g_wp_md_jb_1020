@@ -175,7 +175,6 @@ public class MatchTimer {
 
                 //testcode for calling current activity screen
                 MatchControl mc = (MatchControl) dc.getCurrentActivity();
-                mc.testFunction();
             }
         };
     }
