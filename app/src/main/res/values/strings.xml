@@ -17,7 +17,7 @@
     <string name="button_Injury">Injury</string>
     <string name="button_shotclock">Shotclock</string>
     <string name="button_undoAction">Undo</string>
-    <string name="button_revertToAction">Revert to</string>
+    <string name="button_revertToAction">End match</string>
     <string name="button_signMatch">Sign</string>
 
     <!-- Button tooltips -->

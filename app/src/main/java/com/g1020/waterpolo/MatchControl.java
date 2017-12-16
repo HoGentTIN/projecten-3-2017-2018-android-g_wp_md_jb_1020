@@ -125,8 +125,14 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         });
 
     }
+
     //PROCESS FUNCTIONS
-    //Function: GoalMade - press goal button to change view so you can select who scored
+    /**
+     * Method that is called when goal button is pressed.
+     * This method adds a goal to the scoring team, updates the matchheader and adds the goal to the log.
+     *
+     * @param view The view it is associated with
+     */
     public void goalMade(View view){
 
         Player sp = dc.getSelectedPlayer();
@@ -151,7 +157,13 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
 
     }
 
-    //TEMP function to move to PlayerControl activity
+    /**
+     * Method that is called when switch button is pressed.
+     * Select a player, press the button, select another player.
+     * This method changes the capnumbers of the two selected players.
+     *
+     * @param view The view it is associated with
+     */
     public void changePlayers(View view) {
 
         Player sp = dc.getSelectedPlayer();
@@ -173,9 +185,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
         }else {
             toast("Select a player first.");
         }
-        //PlayersFragment awayTeam = new PlayersFragment();
-        //getSupportFragmentManager().beginTransaction().detach(faultAwayTeam).commit();
-        //getSupportFragmentManager().beginTransaction().add(R.id.awayContainer, awayTeam).commit();
 
     }
 
