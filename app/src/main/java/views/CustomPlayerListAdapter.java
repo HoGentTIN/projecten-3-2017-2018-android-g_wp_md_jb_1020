@@ -22,32 +22,44 @@ import Domain.Domaincontroller;
 import Domain.Player;
 import persistency.PlayerRest;
 
-/**
- * Created by pieter on 29/10/2017.
- */
 
+/**
+ * An {@link ArrayAdapter} subclass.
+ * Adapter for playerobjects in {@link PlayersFragment} listviews
+ *
+ */
 public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
-        private ApplicationRuntime ar = ApplicationRuntime.getInstance();  //this adds temporary code to this class
+        private ApplicationRuntime ar = ApplicationRuntime.getInstance();
         private Domaincontroller dc = ar.getDc();
 
         private PlayerHolder playerHolder;
         private int listLayout;
 
-    //to use colors in resources
-    private int res[] = {R.color.btnColorU20,R.color.btnColorU20Pressed,R.color.btnColorUMV4Pressed};
+        //colors to indicate number of faults for players
+        private int res[] = {R.color.btnColorU20,R.color.btnColorU20Pressed,R.color.btnColorUMV4Pressed};
 
+        /**
+         * Method that creates a new instance of playerfragment
+         *
+         *@param listLay sets the resource for the playerlist items for the adapter.
+         *               This is used to display variable player tile heights
+         */
         public CustomPlayerListAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<Player> players, int listLay) {
             super(context, textViewResourceId, players);
             listLayout = listLay;
         }
 
+        /**
+         * Gets a View that displays the data at the specified position in the data set.
+         * Assigns a {@link PlayerHolder} object to the view.
+         */
         @Override
         public View getView(int position, View convertView, ViewGroup viewGroup) {
 
             if (convertView == null) {
-                LayoutInflater vi;
-                vi = LayoutInflater.from(getContext());
+                LayoutInflater vi = LayoutInflater.from(getContext());
                 convertView = vi.inflate(listLayout, null);
+
                 playerHolder = new PlayerHolder(convertView);
                 convertView.setTag(playerHolder);
             }
@@ -58,41 +70,38 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
             Player p = getItem(position);
 
             if (p != null) {
-
                 if (playerHolder.txtPlayername != null) {
                     playerHolder.txtPlayername.setText(p.getFullName());
                 }
                 if (playerHolder.playerNumberTxtV != null){
                     int pNumber = p.getPlayerNumber();
-
-                    // in comments to reduce laptop fan
                     setTeamColors(convertView,p);
-
-                    StringBuilder sbPlayerNumber = new StringBuilder();
-                    sbPlayerNumber.append(pNumber);
-                    playerHolder.playerNumberTxtV.setText((sbPlayerNumber.toString()));
+                    playerHolder.playerNumberTxtV.setText((String.valueOf(pNumber)));
                 }
                 //check if player already has faults, this way it's correctly displayed in administrationEnd
                 updateBackgroundColors(p,convertView);
             }
-
-
             return convertView;
         }
 
     @Override
     public int getViewTypeCount() {
-
         return getCount();
     }
 
     @Override
     public int getItemViewType(int position) {
-
         return position;
     }
 
-
+    /**
+     * Method to set the correct colors for the player his capnumber
+     * Hometeam = white & black text, awayteam = blue & white text
+     * Goaly hometeam = red & black text, goaly awayteam = red & white text
+     *
+     * @param v View object for player
+     * @param p Player object for which data is displayed
+     */
     private void setTeamColors(View v, Player p){
 
             //assign a standerd player tile to the players
@@ -118,12 +127,23 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
             }
         }
 
-
-        //Function to set the name style of a list item
-    public void setSelectedPlayer(View convertView, int drawableId){
+    /**
+     * Sets the style for the player cell
+     *
+     * @param convertView view object for the player
+     * @param drawableId id for the drawable to set as background for the view object
+     */
+    public void setPlayerTileStyle(View convertView, int drawableId){
             convertView.setBackgroundResource(drawableId);
     }
 
+    /**
+     * Method that updates the fault indicators of the player tiles
+     * Changes the color of the playernumber to gray when the player his game is over
+     *
+     * @param p player object of the player
+     * @param v view object for the player
+     */
     public void updateBackgroundColors(Player p, View v){
 
         playerHolder = (PlayerHolder) v.getTag();
@@ -140,10 +160,7 @@ public class CustomPlayerListAdapter extends ArrayAdapter<Player> {
             }
 
         if(p.getStatus() == Status.GAMEOVER){
-                Log.i("game", "changing background color to game over");
             playerHolder.playerNumberTxtV.setBackgroundResource(R.drawable.playernumber_gameover);
         }
-        //entire cell backgroundcolor
-        //v.setBackgroundResource(res[p.getFaults()]);
     }
 }

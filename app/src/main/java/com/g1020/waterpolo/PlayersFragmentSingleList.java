@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -24,36 +23,26 @@ import views.CustomPlayerListAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
+ * This fragment is used to display the players of a team, displayed in a single list
+ * @see PlayersFragment for the used methods
  */
+
 public class PlayersFragmentSingleList extends Fragment {
 
-    //TEMPORARY
-    Domaincontroller dc;
-    private static PlayersFragmentSingleList pf;
-    private CustomPlayerListAdapter playerAdapter1;
-    List<Player> currentPlayers;
-    Player selectedPlayer;
+    private Domaincontroller dc;
+    private Player selectedPlayer;
     private ListView lvPlayers;
-
     private View viewToReset;
-
-    //Playerselection parameters
-    private int previousPlayerPosition;
 
     private PlayersFragmentSingleList otherTeam;
 
     // interface object to pass data
-    OnPlayerSelectedListener playerListener;
+    private OnPlayerSelectedListener playerListener;
 
-    TextView playerTitle;
-
-
-
-    //TEMPORARY
 
     //interface for passing data to matchcontrol
     public interface OnPlayerSelectedListener{
-        public void onArticleSelected(Boolean homeTeam, int playerId);
+        void onArticleSelected(Boolean homeTeam, int playerId);
     }
 
     @Override
@@ -70,13 +59,12 @@ public class PlayersFragmentSingleList extends Fragment {
     }
 
     public PlayersFragmentSingleList() {
-        // Required empty public constructor
         ApplicationRuntime ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
     }
 
     public static PlayersFragmentSingleList newInstance(int teamNumber) {
-        pf = new PlayersFragmentSingleList();
+        PlayersFragmentSingleList pf = new PlayersFragmentSingleList();
 
         Bundle args = new Bundle();
         args.putInt("teamNumber",teamNumber);
@@ -120,7 +108,6 @@ public class PlayersFragmentSingleList extends Fragment {
                 otherTeam.resetFontPlayers();
 
                 // retrieve the selected player
-                previousPlayerPosition = position;
                 selectedPlayer = (Player) listview.getItemAtPosition(position);
 
 
@@ -141,7 +128,7 @@ public class PlayersFragmentSingleList extends Fragment {
                 Log.i("game", Integer.toString(listview.getChildCount()));
                 Log.i("game", Integer.toString(selectedPlayer.getPlayerNumber()-1));
 
-                ca.setSelectedPlayer(view,R.drawable.player_tile_selected );
+                ca.setPlayerTileStyle(view,R.drawable.player_tile_selected );
                 viewToReset = view;
 
 
@@ -149,24 +136,11 @@ public class PlayersFragmentSingleList extends Fragment {
         });
     }
 
-    //look for the place of the player in currentplayer list to determine in which list he's in
-    private int getCurrentPlayerPositionList(){
-                int playerListNumber = 0;
-                for(Player cp: currentPlayers){
-                    playerListNumber++;
-                    if(cp.equals(selectedPlayer)){
-                        Log.i("game", selectedPlayer.getFullName() + "has number in list: " + String.valueOf(playerListNumber));
-                        return playerListNumber;
-                    }
-                }
-                return 0;
-    }
-
     //function to reset the visibility of currently selected player
     public void resetFontPlayers(){
         if(selectedPlayer!=null){
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-                ca.setSelectedPlayer(viewToReset, R.drawable.player_tile);
+                ca.setPlayerTileStyle(viewToReset, R.drawable.player_tile);
         }
     }
 
@@ -177,20 +151,13 @@ public class PlayersFragmentSingleList extends Fragment {
         }
     }
 
-    public void updateBackgroundPlayers() {
-        CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-        for(int i = 0; i < currentPlayers.size(); i++){
-            ca.updateBackgroundColors(currentPlayers.get(i), lvPlayers.getChildAt(i));
-        }
-    }
-
     public void setOtherTeam(PlayersFragmentSingleList opponent){
         otherTeam = opponent;
     }
 
     public void setListPlayers(Team team){
-        currentPlayers = team.getPlayers();
-        playerAdapter1 = new CustomPlayerListAdapter(getContext(),android.R.id.text1, currentPlayers.subList(0,13),R.layout.list_item_players_administration);
+        List<Player> currentPlayers = team.getPlayers();
+        CustomPlayerListAdapter playerAdapter1 = new CustomPlayerListAdapter(getContext(), android.R.id.text1, currentPlayers.subList(0, 13), R.layout.list_item_players_administration);
 
         lvPlayers.setAdapter(playerAdapter1);
 

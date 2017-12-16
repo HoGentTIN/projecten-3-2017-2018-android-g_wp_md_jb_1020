@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -23,7 +22,7 @@ import views.CustomPlayerListAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
- * This fragment is used to display the players of a team
+ * This fragment is used to display the players of a team, divided in two lists
  */
 public class PlayersFragment extends Fragment {
 
@@ -159,10 +158,10 @@ public class PlayersFragment extends Fragment {
 
                 if(getCurrentPlayerPositionList() < 8){
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-                    ca.setSelectedPlayer(view, R.drawable.player_tile_selected );
+                    ca.setPlayerTileStyle(view, R.drawable.player_tile_selected );
                 }else{
                     CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
-                    ca.setSelectedPlayer(view, R.drawable.player_tile_selected );
+                    ca.setPlayerTileStyle(view, R.drawable.player_tile_selected );
                 }
 
                 viewToReset = view;
@@ -197,10 +196,10 @@ public class PlayersFragment extends Fragment {
         if(selectedPlayer!=null){
             if(getCurrentPlayerPositionList() < 8) {
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers.getAdapter();
-                ca.setSelectedPlayer(viewToReset, R.drawable.player_tile);
+                ca.setPlayerTileStyle(viewToReset, R.drawable.player_tile);
             } else {
                 CustomPlayerListAdapter ca = (CustomPlayerListAdapter) lvPlayers2.getAdapter();
-                ca.setSelectedPlayer(viewToReset, R.drawable.player_tile);
+                ca.setPlayerTileStyle(viewToReset, R.drawable.player_tile);
             }
         }
     }
