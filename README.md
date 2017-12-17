@@ -8,11 +8,11 @@ This is part of our assignment for the course Projecten III: Mobile Apps at Hoge
 Our group is **WP_MD_JB_1020**
 
 ## Waterpolo App + Backend
-This is the waterpolo-app we created for the course Mobile App Projects 3. 
+This is the waterpolo-app we created for the course Mobile App Projects 3. The app is to be only used on **tablet** devices.
 It is written in Java.
 
 ## Languages
-The app is currently translated in these languages, depending on the device settings:
+The app is currently translated in these languages, depending on the device's location settings:
 
 * English
 * Dutch / Nederlands
@@ -33,9 +33,11 @@ To sign and close the match in administration end:
 - password: secret
 
 ## APK Installation
-to install on your tablet follow the instructions on https://www.wikihow.tech/Install-APK-Files-on-Android
-APK name: 
-APK location: 
+To install on your tablet follow the instructions on https://www.wikihow.tech/Install-APK-Files-on-Android
+- APK name: waterpolo-app.apk
+You can download the apk from following locations: 
+- voom.be:12005/files/waterpolo-apk/waterpolo-app.apk
+- from this github project, located at: projecten-3-2017-2018-android-g_wp_md_jb_1020/app/release/waterpolo-app.apk
 
 ## Backend links
 Website: http://voom.be:12005/
