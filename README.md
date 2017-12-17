@@ -26,12 +26,20 @@ This part of the project was made by (focus on):
 
 Other team members (webapp):
   - Matthias Vanooteghem
-  
+
+## Match signing instructions
+To sign and close the match in administration end:
+- email: any @hogent.be email address 
+- password: secret
+
+## APK Installation
+to install on your tablet follow the instructions on https://www.wikihow.tech/Install-APK-Files-on-Android
+APK name: 
+APK location: 
+
 ## Backend links
 Website: http://voom.be:12005/
 
 Adminsection: http://voom.be:12005/admin/
 
 API: http://voom.be:12005/api/
-
-## APK Installation
