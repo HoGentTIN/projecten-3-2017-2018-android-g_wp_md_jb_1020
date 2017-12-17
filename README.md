@@ -38,7 +38,7 @@ To install on your tablet follow the instructions on https://www.wikihow.tech/In
 
 You can download the apk from following locations: 
 - voom.be:12005/files/waterpolo-apk/waterpolo-app.apk
-- from this github project, located at: projecten-3-2017-2018-android-g_wp_md_jb_1020/app/release/waterpolo-app.apk
+- from this github project, located at: projecten-3-2017-2018-android-g_wp_md_jb_1020/waterpolo-app.apk
 
 ## Backend links
 Website: http://voom.be:12005/
