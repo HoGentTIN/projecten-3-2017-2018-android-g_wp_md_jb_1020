@@ -50,26 +50,20 @@ public class ApiClient extends AsyncTask {
                     Request request = chain.request();
                     okhttp3.Response response = chain.proceed(request);
 
-                    Log.i("servertest","" + request);
-                    Log.i("servertest","" + response);
+    //                if (!NetworkUtil.isOnline(dc.getCurrentActivity().getApplicationContext())) {
+    //                    throw new NoConnectivityException();
+    //                }
 
-     //               if(response.isSuccessful())
                     switch(response.code()) {
                         case 500:
                             Toast.makeText(dc.getCurrentActivity().getApplicationContext(), "Server error", Toast.LENGTH_SHORT).show();
-                            Log.i("servertest", "" + response);
                             return response;
                         case 503:
                             Toast.makeText(dc.getCurrentActivity().getApplicationContext(), "Server error", Toast.LENGTH_SHORT).show();
-                            Log.i("servertest", "" + response);
                             return response;
                         case 504:
                             Toast.makeText(dc.getCurrentActivity().getApplicationContext(), "Server error", Toast.LENGTH_SHORT).show();
-                            Log.i("servertest", "" + response);
                             return response;
-
-                        default:
-                                //Log.i("servertest", "shit happens " + response.code());
                     }
                         return response;
                 }
