@@ -36,7 +36,6 @@ public class Domaincontroller {
     private String selectedDivisionNameTemp = null;
     private List<MatchRest> ownedMatchesR;
     private MatchRest selectedMatch;
-    private String startTime;
 
     private Player selectedPlayer;
     private Player playerToSwitch = null;
@@ -65,7 +64,8 @@ public class Domaincontroller {
     public void setSelectedDivisionName() {
         this.selectedDivisionName = this.getSelectedDivisionNameTemp();
     }
-    public String getSelectedDivisionNameTemp() {
+
+    private String getSelectedDivisionNameTemp() {
         return selectedDivisionNameTemp;
     }
 
@@ -103,6 +103,11 @@ public class Domaincontroller {
 
     public void setPlayerToSwitch(Player sp){this.playerToSwitch=sp;}
 
+    /**
+     * Method that sets the selected match in the {@link com.g1020.waterpolo.CompetitionSelection} to the domain.
+     *
+     * @param matchNumber number of the match in the selection list
+     */
     public void setMatch(int matchNumber){
         int aantal = ownedMatchesR.size();
         for (int i =0;i<aantal;i++){
@@ -112,7 +117,12 @@ public class Domaincontroller {
         }
     }
 
-    //set player via team and player id
+    /**
+     * Method that sets the selected player in the {@link com.g1020.waterpolo.MatchControl} to the domain.
+     *
+     * @param homeTeam boolean that indicates the team of the player. true = homeTeam
+     * @param playerId id of the selected player.
+     */
     public void setSelectedPlayer(Boolean homeTeam, int playerId) {
         if (homeTeam){
             selectedPlayer = match.getHomeTeam().getPlayerById(playerId);
@@ -138,6 +148,7 @@ public class Domaincontroller {
     public Match getMatch() {
         return match;
     }
+
     public MatchRest getSelectedMatch(){return  selectedMatch;}
 
     public void setOwnedMatchesR(List<MatchRest> matcherR){
@@ -146,94 +157,12 @@ public class Domaincontroller {
 
     public List<MatchRest> getOwnedMatchesR(){return ownedMatchesR;}
 
-
-    public void convertBackendToClass(){
-
-        //first create team objects widouth player list
-        List<Team> teams = convertTeamRestToTeam();
-        //create player lists with team objects and PlayerRest
-        List<Player> homePlayers = convertPlayerRestToPlayer(teams.get(0),true);
-        List<Player> awayPlayers = convertPlayerRestToPlayer(teams.get(1), false);
-        //add playerlist to team objects
-        teams.get(0).setPlayers(homePlayers);
-        teams.get(1).setPlayers(awayPlayers);
-        //set match variable from dc using team and playerlists
-        Match m = new Match();
-        m.setHomeTeam(teams.get(0));
-        m.setAwayTeam(teams.get(1));
-        m.setLocation(selectedMatch.getLocation());
-        m.setMatch_id(selectedMatch.getMatch_id());
-        //still need code to set date of match after adding string to date converter in Rest class
-        //after backend adds official to match setofficial
-
-        this.match = m;
-    }
-
-    public List<Player> convertPlayerRestToPlayer(Team t, boolean home){
-        List<Player> players = new ArrayList<>();
-        if(home){
-            List<PlayerRest> playersR = selectedMatch.getHome().getPlayers();
-            for (PlayerRest pr : playersR){
-                if(pr.getStarter()) {
-                    int firstSpace = pr.getName().indexOf(" ");                     // find divide between first and lastname
-                    String firstName = pr.getName().substring(0, firstSpace);       // get everything upto the first space character
-                    String lastName = pr.getName().substring(firstSpace).trim();
-
-                    Player p = new Player(pr.getPlayerNumber(), firstName, lastName);
-                    p.setTeam(t);
-                    p.setPlayer_id(pr.getPlayerId());
-                    //still need code to get status enum for player
-                    p.setStatus(pr.getStatus());
-                    //add converter in restobject to turn birthdate into date instead of string and calculate age
-                    //add code for adding player image? only needed in rest yes or no.
-                    players.add(p);
-                }
-            }
-        }else{
-            List<PlayerRest> playersR = selectedMatch.getVisitor().getPlayers();
-            for (PlayerRest pr : playersR){
-                if(pr.getStarter()) {
-                int firstSpace = pr.getName().indexOf(" ");                     // find divide between first and lastname
-                String firstName = pr.getName().substring(0, firstSpace);       // get everything upto the first space character
-                String lastName = pr.getName().substring(firstSpace).trim();
-
-                Player p = new Player(pr.getPlayerNumber(), firstName, lastName);
-                p.setPlayer_id(pr.getPlayerId());
-                p.setTeam(t);
-                //still need code to get status enum for player
-                p.setStatus(pr.getStatus());
-                //add converter in restobject to turn birthdate into date instead of string and calculate age
-                //add code for adding player image? only needed in rest yes or no.
-                players.add(p);}
-            }
-
-        }
-
-        return players;
-    }
-
-    public List<Team> convertTeamRestToTeam(){
-        List<Team> teams = new ArrayList<>();
-
-        Team homeTeam = new Team(selectedMatch.getHome().getTeam_id(), selectedMatch.getHome().getTeamName(), convertDivisionRestToDivision(selectedMatch.getHome().getDivision()));
-        homeTeam.setTeam_id(selectedMatch.getHome().getTeam_id());
-        Team awayTeam = new Team(selectedMatch.getVisitor().getTeam_id(), selectedMatch.getVisitor().getTeamName(), convertDivisionRestToDivision(selectedMatch.getVisitor().getDivision()));
-        awayTeam.setTeam_id(selectedMatch.getVisitor().getTeam_id());
-        teams.add(homeTeam);
-        teams.add(awayTeam);
-
-        //still need to add location to teams
-        //still need to add teamlogo image to team
-        homeTeam.setLogo(selectedMatch.getHome().getLogo());
-        awayTeam.setLogo(selectedMatch.getVisitor().getLogo());
-
-        return teams;
-    }
-    public Division convertDivisionRestToDivision(DivisionRest divisionR){
-        return new Division(divisionR.getDivision_name(),divisionR.getPeriod_length(), divisionR.getBreak_length());
-    }
-
-    //Actions
+    //METHODS to perform the player actions
+    /**
+     * Method that adds ta goal to the team of the selected player.
+     * It sets the status of the selected player to {@link Status#GAMEOVER} if the player's faults weight is 3 or more
+     * calls {@link #asyncPostGoal(Player)} to post goal to backend
+     */
     public void addGoal(){
         if(selectedPlayer != null) {
             if(selectedPlayer.getStatus() == Status.ACTIVE) {
@@ -245,13 +174,26 @@ public class Domaincontroller {
         }
     }
 
+    /**
+     * Method that adds the U20 penalty to the player.
+     * It sets the status of the selected player to {@link Status#GAMEOVER} if the player's faults weight is 3 or more
+     * calls {@link #asyncPostFault(Player, int)} to post fault to backend
+     */
     public void addFaultU20() {
         match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.U20));
 
+        if(getMatch().getPenaltyBook().getPenaltyWeightsForPlayer(selectedPlayer.getPlayer_id()) > 2){
+            selectedPlayer.setStatus(Status.GAMEOVER);
+        }
         //post fault
         asyncPostFault(selectedPlayer, 1);
     }
 
+    /**
+     * Method that adds the UMV penalty to the player.
+     * It sets the status of the selected player to {@link Status#GAMEOVER} because of the weight of this type of fault
+     * calls {@link #asyncPostFault(Player, int)} to post fault to backend
+     */
     public void addFaultUMV() {
         match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.UMV));
 
@@ -261,6 +203,11 @@ public class Domaincontroller {
         asyncPostFault(selectedPlayer, 2);
     }
 
+    /**
+     * Method that adds the UMV4 penalty to the player.
+     * It sets the status of the selected player to {@link Status#GAMEOVER} because of the weight of this type of fault
+     * calls {@link #asyncPostFault(Player, int)} to post fault to backend
+     */
     public void addFaultUMV4() {
         match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.UMV4));
 
@@ -270,14 +217,19 @@ public class Domaincontroller {
         asyncPostFault(selectedPlayer, 3);
     }
 
+    /**
+     * Method that sets the status of the selected player to {@link Status#GAMEOVER} when he gets injured
+     */
     public void addInjury() {
         selectedPlayer.setStatus(Status.GAMEOVER);
-
         //asyncPostInjury();
-
     }
 
     // calls method in team to switch the player numbers when both players are from the same team and passes both player id's
+    /**
+     * Method that calls {@link Team#switchPlayerCaps(int, int)} in team to switch the player numbers when both players are from the same team and passes both player id's
+     * The method reloads the playerfragments to display the changes
+     */
     private void checkPlayerSwitch(){
         if(playerToSwitch!=null){
             if(playerToSwitch.getTeam().equals(selectedPlayer.getTeam())) {
@@ -288,11 +240,12 @@ public class Domaincontroller {
             }
 
             MatchControl mc = (MatchControl) getCurrentActivity();
-
-            mc.ReloadFragments(); //see matchcontrol line 554
+            mc.ReloadFragments();
         }
 
     }
+
+    //METHODS involving the logging of the match
 
     //function to increase current round
     public void nextRound(){
@@ -390,17 +343,117 @@ public class Domaincontroller {
         return index;
     }
 
+    //METHODS that convert rest objects, received from the backend, to the corresponding domainclasses.
 
-    private void displayToast(String message){
-        Toast toast = Toast.makeText(getCurrentActivity(), message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
+    /**
+     * Method that coverts all the rest classes to the corresponding domainclasses.
+     * Uses helpermethods {@link #convertTeamRestToTeam()}, {@link #convertPlayerRestToPlayer(Team, boolean)}}
+     */
+    public void convertBackendToClass(){
+
+        //first create team objects widouth player list
+        List<Team> teams = convertTeamRestToTeam();
+        //create player lists with team objects and PlayerRest
+        List<Player> homePlayers = convertPlayerRestToPlayer(teams.get(0),true);
+        List<Player> awayPlayers = convertPlayerRestToPlayer(teams.get(1), false);
+        //add playerlist to team objects
+        teams.get(0).setPlayers(homePlayers);
+        teams.get(1).setPlayers(awayPlayers);
+        //set match variable from dc using team and playerlists
+        Match m = new Match();
+        m.setHomeTeam(teams.get(0));
+        m.setAwayTeam(teams.get(1));
+        m.setLocation(selectedMatch.getLocation());
+        m.setMatch_id(selectedMatch.getMatch_id());
+        //still need code to set date of match after adding string to date converter in Rest class
+        //after backend adds official to match setofficial
+
+        this.match = m;
+    }
+
+    /**
+     * Method that converts all the players of the teams in the match their rest objects to domain player objects
+     *
+     * @return list of the converted player objects
+     */
+    private List<Player> convertPlayerRestToPlayer(Team t, boolean home){
+        List<Player> players = new ArrayList<>();
+        if(home){
+            List<PlayerRest> playersR = selectedMatch.getHome().getPlayers();
+            for (PlayerRest pr : playersR){
+                if(pr.getStarter()) {
+                    int firstSpace = pr.getName().indexOf(" ");                     // find divide between first and lastname
+                    String firstName = pr.getName().substring(0, firstSpace);       // get everything upto the first space character
+                    String lastName = pr.getName().substring(firstSpace).trim();
+
+                    Player p = new Player(pr.getPlayerNumber(), firstName, lastName);
+                    p.setTeam(t);
+                    p.setPlayer_id(pr.getPlayerId());
+                    //still need code to get status enum for player
+                    p.setStatus(pr.getStatus());
+                    //add converter in restobject to turn birthdate into date instead of string and calculate age
+                    //add code for adding player image? only needed in rest yes or no.
+                    players.add(p);
+                }
+            }
+        }else{
+            List<PlayerRest> playersR = selectedMatch.getVisitor().getPlayers();
+            for (PlayerRest pr : playersR){
+                if(pr.getStarter()) {
+                    int firstSpace = pr.getName().indexOf(" ");                     // find divide between first and lastname
+                    String firstName = pr.getName().substring(0, firstSpace);       // get everything upto the first space character
+                    String lastName = pr.getName().substring(firstSpace).trim();
+
+                    Player p = new Player(pr.getPlayerNumber(), firstName, lastName);
+                    p.setPlayer_id(pr.getPlayerId());
+                    p.setTeam(t);
+                    p.setStatus(pr.getStatus());
+                    //add converter in restobject to turn birthdate into date instead of string and calculate age
+                    //add code for adding player image? only needed in rest yes or no.
+                    players.add(p);}
+            }
+
+        }
+        return players;
+    }
+
+    /**
+     * Method that converts the teams in the match their rest objects to domain team objects.
+     * Uses helperMethod {@link #convertDivisionRestToDivision(DivisionRest)}
+     *
+     * @return list of the converted team objects
+     */
+    private List<Team> convertTeamRestToTeam(){
+        List<Team> teams = new ArrayList<>();
+
+        Team homeTeam = new Team(selectedMatch.getHome().getTeam_id(), selectedMatch.getHome().getTeamName(), convertDivisionRestToDivision(selectedMatch.getHome().getDivision()));
+        homeTeam.setTeam_id(selectedMatch.getHome().getTeam_id());
+        Team awayTeam = new Team(selectedMatch.getVisitor().getTeam_id(), selectedMatch.getVisitor().getTeamName(), convertDivisionRestToDivision(selectedMatch.getVisitor().getDivision()));
+        awayTeam.setTeam_id(selectedMatch.getVisitor().getTeam_id());
+        teams.add(homeTeam);
+        teams.add(awayTeam);
+
+        //still need to add location to teams
+        //still need to add teamlogo image to team
+        homeTeam.setLogo(selectedMatch.getHome().getLogo());
+        awayTeam.setLogo(selectedMatch.getVisitor().getLogo());
+
+        return teams;
+    }
+
+    /**
+     * Method that converts the division object from the backend to the division domain class.
+     *
+     * @return the converted division object.
+     */
+    private Division convertDivisionRestToDivision(DivisionRest divisionR){
+        return new Division(divisionR.getDivision_name(),divisionR.getPeriod_length(), divisionR.getBreak_length());
     }
 
     //METHODS that connect the app with the backend
+
     /**
-     * Method that creates a seperate task on a thread to post that the match has ended and calls the {@link ApiInterface#endMatch(int)} to post it to the backend
-     *
+     * Method that creates a separate task on a thread to post that the match has ended and calls the {@link ApiInterface#startMatch(int)} to post it to the backend
      */
     public void startMatch(){
 
@@ -424,7 +477,7 @@ public class Domaincontroller {
     }
 
     /**
-     * Method that creates a seperate task on a thread to post that the match has ended and calls the {@link ApiInterface#endMatch(int)} to post it to the backend
+     * Method that creates a separate task on a thread to post that the match has ended and calls the {@link ApiInterface#endMatch(int)} to post it to the backend
      *
      */
     public void endMatch(){
@@ -447,8 +500,7 @@ public class Domaincontroller {
     }
 
     /**
-     * Method that creates a seperate task on a thread to post that the match has been cancelled and calls the {@link ApiInterface#cancelMatch(int)} to post it to the backend
-     *
+     * Method that creates a separate task on a thread to post that the match has been cancelled and calls the {@link ApiInterface#cancelMatch(int)} to post it to the backend
      */
     public void cancelMatch(){
         Runnable task = new Runnable() {
@@ -684,5 +736,14 @@ public class Domaincontroller {
             }
         };
         new Thread(task, "Service thread testpost").start();
+    }
+
+    /**
+     * Method that displays toastmessages in the current activity
+     */
+    private void displayToast(String message){
+        Toast toast = Toast.makeText(getCurrentActivity(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 }
