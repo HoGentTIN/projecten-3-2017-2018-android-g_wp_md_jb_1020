@@ -172,9 +172,6 @@ public class MatchTimer {
                 txtShotlock.setText("0");
                 Log.i("Info","Shotlock has expired.");
                 setShotlockTimeRemaining(0);
-
-                //testcode for calling current activity screen
-                MatchControl mc = (MatchControl) dc.getCurrentActivity();
             }
         };
     }

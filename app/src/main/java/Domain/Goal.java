@@ -5,18 +5,10 @@ package Domain;
  */
 public class Goal {
 
-    private int playerid;
-    private int matchid;
-
     private int teamid;
 
-    private Player p;
-
-    public Goal(int matchid, int teamid, int playerid){
+    public Goal(int teamid){
         this.teamid = teamid;
-        this.matchid = matchid;
-        this.p = p;
-        this.playerid = playerid;
     }
 
     public int getTeamid() {

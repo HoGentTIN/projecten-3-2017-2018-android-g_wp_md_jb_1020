@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by timos on 5-10-2017.
+ * Class that holds the information for a waterpolo match
+ * It holds both teams, goals scored and faults committed.
  */
-
 public class Match {
 
     //Variables
@@ -19,10 +19,7 @@ public class Match {
     private Team homeTeam;
     private Team awayTeam;
     private List<Goal> goals;
-
-    private Official official;
     private PenaltyBook penaltyBook;
-    private String matchLog;            //keep this unless there is another way to better keep a written down form of the match progress
 
     private int currentRound;
 
@@ -52,10 +49,6 @@ public class Match {
         this.currentRound = cr;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
     public void setLocation(Location location) {
         this.location = location;
     }
@@ -76,18 +69,13 @@ public class Match {
         this.awayTeam = awayTeam;
     }
 
-    public void setDate(Date date){
-        this.date = date;
-    }
-    public Date getDate(){
-        return date;
-    }
-
     public PenaltyBook getPenaltyBook() {
         return penaltyBook;
     }
 
-    //Calculate the number of point a certain team has scored
+    /**
+     * Method that calculates the number of goals a certain team has scored.
+     */
     public int getScoreForTeam(int teamId) {
 
         int numberOfGoals = 0;
@@ -100,19 +88,11 @@ public class Match {
         return numberOfGoals;
     }
 
-    public Official getOfficial() {
-        return official;
-    }
-
-    public void setOfficial(Official official) {
-        this.official = official;
-    }
-
+    /**
+     * Method that adds a goal to this match.
+     */
     public void addGoal(Goal g){
         goals.add(g);
     }
-
-
-    //Function calculate total match score from rounds
 
 }

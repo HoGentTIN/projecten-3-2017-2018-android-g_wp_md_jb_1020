@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Class that represents the location of the match
  */
-
 public class Location {
 
     //Variables

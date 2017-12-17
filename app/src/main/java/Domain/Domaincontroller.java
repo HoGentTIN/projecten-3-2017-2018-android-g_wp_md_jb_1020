@@ -358,7 +358,7 @@ public class Domaincontroller {
     public void addGoal(){
         if(selectedPlayer != null) {
             if(selectedPlayer.getStatus() == Status.ACTIVE) {
-                match.addGoal(new Goal(match.getMatch_id(), selectedPlayer.getTeam().getTeam_id(),selectedPlayer.getPlayer_id()));
+                match.addGoal(new Goal(selectedPlayer.getTeam().getTeam_id()));
 
                 //Post goal to live
                 asyncPostGoal(selectedPlayer);
@@ -371,15 +371,6 @@ public class Domaincontroller {
 
         //post fault
         asyncPostFault(selectedPlayer, PenaltyType.U20);
-    }
-
-    // indicate that players want to change number & store first player object
-    public void switchPlayerCaps() {
-        //int switchNumber = playerToSwitch.getPlayerNumber();
-        //playerToSwitch.setPlayerNumber(selectedPlayer.getPlayerNumber());
-        //selectedPlayer.setPlayerNumber(switchNumber);
-        //checkPlayerSwitch();
-        //switchPlayer = true;
     }
 
     public void addInjury() {

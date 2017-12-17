@@ -148,8 +148,6 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
                 if(!this.isBreak)
                     stopShotlock(view);
             }else{
-                //this else clause can be removed?
-                dc.switchPlayerCaps();
                 dc.setPlayerToSwitch(null);//reset for next switch
 
                 if(!this.isBreak)
