@@ -45,6 +45,13 @@ public class MatchTimer {
 
 
     //CONSTRUCTORS
+    /**
+     * Constructor for creating controller to control timers used during match.
+     *
+     * @param txtTimer The textfield where the matchtimer will be placed.
+     * @param roundtime Value to set round duration.
+     *  @param breakTime value to set normal break duration.
+     */
     public MatchTimer(TextView txtTimer, long roundtime, long breakTime){
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
@@ -66,7 +73,6 @@ public class MatchTimer {
     public CountDownTimer getCdtShotlock(){return cdtShotlock;}
     //Function getTimeoutTimer
     public CountDownTimer getCdtTimout(){return cdtTimout;}
-
 
     //Function setMaxTime for round
     public void setMaxTime(long roundTime){
@@ -94,15 +100,15 @@ public class MatchTimer {
         return this.shotlockTimeRemaining;
     }
 
-    public long getShotlockTotalTime() {
-        return shotlockTotalTime;
-    }
-    public void setShotlockTotalTime(long shotlockTotalTime) {
-        this.shotlockTotalTime = shotlockTotalTime;
-    }
 
     //CLASS FUNCTIONS
-    //Function initialize matchtimer - reset matchtimer
+
+    /**
+     * Method for initializing timer.
+     *
+     * @param txtTimer The textfield where the matchtimer will be placed.
+     * @param timeRemaining value to set remaining time in milliseconds.
+     */
     public void initTimer(final TextView txtTimer, long timeRemaining){
         if(timeRemaining==(roundTime*1000*60)){
             if(cdtTimer!=null)
@@ -149,7 +155,13 @@ public class MatchTimer {
             }
         };
     }
-    //Function initShotlock - Setup shotlock, also callable when match paused to reset shotlock when neither team has ball possesion
+
+    /**
+     * Method for for initializing shotlock.
+     *
+     * @param txtShotlock The textfield where the shotlock will be placed.
+     * @param shotlockTimeRemaining Value to set shotlock duration.
+     */
     public void initShotlock(final TextView txtShotlock, Long shotlockTimeRemaining){
         //when the matchtimers pauzes, also pause shotlock, after special reset shotlock to neutral
         //textview clickable, reset shotlock to no team, only possible during player edit events
@@ -175,7 +187,13 @@ public class MatchTimer {
             }
         };
     }
-    //Function initTimeout
+
+
+    /**
+     * Method for for initializing Timout.
+     *
+     * @param btnTimeout button in view used to display this timout.
+     */
     public void initTimeout(final Button btnTimeout){
 
         btnTimeout.setClickable(false);                     //Can no longer be activated in this quarter
@@ -202,6 +220,11 @@ public class MatchTimer {
 
     }
     //Function intiBreak
+    /**
+     * Method for for initializing breaktimer.
+     *
+     * @param txtTimer The textfield where the break timer will be placed.
+     */
     public void initBreak(final TextView txtTimer){
         //before starting timer initvalue
         long fullBreakTime = breakTime*1000*60;
@@ -238,52 +261,66 @@ public class MatchTimer {
 
     }
 
-    //Function resetTimer
-    public void resetTimer(final TextView txtTimer){
-        timeRemaining = (roundTime*1000*60);
-    }
-    //Function resetShotlock - set remaining shotlocktime to 30000
-    public void resetShotlock(final TextView txtShotlock){
-        shotlockTimeRemaining = 30000;
-    }
-    public void clearBreak(){
-        this.cdtBreak = null;
-    }
+    /**
+     * Method for for initializing clearing the timer.
+     *
+     */
     public void clearTimer(){this.cdtTimer = null;}
 
-    //Function startTimer
+    /**
+     * Method for for starting matchtimer.
+     *
+     * this will restart the timer by recreating it with the time it had left
+     * shotlock is connected to this method as well to sync the two together
+     */
     public void startChrono(){
         cdtTimer.start();
         cdtShotlock.start();
         isChronoOn = true;
     }
-    //Function stopTimer
+    /**
+     * Method for for stopping matchtimer.
+     *
+     * this will stop and destroy the timer so it can be recreated starting from the time it had remaining
+     * shotlock is connected to this method as well to sync the two together
+     */
     public void stopChrono(){
         cdtTimer.cancel();
         isChronoOn = false;
         cdtShotlock.cancel();   //stop running shotlocktimer
     }
-    //start breaktimer
+
+    /**
+     * Method for starting break.
+     *
+     * This method is called when matchtimer reaches 0 and will automatically start the break
+     */
     public void startBreak(){
         this.cdtBreak.start();
     }
 
 
-    //Function stopTimeout //in case time out needs to be stopped earlier ?should automaticly stop when restarting chrono
-    public void stopTimeout(){
-        //make button of timeout unavailable in activity when this is called
-        //???Can timeout be prematurly stopped
-    }
-
-    //Function get Chronostate
+    /**
+     * Method for checking chronostate.
+     *
+     * This is used as a safety check to determine the current state of the timers so no faulty methods are called.
+     */
     public boolean isChronoOn() {
         return isChronoOn;
     }
-    //Function get shotlock used
+    /**
+     * Method for checking timout.
+     *
+     * Used to prevent timout being called more than once per round
+     */
     public boolean isTimoutUsed() {
         return istimoutUsed;
     }
-    //Function set shotlock used
+    /**
+     * Method for reseting timoutimers
+     *
+     * This method is used to allow the resettimers to be used again once a new round starts
+     */
     public void resetIsTimoutUsed() {
         istimoutUsed = false;
     }
