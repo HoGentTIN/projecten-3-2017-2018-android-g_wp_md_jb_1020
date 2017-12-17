@@ -19,10 +19,10 @@ The app is currently translated in these languages, depending on the device sett
 * French / Français
 
 ## Contributors
-This part of the project was made by (with biggest contribution to classes):
-    - Pieter Uyttersprot (Domain, Matchcontrol, AdministrationEnd)
-    - Timo Spanhove (Domain, Matchtimer, activity logging functions, API calls)
-    - Laurent Deschryver (CompetitionSelection, testing)
+This part of the project was made by (focus on):
+- Pieter Uyttersprot (Domain, Matchcontrol, AdministrationEnd)
+- Timo Spanhove (Domain, Matchtimer, activity logging functions, API calls)
+- Laurent Deschryver (CompetitionSelection, testing)
 
 Other team members (webapp):
   - Matthias Vanooteghem
