@@ -34,28 +34,23 @@ public class Domaincontroller {
     private List<DivisionRest> divisions;
     private String selectedDivisionName =null;
     private String selectedDivisionNameTemp = null;
-    private MatchRest selectedMatch;
-
     private List<MatchRest> ownedMatchesR;
+    private MatchRest selectedMatch;
     private String startTime;
 
     private Player selectedPlayer;
+    private Player playerToSwitch = null;
 
     private List<String[]> logList = new ArrayList<>();                                             //List of all events, event = String[] => [0] = roundNumber, [1] = roundTime, [2] = eventCode ,[3] = eventDescription
     private int eventCounter = 0;                                                                   //eventCode used for filtering logs, show all goals, faults, [G|C|P|U|V|V4][H,A][1,2,3,4] {G,C,P,U,V,V4 = goal|change of player|Penalty|faults.. , H,A = Home|Away, 1,2,3,4 = Round}
-    private int latestSyncedlog;
-
-    //pretty sure this isn't the correct way to switch players, but it works
-    private Player playerToSwitch = null;
 
     private AppCompatActivity currentActivity;
 
     public Domaincontroller(){
 
     }
+
     public List<DivisionRest> getDivisions() {
-
-
         return divisions;
     }
 
@@ -78,9 +73,13 @@ public class Domaincontroller {
     }
 
 
-    //TESTCODE ASYNC START
-    //Player needs to be passed since async could allow the activity to reset the selected player to null before it can be called
-    public void asyncPostGoal(Player player){
+    //ASYNC METHODS
+    /**
+     * Method that creates a task on a seperate thread to post a scored goal to the backend.
+     *
+     * @param player needs to be passed since async could allow the activity to reset the selected player to null before it can be called
+     */
+    private void asyncPostGoal(Player player){
         final Player p = player;
         Runnable task = new Runnable() {
             @Override
@@ -95,39 +94,45 @@ public class Domaincontroller {
         new Thread(task, "Service thread testpost").start();
     }
 
-    public int postGoal(Player p) throws InterruptedException {
+    /**
+     * Method that creates a task to post a scored goal to the backend.
+     *
+     * @param p needs to be passed since async could allow the activity to reset the selected player to null before it can be called
+     * @throws InterruptedException for when a thread is waiting, sleeping, or otherwise occupied, and the thread is interrupted, either before or during the activity.
+     */
+    private void postGoal(Player p) throws InterruptedException {
         Call<Void> call = apiService.addGoal(match.getMatch_id(),p.getPlayer_id(),match.getCurrentRound());
         try {
             call.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //long process
-        return 1;
     }
 
-    public void asyncPostFault(Player player, PenaltyType penaltyType){
-        final int penalty = penaltyType.getWeight();
+    /**
+     * Method that creates a task on a seperate thread to post a scored goal to the backend.
+     *
+     * @param player needs to be passed since async could allow the activity to reset the selected player to null before it can be called
+     * @param penaltyTypeId id for the type of penalty
+     */
+    private void asyncPostFault(Player player, final int penaltyTypeId){
         final Player p = player;
         Runnable task = new Runnable() {
             @Override
             public void run() {
-                    postfault(p, penalty);
+                    postfault(p, penaltyTypeId);
             }
         };
         new Thread(task, "Service thread testpost").start();
     }
 
-    public int postfault(Player p, int penaltyTypeId){
+    private void postfault(Player p, int penaltyTypeId){
         Call<Void> call = apiService.addPenalty(match.getMatch_id(),p.getPlayer_id(),penaltyTypeId);
         try {
             call.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //long process
-        return 1;
     }
 
     public void asyncPostSignMatch(final String email, final String password){
@@ -353,7 +358,25 @@ public class Domaincontroller {
         match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.U20));
 
         //post fault
-        asyncPostFault(selectedPlayer, PenaltyType.U20);
+        asyncPostFault(selectedPlayer, 1);
+    }
+
+    public void addFaultUMV() {
+        match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.UMV));
+
+        selectedPlayer.setStatus(Status.GAMEOVER);
+
+        //post fault
+        asyncPostFault(selectedPlayer, 2);
+    }
+
+    public void addFaultUMV4() {
+        match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.UMV4));
+
+        selectedPlayer.setStatus(Status.GAMEOVER);
+
+        //post fault
+        asyncPostFault(selectedPlayer, 3);
     }
 
     public void addInjury() {
@@ -378,24 +401,6 @@ public class Domaincontroller {
             mc.ReloadFragments(); //see matchcontrol line 554
         }
 
-    }
-
-    public void addFaultUMV() {
-        match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.UMV));
-
-        selectedPlayer.setStatus(Status.GAMEOVER);
-
-        //post fault
-        asyncPostFault(selectedPlayer, PenaltyType.UMV);
-    }
-
-    public void addFaultUMV4() {
-        match.getPenaltyBook().addPenalty(new Penalty(selectedPlayer,PenaltyType.UMV4));
-
-        selectedPlayer.setStatus(Status.GAMEOVER);
-
-        //post fault
-        asyncPostFault(selectedPlayer, PenaltyType.UMV4);
     }
 
     //function to increase current round
