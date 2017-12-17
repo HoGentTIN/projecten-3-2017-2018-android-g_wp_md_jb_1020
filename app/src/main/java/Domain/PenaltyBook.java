@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Impling on 18-Oct-17.
+ * Class that holds all of the faults committed during a match.
  */
-
 public class PenaltyBook {
 
     //Variables
     private int penaltyBook_id;
     private List<Penalty> penalties;
 
-    //Constructor
     public PenaltyBook(){
         penalties = new ArrayList<Penalty>();
     }
@@ -22,6 +20,12 @@ public class PenaltyBook {
         penalties.add(p);
     }
 
+    /**
+     * Method that calculates the total amount of penalty weights a certain player has acquired during a single match
+     *
+     * @param playerId id for the player for which the weight needs to be calculated
+     * @return total amount of weight for the faults the player has committed
+     */
     public int getPenaltyWeightsForPlayer(int playerId){
         int weight = 0;
 

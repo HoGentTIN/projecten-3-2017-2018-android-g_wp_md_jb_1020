@@ -175,7 +175,6 @@ public class AdministrationEnd extends AppCompatActivity implements PlayersFragm
         Player sp = dc.getSelectedPlayer();
         if(sp!=null){
 
-            dc.switchPlayerCaps();
             clearSelectedPlayer();
 
         }else {

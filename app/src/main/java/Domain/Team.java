@@ -8,22 +8,17 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by timos on 5-10-2017.
+ * Class to represent the teams
+ * A team has a division and players
  */
-
 public class Team {
 
     //Variables
     private int team_id;
     private String teamName;
     private String logo;
-
-    private Location location;      // now hear me out on this one, when we need to replace a member they can be replaced by anyone of the same organization that has the same division so In my oppinion this should be added to class diagram
     private Division division;
-
-    private Official coach;
     private List<Player> players = new ArrayList<>();
-
 
     public Team(int teamId, String teamname, Division division) {
         this.team_id = teamId;
@@ -41,26 +36,6 @@ public class Team {
 
     public void setLogo(String logo) {
         this.logo = logo;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Official getCoach() {
-        return coach;
-    }
-
-    public void setCoach(Official coach) {
-        this.coach = coach;
-    }
-
-    public void addPlayers(Player p){
-        players.add(p);
     }
 
     public String getTeamName() {
@@ -107,6 +82,12 @@ public class Team {
         return players;
     }
 
+    /**
+     * Searches the playerlist for a given id
+     *
+     * @param id id of the player to search
+     * @return the playerobject if found, otherwise null
+     */
     public Player getPlayerById(int id){
         Player pl = null;
         for(Player p: players){
@@ -117,6 +98,12 @@ public class Team {
         return pl;
     }
 
+    /**
+     * Switch the capnumbers of the chosen players
+     *
+     * @param playerId1 id of the first player to switch cap
+     * @param playerId2 id of the second player to switch cap
+     */
     public void switchPlayerCaps(int playerId1, int playerId2){
         Player p1 = getPlayerById(playerId1);
         Player p2 = getPlayerById(playerId2);

@@ -31,26 +31,15 @@ public class Domaincontroller {
     private final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
     private Match match;
-    private MatchRest matchR;
     private List<DivisionRest> divisions;
     private String selectedDivisionName =null;
     private String selectedDivisionNameTemp = null;
-    //hier ga ik een selectedmatch maken in principe is dit exact hetzelfde als 'match' dat hierboven staat maar ik ga et voor de functionaliteit even apart declareren
     private MatchRest selectedMatch;
 
-    //hier ga ik een aantal matches aanmaken om een lijst van matches van een official te simuleren (gade uiteindelijk moeten verwijderen)
-    //de waarden toekennen staat in startmatch() dus daar ook wegdoen dan
-    private Match testMatch1 = new Match();
-    private Match testMatch2 = new Match();
-
-
     private List<MatchRest> ownedMatchesR;
-    private Official o;
     private String startTime;
 
     private Player selectedPlayer;
-
-
 
     private List<String[]> logList = new ArrayList<>();                                             //List of all events, event = String[] => [0] = roundNumber, [1] = roundTime, [2] = eventCode ,[3] = eventDescription
     private int eventCounter = 0;                                                                   //eventCode used for filtering logs, show all goals, faults, [G|C|P|U|V|V4][H,A][1,2,3,4] {G,C,P,U,V,V4 = goal|change of player|Penalty|faults.. , H,A = Home|Away, 1,2,3,4 = Round}
@@ -255,10 +244,6 @@ public class Domaincontroller {
     }
     public MatchRest getSelectedMatch(){return  selectedMatch;}
 
-    public MatchRest getMatchR() {
-        return matchR;
-    }
-
     public void setOwnedMatchesR(List<MatchRest> matcherR){
         this.ownedMatchesR = matcherR;
     }
@@ -335,10 +320,8 @@ public class Domaincontroller {
         List<Team> teams = new ArrayList<>();
 
         Team homeTeam = new Team(selectedMatch.getHome().getTeam_id(), selectedMatch.getHome().getTeamName(), convertDivisionRestToDivision(selectedMatch.getHome().getDivision()));
-        homeTeam.setCoach(selectedMatch.getHome().getCoach());
         homeTeam.setTeam_id(selectedMatch.getHome().getTeam_id());
         Team awayTeam = new Team(selectedMatch.getVisitor().getTeam_id(), selectedMatch.getVisitor().getTeamName(), convertDivisionRestToDivision(selectedMatch.getVisitor().getDivision()));
-        awayTeam.setCoach(selectedMatch.getVisitor().getCoach());
         awayTeam.setTeam_id(selectedMatch.getVisitor().getTeam_id());
         teams.add(homeTeam);
         teams.add(awayTeam);
@@ -535,29 +518,6 @@ public class Domaincontroller {
 
     public void startMatch(){
 
-        //these steps should now already be done in endselection of competitionselection
-
-        //Original test code
-        /*
-        match = new Match();
-        matchR = new MatchRest();
-        matchR.setDate(new Date(2017,11,11).toString());
-
-
-        //hier ga ik al een vaste datum meegeven om te testen dit moet nog aangepast worden met de juiste functionaliteit (groetjes laurentje)
-        match.setDate(new Date(2017,11,11));
-        //ik ga hier verder die testmatchen uitwerken dus dit ook ni vergeten weg te doen dan;
-        ownedMatches = new ArrayList<Match>();
-        testMatch1.setDate(new Date(2017,12,12));
-        Division Dames = new Division("Dames",7,2);
-        testMatch1.setHomeTeam(new Team(0,"Gent",Dames));
-        testMatch1.setAwayTeam(new Team(1,"Oostakker",Dames));
-        testMatch2.setDate(new Date(2017,12,11));
-        testMatch2.setHomeTeam(new Team(2,"Kortrijk",Dames));
-        testMatch2.setAwayTeam(new Team(3,"Lochristi",Dames));
-        ownedMatches.add(testMatch1);
-        ownedMatches.add(testMatch2);
-        */
         Runnable task = new Runnable() {
             @Override
             public void run() {
@@ -716,14 +676,4 @@ public class Domaincontroller {
         new Thread(task, "Service thread testpost").start();
 
     }
-
-
-
-
-
-
-    //eventcode - description => Overview of eventlogcodes and corresponding description
-    //G01 - Player [Int playernumber] [String playername] from the hometeam has scored a goal [int homescore] - [ int awayscore]    //Goalevent
-    //
-
 }

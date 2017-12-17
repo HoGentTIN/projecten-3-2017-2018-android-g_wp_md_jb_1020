@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import Domain.Division;
-import Domain.Official;
-
 /**
  * Created by Impling on 12-Nov-17.
  */
@@ -24,8 +21,6 @@ public class TeamRest {
     private int division_id;
     @SerializedName("division")
     private DivisionRest division;
-    @SerializedName("coach")
-    private Official coach;
 
     @SerializedName("players")
     private List<PlayerRest> players = new ArrayList<>();
@@ -34,11 +29,10 @@ public class TeamRest {
     private String logo;
 
 
-    public TeamRest(String teamName, int division_id, DivisionRest division, Official coach, List<PlayerRest> players) {
+    public TeamRest(String teamName, int division_id, DivisionRest division, List<PlayerRest> players) {
         this.teamName = teamName;
         this.division_id = division_id;
         this.division = division;
-        this.coach = coach;
         this.players = players;
     }
 
@@ -77,14 +71,6 @@ public class TeamRest {
 
     public void setDivision(DivisionRest division) {
         this.division = division;
-    }
-
-    public Official getCoach() {
-        return coach;
-    }
-
-    public void setCoach(Official coach) {
-        this.coach = coach;
     }
 
     public List<PlayerRest> getPlayers() {

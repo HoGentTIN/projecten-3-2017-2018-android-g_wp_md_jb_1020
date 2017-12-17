@@ -7,18 +7,15 @@ import android.util.Log;
 import persistency.PlayerRest;
 
 /**
- * Created by timos on 5-10-2017.
+ * Class that represents the players of a waterpolo team
  */
-
 public class Player implements Comparable<Player>{
 
     //variables
-
     private int player_id;
     private int playerNumber;
     private String firstName;
     private String lastName;
-    private int age;            //would this normally not be birthdate
     private Status status;
     private boolean starter;
     private Team team;
@@ -32,8 +29,6 @@ public class Player implements Comparable<Player>{
         this.firstName = firstName;
         this.lastName = lastName;
         this.playerNumber = n;
-        this.status = status;
-
     }
 
     public Team getTeam() {
@@ -64,14 +59,6 @@ public class Player implements Comparable<Player>{
         return firstName.charAt(0) + ". " + lastName;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public Status getStatus() {
         return status;
     }
@@ -80,6 +67,11 @@ public class Player implements Comparable<Player>{
         this.status = status;
     }
 
+    /**
+     * Method that uses an int value to set the correct status to the player
+     *
+     * @param statusNr 1 is active, 2 is suspended, 3 is game over, 4 is injured
+     */
     public void setStatus(int statusNr){
         switch (statusNr){
             case 1:
@@ -120,6 +112,9 @@ public class Player implements Comparable<Player>{
         return faultTimer;
     }
 
+    /**
+     * Method that adds a 20 second penalty timer to the player when he commits a U20 fault
+     */
     public void setFaultTimer() {
         if(faultTimer==null || faultTimeRemaining == 0){
             faultTimer = new CountDownTimer(20000,1000){
