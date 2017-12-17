@@ -44,6 +44,8 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
     LogoFragment logoFrag;
     ApiInterface apiService;
     private PlayerRest selectedPlayer;
+
+    //techicaly a boolean but it is an int now because the backend also works with ints
     private int hometeam;
 
 
@@ -56,13 +58,6 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         ar = ApplicationRuntime.getInstance();
         dc = ar.getDc();
 
-        //original testcode for hardcoded match
-        //dc.startMatch();
-        //dc.createTeams("Oostende", new Division("U20", 7,2),"Aalst",new Division("U20", 7,2));
-        //dc.createPlayers();
-
-        //matches = new MatchFragment();
-        //getSupportFragmentManager().beginTransaction().add(R.id.matchesContainer, matches).commit();
 
 
         //Retrieve list of Matches being played -- TEMPORARY THIS RETURNS ALL MATCHES PRACTICLY SHOULD ONLY BE MATCHES OF LOGGED IN OFFICIAL
@@ -85,52 +80,6 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
                 //retrieve for each match the teams and needed info
                 MatchRest mtest = matchesR.get(0);
                 String ptest = mtest.getHome().getPlayers().get(0).getName();
-                //Log.d(TAG,"random test player retrival from Matchrest object: " + ptest + ". Player who made the first goal " + mtest.getGoals().get(0).getPlayer().getName());
-
-                /* Technicly not needed since Match knows its TeamRest objects and its PlayerRestObjects - Normaly when a match is finished it cannot be played anymore so should always initialize on empty array
-                Call<TeamRest> tCallHome = apiService.getTeam(mtest.getHome_id());
-                Call<TeamRest> tCallVisitor = apiService.getTeam(mtest.getVisitor_id());
-
-                tCallHome.enqueue(new Callback<TeamRest>() {
-                    @Override
-                    public void onResponse(Call<TeamRest> call, Response<TeamRest> response) {
-                        TeamRest tHomeTest = response.body();
-                        Log.d(TAG,"Retrieved home team " + tHomeTest.getTeamName());
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<TeamRest> call, Throwable t) {
-                        Log.e(TAG,t.toString());
-                    }
-                });
-                tCallVisitor.enqueue(new Callback<TeamRest>() {
-                    @Override
-                    public void onResponse(Call<TeamRest> call, Response<TeamRest> response) {
-                        TeamRest tVisitorTest = response.body();
-                        Log.d(TAG,"Retrieved visitor team " + tVisitorTest.getTeamName());
-                        List<PlayerRest> playersVisitor = tVisitorTest.getPlayers();
-                        for (PlayerRest p : playersVisitor){
-                            Log.d(TAG,"Retrieved visitor players " + p.getName());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<TeamRest> call, Throwable t) {
-                        Log.e(TAG,t.toString());
-                    }
-                });
-                */
-
-
-
-                //When match selected show info in screen and list of players
-
-                //use match to get the id's of both teams
-                //call to retrieve team using that id, for both home and visitor
-
-
-                //team should have list of players
 
 
             }
@@ -141,10 +90,10 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
             }
         });
 
-        //show list of match ..... vs ......
 
 
 
+//same thing for the divisions as for the matches
     apiService = dc.getApiService();
     Call<List<DivisionRest>> call2 = apiService.getDivisions();
         call2.enqueue(new Callback<List<DivisionRest>>() {
@@ -161,9 +110,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
 
             Log.d(TAG,"Retrieved " + divisionsR.size() + " division objects.");
 
-            //for each match offical has filter matches
 
-            //retrieve for each match the teams and needed info
 
 
 
@@ -175,7 +122,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
         }
     });
 
-    //show list of match ..... vs ......
+
 
 
 }
@@ -193,8 +140,11 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
             aantal += dc.getSelectedMatch().getHome().getPlayers().size();
             aantal += dc.getSelectedMatch().getVisitor().getPlayers().size();
 
+
+            //this is a list of a custom object defined in apiclient to send a complete list op players that should be updated
+            // the update is to set the starter variable that there will be 13 starters
             List<ApiClient.Starter> upstarters = new ArrayList<>();
-            int teller = 0;
+
             List<PlayerRest> players = dc.getSelectedMatch().getHome().getPlayers();
             for (PlayerRest player : players) {
                 int starter;
@@ -203,7 +153,7 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
                 else
                     starter = 0;
                 upstarters.add(new ApiClient.Starter(player.getPlayerId(), starter));
-                teller += 1;
+
 
             }
             //en nu eens voor de visitor
@@ -215,24 +165,17 @@ public class CompetitionSelection extends AppCompatActivity implements MatchFrag
                 else
                     starter = 0;
                 upstarters.add(new ApiClient.Starter(player.getPlayerId(), starter));
-                teller += 1;
+
             }
 
-
-            //apiService.updateStarter(dc.getSelectedMatch().getMatch_id(),upstarters);
             ApiClient.ArrayListStarters arrStarters = new ApiClient.ArrayListStarters();
             arrStarters.addStarters((ArrayList<ApiClient.Starter>) upstarters);
 
             dc.asyncUpdateStarters(arrStarters);
 
 
-
-
-
-
-
             Intent intent = new Intent(this, MatchControl.class);
-            //Intent intent = new Intent(this, AdministrationSetup.class);
+
             startActivity(intent);
         }
     }
@@ -243,26 +186,23 @@ this.position = position;
         matchSettings = new MatchSettingsFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.matchSettingsContainer,matchSettings).commit();
 
-
-
         playersFrag = new PlayersMatchSettingsFragment();
         playersFrag.setHometeam(1);//keeps adding to list on reloading the fragment try to prevent this TO DO
         getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();
-
+//we zetten alles op voor de hometeam aangezien we kunnen wisselen binnen match tussen de twee ploegen en we met hometeam als standaard beginne
 
         hometeam =1;
-
 
         logoFrag = new LogoFragment();
         logoFrag.setHometeam(1);
         getSupportFragmentManager().beginTransaction().replace(R.id.logoContainer,logoFrag).commit();
 
-
-
     }
 
     @Override
     public void onFiltered() {
+
+        // this is to throw away the fragment of the opened match if it has been opened
         if(matchSettings != null){
         MatchSettingsFragment fragment = (MatchSettingsFragment)getSupportFragmentManager().findFragmentById(matchSettings.getId());
         if(fragment != null)
@@ -271,13 +211,12 @@ this.position = position;
 
     @Override
     public void changeTeams(int id) {
+        //This is to show antother team of the two teams in the match
         hometeam = id;
         playersFrag = new PlayersMatchSettingsFragment();
         playersFrag.setHometeam(id);
-        //keeps adding to list on reloading the fragment try to prevent this TO DO
+
         getSupportFragmentManager().beginTransaction().replace(R.id.homeContainer1,playersFrag).commit();
-
-
 
         logoFrag = new LogoFragment();
         logoFrag.setHometeam(id);
@@ -401,6 +340,8 @@ this.position = position;
     // custom class to use for the api put of updatestarters
 
     private boolean checkTeams(){
+
+        // a check if that both teams have 13 starters
         List<PlayerRest> homePlayers = new ArrayList<PlayerRest>();
         List<PlayerRest> visitorPlayers = new ArrayList<PlayerRest>();
 

@@ -29,7 +29,7 @@
 
 
                 android:onClick="endSelection"
-                android:text="Begin"
+                android:text="@string/button_begin"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
@@ -42,7 +42,7 @@
                 android:paddingLeft="3dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff"
-                android:text="Cancel"
+                android:text="@string/button_cancel"
                 android:onClick="cancelMatch"/>
 
 
@@ -63,7 +63,7 @@
                 android:layout_marginLeft="6dp"
                 android:background="#ffffff"
 
-                android:text="Period Time"
+                android:text="@string/period_time"
                 />
 
             <TextView
@@ -93,7 +93,7 @@
             android:layout_marginBottom="6dp"
             android:gravity="center"
             style="@style/matchsettings_manage_title"
-            android:text="Manage Players"
+            android:text="@string/manage_players"
             />
 
         <LinearLayout

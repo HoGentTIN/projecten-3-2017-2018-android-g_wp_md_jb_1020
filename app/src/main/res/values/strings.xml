@@ -19,6 +19,8 @@
     <string name="button_undoAction">Undo</string>
     <string name="button_revertToAction">End match</string>
     <string name="button_signMatch">Sign</string>
+    <string name="button_begin">Begin</string>
+    <string name="button_cancel">Cancel Match</string>
 
     <!-- Button tooltips -->
     <string name="t_button_goal">Goal was scored.</string>
@@ -34,9 +36,12 @@
     <string name="playerFragmentTitle">TEAM</string>
     <string name="injury">Injury</string>
     <string name="field">Active</string>
-    <string name="bench">not Active</string>
+    <string name="bench">Not Active</string>
     <string name="referee_email_hint">Referee email</string>
     <string name="referee_code_hint">Referee code</string>
     <string name="filter">Filter on Division</string>
     <string name="text_resetShotlock">reset</string>
+    <string name="period_time">Period Time</string>
+    <string name="manage_players">Manage Players</string>
+
 </resources>
