@@ -390,7 +390,7 @@ this.position = position;
         this.selectedPlayer = selectedPlayer;
     }
     public void cancelMatch(View view){
-        dc.asyncCancelMatch();
+        dc.cancelMatch();
         finish();
         startActivity(getIntent());
     }

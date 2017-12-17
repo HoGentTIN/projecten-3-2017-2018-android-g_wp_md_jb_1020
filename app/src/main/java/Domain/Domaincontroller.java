@@ -57,6 +57,7 @@ public class Domaincontroller {
     public void setDivisions(List<DivisionRest> divisions) {
         this.divisions = divisions;
     }
+
     public String getSelectedDivisionName() {
         return selectedDivisionName;
     }
@@ -72,151 +73,37 @@ public class Domaincontroller {
         this.selectedDivisionNameTemp = selectedDivisionNameTemp;
     }
 
-
-    //ASYNC METHODS
-    /**
-     * Method that creates a task on a seperate thread to post a scored goal to the backend.
-     *
-     * @param player needs to be passed since async could allow the activity to reset the selected player to null before it can be called
-     */
-    private void asyncPostGoal(Player player){
-        final Player p = player;
-        Runnable task = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    postGoal(p);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        new Thread(task, "Service thread testpost").start();
+    public long getRoundTime(){
+        return match.getHomeTeam().getDivision().getRoundLength();
     }
 
-    /**
-     * Method that creates a task to post a scored goal to the backend.
-     *
-     * @param p needs to be passed since async could allow the activity to reset the selected player to null before it can be called
-     * @throws InterruptedException for when a thread is waiting, sleeping, or otherwise occupied, and the thread is interrupted, either before or during the activity.
-     */
-    private void postGoal(Player p) throws InterruptedException {
-        Call<Void> call = apiService.addGoal(match.getMatch_id(),p.getPlayer_id(),match.getCurrentRound());
-        try {
-            call.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public long getBreakTime() {return match.getHomeTeam().getDivision().getPauseLength();}
+
+    public Team getHomeTeam(){
+        return match.getHomeTeam();
     }
 
-    /**
-     * Method that creates a task on a seperate thread to post a scored goal to the backend.
-     *
-     * @param player needs to be passed since async could allow the activity to reset the selected player to null before it can be called
-     * @param penaltyTypeId id for the type of penalty
-     */
-    private void asyncPostFault(Player player, final int penaltyTypeId){
-        final Player p = player;
-        Runnable task = new Runnable() {
-            @Override
-            public void run() {
-                    postfault(p, penaltyTypeId);
-            }
-        };
-        new Thread(task, "Service thread testpost").start();
+    public Team getAwayTeam(){
+        return match.getAwayTeam();
     }
 
-    private void postfault(Player p, int penaltyTypeId){
-        Call<Void> call = apiService.addPenalty(match.getMatch_id(),p.getPlayer_id(),penaltyTypeId);
-        try {
-            call.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public AppCompatActivity getCurrentActivity() {
+        return currentActivity;
     }
 
-    public void asyncPostSignMatch(final String email, final String password){
-        Runnable task = new Runnable() {
-            @Override
-            public void run() {
-                postSignMatch(email, password);
-            }
-        };
-        new Thread(task, "Service thread testpost").start();
-
+    public void setCurrentActivity(AppCompatActivity currentActivity) {
+        this.currentActivity = currentActivity;
     }
-
-    private void displayToast(String message){
-        Toast toast = Toast.makeText(getCurrentActivity(), message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
-    }
-
-    public void postSignMatch(String email, String password){
-        final AdministrationEnd[] adminEnd = {(AdministrationEnd) getCurrentActivity()};
-
-        Call<Void> call = apiService.signMatch(match.getMatch_id(),email,password);
-        try {
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if(response.isSuccessful()){
-                        displayToast("You have succesfully signed the match");
-                        try {
-                            adminEnd[0].finishAdmin();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        switch(response.code()) {
-                            case 400:
-                                displayToast("Authentication failed when signing form, please fill in your credentials correctly");
-                                break;
-                            case 401:
-                                displayToast("Authentication failed when signing form, please fill in your credentials correctly");
-                                break;
-                            case 402:
-                                displayToast("Authentication failed when signing form, please fill in your credentials correctly");
-                                break;
-                            case 403:
-                                displayToast("Authentication failed when signing form, please fill in your credentials correctly");
-                                break;
-                            case 422:
-                                displayToast("Authentication failed when signing form, please fill in your credentials correctly");
-                                break;
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    displayToast("Connection with server failed");
-                }
-            });
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-        //long process
-    }
-
-    //END TESTCODE ASYNC
 
     public ApiInterface getApiService() {
         return apiService;
     }
 
-    public Player getSelectedPlayer() {
-        return selectedPlayer;
-    }
     public Player getPlayerToSwitch(){return playerToSwitch;}
 
     public void setPlayerToSwitch(Player sp){this.playerToSwitch=sp;}
 
     public void setMatch(int matchNumber){
-        //hier moet er nog vanuit de lijst van ownedmathes de juiste match worden gehaald om die vervolgens in match te steken wat de
-        //eigenlijke geselecteerde match is.
         int aantal = ownedMatchesR.size();
         for (int i =0;i<aantal;i++){
             if(ownedMatchesR.get(i).getMatch_id()==matchNumber){
@@ -238,6 +125,10 @@ public class Domaincontroller {
         //check if there's a player to switch
         checkPlayerSwitch();
 
+    }
+
+    public Player getSelectedPlayer() {
+        return selectedPlayer;
     }
 
     public void resetSelectedPlayer() {
@@ -499,28 +390,18 @@ public class Domaincontroller {
         return index;
     }
 
-    //funcion to set timer times
-    public long getRoundTime(){
-        return match.getHomeTeam().getDivision().getRoundLength();
-    }
-    public long getBreakTime() {return match.getHomeTeam().getDivision().getPauseLength();}
 
-    public Team getHomeTeam(){
-       return match.getHomeTeam();
+    private void displayToast(String message){
+        Toast toast = Toast.makeText(getCurrentActivity(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 
-    public Team getAwayTeam(){
-        return match.getAwayTeam();
-    }
-
-    public AppCompatActivity getCurrentActivity() {
-        return currentActivity;
-    }
-
-    public void setCurrentActivity(AppCompatActivity currentActivity) {
-        this.currentActivity = currentActivity;
-    }
-
+    //METHODS that connect the app with the backend
+    /**
+     * Method that creates a seperate task on a thread to post that the match has ended and calls the {@link ApiInterface#endMatch(int)} to post it to the backend
+     *
+     */
     public void startMatch(){
 
         Runnable task = new Runnable() {
@@ -542,6 +423,10 @@ public class Domaincontroller {
         new Thread(task, "Service thread testpost").start();
     }
 
+    /**
+     * Method that creates a seperate task on a thread to post that the match has ended and calls the {@link ApiInterface#endMatch(int)} to post it to the backend
+     *
+     */
     public void endMatch(){
         Runnable task = new Runnable() {
             @Override
@@ -561,59 +446,194 @@ public class Domaincontroller {
         new Thread(task, "Service thread testpost").start();
     }
 
-    public void createPlayers(){
-        Player[] homePlayers = {new Player(1,"Beirens", "Sam" ),new Player(2,"Beirens","Stijn"),new Player(3,"Boedt","Olivier"),
-                new Player(7,"Callebout", "Tom"),new Player(10,"Crombez","Brecht"),new Player(5,"David","Indy"),
-                new Player(8,"Devlies","Tim"),new Player(4,"Haelemeersch","Benoit"),new Player(6,"Hendryckx","Kris"),
-                new Player(9,"Mechele","Steve"), new Player(11,"Peel","Dailly"),new Player(12,"Piens","Tim"),
-                new Player(13,"Vandermeulen","Matisse")};
-        for(Player p: homePlayers){
-            p.setTeam(match.getHomeTeam());
-        }
-        Log.i("game","Hometeam " + match.getHomeTeam().getTeamName() + ", players created");
-
-        Player[] awayPlayers = {new Player(1,"Backaert","Guy"),new Player(2,"Cassiman","Thomas"),new Player(3,"De Smedt","Peter"),
-                new Player(7,"Gheyssens","Ruben"),new Player(10,"Goossens","Jonas"),new Player(5,"Heyvaert","Norbert"),
-                new Player(8,"Langelet","Rik"),new Player(4,"Pandolfi","Mateo"),new Player(6,"Uyttersprot","Dieter"),new Player(9,"Van der Heyden","Stijn"),
-                new Player(11,"Verhoeve","Lander"),new Player(12,"Verhoeven","Maxim"),new Player(13,"Bakker","Boris")};
-        for(Player p: awayPlayers){
-            p.setTeam(match.getAwayTeam());
-        }
-        Log.i("game","AwayTeam " + match.getAwayTeam().getTeamName() + ", players created");
-
-        match.getHomeTeam().addPlayers(homePlayers);
-        match.getAwayTeam().addPlayers(awayPlayers);
-
-        setPlayersStatus();
+    /**
+     * Method that creates a seperate task on a thread to post that the match has been cancelled and calls the {@link ApiInterface#cancelMatch(int)} to post it to the backend
+     *
+     */
+    public void cancelMatch(){
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Call<Void> call = apiService.cancelMatch(getSelectedMatch().getMatch_id());
+                    try {
+                        call.execute();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Error e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
     }
 
-    private void setPlayersStatus(){
-        // match.getTeam().getPlayers().subList(0,6).forEach(p -> p.setStatus(Status.PLAYING));
-        for (int i = 0; i < match.getHomeTeam().getPlayers().size(); i++){
+    /**
+     * Method that creates a task on a separate thread to post a scored goal to the backend.
+     *
+     * @param player needs to be passed since async could allow the activity to reset the selected player to null before it can be called
+     */
+    private void asyncPostGoal(Player player){
+        final Player p = player;
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    postGoal(p);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
+    }
 
-                match.getHomeTeam().getPlayers().get(i).setStatus(Status.ACTIVE);
-                match.getAwayTeam().getPlayers().get(i).setStatus(Status.ACTIVE);
+    /**
+     * Method that calls the {@link ApiInterface#addGoal(int, int, int)} to post the goal to the backend
+     *
+     * @param p needs to be passed since async could allow the activity to reset the selected player to null before it can be called
+     * @throws InterruptedException for when a thread is waiting, sleeping, or otherwise occupied, and the thread is interrupted, either before or during the activity.
+     */
+    private void postGoal(Player p) throws InterruptedException {
+        Call<Void> call = apiService.addGoal(match.getMatch_id(),p.getPlayer_id(),match.getCurrentRound());
+        try {
+            call.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    /**
+     * Method that creates a task on a separate thread to post a scored goal to the backend.
+     *
+     * @param player needs to be passed since async could allow the activity to reset the selected player to null before it can be called
+     * @param penaltyTypeId id for the type of penalty
+     */
+    private void asyncPostFault(Player player, final int penaltyTypeId){
+        final Player p = player;
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    postfault(p, penaltyTypeId);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
+    }
+
+    /**
+     * Method that calls the {@link ApiInterface#addPenalty(int, int, int)} to post the faults to the backend.
+     *
+     * @param p needs to be passed since async could allow the activity to reset the selected player to null before it can be called
+     * @param penaltyTypeId id for the type of penalty
+     * @throws InterruptedException for when a thread is waiting, sleeping, or otherwise occupied, and the thread is interrupted, either before or during the activity.
+     */
+    private void postfault(Player p, int penaltyTypeId) throws InterruptedException{
+        Call<Void> call = apiService.addPenalty(match.getMatch_id(),p.getPlayer_id(),penaltyTypeId);
+        try {
+            call.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method that creates a task on a separate thread to post to the backend that the match has been signed.
+     *
+     * @param email email of the assigned match referee
+     * @param password password of the assigned match referee
+     */
+    public void asyncPostSignMatch(final String email, final String password){
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    postSignMatch(email, password);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(task, "Service thread testpost").start();
 
     }
 
-    public void createTeams(String homeTeamName, Division dH, String awayTeamName, Division dA){
-        Team hometeam = new Team(4,homeTeamName, dH);
-        Team awayteam = new Team(5,awayTeamName, dA);
-        match.setHomeTeam(hometeam);
-        match.setAwayTeam(awayteam);
+    /**
+     * Method that calls the {@link ApiInterface#signMatch(int, String, String)} to post that the match has been signed to the backend.
+     * This method displays a toast in the when the match has been succesfully signed or when an authentication 400, 401, 402, 403, 422 error has occurred.
+     *
+     * @param email email of the assigned match referee
+     * @param password password of the assigned match referee
+     * @throws InterruptedException for when a thread is waiting, sleeping, or otherwise occupied, and the thread is interrupted, either before or during the activity.
+     */
+    private void postSignMatch(String email, String password) throws InterruptedException{
+        final AdministrationEnd[] adminEnd = {(AdministrationEnd) getCurrentActivity()};
+
+        Call<Void> call = apiService.signMatch(match.getMatch_id(),email,password);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    displayToast("You have succesfully signed the match");
+                    try {
+                        adminEnd[0].finishAdmin();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    switch(response.code()) {
+                        case 400:
+                            displayToast("Authentication failed when signing form, please fill in your credentials correctly");
+                            break;
+                        case 401:
+                            displayToast("Authentication failed when signing form, please fill in your credentials correctly");
+                            break;
+                        case 402:
+                            displayToast("Authentication failed when signing form, please fill in your credentials correctly");
+                            break;
+                        case 403:
+                            displayToast("Authentication failed when signing form, please fill in your credentials correctly");
+                            break;
+                        case 422:
+                            displayToast("Authentication failed when signing form, please fill in your credentials correctly");
+                            break;
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                displayToast("Connection with server failed");
+            }
+        });
+
     }
-    private int updateNumber(int playerid,int number) throws InterruptedException {
+
+    /**
+     * Method that calls the {@link ApiInterface#updateNumber(int, int)} to post the new capnumber of the player.
+     *
+     * @param playerid id of the player to update the number for
+     * @param number the capnumber of the player
+     * @throws InterruptedException for when a thread is waiting, sleeping, or otherwise occupied, and the thread is interrupted, either before or during the activity.
+     */
+    private void updateNumber(int playerid, int number) throws InterruptedException {
         Call<Void> call = apiService.updateNumber(playerid,number);
         try {
             call.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //long process
-        return 1;
     }
+
+    /**
+     * Method that creates a task on a separate thread to post to the backend that an active player has been switched pre match and needs to switch capnumber.
+     *
+     * @param playerid id of the player to update the number for
+     * @param number the capnumber of the player
+     */
     public void asyncUpdatePlayerNumber(int playerid, int number){
         final int p = playerid;
         final int n = number;
@@ -629,30 +649,28 @@ public class Domaincontroller {
         };
         new Thread(task, "Service thread testpost").start();
     }
-    private int cancelMatch() throws InterruptedException{
-        Call<Void> call = apiService.cancelMatch(this.getSelectedMatch().getMatch_id());
-        try {
-            call.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        //long process
-        return 1;
-    }
-
-    private int updatestarters(ApiClient.ArrayListStarters starters) throws InterruptedException {
+    /**
+     * Method that calls the {@link ApiInterface#putListOfStarters(int, ApiClient.ArrayListStarters)} to update the active players to the backend.
+     *
+     * @param starters the list of players that wil play in the match
+     * @throws InterruptedException for when a thread is waiting, sleeping, or otherwise occupied, and the thread is interrupted, either before or during the activity.
+     */
+    private void updatestarters(ApiClient.ArrayListStarters starters) throws InterruptedException {
         Call<ResponseBody> call = apiService.putListOfStarters(getSelectedMatch().getMatch_id(),starters);
         try {
             call.execute();
         } catch (Exception e) {
             Log.e("log_tag","den eersten eeft nie gewerkt");
         }
-
-        //long process
-        return 1;
     }
 
+    /**
+     * Method that creates a task on a separate thread to post the active players to the backend.
+     * These are all the players that will perform actions during the match
+     *
+     * @param starters the list of players that wil play in the match
+     */
     public void asyncUpdateStarters(ApiClient.ArrayListStarters starters){
         final ApiClient.ArrayListStarters s =  starters;
         Runnable task = new Runnable() {
@@ -666,19 +684,5 @@ public class Domaincontroller {
             }
         };
         new Thread(task, "Service thread testpost").start();
-    }
-    public void asyncCancelMatch(){
-        Runnable task = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    cancelMatch();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        new Thread(task, "Service thread testpost").start();
-
     }
 }
