@@ -57,7 +57,7 @@ public class MatchTimer {
         dc = ar.getDc();
         setMaxTime(roundtime);
         if(dc.getMatch().getCurrentRound()==2){
-            setBreaktime(1);
+            setBreaktime(5);
         }else{
             setBreaktime(breakTime);
         }

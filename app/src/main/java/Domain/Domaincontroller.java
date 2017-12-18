@@ -404,7 +404,7 @@ public class Domaincontroller {
                     String firstName = pr.getName().substring(0, firstSpace);       // get everything upto the first space character
                     String lastName = pr.getName().substring(firstSpace).trim();
 
-                    Player p = new Player(pr.getPlayerNumber(), firstName, lastName);
+                    Player p = new Player(pr.getPlayerNumber(), lastName, firstName);
                     p.setPlayer_id(pr.getPlayerId());
                     p.setTeam(t);
                     p.setStatus(pr.getStatus());

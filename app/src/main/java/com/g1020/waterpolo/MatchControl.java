@@ -146,7 +146,7 @@ public class MatchControl extends AppCompatActivity implements PlayersFragment.O
             if(dc.getPlayerToSwitch()==null){
                 dc.setPlayerToSwitch(sp);
                 if(!this.isBreak)
-                    stopShotlock(view);
+                    toggleChrono(view);
             }else{
                 dc.setPlayerToSwitch(null);//reset for next switch
 
